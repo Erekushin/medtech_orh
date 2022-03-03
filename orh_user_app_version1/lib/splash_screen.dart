@@ -1,9 +1,6 @@
-
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-// import 'Login/login.dart';
 
 class MyCustomSplashScreen extends StatefulWidget {
   const MyCustomSplashScreen({Key? key}) : super(key: key);
