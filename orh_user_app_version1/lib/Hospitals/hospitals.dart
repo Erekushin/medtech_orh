@@ -31,6 +31,7 @@ class _HospitalsState extends State<Hospitals> {
   @override
   void dispose(){
     pageController.dispose();
+    super.dispose();
   }
   @override
   Widget build(BuildContext context) {
@@ -210,10 +211,15 @@ class _HospitalsState extends State<Hospitals> {
             color: index.isEven? Color(0xFFC9DAED): Color(0xFFE6CF9B)
         ),
       ).PressExtention((){
-        final Discription = Get.arguments as String;
-        switch(Discription){
-          case "hospitals":
-            Get.toNamed('/Doctors');
+        final Description = Get.arguments as String;
+        print("press on hospital");
+        print(Description);
+        switch(Description){
+          case "fromHospitals":
+            Get.toNamed('/hospital/hospitalProfile', arguments: '');
+            break;
+          case "fromTimeOrder":
+            Get.toNamed('/hospital/doctors', arguments: '');
         }
       }),
     );

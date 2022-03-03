@@ -73,65 +73,65 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin{
               ),
               homePageCardsGroup(
                 'profile',
+                '/profile',
                 Color(0xFF12C0A1),
                 Icons.person,
                 'Профайл',
                 context,
-                '/profile',
-                'answers',
+                'firstPage',
+                '/firstPage',
                 Color(0xffFF6D6D),
                 Icons.analytics_outlined,
                 'Хариунууд',
-                '/firstPage',
               ),
               homePageCardsGroup(
-                  'timeOrder',
+                  'fromTimeOrder',
+                  '/hospitals',
                   Colors.lightGreen,
                   Icons.calendar_today_sharp,
                   'Цаг авах',
                   context,
+                  'fromHospitals',
                   '/hospitals',
-                  'hospitals',
                   Color(0xffffa700),
                   Icons.article,
-                  'Эмнэлэгүүд',
-                  '/hospitals'),
+                  'Эмнэлэгүүд',),
               homePageCardsGroup(
-                  'Хариунууд',
+                  'fromlavlagaa1',
+                  '/lavlagaa1',
                   Color(0xff63ace5),
                   Icons.ad_units_outlined,
                   'Лавлагаа 1',
                   context,
-                  '/form1',
-                  'Хариунууд',
+                  'fromHospitals',
+                  '/doctors',
                   Color(0xfff37736),
                   Icons.article_sharp,
-                  'Эмч нар',
-                  '/doctors'),
+                  'Эмч нар',),
               homePageCardsGroup(
-                  'Хариунууд',
+                  'fromHospitals',
+                  '/form1',
                   Color(0xffFF6D6D),
                   Icons.android,
                   'Example example',
                   context,
+                  'fromHospitals',
                   '/form1',
-                  'Хариунууд',
                   Colors.lightGreen,
                   Icons.text_format,
-                  'Example',
-                  '/form1'),
+                  'Example',),
               homePageCardsGroup(
-                  'Хариунууд',
+                  'fromHospitals',
+                  '/form1',
                   Color(0xffffa700),
                   Icons.text_fields,
                   'Example',
                   context,
+                  'fromHospitals',
                   '/form1',
-                  'Хариунууд',
                   Color(0xff63ace5),
                   Icons.gamepad_outlined,
-                  'Example example',
-                  '/form1'),
+                  'Example example',),
               SizedBox(height: _w / 20),
             ],
           ),
@@ -178,31 +178,31 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin{
     );
   }
   Widget homePageCardsGroup(
-      String description,
+      String data,
+      String route,
       Color color,
       IconData icon,
       String title,
       BuildContext context,
-      String route,
-      String description2,
+      String data2,
+      String route2,
       Color color2,
       IconData icon2,
-      String title2,
-      String route2) {
+      String title2,) {
     double _w = MediaQuery.of(context).size.width;
     return Padding(
       padding: EdgeInsets.only(bottom: _w / 17),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          homePageCard(description, color, icon, title, context, route),
-          homePageCard(description2, color2, icon2, title2, context, route2),
+          homePageCard(data, route, color, icon, title, context),
+          homePageCard(data2, route2, color2, icon2, title2, context),
         ],
       ),
     );
   }
-  Widget homePageCard(description, Color color, IconData icon, String title,
-      BuildContext context, String route) {
+  Widget homePageCard(String data, String route, Color color, IconData icon, String title,
+      BuildContext context) {
     double _w = MediaQuery.of(context).size.width;
     return Opacity(
       opacity: _animation.value,
@@ -214,7 +214,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin{
           onTap: () {
             HapticFeedback.lightImpact();
             print('something good gonna happen');
-            Get.toNamed(route, arguments: description);
+            Get.toNamed(route, arguments: data);
           },
           child: Container(
             padding: EdgeInsets.all(15),

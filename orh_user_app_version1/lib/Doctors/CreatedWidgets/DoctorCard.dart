@@ -80,7 +80,7 @@ class _DoctorCardState extends State<DoctorCard> {
         )
     ).PressExtention((){
       print('Click from doctor card ');
-      Get.toNamed('/TimeSequence');
+      Get.toNamed('/doctorTimeSequence');
     });
   }
 }
