@@ -72,52 +72,62 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin{
                 ),
               ),
               homePageCardsGroup(
+                'profile',
                 Color(0xFF12C0A1),
                 Icons.person,
                 'Профайл',
                 context,
                 '/profile',
+                'answers',
                 Color(0xffFF6D6D),
                 Icons.analytics_outlined,
-                'Хариунууд ',
+                'Хариунууд',
                 '/firstPage',
               ),
               homePageCardsGroup(
+                  'timeOrder',
                   Colors.lightGreen,
                   Icons.calendar_today_sharp,
                   'Цаг авах',
                   context,
-                  '/Hospitals',
+                  '/hospitals',
+                  'hospitals',
                   Color(0xffffa700),
                   Icons.article,
                   'Эмнэлэгүүд',
-                  'form1'),
+                  '/hospitals'),
               homePageCardsGroup(
+                  'Хариунууд',
                   Color(0xff63ace5),
                   Icons.ad_units_outlined,
                   'Лавлагаа 1',
                   context,
                   '/form1',
+                  'Хариунууд',
                   Color(0xfff37736),
                   Icons.article_sharp,
-                  'Example example',
-                  '/form1'),
+                  'Эмч нар',
+                  '/doctors'),
               homePageCardsGroup(
+                  'Хариунууд',
                   Color(0xffFF6D6D),
                   Icons.android,
                   'Example example',
                   context,
                   '/form1',
+                  'Хариунууд',
                   Colors.lightGreen,
                   Icons.text_format,
                   'Example',
                   '/form1'),
               homePageCardsGroup(
+                  'Хариунууд',
                   Color(0xffffa700),
                   Icons.text_fields,
                   'Example',
                   context,
                   '/form1',
+                  'Хариунууд',
                   Color(0xff63ace5),
                   Icons.gamepad_outlined,
                   'Example example',
@@ -168,11 +178,13 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin{
     );
   }
   Widget homePageCardsGroup(
+      String description,
       Color color,
       IconData icon,
       String title,
       BuildContext context,
       String route,
+      String description2,
       Color color2,
       IconData icon2,
       String title2,
@@ -183,13 +195,13 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin{
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          homePageCard(color, icon, title, context, route),
-          homePageCard(color2, icon2, title2, context, route2),
+          homePageCard(description, color, icon, title, context, route),
+          homePageCard(description2, color2, icon2, title2, context, route2),
         ],
       ),
     );
   }
-  Widget homePageCard(Color color, IconData icon, String title,
+  Widget homePageCard(description, Color color, IconData icon, String title,
       BuildContext context, String route) {
     double _w = MediaQuery.of(context).size.width;
     return Opacity(
@@ -202,7 +214,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin{
           onTap: () {
             HapticFeedback.lightImpact();
             print('something good gonna happen');
-            Get.toNamed(route);
+            Get.toNamed(route, arguments: description);
           },
           child: Container(
             padding: EdgeInsets.all(15),

@@ -210,7 +210,11 @@ class _HospitalsState extends State<Hospitals> {
             color: index.isEven? Color(0xFFC9DAED): Color(0xFFE6CF9B)
         ),
       ).PressExtention((){
-        Get.toNamed('/Doctors');
+        final Discription = Get.arguments as String;
+        switch(Discription){
+          case "hospitals":
+            Get.toNamed('/Doctors');
+        }
       }),
     );
   }
