@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
 import '../Helpers/CreatedGlobalWidgets/scroll_behavior.dart';
+import 'controller.dart';
+import 'model.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -10,11 +12,11 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login>with SingleTickerProviderStateMixin {
-  // loginController logincontroller = new loginController();
+  LoginController logincontroller = new LoginController();
   late AnimationController _controller;
   late Animation<double> _opacity;
   late Animation<double> _transform;
-  bool LoginLoading = false;
+
 
   GlobalKey<FormState> LoginValidatorKey = GlobalKey<FormState>();
 
@@ -100,18 +102,18 @@ class _LoginState extends State<Login>with SingleTickerProviderStateMixin {
                               ),
                             ),
                             const SizedBox(),
-                            // component1(Icons.account_circle_outlined,
-                            //     'User name...', false, false, logincontroller.rD),
-                            // component1(
-                            //     Icons.lock_outline, 'Password...', true, false, logincontroller.rD),
+                            component1(Icons.account_circle_outlined,
+                                'User name...', false, false, logincontroller.rD),
+                            component1(
+                                Icons.lock_outline, 'Password...', true, false, logincontroller.rD),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                // component2(
-                                //     'LOGIN',
-                                //     2.6,
-                                //         () => logincontroller.getdata()
-                                // ),
+                                component2(
+                                    'LOGIN',
+                                    2.6,
+                                        () => logincontroller.getdata()
+                                ),
                                 SizedBox(width: size.width / 25),
                                 Container(
                                   width: size.width / 2.6,
@@ -142,7 +144,7 @@ class _LoginState extends State<Login>with SingleTickerProviderStateMixin {
                               ),
                             ),
                             const SizedBox(),
-                            LoginLoading? CircularProgressIndicator() : SizedBox()
+                            LoginModel.loginloading? CircularProgressIndicator() : SizedBox()
                           ],
                         ),
                       )
