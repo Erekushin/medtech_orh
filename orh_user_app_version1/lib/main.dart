@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:orh_user_app_version1/splash_screen.dart';
 import 'Home/home.dart';
+import 'Hospitals/hospitals.dart';
 import 'Login/login.dart';
 
 void main() {
@@ -19,6 +20,7 @@ class MyApp extends StatelessWidget {
         GetPage(name: "/", page: ()=> const MyCustomSplashScreen()),
         GetPage(name: "/login", page: ()=> const Login()),
         GetPage(name: "/home", page: ()=> const Home()),
+        GetPage(name: "/Hospitals", page: ()=> const Hospitals()),
         // GetPage(name: "/form1", page: ()=> const form1()),
         // GetPage(name: "/firstPage", page: ()=> const FirstPage()),
         // GetPage(name: "/Doctors", page: ()=> const Doctors()),
