@@ -1,0 +1,1 @@
+const String uri = "http://10.0.0.116:8080/ords/medical_backend/request/make";
