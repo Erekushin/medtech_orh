@@ -2,6 +2,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import 'global_constant.dart';
+
 class MyCustomSplashScreen extends StatefulWidget {
   const MyCustomSplashScreen({Key? key}) : super(key: key);
   @override
@@ -51,7 +53,7 @@ class _MyCustomSplashScreenState extends State<MyCustomSplashScreen>
     Timer(Duration(seconds: 4), () {
       setState(() {
         // Navigator.pushReplacement(context, PageTransition(Login()));
-        Get.toNamed('/login');
+        Get.toNamed(RouteUnits.login);
       });
     });
   }

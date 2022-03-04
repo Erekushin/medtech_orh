@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'dart:ui';
 import 'package:flutter/services.dart';
+
+import '../global_constant.dart';
 // import '../Lavlagaa1/form.dart';
 // import '../Results/firstPage.dart';
 class Home extends StatefulWidget {
@@ -86,25 +88,25 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin{
               ),
               homePageCardsGroup(
                   'fromTimeOrder',
-                  '/hospitals',
+                  RouteUnits.timeOrder + RouteUnits.hospitals,
                   Colors.lightGreen,
                   Icons.calendar_today_sharp,
                   'Цаг авах',
                   context,
                   'fromHospitals',
-                  '/hospitals',
+                  RouteUnits.hospitals,
                   Color(0xffffa700),
                   Icons.article,
                   'Эмнэлэгүүд',),
               homePageCardsGroup(
                   'fromlavlagaa1',
-                  '/lavlagaa1',
+                  RouteUnits.lavlagaa1,
                   Color(0xff63ace5),
                   Icons.ad_units_outlined,
                   'Лавлагаа 1',
                   context,
-                  'fromHospitals',
-                  '/doctors',
+                  'fromDoctors',
+                  RouteUnits.doctors,
                   Color(0xfff37736),
                   Icons.article_sharp,
                   'Эмч нар',),

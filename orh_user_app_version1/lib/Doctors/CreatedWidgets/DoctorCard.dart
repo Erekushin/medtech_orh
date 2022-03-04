@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:orh_user_app_version1/Helpers/CreatedGlobalWidgets/on_press_extention.dart';
 
+import '../../global_constant.dart';
+
 class DoctorCard extends StatefulWidget {
   const DoctorCard({Key? key,required this.Name,required this.Phone,required this.Mail,required
   this.AvatarPhoto,required this.Profesion, required this.SocialStatus}) : super(key: key);
@@ -79,8 +81,17 @@ class _DoctorCardState extends State<DoctorCard> {
           ),
         )
     ).PressExtention((){
-      print('Click from doctor card ');
-      Get.toNamed('/doctorTimeSequence');
+      final Description = Get.arguments as String;
+      print('press on doctor card');
+      print(Description);
+      switch(Description){
+        case "fromDoctors":
+          Get.toNamed(RouteUnits.doctors + RouteUnits.doctorProfile);
+          break;
+        case "fromTimeOrder":
+          Get.toNamed(RouteUnits.timeOrder + RouteUnits.hospitals + RouteUnits.doctors + RouteUnits.timeSequence);
+      }
+
     });
   }
 }

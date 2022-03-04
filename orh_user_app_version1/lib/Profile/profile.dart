@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
 import '../Helpers/CreatedGlobalWidgets/bottom_nav_bar.dart';
-class HospitalProfile extends StatefulWidget {
-  const HospitalProfile({Key? key}) : super(key: key);
 
+class Profile extends StatefulWidget {
+  const Profile({Key? key}) : super(key: key);
   @override
-  _HospitalProfileState createState() => _HospitalProfileState();
+  _ProfileState createState() => _ProfileState();
 }
 
-class _HospitalProfileState extends State<HospitalProfile> {
+class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,7 +18,7 @@ class _HospitalProfileState extends State<HospitalProfile> {
         centerTitle: true,
         shadowColor: Colors.black.withOpacity(.5),
         title: Text(
-          'Hospital Profile',
+          'Лавлагаа 1',
           style: TextStyle(
               color: Colors.black.withOpacity(.7),
               fontWeight: FontWeight.w600,
@@ -33,7 +33,11 @@ class _HospitalProfileState extends State<HospitalProfile> {
         ),
       ),
       bottomNavigationBar: MyBottomNavBar(),
-      body: Container(child: Center(child: Text("Hospital profile"),),),
+      body: Container(
+        child: Center(
+          child: Text('Profile'),
+        ),
+      ),
     );
   }
 }

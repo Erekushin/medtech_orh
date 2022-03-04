@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../Helpers/Api/post_request_general.dart';
+import '../global_constant.dart';
 import 'model.dart';
 
 class LoginController{
@@ -22,7 +23,7 @@ class LoginController{
       model = LoginModel.fromJson(jsonDecode(data.toString()));
       print(LoginController.model.code);
       if(LoginController.model.code == 200){
-        Get.toNamed('/home');
+        Get.toNamed(RouteUnits.home);
         return true;
       }
       else if(LoginController.model.code == 404){

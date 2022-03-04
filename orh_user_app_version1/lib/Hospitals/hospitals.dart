@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:orh_user_app_version1/Helpers/CreatedGlobalWidgets/on_press_extention.dart';
 import '../Helpers/CreatedGlobalWidgets/bottom_nav_bar.dart';
 import '../Helpers/CreatedGlobalWidgets/scroll_behavior.dart';
+import '../global_constant.dart';
 
 class Hospitals extends StatefulWidget {
   const Hospitals({Key? key}) : super(key: key);
@@ -216,10 +217,10 @@ class _HospitalsState extends State<Hospitals> {
         print(Description);
         switch(Description){
           case "fromHospitals":
-            Get.toNamed('/hospital/hospitalProfile', arguments: '');
+            Get.toNamed(RouteUnits.hospitals + RouteUnits.hospitalProfile, arguments: '');
             break;
           case "fromTimeOrder":
-            Get.toNamed('/hospital/doctors', arguments: '');
+            Get.toNamed(RouteUnits.timeOrder + RouteUnits.hospitals + RouteUnits.doctors, arguments: 'fromTimeOrder');
         }
       }),
     );
