@@ -72,9 +72,9 @@ class form1Controller{
   }
   Future<BaseData> getdata() async{
     var body = {};
-    var ownDataString = await postRequestGeneral.getdata(toJsonn(), '203842', uri);
+    var ownDataString = await postRequestGeneral.getdata(toJsonn(), '203842', MedTechUri);
     ownData = OwnData.fromJson(jsonDecode(ownDataString));
-    var basedataString = await postRequestGeneral.getdata(body, '203828', uri);
+    var basedataString = await postRequestGeneral.getdata(body, '203828', MedTechUri);
     basedata = BaseData.fromJson(jsonDecode(basedataString));
     return basedata;
   }
@@ -101,12 +101,12 @@ class form1Controller{
     }
   }
   Future<BaseData> pushForm1() async{
-    var pushForm1Response = await postRequestGeneral.getdata(toJson(), '203825', uri);
+    var pushForm1Response = await postRequestGeneral.getdata(toJson(), '203825', MedTechUri);
     ehbvrtgelResponse = BaseData.fromJson(jsonDecode(pushForm1Response));
     return ehbvrtgelResponse;
   }
   Future<BaseData>SaveChangesOnBack() async {
-    var saveChangesOnBackResponse = await postRequestGeneral.getdata(toJson(), '203847', uri);
+    var saveChangesOnBackResponse = await postRequestGeneral.getdata(toJson(), '203847', MedTechUri);
     print('abalabadv');
     print(toJson().toString());
     ehbvrtgelZasvarResponse = BaseData.fromJson(jsonDecode(saveChangesOnBackResponse));

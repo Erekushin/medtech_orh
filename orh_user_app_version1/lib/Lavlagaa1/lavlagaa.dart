@@ -66,6 +66,8 @@ class _LavlagaaState extends State<Lavlagaa> {
                   case ConnectionState.active:
                     return Text('active');
                   case ConnectionState.waiting:
+                    print('waiting rvv orson');
+                    print(snapshot.connectionState);
                     return WaitingScreen();
                   case ConnectionState.done:
                     controller.profession.text = form1Controller.ownData.result?.list?[0].profession ?? "";
@@ -89,7 +91,7 @@ class _LavlagaaState extends State<Lavlagaa> {
                           w: _w, listitems: form1Controller.basedata.result?.items?[0].views, currentValue: form1Controller.ownData.result?.list?[0].employment,),
                         myDropDown(dropDownHint: form1Controller.basedata.result?.items?[1].name?? "сонголт байхгүй",
                           w: _w, listitems: form1Controller.basedata.result?.items?[1].views, currentValue: form1Controller.ownData.result?.list?[0].educationSituation,),
-                        RadioBtn(w: _w, name: form1Controller.basedata.result?.items?[2].name, listitems: form1Controller.basedata.result?.items?[2].views),
+                        // RadioBtn(w: _w, name: form1Controller.basedata.result?.items?[2].name, listitems: form1Controller.basedata.result?.items?[2].views),
                         myDropDown(dropDownHint: form1Controller.basedata.result?.items?[4].name?? "сонголт байхгүй",
                           w: _w, listitems: form1Controller.basedata.result?.items?[4].views, currentValue: form1Controller.ownData.result?.list?[0].maritalStatus,),
                         MyTextField(w: _w, controller: controller.number_families, label: "гэр бүлийн тоо?", hint: "тоо",),

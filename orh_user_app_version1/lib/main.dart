@@ -11,6 +11,7 @@ import 'Login/login.dart';
 import 'Profile/profile.dart';
 import 'TimeSequence/time_sequence.dart';
 import 'global_constant.dart';
+import 'tvr.dart';
 
 void main() {
   runApp(const MyApp());
@@ -24,7 +25,7 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       getPages: [
         ///Root
-        GetPage(name: "/", page: ()=> const MyCustomSplashScreen()),
+        // GetPage(name: "/", page: ()=> const MyCustomSplashScreen()),
         ///login
         GetPage(name: RouteUnits.login, page: ()=> const Login()),
         ///home
@@ -43,6 +44,8 @@ class MyApp extends StatelessWidget {
         GetPage(name: RouteUnits.doctors + RouteUnits.doctorProfile, page: ()=> const DoctorProfile()),
         ///Лавлагаа
         GetPage(name: RouteUnits.lavlagaa1, page: ()=> const Lavlagaa()),
+
+        GetPage(name: "/", page: ()=> MyAppll())
 
       ],
     );

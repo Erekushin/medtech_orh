@@ -1,4 +1,6 @@
-const String uri = "http://10.0.0.116:8080/ords/medical_backend/request/make";
+const String MedTechUri = "http://10.0.0.116:8080/ords/medical_backend/request/make";
+const String GeregeUserUri = "https://iam.gerege.mn/api/public/user/login";
+const String GeregeUserLoginUri = "https://iam.gerege.mn/api/public/user/login/username";
 
 class RouteUnits{
   static String login = "/login";
