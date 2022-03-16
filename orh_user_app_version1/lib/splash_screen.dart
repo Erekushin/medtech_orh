@@ -53,6 +53,7 @@ class _MyCustomSplashScreenState extends State<MyCustomSplashScreen>
     Timer(Duration(seconds: 4), () {
       setState(() {
         // Navigator.pushReplacement(context, PageTransition(Login()));
+        print('spash aas garlaa');
         Get.toNamed(RouteUnits.login);
       });
     });
@@ -66,11 +67,10 @@ class _MyCustomSplashScreenState extends State<MyCustomSplashScreen>
 
   @override
   Widget build(BuildContext context) {
-    double _width = MediaQuery.of(context).size.width;
-    double _height = MediaQuery.of(context).size.height;
-
+    GeneralMeasurements.deviceHeight = MediaQuery.of(context).size.height;
+    GeneralMeasurements.deviceWidth = MediaQuery.of(context).size.width;
     return Scaffold(
-      backgroundColor: Color(0xFF0072FE),
+      backgroundColor: CommonColors.geregeBlue,
       body: Stack(
         children: [
           Column(
@@ -78,7 +78,7 @@ class _MyCustomSplashScreenState extends State<MyCustomSplashScreen>
               AnimatedContainer(
                   duration: Duration(milliseconds: 2000),
                   curve: Curves.fastLinearToSlowEaseIn,
-                  height: _height / _fontSize
+                  height: GeneralMeasurements.deviceHeight / _fontSize
               ),
               AnimatedOpacity(
                 duration: Duration(milliseconds: 1000),
@@ -102,8 +102,8 @@ class _MyCustomSplashScreenState extends State<MyCustomSplashScreen>
               child: AnimatedContainer(
                   duration: Duration(milliseconds: 2000),
                   curve: Curves.fastLinearToSlowEaseIn,
-                  height: _width / _containerSize,
-                  width: _width / _containerSize,
+                  height: GeneralMeasurements.deviceWidth / _containerSize,
+                  width: GeneralMeasurements.deviceWidth / _containerSize,
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
                     color: Colors.white,

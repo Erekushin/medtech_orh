@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:orh_user_app_version1/global_constant.dart';
 class MyBottomNavBar extends StatefulWidget {
   const MyBottomNavBar({Key? key}) : super(key: key);
 
@@ -13,7 +14,7 @@ class _MyBottomNavBarState extends State<MyBottomNavBar> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Container(
-      margin: EdgeInsets.all(20),
+      margin: const EdgeInsets.all(20),
       height: size.width * .155,
       decoration: BoxDecoration(
         color: Colors.white,
@@ -21,7 +22,7 @@ class _MyBottomNavBarState extends State<MyBottomNavBar> {
           BoxShadow(
             color: Colors.black.withOpacity(.15),
             blurRadius: 30,
-            offset: Offset(0, 10),
+            offset: const Offset(0, 10),
           ),
         ],
         borderRadius: BorderRadius.circular(50),
@@ -45,10 +46,9 @@ class _MyBottomNavBarState extends State<MyBottomNavBar> {
                     print('setting');
                     break;
                   case 3 :
-                    print('Profile');
+                    Get.toNamed(RouteUnits.profile);
                     break;
                 }
-
                 currentIndex = index;
               },
             );
@@ -59,7 +59,7 @@ class _MyBottomNavBarState extends State<MyBottomNavBar> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               AnimatedContainer(
-                duration: Duration(milliseconds: 1500),
+                duration: const Duration(milliseconds: 1500),
                 curve: Curves.fastLinearToSlowEaseIn,
                 margin: EdgeInsets.only(
                   bottom: index == currentIndex ? 0 : size.width * .029,
@@ -68,7 +68,7 @@ class _MyBottomNavBarState extends State<MyBottomNavBar> {
                 ),
                 width: size.width * .128,
                 height: index == currentIndex ? size.width * .014 : 0,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   color: Colors.blueAccent,
                   borderRadius: BorderRadius.vertical(
                     bottom: Radius.circular(10),
@@ -79,7 +79,7 @@ class _MyBottomNavBarState extends State<MyBottomNavBar> {
                 listOfIcons[index],
                 size: size.width * .076,
                 color: index == currentIndex
-                    ? Colors.blueAccent
+                    ? CommonColors.geregeBlue
                     : Colors.black38,
               ),
               SizedBox(height: size.width * .03),

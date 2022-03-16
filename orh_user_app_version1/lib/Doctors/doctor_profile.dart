@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../Helpers/CreatedGlobalWidgets/bottom_nav_bar.dart';
 
 class DoctorProfile extends StatefulWidget {

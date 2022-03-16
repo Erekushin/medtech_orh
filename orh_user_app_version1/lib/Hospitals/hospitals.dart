@@ -1,23 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:orh_user_app_version1/Helpers/CreatedGlobalWidgets/on_press_extention.dart';
+import 'package:orh_user_app_version1/Hospitals/side_search_address.dart';
+import 'package:orh_user_app_version1/Hospitals/side_search_name.dart';
 import '../Helpers/CreatedGlobalWidgets/bottom_nav_bar.dart';
 import '../Helpers/CreatedGlobalWidgets/scroll_behavior.dart';
 import '../global_constant.dart';
 
 class Hospitals extends StatefulWidget {
   const Hospitals({Key? key}) : super(key: key);
-
   @override
   _HospitalsState createState() => _HospitalsState();
 }
 class _HospitalsState extends State<Hospitals> {
-  bool SideBarToggler = false;
-  GlobalKey<ScaffoldState> SidePageKey = GlobalKey<ScaffoldState>();
+  bool sideBarToggler = false;
+  GlobalKey<ScaffoldState> sidePageKey = GlobalKey<ScaffoldState>();
   PageController pageController = PageController(viewportFraction: 0.85);
   var _currentPageValue = 0.0;
-  double _scaleFactor = 0.8;
-  double _height = 120;
+  final double _scaleFactor = 0.8;
+  final double _height = 120;
   bool isTapped = true;
   bool isExpanded = false;
   @override
@@ -39,9 +40,9 @@ class _HospitalsState extends State<Hospitals> {
     Size size = MediaQuery.of(context).size;
     double _w = MediaQuery.of(context).size.width;
     return Scaffold(
-        bottomNavigationBar: MyBottomNavBar(),
-        key: SidePageKey,
-        endDrawer : SideBarToggler? SidePageForName() : SidePageForAddress(),
+        bottomNavigationBar: const MyBottomNavBar(),
+        key: sidePageKey,
+        endDrawer : sideBarToggler? const SidePageForName() : const SidePageForAddress(),
         appBar: AppBar(
           backgroundColor: Colors.white,
           elevation: 0,
@@ -68,7 +69,7 @@ class _HospitalsState extends State<Hospitals> {
             child: SizedBox(
               height: size.height,
               child: Container(
-                margin: EdgeInsets.only(top: 20, bottom: 20),
+                margin: const EdgeInsets.only(top: 20, bottom: 20),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
@@ -76,8 +77,8 @@ class _HospitalsState extends State<Hospitals> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Container(
-                          margin: EdgeInsets.only(left: 50),
-                          child: Text(
+                          margin: const EdgeInsets.only(left: 50),
+                          child: const Text(
                             'Таний бүртгэлтэй  эмнэлэгүүд:',
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
@@ -86,7 +87,7 @@ class _HospitalsState extends State<Hospitals> {
                           ),
                         ),
                         Container(
-                          margin: EdgeInsets.only(top: 10),
+                          margin: const EdgeInsets.only(top: 10),
                           height: 220,
                           child: PageView.builder(
                               controller: pageController,
@@ -101,17 +102,17 @@ class _HospitalsState extends State<Hospitals> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Container(
-                            margin: EdgeInsets.all(10),
+                            margin: const EdgeInsets.all(10),
                             height: 180,
                             width: _w/2 - 40,
                             decoration: BoxDecoration(
-                                color: Color(0xFFFEC07B),
+                                color: const Color(0xFFFEC07B),
                                 boxShadow: [
-                                  BoxShadow(color: Color(0xFFFEC07B).withOpacity(0.6), spreadRadius: 0.1, blurRadius: 10, offset: Offset(0, 7))
+                                  BoxShadow(color: const Color(0xFFFEC07B).withOpacity(0.6), spreadRadius: 0.1, blurRadius: 10, offset: const Offset(0, 7))
                                 ],
-                                borderRadius: BorderRadius.all(Radius.circular(30))
+                                borderRadius: const BorderRadius.all(Radius.circular(30))
                             ),
-                            child: Center(
+                            child: const Center(
                               child: Text(
                                 'Хаягаар\nхайх'
                                 ,
@@ -121,42 +122,40 @@ class _HospitalsState extends State<Hospitals> {
                                     fontSize: 25),
                               ),
                             )
-                        ).PressExtention((){
-                          print('press on haygaar haih');
+                        ).pressExtention((){
                           setState(() {
-                            SideBarToggler = true;
+                            sideBarToggler = true;
                           });
-                          SidePageKey.currentState?.openEndDrawer();
+                          sidePageKey.currentState?.openEndDrawer();
                         }),
                         Container(
-                            margin: EdgeInsets.all(10),
+                            margin: const EdgeInsets.all(10),
                             height: 180,
                             width: _w/2 - 40,
                             decoration: BoxDecoration(
-                                color: Color(0xFFFF4484),
+                                color: const Color(0xFFFF4484),
                                 boxShadow: [
-                                  BoxShadow(color: Color(0xFF4484).withOpacity(0.6), spreadRadius: 0.1, blurRadius: 10, offset: Offset(0, 7))
+                                  BoxShadow(color: const Color(0xFFFF4484).withOpacity(0.6), spreadRadius: 0.1, blurRadius: 10, offset: const Offset(0, 7))
                                 ],
-                                borderRadius: BorderRadius.all(Radius.circular(30))
+                                borderRadius: const BorderRadius.all(Radius.circular(30))
                             ),
-                            child: Center(
+                            child: const Center(
                               child: Text('Нэрээр \n хайх',
                                 style: TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold,
                                     fontSize: 25),),
                             )
-                        ).PressExtention((){
-                          print('press on nereer haih');
+                        ).pressExtention((){
                           setState(() {
-                            SideBarToggler = false;
+                            sideBarToggler = false;
                           });
 
-                          SidePageKey.currentState?.openEndDrawer();
+                          sidePageKey.currentState?.openEndDrawer();
                         }),
                       ],
                     ),
-                    SizedBox(height: 80,),
+                    const SizedBox(height: 80,),
                   ],
                 ),
               ),
@@ -166,20 +165,20 @@ class _HospitalsState extends State<Hospitals> {
     );
   }
   Widget _buildPageItem(int index){
-    String? ImagePath;
+    String? imagePath;
     if(index == 0){
-      ImagePath = "assets/images/hospital1.jpg";
+      imagePath = "assets/images/hospital1.jpg";
     }
     else if(index == 1){
-      ImagePath = "assets/images/hospital2.jpg";
+      imagePath = "assets/images/hospital2.jpg";
     }
     else if(index == 2){
-      ImagePath = "assets/images/hospital3.jpg";
+      imagePath = "assets/images/hospital3.jpg";
     }
     else if(index == 3){
-      ImagePath = "assets/images/hospital4.jpg";
+      imagePath = "assets/images/hospital4.jpg";
     }
-    Matrix4 matrix = new Matrix4.identity();
+    Matrix4 matrix = Matrix4.identity();
     if(index == _currentPageValue.floor()){
       var currScale = 1 - (_currentPageValue - index)*(1-_scaleFactor);
       var currTrans = _height*(1-currScale)/2;
@@ -205,17 +204,15 @@ class _HospitalsState extends State<Hospitals> {
     return Transform(
       transform: matrix,
       child: Container(
-        margin: EdgeInsets.only(left: 15, right: 15),
+        margin: const EdgeInsets.only(left: 15, right: 15),
         decoration: BoxDecoration(
-            image: DecorationImage(image: AssetImage(ImagePath!), fit: BoxFit.fill),
+            image: DecorationImage(image: AssetImage(imagePath!), fit: BoxFit.fill),
             borderRadius: BorderRadius.circular(30),
-            color: index.isEven? Color(0xFFC9DAED): Color(0xFFE6CF9B)
+            color: index.isEven? const Color(0xFFC9DAED): const Color(0xFFE6CF9B)
         ),
-      ).PressExtention((){
-        final Description = Get.arguments as String;
-        print("press on hospital");
-        print(Description);
-        switch(Description){
+      ).pressExtention((){
+        final description = Get.arguments as String;
+        switch(description){
           case "fromHospitals":
             Get.toNamed(RouteUnits.hospitals + RouteUnits.hospitalProfile, arguments: '');
             break;
@@ -229,181 +226,5 @@ class _HospitalsState extends State<Hospitals> {
 
 
 
-class SidePageForName extends StatefulWidget {
-  SidePageForName({Key? key}) : super(key: key);
-  final padding = EdgeInsets.symmetric(horizontal: 20);
-  @override
-  _SidePageForName createState() => _SidePageForName();
-}
 
-class _SidePageForName extends State<SidePageForName> {
-  String? selectvalCity;
-  String? selectvalDistrict;
-  String? selectvalCommity;
-  @override
-  Widget build(BuildContext context) {
-    return Drawer(
-      backgroundColor: Color(0xFFEAE9ED),
-      child: Container(
-        margin: EdgeInsets.only(top: 50, left: 5, right: 5, bottom: 50),
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                margin: EdgeInsets.only(top: 5, bottom: 5, left: 15, right: 15),
-                child: DropdownButton<String>(
-                  hint: Text("Аймаг сонгох (Хот)"),
-                  value: selectvalCity,
-                  onChanged: (String? newValue) {
-                    setState(() {
-                      selectvalCity = newValue.toString();
-                    });
-                  },
-                  underline: SizedBox(),
-                  isExpanded: true,
-                  borderRadius: BorderRadius.circular(5),
-                  items: <String>[
-                    'Дархан','Өмнө-Говь','Ховд'
-                  ].map<DropdownMenuItem<String>>((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                    );
-                  }).toList(),
-                ),),
-              Container(
-                margin: EdgeInsets.only(top: 5, bottom: 5, left: 15, right: 15),
-                child: DropdownButton<String>(
-                  hint: Text("Сум сонгох (Дүүрэг)"),
-                  value: selectvalDistrict,
-                  onChanged: (String? newValue) {
-                    setState(() {
-                      selectvalDistrict = newValue.toString();
-                    });
-                  },
-                  underline: SizedBox(),
-                  isExpanded: true,
-                  borderRadius: BorderRadius.circular(5),
-                  items: <String>[
-                    'Баянзүрх','Хан-уул','Сонгино хайрхан'
-                  ].map<DropdownMenuItem<String>>((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                    );
-                  }).toList(),
-                ),),
-              Container(
-                margin: EdgeInsets.only(top: 5, bottom: 5, left: 15, right: 15),
-                child: DropdownButton<String>(
-                  hint: Text("Хороо сонгох"),
-                  value: selectvalCommity,
-                  onChanged: (String? newValue) {
-                    setState(() {
-                      selectvalCommity = newValue.toString();
-                    });
-                  },
-                  underline: SizedBox(),
-                  isExpanded: true,
-                  borderRadius: BorderRadius.circular(5),
-                  items: <String>[
-                    '8-р хороо','24-р хороо','5-р хороо'
-                  ].map<DropdownMenuItem<String>>((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                    );
-                  }).toList(),
-                ),),
-
-              Container(
-                height: 400,
-                child: new ListView.builder(
-                    itemCount: 50,
-                    itemBuilder: (context, index){
-                      return EachHospital();
-                    }),
-              )
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class EachHospital extends StatelessWidget {
-  const EachHospital({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.all(10),
-      padding: EdgeInsets.all(5),
-      decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.all(Radius.circular(10))
-      ),
-      child: Center(
-        child: Text('эмнэлэг',style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.grey),),
-      ),
-    );
-  }
-}
-
-
-
-
-class SidePageForAddress extends StatefulWidget {
-  SidePageForAddress({Key? key}) : super(key: key);
-  final padding = EdgeInsets.symmetric(horizontal: 20);
-  @override
-  _SidePageForAddress createState() => _SidePageForAddress();
-}
-
-class _SidePageForAddress extends State<SidePageForAddress> {
-  @override
-  Widget build(BuildContext context) {
-    return Drawer(
-      backgroundColor: Color(0xFFEAE9ED),
-      child: Container(
-        margin: EdgeInsets.only(top: 50, left: 5, right: 5, bottom: 50),
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                margin: EdgeInsets.all(10),
-                child: TextField(
-                  decoration: InputDecoration(
-                    focusedBorder: const OutlineInputBorder(
-                      borderSide:  BorderSide(color: Colors.white),
-                    ),
-                    enabledBorder: const OutlineInputBorder(
-                      borderSide:  BorderSide(color: Colors.white),
-                    ),
-                    fillColor: Colors.white,
-                    filled: true,
-                    hintText: 'Эмнэлэгийн нэр',
-                    labelText: 'Эмнэлэгийн нэр',
-                  ),
-                ),
-              ),
-
-              Container(
-                height: 400,
-                child: new ListView.builder(
-                    itemCount: 50,
-                    itemBuilder: (context, index){
-                      return EachHospital();
-                    }),
-              )
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
 

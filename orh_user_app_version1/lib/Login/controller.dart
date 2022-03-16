@@ -27,8 +27,8 @@ class LoginController{
     LoginModel.loginloading = true;
     print('on getdata');
     if(rD.text.isNotEmpty){
-      var data = await getData.getdata(toJsonn(), "203801", MedTechUri);
-      // var data = await getData.getdata(toJsonn(), "", GeregeUserLoginUri);
+      // var data = await getData.getdata(toJsonn(), "203801", MedTechUri);
+      var data = await getData.getdata(toJsonn(), "", UriAdresses.geregeUserLoginUri);
       model = LoginModel.fromJson(jsonDecode(data.toString()));
       print(LoginController.model.code);
       if(LoginController.model.code == 200){

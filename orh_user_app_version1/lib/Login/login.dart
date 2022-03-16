@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
+import 'package:orh_user_app_version1/global_constant.dart';
 import '../Helpers/CreatedGlobalWidgets/scroll_behavior.dart';
 import 'controller.dart';
 import 'model.dart';
@@ -159,6 +161,7 @@ class _LoginState extends State<Login>with SingleTickerProviderStateMixin {
                                 ),
                                 recognizer: TapGestureRecognizer()
                                   ..onTap = () {
+                                  Get.toNamed(RouteUnits.basicProfileInput);
                                   },
                               ),
                             ),

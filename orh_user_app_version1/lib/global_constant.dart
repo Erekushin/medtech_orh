@@ -1,6 +1,10 @@
-const String MedTechUri = "http://10.0.0.116:8080/ords/medical_backend/request/make";
-const String GeregeUserUri = "https://iam.gerege.mn/api/public/user/login";
-const String GeregeUserLoginUri = "https://iam.gerege.mn/api/public/user/login/username";
+import 'package:flutter/material.dart';
+
+class UriAdresses{
+static const String medTechUri = "http://10.0.0.116:8080/ords/medical_backend/request/make";
+static const String geregeUserUri = "https://iam.gerege.mn/api/public/user/login";
+static const String geregeUserLoginUri = "https://iam.gerege.mn/api/public/user/login/username";
+}
 
 class RouteUnits{
   static String login = "/login";
@@ -13,4 +17,14 @@ class RouteUnits{
   static String hospitalProfile = "/hospitalProfile";
   static String timeSequence = "/doctorTimeSequence";
   static String lavlagaa1 = "/lavlagaa1";
+  static String basicProfileInput = "/basicProfileInput";
+}
+
+class CommonColors{
+  static Color geregeBlue = const Color(0xFF0072FE);
+}
+
+class GeneralMeasurements{
+  static late double deviceHeight;
+  static late double deviceWidth;
 }

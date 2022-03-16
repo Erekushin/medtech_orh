@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 extension OnPressed on Widget {
-  Widget PressExtention(Function onPressed,
+  Widget pressExtention(Function onPressed,
       {BorderRadiusGeometry borderRadius =
       const BorderRadius.all(Radius.circular(5))}) =>
       Stack(

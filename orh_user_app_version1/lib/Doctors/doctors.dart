@@ -41,12 +41,12 @@ class _DoctorsState extends State<Doctors> {
           child: SingleChildScrollView(
             child: Wrap(
               children: [
-                DoctorCard(Name: "Буян-Хишиг", Phone: "98987845", Mail: "buynaa@yahoo.com", Profesion: "Дотор", AvatarPhoto: "assets/images/Avatar.jpg", SocialStatus: 1,),
-                DoctorCard(Name: "Түвшээ", Phone: "88745487", Mail: "Tuvshee@Gmail.com", Profesion: "Шүд", AvatarPhoto: "assets/images/avatar2.jpg", SocialStatus: 0,),
-                DoctorCard(Name: "Төгсжаргал", Phone: "94777658", Mail: "world@gmail.com", Profesion: "Мэдрэл", AvatarPhoto: "assets/images/avatar3.jpg", SocialStatus: 0,),
-                DoctorCard(Name: "Солонгоо", Phone: "95894444", Mail: "sookoo_kk44@yahoo.com", Profesion: "БЗДХ", AvatarPhoto: "assets/images/avatar4.jpg", SocialStatus: 1,),
-                DoctorCard(Name: "Наранзул", Phone: "99992222", Mail: "bossyCountry@gmail.com", Profesion: "Эрхлэгч", AvatarPhoto: "assets/images/avatar5.jpg", SocialStatus: 0,),
-                DoctorCard(Name: "Сувдэрдэнэ", Phone: "88958748", Mail: "daamAmidray@gmail.com", Profesion: "Фицик", AvatarPhoto: "assets/images/avatar6.jpg", SocialStatus: 1,),
+                DoctorCard(name: "Буян-Хишиг", phone: "98987845", mail: "buynaa@yahoo.com", profesion: "Дотор", avatarPhoto: "assets/images/Avatar.jpg", socialStatus: 1,),
+                DoctorCard(name: "Түвшээ", phone: "88745487", mail: "Tuvshee@Gmail.com", profesion: "Шүд", avatarPhoto: "assets/images/avatar2.jpg", socialStatus: 0,),
+                DoctorCard(name: "Төгсжаргал", phone: "94777658", mail: "world@gmail.com", profesion: "Мэдрэл", avatarPhoto: "assets/images/avatar3.jpg", socialStatus: 0,),
+                DoctorCard(name: "Солонгоо", phone: "95894444", mail: "sookoo_kk44@yahoo.com", profesion: "БЗДХ", avatarPhoto: "assets/images/avatar4.jpg", socialStatus: 1,),
+                DoctorCard(name: "Наранзул", phone: "99992222", mail: "bossyCountry@gmail.com", profesion: "Эрхлэгч", avatarPhoto: "assets/images/avatar5.jpg", socialStatus: 0,),
+                DoctorCard(name: "Сувдэрдэнэ", phone: "88958748", mail: "daamAmidray@gmail.com", profesion: "Фицик", avatarPhoto: "assets/images/avatar6.jpg", socialStatus: 1,),
               ],
             ),
           ),

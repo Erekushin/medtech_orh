@@ -3,12 +3,12 @@ import 'dart:io';
 import 'package:http/http.dart';
 
 class PostRequestGeneral{
-  Future<String> getdata(var JsonBody, String MessageCode, String UriAdress,) async{
+  Future<String> getdata(var jsonBody, String messageCode, String uriAdress,) async{
     try{
-      var headers = {
-        'message_code': MessageCode,
+      var myheaders = {
+        'message_code': messageCode,
       };
-      Response response = await post(Uri.parse(UriAdress), body: json.encode(JsonBody), headers: headers );
+      Response response = await post(Uri.parse(uriAdress), body: json.encode(jsonBody), headers: myheaders );
       var data = utf8.decode(response.bodyBytes);
       return data;
     }on HttpException catch(err){

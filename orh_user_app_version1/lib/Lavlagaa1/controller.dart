@@ -60,21 +60,21 @@ class form1Controller{
     data['is_medicine'] = model.is_medicine;
     return data;
   }
-  static BaseData basedata = new BaseData();
-  static BaseData ehbvrtgelResponse = new BaseData();
-  static BaseData ehbvrtgelZasvarResponse = new BaseData();
-  static OwnData ownData = new OwnData();
+  static BaseData basedata = BaseData();
+  static BaseData ehbvrtgelResponse = BaseData();
+  static BaseData ehbvrtgelZasvarResponse = BaseData();
+  static OwnData ownData = OwnData();
   Map<String, dynamic> toJsonn() {
     String? RD = "ай01281611";
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = Map<String, dynamic>();
     data['id'] = RD;
     return data;
   }
   Future<BaseData> getdata() async{
     var body = {};
-    var ownDataString = await postRequestGeneral.getdata(toJsonn(), '203842', MedTechUri);
+    var ownDataString = await postRequestGeneral.getdata(toJsonn(), '203842', UriAdresses.medTechUri);
     ownData = OwnData.fromJson(jsonDecode(ownDataString));
-    var basedataString = await postRequestGeneral.getdata(body, '203828', MedTechUri);
+    var basedataString = await postRequestGeneral.getdata(body, '203828', UriAdresses.medTechUri);
     basedata = BaseData.fromJson(jsonDecode(basedataString));
     return basedata;
   }
@@ -101,12 +101,12 @@ class form1Controller{
     }
   }
   Future<BaseData> pushForm1() async{
-    var pushForm1Response = await postRequestGeneral.getdata(toJson(), '203825', MedTechUri);
+    var pushForm1Response = await postRequestGeneral.getdata(toJson(), '203825', UriAdresses.medTechUri);
     ehbvrtgelResponse = BaseData.fromJson(jsonDecode(pushForm1Response));
     return ehbvrtgelResponse;
   }
   Future<BaseData>SaveChangesOnBack() async {
-    var saveChangesOnBackResponse = await postRequestGeneral.getdata(toJson(), '203847', MedTechUri);
+    var saveChangesOnBackResponse = await postRequestGeneral.getdata(toJson(), '203847', UriAdresses.medTechUri);
     print('abalabadv');
     print(toJson().toString());
     ehbvrtgelZasvarResponse = BaseData.fromJson(jsonDecode(saveChangesOnBackResponse));

@@ -1,39 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:orh_user_app_version1/Helpers/CreatedGlobalWidgets/on_press_extention.dart';
-
 import '../../global_constant.dart';
-
 class DoctorCard extends StatefulWidget {
-  const DoctorCard({Key? key,required this.Name,required this.Phone,required this.Mail,required
-  this.AvatarPhoto,required this.Profesion, required this.SocialStatus}) : super(key: key);
-  final String Name;
-  final String Phone;
-  final String Mail;
-  final String AvatarPhoto;
-  final String Profesion;
-  final int SocialStatus;
+  const DoctorCard({Key? key,required this.name,required this.phone,required this.mail,required
+  this.avatarPhoto,required this.profesion, required this.socialStatus}) : super(key: key);
+  final String name;
+  final String phone;
+  final String mail;
+  final String avatarPhoto;
+  final String profesion;
+  final int socialStatus;
   @override
   _DoctorCardState createState() => _DoctorCardState();
 }
-
 class _DoctorCardState extends State<DoctorCard> {
   @override
   Widget build(BuildContext context) {
     return  Container(
         width: 150,
         height: 250,
-        margin: EdgeInsets.all(5),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(10)),
-          color: Color(0xFFE6E7E8),
+        margin: const EdgeInsets.all(5.0),
+        decoration: const BoxDecoration(
+          borderRadius: BorderRadius.all( Radius.circular(10)),
+          color:Color(0xFFE6E7E8),
         ),
         child: Center(
           child: Stack(
             alignment: AlignmentDirectional.bottomCenter,
             children: [
-              Container(
-                child: Column(
+              Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     FittedBox(
@@ -43,48 +39,45 @@ class _DoctorCardState extends State<DoctorCard> {
                           CircleAvatar(
                             backgroundColor: Colors.grey,
                             radius: 40,
-                            backgroundImage: AssetImage(widget.AvatarPhoto),
+                            backgroundImage: AssetImage(widget.avatarPhoto),
                           ),
                           Align(
                             alignment: Alignment.center,
                             child: CircleAvatar(
                               radius: 10,
-                              backgroundColor: widget.SocialStatus == 1? Colors.green : Colors.grey,
+                              backgroundColor: widget.socialStatus == 1? Colors.green : Colors.grey,
                             ),
                           ),
                         ],
                       ),
                     ),
-                    Text(widget.Name, style: TextStyle(color: Color(0xFF8BA3B8),
+                    Text(widget.name, style: const TextStyle(color: Color(0xFF8BA3B8),
                         fontWeight: FontWeight.bold),),
-                    Text(widget.Phone, style: TextStyle(color: Color(0xFF8BA3B8),
+                    Text(widget.phone, style: const TextStyle(color: Color(0xFF8BA3B8),
                         fontWeight: FontWeight.bold),),
-                    Text(widget.Mail, style: TextStyle(color: Color(0xFF8BA3B8),
+                    Text(widget.mail, style: const TextStyle(color: Color(0xFF8BA3B8),
                         fontWeight: FontWeight.bold),),
-                    SizedBox(
-                      height: 50,
+                    const SizedBox(
+                       height: 50,
                     )
                   ],
                 ),
-              ),
-              Container(width: 200, height: 200, child: ClipPath(
-                clipper: MyClipper(),
+              SizedBox(width: 200, height: 200, child: ClipPath(
+                clipper: DoctorCartBottomShape(),
                 child: Container(color: Colors.blue,),
               ),),
               Container(
-                margin: EdgeInsets.all(10),
-                child:  Text(widget.Profesion, style: TextStyle(
+                margin: const EdgeInsets.all(10),
+                child:  Text(widget.profesion, style: const TextStyle(
                     fontSize: 20, color: Colors.white,
                     fontWeight: FontWeight.bold),),
               )
             ],
           ),
         )
-    ).PressExtention((){
-      final Description = Get.arguments as String;
-      print('press on doctor card');
-      print(Description);
-      switch(Description){
+    ).pressExtention((){
+      final description = Get.arguments as String;
+      switch(description){
         case "fromDoctors":
           Get.toNamed(RouteUnits.doctors + RouteUnits.doctorProfile);
           break;
@@ -95,7 +88,7 @@ class _DoctorCardState extends State<DoctorCard> {
     });
   }
 }
-class MyClipper extends CustomClipper<Path>{
+class DoctorCartBottomShape extends CustomClipper<Path>{
   @override
   Path getClip(Size size){
     Path path0 = Path();
