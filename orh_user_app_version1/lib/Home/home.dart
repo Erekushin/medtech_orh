@@ -131,10 +131,10 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin{
                   'ionDemo',),
               homePageCardsGroup(
                   'fromHospitals',
-                  '/gridTest',
+                  '/',
                   Color(0xffffa700),
                   Icons.text_fields,
-                  'gridTest',
+                  'empty',
                   context,
                   'fromHospitals',
                   '/stun',
