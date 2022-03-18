@@ -22,7 +22,7 @@ class _DoctorTimeSequenceState extends State<DoctorTimeSequence> {
   @override
   Widget build(BuildContext context){
     return Scaffold(
-      bottomNavigationBar: MyBottomNavBar(),
+      bottomNavigationBar: MyBottomNavbar(),
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,

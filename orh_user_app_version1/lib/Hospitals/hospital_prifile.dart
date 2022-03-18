@@ -32,7 +32,7 @@ class _HospitalProfileState extends State<HospitalProfile> {
           onPressed: () => Navigator.maybePop(context),
         ),
       ),
-      bottomNavigationBar: MyBottomNavBar(),
+      bottomNavigationBar: MyBottomNavbar(),
       body: Container(child: Center(child: Text("Hospital profile"),),),
     );
   }

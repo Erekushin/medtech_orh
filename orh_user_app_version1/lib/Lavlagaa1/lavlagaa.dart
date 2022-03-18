@@ -27,7 +27,7 @@ class _LavlagaaState extends State<Lavlagaa> {
         return controller.SaveOnBack(context);
       },
       child: Scaffold(
-        bottomNavigationBar: MyBottomNavBar(),
+        bottomNavigationBar: MyBottomNavbar(),
         appBar: AppBar(
           backgroundColor: Colors.white,
           elevation: 0,

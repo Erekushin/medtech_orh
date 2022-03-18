@@ -10,6 +10,7 @@ import 'Hospitals/hospitals.dart';
 import 'Lavlagaa1/lavlagaa.dart';
 import 'Login/login.dart';
 import 'Profile/profile.dart';
+import 'Profile/tvr.dart';
 import 'TimeSequence/time_sequence.dart';
 import 'VideoCall/camera_ex.dart';
 import 'VideoCall/stun_check.dart';
@@ -67,6 +68,7 @@ class MyApp extends StatelessWidget {
         GetPage(name: "/stun", page: ()=> const StunCheck()),
         // GetPage(name: "/login", page: ()=> LoginView()),
         GetPage(name: "/camera", page: ()=> CameraApp()),
+        GetPage(name: "/gridTest", page: ()=> GridListExample()),
       ],
     );
   }

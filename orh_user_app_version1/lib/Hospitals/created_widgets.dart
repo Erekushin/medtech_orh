@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../global_constant.dart';
 
 Widget eachHospital(){
   return Container(
@@ -23,5 +24,27 @@ Widget hospitalsResultList(){
                       return eachHospital();
                     }),
               );
+}
+
+Widget searchBtn(String btntext, Color btncolor){
+  return  Container(
+            margin: const EdgeInsets.all(10),
+            height: 180,
+            width: GeneralMeasurements.deviceWidth/2 - 40,
+            decoration: BoxDecoration(
+              color: btncolor,
+              boxShadow: [
+                BoxShadow(color: btncolor.withOpacity(0.6), spreadRadius: 0.1, blurRadius: 10, offset: const Offset(0, 7))
+                ],
+              borderRadius: const BorderRadius.all(Radius.circular(30))
+            ),
+            child:  Center(
+              child: Text(btntext,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 25),),
+              )
+          );
 }
 

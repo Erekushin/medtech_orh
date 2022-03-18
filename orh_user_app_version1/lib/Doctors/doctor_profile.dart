@@ -32,7 +32,7 @@ class _DoctorProfileState extends State<DoctorProfile> {
           onPressed: () => Navigator.maybePop(context),
         ),
       ),
-      bottomNavigationBar: MyBottomNavBar(),
+      bottomNavigationBar: MyBottomNavbar(),
       body: Container(
         child: Center(
           child: Text('Doctor Profile Page'),

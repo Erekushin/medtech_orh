@@ -4,14 +4,15 @@ import 'package:orh_user_app_version1/Helpers/CreatedGlobalWidgets/on_press_exte
 import 'package:orh_user_app_version1/Hospitals/side_search_address.dart';
 import 'package:orh_user_app_version1/Hospitals/side_search_name.dart';
 import '../Helpers/CreatedGlobalWidgets/bottom_nav_bar.dart';
-import '../Helpers/CreatedGlobalWidgets/scroll_behavior.dart';
 import '../global_constant.dart';
+import 'created_widgets.dart';
 
 class Hospitals extends StatefulWidget {
   const Hospitals({Key? key}) : super(key: key);
   @override
   _HospitalsState createState() => _HospitalsState();
 }
+
 class _HospitalsState extends State<Hospitals> {
   bool sideBarToggler = false;
   GlobalKey<ScaffoldState> sidePageKey = GlobalKey<ScaffoldState>();
@@ -37,10 +38,8 @@ class _HospitalsState extends State<Hospitals> {
   }
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-    double _w = MediaQuery.of(context).size.width;
     return Scaffold(
-        bottomNavigationBar: const MyBottomNavBar(),
+        bottomNavigationBar: MyBottomNavbar(),
         key: sidePageKey,
         endDrawer : sideBarToggler? const SidePageForName() : const SidePageForAddress(),
         appBar: AppBar(
@@ -63,14 +62,7 @@ class _HospitalsState extends State<Hospitals> {
             onPressed: () => Navigator.maybePop(context),
           ),
         ),
-        body: ScrollConfiguration(
-          behavior: MyBehavior(),
-          child: SingleChildScrollView(
-            child: SizedBox(
-              height: size.height,
-              child: Container(
-                margin: const EdgeInsets.only(top: 20, bottom: 20),
-                child: Column(
+        body:Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Column(
@@ -101,67 +93,22 @@ class _HospitalsState extends State<Hospitals> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Container(
-                            margin: const EdgeInsets.all(10),
-                            height: 180,
-                            width: _w/2 - 40,
-                            decoration: BoxDecoration(
-                                color: const Color(0xFFFEC07B),
-                                boxShadow: [
-                                  BoxShadow(color: const Color(0xFFFEC07B).withOpacity(0.6), spreadRadius: 0.1, blurRadius: 10, offset: const Offset(0, 7))
-                                ],
-                                borderRadius: const BorderRadius.all(Radius.circular(30))
-                            ),
-                            child: const Center(
-                              child: Text(
-                                'Хаягаар\nхайх'
-                                ,
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 25),
-                              ),
-                            )
-                        ).pressExtention((){
+                        searchBtn('Хаягаар\nхайх', const Color(0xFFFEC07B)).pressExtention((){
                           setState(() {
                             sideBarToggler = true;
                           });
                           sidePageKey.currentState?.openEndDrawer();
                         }),
-                        Container(
-                            margin: const EdgeInsets.all(10),
-                            height: 180,
-                            width: _w/2 - 40,
-                            decoration: BoxDecoration(
-                                color: const Color(0xFFFF4484),
-                                boxShadow: [
-                                  BoxShadow(color: const Color(0xFFFF4484).withOpacity(0.6), spreadRadius: 0.1, blurRadius: 10, offset: const Offset(0, 7))
-                                ],
-                                borderRadius: const BorderRadius.all(Radius.circular(30))
-                            ),
-                            child: const Center(
-                              child: Text('Нэрээр \n хайх',
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 25),),
-                            )
-                        ).pressExtention((){
+                        searchBtn('Нэрээр \n хайх', const Color(0xFFFF4484)).pressExtention((){
                           setState(() {
                             sideBarToggler = false;
                           });
-
                           sidePageKey.currentState?.openEndDrawer();
                         }),
                       ],
                     ),
-                    const SizedBox(height: 80,),
                   ],
                 ),
-              ),
-            ),
-          ),
-        )
     );
   }
   Widget _buildPageItem(int index){

@@ -1,21 +1,47 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:orh_user_app_version1/global_constant.dart';
-class MyBottomNavBar extends StatefulWidget {
-  const MyBottomNavBar({Key? key}) : super(key: key);
 
-  @override
-  _MyBottomNavBarState createState() => _MyBottomNavBarState();
+class MyBottomNavBarController extends GetxController{
+  int _currentIndex = 4;
+  int get currentIndex => _currentIndex;
+  routing(int index){
+    switch(index){
+      case 0 :
+        Get.toNamed(RouteUnits.home);
+        break;
+      case 1 :
+        Get.toNamed('/');
+        break;
+      case 2 :
+        Get.toNamed('/');
+        break;
+      case 3 :
+        Get.toNamed(RouteUnits.profile);
+        break;
+    }
+    _currentIndex = index; 
+  }
 }
 
-class _MyBottomNavBarState extends State<MyBottomNavBar> {
-  var currentIndex = 0;
+class MyBottomNavbar extends StatelessWidget {
+  MyBottomNavbar({ Key? key }) : super(key: key);
+
+  final List<IconData> listOfIcons = [
+    Icons.home_rounded,
+    Icons.favorite_rounded,
+    Icons.settings_rounded,
+    Icons.person_rounded,
+  ];
+
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-    return Container(
+    return(
+    SizedBox(
+      child: GetBuilder<MyBottomNavBarController>(builder: (bottomNavBar){
+     return Container(
       margin: const EdgeInsets.all(20),
-      height: size.width * .155,
+      height: GeneralMeasurements.deviceHeight/100*7,
       decoration: BoxDecoration(
         color: Colors.white,
         boxShadow: [
@@ -30,28 +56,10 @@ class _MyBottomNavBarState extends State<MyBottomNavBar> {
       child: ListView.builder(
         itemCount: 4,
         scrollDirection: Axis.horizontal,
-        padding: EdgeInsets.symmetric(horizontal: size.width * .024),
+        padding: EdgeInsets.symmetric(horizontal: GeneralMeasurements.deviceWidth * .024),
         itemBuilder: (context, index) => InkWell(
           onTap: () {
-            setState(
-                  () {
-                switch(index){
-                  case 0 :
-                    Get.toNamed('/home');
-                    break;
-                  case 1 :
-                    print('heart');
-                    break;
-                  case 2 :
-                    print('setting');
-                    break;
-                  case 3 :
-                    Get.toNamed(RouteUnits.profile);
-                    break;
-                }
-                currentIndex = index;
-              },
-            );
+            Get.find<MyBottomNavBarController>().routing(index);
           },
           splashColor: Colors.transparent,
           highlightColor: Colors.transparent,
@@ -62,12 +70,12 @@ class _MyBottomNavBarState extends State<MyBottomNavBar> {
                 duration: const Duration(milliseconds: 1500),
                 curve: Curves.fastLinearToSlowEaseIn,
                 margin: EdgeInsets.only(
-                  bottom: index == currentIndex ? 0 : size.width * .029,
-                  right: size.width * .0422,
-                  left: size.width * .0422,
+                  bottom: index == bottomNavBar.currentIndex ? 0 : GeneralMeasurements.deviceWidth * .029,
+                  right: GeneralMeasurements.deviceWidth * .0422,
+                  left: GeneralMeasurements.deviceWidth * .0422,
                 ),
-                width: size.width * .128,
-                height: index == currentIndex ? size.width * .014 : 0,
+                width: GeneralMeasurements.deviceWidth * .128,
+                height: index == bottomNavBar.currentIndex ? GeneralMeasurements.deviceWidth * .014 : 0,
                 decoration: const BoxDecoration(
                   color: Colors.blueAccent,
                   borderRadius: BorderRadius.vertical(
@@ -77,22 +85,21 @@ class _MyBottomNavBarState extends State<MyBottomNavBar> {
               ),
               Icon(
                 listOfIcons[index],
-                size: size.width * .076,
-                color: index == currentIndex
+                size: GeneralMeasurements.deviceWidth * .076,
+                color: index == bottomNavBar.currentIndex
                     ? CommonColors.geregeBlue
                     : Colors.black38,
               ),
-              SizedBox(height: size.width * .03),
+              SizedBox(height: GeneralMeasurements.deviceWidth * .03),
             ],
           ),
         ),
       ),
     );
+  }),
+  )
+  );
   }
-  List<IconData> listOfIcons = [
-    Icons.home_rounded,
-    Icons.favorite_rounded,
-    Icons.settings_rounded,
-    Icons.person_rounded,
-  ];
 }
+
+

@@ -3,9 +3,10 @@ import 'package:get/get.dart';
 import 'dart:ui';
 import 'package:flutter/services.dart';
 
+import '../Helpers/CreatedGlobalWidgets/bottom_nav_bar.dart';
 import '../global_constant.dart';
-// import '../Lavlagaa1/form.dart';
-// import '../Results/firstPage.dart';
+
+
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
   @override
@@ -36,8 +37,14 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin{
     _controller.dispose();
     super.dispose();
   }
+
+
+
+
+
   @override
   Widget build(BuildContext context) {
+    Get.put(MyBottomNavBarController());
     double _w = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: Colors.white,
@@ -124,10 +131,10 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin{
                   'ionDemo',),
               homePageCardsGroup(
                   'fromHospitals',
-                  '/',
+                  '/gridTest',
                   Color(0xffffa700),
                   Icons.text_fields,
-                  'empty',
+                  'gridTest',
                   context,
                   'fromHospitals',
                   '/stun',
