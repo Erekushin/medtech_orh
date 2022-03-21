@@ -3,11 +3,13 @@ import '../base_data.dart';
 import '../controller.dart';
 
 class myDropDown extends StatefulWidget {
-  const myDropDown({Key? key, required this.dropDownHint, required this.w, required this.listitems,required this.currentValue}) : super(key: key);
+  myDropDown({Key? key, required this.dropDownHint, required this.w, 
+  required this.listitems,required this.currentValue, required this.mark}) : super(key: key);
   final String? dropDownHint;
   final double w;
   final List<Views>? listitems;
   final int? currentValue;
+  final String? mark;
   @override
   _DropDownState createState() => _DropDownState();
 }
@@ -22,7 +24,8 @@ class _DropDownState extends State<myDropDown> {
   }
 
   void transferDataToModul(){
-    switch(widget.dropDownHint){
+
+    switch(widget.mark){
       case "боловсрол байдал":
         print("case taarsan");
         form1Controller.model.education_situation = SelectedID!;
