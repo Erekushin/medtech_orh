@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'dart:ui';
-import 'package:flutter/services.dart';
-
 import '../Helpers/CreatedGlobalWidgets/bottom_nav_bar.dart';
 import '../global_constant.dart';
 
@@ -13,63 +11,42 @@ class Home extends StatefulWidget {
   _HomeState createState() => _HomeState();
 }
 class _HomeState extends State<Home> with SingleTickerProviderStateMixin{
-  late AnimationController _controller;
-  late Animation<double> _animation;
-  late Animation<double> _animation2;
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(
-      vsync: this,
-      duration: Duration(seconds: 1),
-    );
-    _animation = Tween<double>(begin: 0, end: 1)
-        .animate(CurvedAnimation(parent: _controller, curve: Curves.easeIn))
-      ..addListener(() {
-        setState(() {});
-      });
-    _animation2 = Tween<double>(begin: -5, end: 0)
-        .animate(CurvedAnimation(parent: _controller, curve: Curves.easeIn));
-    _controller.forward();
   }
   @override
   void dispose() {
-    _controller.dispose();
+    // _controller.dispose();
     super.dispose();
   }
-
-
-
-
-
   @override
   Widget build(BuildContext context) {
     Get.put(MyBottomNavBarController());
-    double _w = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: Colors.white,
       body: Stack(
         children: [
           ListView(
             physics:
-            BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+            const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
             children: [
               Padding(
-                padding: EdgeInsets.fromLTRB(_w / 17, _w / 20, 0, _w / 10),
+                padding: EdgeInsets.fromLTRB(GeneralMeasurements.deviceWidth / 17, GeneralMeasurements.deviceWidth / 20, 0, GeneralMeasurements.deviceWidth / 10),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Gerege Өрх MN',
+                      'Эрүүл Gerege',
                       style: TextStyle(
                         fontSize: 27,
                         color: Colors.black.withOpacity(.6),
                         fontWeight: FontWeight.w700,
                       ),
                     ),
-                    SizedBox(height: _w / 35),
+                    SizedBox(height: GeneralMeasurements.deviceWidth / 35),
                     Text(
-                      'Өрхийн эрүүл мэндийн үйлчилгээг цахимаар авах боломжтой боллоо.',
+                      'Таний эрүүл мэндийн дэжитал туслах.',
                       style: TextStyle(
                         fontSize: 19,
                         color: Colors.black.withOpacity(.5),
@@ -83,13 +60,13 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin{
               homePageCardsGroup(
                 'profile',
                 '/profile',
-                Color(0xFF12C0A1),
+                const Color(0xFF12C0A1),
                 Icons.person,
                 'Профайл',
                 context,
                 'firstPage',
                 '/',
-                Color(0xffFF6D6D),
+                const Color(0xffFF6D6D),
                 Icons.analytics_outlined,
                 'empty',
               ),
@@ -102,25 +79,25 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin{
                   context,
                   'fromHospitals',
                   RouteUnits.hospitals,
-                  Color(0xffffa700),
+                  const Color(0xffffa700),
                   Icons.article,
                   'Эмнэлэгүүд',),
               homePageCardsGroup(
                   'fromlavlagaa1',
                   RouteUnits.lavlagaa1,
-                  Color(0xff63ace5),
+                  const Color(0xff63ace5),
                   Icons.ad_units_outlined,
                   'Лавлагаа 1',
                   context,
                   'fromDoctors',
                   RouteUnits.doctors,
-                  Color(0xfff37736),
+                  const Color(0xfff37736),
                   Icons.article_sharp,
                   'Эмч нар',),
               homePageCardsGroup(
                   'fromHospitals',
                   '/camera',
-                  Color(0xffFF6D6D),
+                  const Color(0xffFF6D6D),
                   Icons.android,
                   'camera',
                   context,
@@ -132,21 +109,20 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin{
               homePageCardsGroup(
                   'fromHospitals',
                   '/',
-                  Color(0xffffa700),
+                  const Color(0xffffa700),
                   Icons.text_fields,
                   'empty',
                   context,
                   'fromHospitals',
                   '/stun',
-                  Color(0xff63ace5),
+                  const Color(0xff63ace5),
                   Icons.gamepad_outlined,
                     'stun check',),
-              SizedBox(height: _w / 20),
+              SizedBox(height:  GeneralMeasurements.deviceWidth/ 20),
             ],
           ),
-          /// SETTING ICON
-          Padding(
-            padding: EdgeInsets.fromLTRB(0, _w / 9.5, _w / 15, 0),
+          Padding(// SETTING button
+            padding: EdgeInsets.fromLTRB(0, GeneralMeasurements.deviceWidth / 9.5, GeneralMeasurements.deviceWidth / 15, 0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
@@ -154,16 +130,14 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin{
                   highlightColor: Colors.transparent,
                   splashColor: Colors.transparent,
                   onTap: () {
-                    HapticFeedback.lightImpact();
-                    // Get.to(() => form1());
                   },
                   child: ClipRRect(
-                    borderRadius: BorderRadius.all(Radius.circular(99)),
+                    borderRadius: const BorderRadius.all(Radius.circular(99)),
                     child: BackdropFilter(
                       filter: ImageFilter.blur(sigmaY: 5, sigmaX: 5),
                       child: Container(
-                        height: _w / 8.5,
-                        width: _w / 8.5,
+                        height: GeneralMeasurements.deviceWidth / 8.5,
+                        width: GeneralMeasurements.deviceWidth / 8.5,
                         decoration: BoxDecoration(
                           color: Colors.black.withOpacity(.05),
                           shape: BoxShape.circle,
@@ -171,7 +145,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin{
                         child: Center(
                           child: Icon(
                             Icons.settings,
-                            size: _w / 17,
+                            size: GeneralMeasurements.deviceWidth / 17,
                             color: Colors.black.withOpacity(.6),
                           ),
                         ),
@@ -213,27 +187,21 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin{
   Widget homePageCard(String data, String route, Color color, IconData icon, String title,
       BuildContext context) {
     double _w = MediaQuery.of(context).size.width;
-    return Opacity(
-      opacity: _animation.value,
-      child: Transform.translate(
-        offset: Offset(0, _animation2.value),
-        child: InkWell(
+    return InkWell(
           highlightColor: Colors.transparent,
           splashColor: Colors.transparent,
           onTap: () {
-            HapticFeedback.lightImpact();
-            print('something good gonna happen');
             Get.toNamed(route, arguments: data);
           },
           child: Container(
-            padding: EdgeInsets.all(15),
+            padding: const EdgeInsets.all(15),
             height: _w / 2,
             width: _w / 2.4,
             decoration: BoxDecoration(
               color: Colors.white,
               boxShadow: [
                 BoxShadow(
-                  color: Color(0xff040039).withOpacity(.15),
+                  color: const Color(0xff040039).withOpacity(.15),
                   blurRadius: 99,
                 ),
               ],
@@ -273,9 +241,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin{
               ],
             ),
           ),
-        ),
-      ),
-    );
+        );
   }
 }
 

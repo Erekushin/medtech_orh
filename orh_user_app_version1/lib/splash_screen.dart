@@ -1,8 +1,11 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
+import 'package:flutter/services.dart';
+import 'Login/controller.dart';
 import 'global_constant.dart';
+import 'package:unique_identifier/unique_identifier.dart';
+import 'package:device_information/device_information.dart';
 
 class MyCustomSplashScreen extends StatefulWidget {
   const MyCustomSplashScreen({Key? key}) : super(key: key);
@@ -16,16 +19,49 @@ class _MyCustomSplashScreenState extends State<MyCustomSplashScreen>
   double _containerSize = 1.5;
   double _textOpacity = 0.0;
   double _containerOpacity = 0.0;
+  String? _identifier = 'UnknownUngaBanga';
+  String uniqueId = "Unknown";
+  Future<void> initUniqueIdentifierState() async {
+    String? identifier;
+
+     try {
+      String platformVersion = await DeviceInformation.platformVersion;
+      String imeiNo = await DeviceInformation.deviceIMEINumber;
+      String modelName = await DeviceInformation.deviceModel;
+      String manufacturer = await DeviceInformation.deviceManufacturer;
+      String apiLevel =  await DeviceInformation.apiLevel;
+      String deviceName = await DeviceInformation.deviceName;
+      String productName = await DeviceInformation.productName;
+      String cpuType = await DeviceInformation.cpuName;
+      String hardware = await DeviceInformation.hardware;
+    } on PlatformException {
+      String ee = 'Failed to get platform version.';
+    }
+
+
+
+    try {
+      identifier = await UniqueIdentifier.serial;
+    } on PlatformException {
+      identifier = 'Failed to get Unique Identifier';
+    }
+    if (!mounted) return;
+    setState(() {
+      _identifier = identifier;
+    });
+    LoginController.model.terminalID = _identifier;
+  }
+
 
   late AnimationController _controller;
   late Animation<double> animation1;
 
   @override
   void initState() {
+    initUniqueIdentifierState();
     super.initState();
-
     _controller =
-        AnimationController(vsync: this, duration: Duration(seconds: 3));
+        AnimationController(vsync: this, duration: const Duration(seconds: 3));
 
     animation1 = Tween<double>(begin: 40, end: 20).animate(CurvedAnimation(
         parent: _controller, curve: Curves.fastLinearToSlowEaseIn))
@@ -37,23 +73,21 @@ class _MyCustomSplashScreenState extends State<MyCustomSplashScreen>
 
     _controller.forward();
 
-    Timer(Duration(seconds: 2), () {
+    Timer(const Duration(seconds: 2), () {
       setState(() {
         _fontSize = 1.06;
       });
     });
 
-    Timer(Duration(seconds: 2), () {
+    Timer(const Duration(seconds: 2), () {
       setState(() {
         _containerSize = 2;
         _containerOpacity = 1;
       });
     });
 
-    Timer(Duration(seconds: 4), () {
+    Timer(const Duration(seconds: 4), () {
       setState(() {
-        // Navigator.pushReplacement(context, PageTransition(Login()));
-        print('spash aas garlaa');
         Get.toNamed(RouteUnits.login);
       });
     });
@@ -76,12 +110,12 @@ class _MyCustomSplashScreenState extends State<MyCustomSplashScreen>
           Column(
             children: [
               AnimatedContainer(
-                  duration: Duration(milliseconds: 2000),
+                  duration: const Duration(milliseconds: 2000),
                   curve: Curves.fastLinearToSlowEaseIn,
                   height: GeneralMeasurements.deviceHeight / _fontSize
               ),
               AnimatedOpacity(
-                duration: Duration(milliseconds: 1000),
+                duration: const Duration(milliseconds: 1000),
                 opacity: _textOpacity,
                 child: Text(
                   'Gerege Systems',
@@ -96,11 +130,11 @@ class _MyCustomSplashScreenState extends State<MyCustomSplashScreen>
           ),
           Center(
             child: AnimatedOpacity(
-              duration: Duration(milliseconds: 2000),
+              duration: const Duration(milliseconds: 2000),
               curve: Curves.fastLinearToSlowEaseIn,
               opacity: _containerOpacity,
               child: AnimatedContainer(
-                  duration: Duration(milliseconds: 2000),
+                  duration: const Duration(milliseconds: 2000),
                   curve: Curves.fastLinearToSlowEaseIn,
                   height: GeneralMeasurements.deviceWidth / _containerSize,
                   width: GeneralMeasurements.deviceWidth / _containerSize,
@@ -109,7 +143,6 @@ class _MyCustomSplashScreenState extends State<MyCustomSplashScreen>
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(30),
                   ),
-                  // child: Image.asset('assets/images/file_name.png')
                   child: Image.asset('assets/images/gerege-black.png')
               ),
             ),
@@ -126,7 +159,7 @@ class PageTransition extends PageRouteBuilder {
   PageTransition(this.page)
       : super(
     pageBuilder: (context, animation, anotherAnimation) => page,
-    transitionDuration: Duration(milliseconds: 2000),
+    transitionDuration: const Duration(milliseconds: 2000),
     transitionsBuilder: (context, animation, anotherAnimation, child) {
       animation = CurvedAnimation(
         curve: Curves.fastLinearToSlowEaseIn,

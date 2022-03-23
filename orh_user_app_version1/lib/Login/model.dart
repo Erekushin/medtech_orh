@@ -1,3 +1,5 @@
+//TODO json toi ajilladag ilvv deer arga oloh
+
 class LoginModel {
   static const String uri = "";
   static bool loginloading = false;
@@ -5,24 +7,14 @@ class LoginModel {
   String? status;
   String? message;
   Result? result;
-
-  LoginModel({this.code, this.status, this.message, this.result});
+  String? terminalID;
+  LoginModel({this.code, this.status, this.message, this.result, this.terminalID});
   LoginModel.fromJson(Map<String, dynamic> json) {
     code = json['code'];
     status = json['status'];
     message = json['message'];
     result =
     json['result'] != null ?  Result.fromJson(json['result']) : null;
-  }
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['code'] = this.code;
-    data['status'] = this.status;
-    data['message'] = this.message;
-    if (this.result != null) {
-      data['result'] = this.result!.toJson();
-    }
-    return data;
   }
 }
 class Result {
@@ -81,26 +73,5 @@ class Result {
     accountNo = json['account_no'];
     gender = json['gender'];
     driverLicenseNumber = json['driver_license_number'];
-  }
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['reg_no'] = this.regNo;
-    data['first_name'] = this.firstName;
-    data['last_name'] = this.lastName;
-    data['family_name'] = this.familyName;
-    data['phone'] = this.phone;
-    data['civil_id'] = this.civilId;
-    data['user_name'] = this.userName;
-    data['birth_date'] = this.birthDate;
-    data['age'] = this.age;
-    data['email'] = this.email;
-    data['address'] = this.address;
-    data['drive_exp'] = this.driveExp;
-    data['gerege_card'] = this.geregeCard;
-    data['account_no'] = this.accountNo;
-    data['gender'] = this.gender;
-    data['driver_license_number'] = this.driverLicenseNumber;
-    return data;
   }
 }

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class UriAdresses{
 static const String medTechUri = "http://10.0.0.116:8080/ords/medical_backend/request/make";
 static const String geregeUserUri = "https://iam.gerege.mn/api/public/user/login";
-static const String geregeUserLoginUri = "https://iam.gerege.mn/api/public/user/login/username";
+static const String geregeUserLoginUri = "https://iam.gerege.mn/api/public/user/login/username";//нууц үг шаарддаг Uri
 }
 
 class RouteUnits{

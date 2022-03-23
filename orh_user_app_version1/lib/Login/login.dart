@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:orh_user_app_version1/global_constant.dart';
 import '../Helpers/CreatedGlobalWidgets/scroll_behavior.dart';
 import 'controller.dart';
 import 'model.dart';
-import 'package:unique_identifier/unique_identifier.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -15,34 +13,18 @@ class Login extends StatefulWidget {
   _LoginState createState() => _LoginState();
 }
 class _LoginState extends State<Login>with SingleTickerProviderStateMixin {
-  LoginController logincontroller = new LoginController();
+  LoginController logincontroller = LoginController();
   late AnimationController _controller;
   late Animation<double> _opacity;
   late Animation<double> _transform;
 
-  GlobalKey<FormState> LoginValidatorKey = GlobalKey<FormState>();
+  GlobalKey<FormState> loginValidatorKey = GlobalKey<FormState>();
 
-  String? _identifier = 'UnknownUngaBanga';
-  Future<void> initUniqueIdentifierState() async {
-    print('future ajillaj bna');
-    String? identifier;
-    try {
-      identifier = await UniqueIdentifier.serial;
-    } on PlatformException {
-      identifier = 'Failed to get Unique Identifier';
-    }
-    print("serial aa avsan bj magadgvi");
-    print(identifier);
-    if (!mounted) return;
-    setState(() {
-      _identifier = identifier;
-    });
-  }
+ 
+  
   @override
   void initState() {
     super.initState();
-    initUniqueIdentifierState();
-    print(_identifier);
     _controller = AnimationController(
       vsync: this,
       duration: const Duration(seconds: 3),
@@ -109,7 +91,7 @@ class _LoginState extends State<Login>with SingleTickerProviderStateMixin {
                         ],
                       ),
                       child: Form(
-                        key: LoginValidatorKey,
+                        key: loginValidatorKey,
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
@@ -166,7 +148,7 @@ class _LoginState extends State<Login>with SingleTickerProviderStateMixin {
                               ),
                             ),
                             const SizedBox(),
-                            LoginModel.loginloading? CircularProgressIndicator() : SizedBox()
+                            LoginModel.loginloading? const CircularProgressIndicator() : const SizedBox()
                           ],
                         ),
                       )
@@ -222,7 +204,7 @@ class _LoginState extends State<Login>with SingleTickerProviderStateMixin {
       highlightColor: Colors.transparent,
       splashColor: Colors.transparent,
       onTap: () => setState(() {
-        LoginValidatorKey.currentState?.validate();
+        loginValidatorKey.currentState?.validate();
         voidCallback();
       }) ,
       child: Container(

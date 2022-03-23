@@ -17,7 +17,9 @@ dependencies:
   flutter_webrtc: ^0.7.0
   flutter_ion: ^1.0.0
   swipe_cards: ^1.0.0
+  device_information: ^0.0.4
   unique_identifier: ^0.2.2
+
   crypto: ^3.0.1
   http: ^0.13.4
   get: ^4.6.1
