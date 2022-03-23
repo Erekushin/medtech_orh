@@ -4,6 +4,8 @@ import 'package:orh_user_app_version1/splash_screen.dart';
 import 'BasicProfileCreation/basic_profile_data_cards.dart';
 import 'Doctors/doctor_profile.dart';
 import 'Doctors/doctors.dart';
+import 'Helpers/Calculators/CalculatorViews/bmi.dart';
+import 'Helpers/Calculators/CalculatorViews/calculators_home.dart';
 import 'Home/home.dart';
 import 'Hospitals/hospital_prifile.dart';
 import 'Hospitals/hospitals.dart';
@@ -17,17 +19,15 @@ import 'VideoCall/video_call.dart';
 import 'global_constant.dart';
 import 'dart:async';
 import 'package:camera/camera.dart';
-
+ 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   cameras = await availableCameras();
   runApp(const MyApp());
 }
-
 // void main() {
 //   runApp(const MyApp());
 // }
-
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
   @override
@@ -58,7 +58,11 @@ class MyApp extends StatelessWidget {
         GetPage(name: RouteUnits.doctors + RouteUnits.doctorProfile, page: ()=> const DoctorProfile()),
         ///Лавлагаа
         GetPage(name: RouteUnits.lavlagaa1, page: ()=> const Lavlagaa()),
-
+        ///Calculators
+        GetPage(name: RouteUnits.calculators, page: ()=> const CalculatorHome()),
+        GetPage(name: "/bmi", page: ()=> const BMI()),
+        ///Асуумжууд
+        GetPage(name: RouteUnits.questions, page: ()=> const Lavlagaa()),
 
         ///card test
         // GetPage(name: "/loginforvchat", page: ()=> LoginView()),

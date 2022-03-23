@@ -18,6 +18,8 @@ class RouteUnits{
   static String timeSequence = "/doctorTimeSequence";
   static String lavlagaa1 = "/lavlagaa1";
   static String basicProfileInput = "/basicProfileInput";
+  static String calculators = "/calculators";
+  static String questions = "/questions";
 }
 
 class CommonColors{
