@@ -12,6 +12,10 @@ import 'Hospitals/hospitals.dart';
 import 'Lavlagaa1/lavlagaa.dart';
 import 'Login/login.dart';
 import 'Profile/profile.dart';
+import 'Profile/profile_devicelog.dart';
+import 'Profile/profile_diagnosis_history.dart';
+import 'Profile/profile_info.dart';
+import 'Profile/profile_lifetoken.dart';
 import 'TimeSequence/time_sequence.dart';
 import 'VideoCall/camera_ex.dart';
 import 'VideoCall/stun_check.dart';
@@ -44,8 +48,14 @@ class MyApp extends StatelessWidget {
         GetPage(name: RouteUnits.login, page: ()=> const Login()),
         ///home
         GetPage(name: RouteUnits.home, page: ()=> const Home()),
-        ///Prifel
+        ///Profile
         GetPage(name: RouteUnits.profile, page: ()=> const Profile()),
+        GetPage(name: RouteUnits.profileInfo, page: ()=> const ProfileInfo()),
+        GetPage(name: RouteUnits.profileDiagnosisHistory, page: ()=> const ProfileDiagnosisHistory()),
+        GetPage(name: RouteUnits.profileLifeToken, page: ()=> const ProfileLifeToken()),
+        GetPage(name: RouteUnits.profileDeviceLog, page: ()=> const ProfileDevicelog()),
+        
+
         ///Үйлчлүүлэгч үзлэгийн цаг захиалах
         GetPage(name: RouteUnits.timeOrder + RouteUnits.hospitals, page: ()=> const Hospitals()),
         GetPage(name: RouteUnits.timeOrder + RouteUnits.hospitals + RouteUnits.doctors, page: ()=> const Doctors()),

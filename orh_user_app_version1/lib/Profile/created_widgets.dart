@@ -1,22 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:orh_user_app_version1/global_constant.dart';
 
 
 class ButtonStructure {  
-  const ButtonStructure({required this.title, required this.icon});  
+  const ButtonStructure({required this.title, required this.icon, required this.route});  
   final String title;  
-  final IconData icon;  
+  final IconData icon;
+  final String route; 
 }  
   
-List<ButtonStructure> bigButtons = const <ButtonStructure>[  
-  ButtonStructure(title: 'Mэдээлэл', icon: Icons.person),  
-  ButtonStructure(title: 'Онош Түүх', icon: Icons.history),  
-  ButtonStructure(title: 'Life Token', icon: Icons.token),  
-  ButtonStructure(title: 'Device Log', icon: Icons.book),  
+List<ButtonStructure> bigButtons = <ButtonStructure>[  
+  ButtonStructure(title: 'Mэдээлэл', icon: Icons.person, route: RouteUnits.profileInfo),  
+  ButtonStructure(title: 'Онош Түүх', icon: Icons.history, route: RouteUnits.profileDiagnosisHistory),  
+  ButtonStructure(title: 'Life Token', icon: Icons.token, route: RouteUnits.profileLifeToken),  
+  ButtonStructure(title: 'Device Log', icon: Icons.book, route: RouteUnits.profileDeviceLog)  
 ]; 
 
 Widget profileBigButtons(ButtonStructure structureInfo){
-  return Container(
+  return InkWell(
+    onTap: (){Get.toNamed(structureInfo.route);},
+    child: Container(
     width: GeneralMeasurements.deviceWidth/10*4,
     height: GeneralMeasurements.deviceHeight/24*4,
     decoration: BoxDecoration(
@@ -39,5 +43,6 @@ Widget profileBigButtons(ButtonStructure structureInfo){
                 Text(structureInfo.title, style: const TextStyle(fontWeight: FontWeight.bold),),
               ]  
           ),
+  ),
   );
 }

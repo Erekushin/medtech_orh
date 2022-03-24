@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+
 class UriAdresses{
 static const String medTechUri = "http://10.0.0.116:8080/ords/medical_backend/request/make";
 static const String geregeUserUri = "https://iam.gerege.mn/api/public/user/login";
@@ -9,7 +10,15 @@ static const String geregeUserLoginUri = "https://iam.gerege.mn/api/public/user/
 class RouteUnits{
   static String login = "/login";
   static String home = "/home";
+
+
+  //Profile routes
   static String profile = "/profile";
+  static String profileInfo = "/profileInfo";
+  static String profileDiagnosisHistory = "/profileDiagnosisHistory";
+  static String profileLifeToken = "/profileLifeToken";
+  static String profileDeviceLog = "/profileDeviceLog";
+
   static String timeOrder = "/timeOrder";
   static String doctors = "/doctors";
   static String doctorProfile = "/doctorProfile";

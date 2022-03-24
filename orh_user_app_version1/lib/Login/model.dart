@@ -2,7 +2,6 @@
 
 class LoginModel {
   static const String uri = "";
-  static bool loginloading = false;
   int? code;
   String? status;
   String? message;

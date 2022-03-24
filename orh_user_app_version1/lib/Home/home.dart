@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:orh_user_app_version1/Login/controller.dart';
 import 'dart:ui';
 import '../Helpers/CreatedGlobalWidgets/bottom_nav_bar.dart';
 import '../global_constant.dart';
@@ -126,6 +127,13 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin{
             child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
+                // GetBuilder<LoginController>(builder: (something){
+                //   print('home dotor loading check');
+                //   print(something.loginloading.toString());
+                //   return
+                //   something.loginloading? const SizedBox() : const CircularProgressIndicator();
+                  
+                // }),
                 InkWell(
                   highlightColor: Colors.transparent,
                   splashColor: Colors.transparent,

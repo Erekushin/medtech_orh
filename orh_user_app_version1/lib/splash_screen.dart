@@ -101,6 +101,7 @@ class _MyCustomSplashScreenState extends State<MyCustomSplashScreen>
 
   @override
   Widget build(BuildContext context) {
+    Get.put(LoginController());
     GeneralMeasurements.deviceHeight = MediaQuery.of(context).size.height;
     GeneralMeasurements.deviceWidth = MediaQuery.of(context).size.width;
     return Scaffold(

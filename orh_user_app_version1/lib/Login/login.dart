@@ -8,20 +8,15 @@ import 'model.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
-
   @override
   _LoginState createState() => _LoginState();
 }
 class _LoginState extends State<Login>with SingleTickerProviderStateMixin {
-  LoginController logincontroller = LoginController();
   late AnimationController _controller;
   late Animation<double> _opacity;
   late Animation<double> _transform;
 
   GlobalKey<FormState> loginValidatorKey = GlobalKey<FormState>();
-
- 
-  
   @override
   void initState() {
     super.initState();
@@ -53,14 +48,14 @@ class _LoginState extends State<Login>with SingleTickerProviderStateMixin {
   }
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-    return Scaffold(
+    return GetBuilder<LoginController>(builder: (logincontroller){
+      return Scaffold(
       extendBodyBehindAppBar: true,
       body: ScrollConfiguration(
         behavior: MyBehavior(),
         child: SingleChildScrollView(
           child: SizedBox(
-            height: size.height,
+            height: GeneralMeasurements.deviceHeight,
             child: Container(
               alignment: Alignment.center,
               decoration: const BoxDecoration(
@@ -78,8 +73,8 @@ class _LoginState extends State<Login>with SingleTickerProviderStateMixin {
                 child: Transform.scale(
                   scale: _transform.value,
                   child: Container(
-                      width: size.width * .9,
-                      height: size.width * 1.1,
+                      width: GeneralMeasurements.deviceWidth * .9,
+                      height: GeneralMeasurements.deviceWidth * 1.1,
                       decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(15),
@@ -106,20 +101,37 @@ class _LoginState extends State<Login>with SingleTickerProviderStateMixin {
                             ),
                             const SizedBox(),
                             component1(Icons.account_circle_outlined,
-                                'User name...', false, false, logincontroller.rD),
+                                'User name...', false, false, logincontroller.username),
                             component1(
                                 Icons.lock_outline, 'Password...', true, false, logincontroller.pass),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                component2(
-                                    'LOGIN',
-                                    2.6,
-                                        () => logincontroller.getdata()
+                                InkWell(
+                                  highlightColor: Colors.transparent,
+                                  splashColor: Colors.transparent,
+                                  onTap: (){
+                                    loginValidatorKey.currentState?.validate();
+                                    Get.find<LoginController>().getdata();
+                                    print('sddfdf');
+                                  },
+                                  child: Container(
+                                    height: GeneralMeasurements.deviceWidth / 8,
+                                    width: GeneralMeasurements.deviceWidth / 2.6,
+                                    alignment: Alignment.center,
+                                    decoration: BoxDecoration(
+                                      color: const Color(0xff4796ff),
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    child: Text(
+                                      "LOGIN",
+                                      style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w600),
+                                    ),
+                                  ),
                                 ),
-                                SizedBox(width: size.width / 25),
+                                SizedBox(width: GeneralMeasurements.deviceWidth / 25),
                                 Container(
-                                  width: size.width / 2.6,
+                                  width: GeneralMeasurements.deviceWidth / 2.6,
                                   alignment: Alignment.center,
                                   child: RichText(
                                     text: TextSpan(
@@ -148,7 +160,12 @@ class _LoginState extends State<Login>with SingleTickerProviderStateMixin {
                               ),
                             ),
                             const SizedBox(),
-                            LoginModel.loginloading? const CircularProgressIndicator() : const SizedBox()
+                            // Obx((){
+                            //   if(Get.find<LoginController>().loginloading as bool){} const CircularProgressIndicator() : const SizedBox();
+                            // })
+                            GetX<LoginController>(builder: (builder){
+                              return builder.loginloading.isTrue? const CircularProgressIndicator() : const SizedBox();
+                            })
                           ],
                         ),
                       )
@@ -160,16 +177,16 @@ class _LoginState extends State<Login>with SingleTickerProviderStateMixin {
         ),
       ),
     );
+    });
   }
 
   Widget component1(
       IconData icon, String hintText, bool isPassword, bool isEmail, TextEditingController controller) {
-    Size size = MediaQuery.of(context).size;
     return Container(
-      height: size.width / 8,
-      width: size.width / 1.22,
+      height: GeneralMeasurements.deviceWidth / 8,
+      width: GeneralMeasurements.deviceWidth / 1.22,
       alignment: Alignment.center,
-      padding: EdgeInsets.only(right: size.width / 30),
+      padding: EdgeInsets.only(right: GeneralMeasurements.deviceWidth / 30),
       decoration: BoxDecoration(
         color: Colors.black.withOpacity(.05),
         borderRadius: BorderRadius.circular(10),
@@ -194,30 +211,6 @@ class _LoginState extends State<Login>with SingleTickerProviderStateMixin {
           hintText: hintText,
           hintStyle:
           TextStyle(fontSize: 14, color: Colors.black.withOpacity(.5)),
-        ),
-      ),
-    );
-  }
-  Widget component2(String string, double width, VoidCallback voidCallback) {
-    Size size = MediaQuery.of(context).size;
-    return InkWell(
-      highlightColor: Colors.transparent,
-      splashColor: Colors.transparent,
-      onTap: () => setState(() {
-        loginValidatorKey.currentState?.validate();
-        voidCallback();
-      }) ,
-      child: Container(
-        height: size.width / 8,
-        width: size.width / width,
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          color: const Color(0xff4796ff),
-          borderRadius: BorderRadius.circular(10),
-        ),
-        child: Text(
-          string,
-          style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w600),
         ),
       ),
     );
