@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:orh_user_app_version1/Login/login.dart';
 import '../Helpers/Api/post_request_general.dart';
+import '../Home/home.dart';
 import '../global_constant.dart';
 import 'model.dart';
 import 'package:crypto/crypto.dart';
@@ -46,7 +47,9 @@ class LoginController extends GetxController{
       switch(LoginController.model.code){
         case 200:
         loginloading.value = false;
-         Get.toNamed(RouteUnits.home);
+         Get.offNamed(RouteUnits.home);
+         username.clear();
+          pass.clear();
          return true;
         case 403:
         loginloading.value = false; 
@@ -68,9 +71,8 @@ class LoginController extends GetxController{
     }
     else{
       loginloading.value = false;
-      
-      // Get.toNamed('/home');
-      Get.snackbar('Талбаруудын утга хоосон байна44', "Хэрэглэгчийн нэр ихэвчлэн Регистрийн дугаараар баталгаажсан байгаа!", snackPosition: SnackPosition.BOTTOM,
+      Get.toNamed('/home');
+      Get.snackbar('Талбаруудын утга хоосон байна', "Хэрэглэгчийн нэр ихэвчлэн Регистрийн дугаараар баталгаажсан байгаа!", snackPosition: SnackPosition.BOTTOM,
       
           colorText: Colors.white, backgroundColor: Colors.grey[900], margin: const EdgeInsets.all(5));
       return false;

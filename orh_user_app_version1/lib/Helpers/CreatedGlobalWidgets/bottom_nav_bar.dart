@@ -1,14 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:orh_user_app_version1/Profile/profile.dart';
+import 'package:orh_user_app_version1/VideoCall/login_test.dart';
 import 'package:orh_user_app_version1/global_constant.dart';
+
+import '../../Home/home.dart';
+import '../../Login/login.dart';
 
 class MyBottomNavBarController extends GetxController{
   int _currentIndex = 4;
+  // Route<Profile> profile = const Profile() as Route<Profile>;
   int get currentIndex => _currentIndex;
   routing(int index){
     switch(index){
       case 0 :
-        Get.toNamed(RouteUnits.home);
+        Get.offAllNamed(RouteUnits.home);
         break;
       case 1 :
         Get.toNamed('/');
@@ -17,7 +23,9 @@ class MyBottomNavBarController extends GetxController{
         Get.toNamed('/');
         break;
       case 3 :
-        Get.toNamed(RouteUnits.profile);
+        Get.offNamedUntil(RouteUnits.profile, ModalRoute.withName(RouteUnits.home));
+        
+        // Get.offUntil(profile, (route) => (route as GetPageRoute).routeName == '/home');
         break;
     }
     _currentIndex = index; 

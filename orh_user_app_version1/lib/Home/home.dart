@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:orh_user_app_version1/Login/controller.dart';
 import 'dart:ui';
@@ -12,6 +13,13 @@ class Home extends StatefulWidget {
   _HomeState createState() => _HomeState();
 }
 class _HomeState extends State<Home> with SingleTickerProviderStateMixin{
+  Future<bool>CloaseTheApp(BuildContext context) async {
+    return await Get.defaultDialog(title: 'Эрүүл Gerege ийг хаах уу?', content: Image.asset('assets/images/thinkingBoy.png'),
+    actions: <Widget>[TextButton(onPressed: (){SystemNavigator.pop();}, child: const Text("ok", style: TextStyle(fontSize: 20),)), 
+    TextButton(onPressed: (){Get.back();}, child: const Text("cancel", style: TextStyle(fontSize: 20)))]);
+  }
+
+
   @override
   void initState() {
     super.initState();
@@ -24,7 +32,8 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin{
   @override
   Widget build(BuildContext context) {
     Get.put(MyBottomNavBarController());
-    return Scaffold(
+    return WillPopScope(
+      child: Scaffold(
       backgroundColor: Colors.white,
       body: Stack(
         children: [
@@ -166,7 +175,10 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin{
           ),
         ],
       ),
-    );
+    ), 
+      onWillPop: (){
+        return CloaseTheApp(context);
+      });
   }
   Widget homePageCardsGroup(
       String data,

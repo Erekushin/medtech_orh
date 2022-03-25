@@ -37,9 +37,6 @@ class _MyCustomSplashScreenState extends State<MyCustomSplashScreen>
     } on PlatformException {
       String ee = 'Failed to get platform version.';
     }
-
-
-
     try {
       identifier = await UniqueIdentifier.serial;
     } on PlatformException {
@@ -101,7 +98,6 @@ class _MyCustomSplashScreenState extends State<MyCustomSplashScreen>
 
   @override
   Widget build(BuildContext context) {
-    Get.put(LoginController());
     GeneralMeasurements.deviceHeight = MediaQuery.of(context).size.height;
     GeneralMeasurements.deviceWidth = MediaQuery.of(context).size.width;
     return Scaffold(

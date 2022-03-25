@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:orh_user_app_version1/GlobalControllers/image_controller.dart';
+import 'package:orh_user_app_version1/Helpers/CreatedGlobalWidgets/on_press_extention.dart';
 
-class BasicProfileData1 extends StatefulWidget {
-  const BasicProfileData1({Key? key}) : super(key: key);
+class BasicProfileData1 extends StatelessWidget {
+  const BasicProfileData1({ Key? key }) : super(key: key);
 
-  @override
-  _BasicProfileData1 createState() => _BasicProfileData1();
-}
-
-class _BasicProfileData1 extends State<BasicProfileData1> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -18,11 +16,20 @@ class _BasicProfileData1 extends State<BasicProfileData1> {
             Column(
               children: [
                 SizedBox(height: 20,),
-                CircleAvatar(
+                GetX<ImageController>(builder: (imageController){
+                  return CircleAvatar(
                   backgroundColor: Colors.grey,
                   radius: 40,
-                  backgroundImage: AssetImage('assets/images/user_default.png'),
-                ),
+                  backgroundImage: const AssetImage('assets/images/user_default.png'),
+                  child:  ClipRRect(
+                               child: imageController.imageFile == null? const Placeholder(strokeWidth: 0, color: Colors.grey,) 
+                               : AspectRatio(aspectRatio: 1 / 1, child: Image.file(imageController.imageFile.value, fit: BoxFit.fill,)),
+                               borderRadius: BorderRadius.circular(90.0),
+                               ),
+                  ).pressExtention((){
+                    imageController.cameraAndGallery();
+                  });
+                })
               ],
             ),
             Container(

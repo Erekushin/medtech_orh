@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:orh_user_app_version1/GlobalControllers/image_controller.dart';
 import 'package:orh_user_app_version1/global_constant.dart';
 import '../Helpers/CreatedGlobalWidgets/bottom_nav_bar.dart';
 import 'created_widgets.dart';
@@ -12,30 +13,18 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
+
   PageController pageController = PageController(viewportFraction: 0.85);
   @override
   Widget build(BuildContext context) {
     Get.find<MyBottomNavBarController>();
     return Scaffold(
-      appBar: AppBar(
-        toolbarHeight: GeneralMeasurements.deviceHeight/100*12,
-        backgroundColor: CommonColors.geregeBlue,
-        elevation: 0,
-        centerTitle: true,
-        shadowColor: Colors.black.withOpacity(.5),
-        leading: IconButton(
-          icon: const Icon(
-            Icons.arrow_back,
-            color: Colors.white,
-          ),
-          onPressed: () => Navigator.maybePop(context),
-        ),
-      ),
+      
       bottomNavigationBar: MyBottomNavbar(),
       body: Stack(
         children: [
           Container(
-                 height: GeneralMeasurements.deviceHeight/8,
+                 height: GeneralMeasurements.deviceHeight/100*25,
                  decoration: BoxDecoration(
                    color: CommonColors.geregeBlue,
                    borderRadius: const BorderRadius.only(bottomLeft: Radius.circular(40), 
@@ -46,9 +35,30 @@ class _ProfileState extends State<Profile> {
            child:  Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
+              SizedBox(
+                height: GeneralMeasurements.deviceHeight/100*12,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    IconButton(
+                      icon: const Icon(
+                       Icons.arrow_back,
+                      color: Colors.white,
+                      ),
+                      onPressed: () => Navigator.maybePop(context),
+                    ),
+                    Row(
+                      children: [
+                        TextButton(onPressed: (){Get.offAllNamed(RouteUnits.login);}, 
+                        child: Text('change account', style: TextStyle(color: Colors.white),))
+                      ],
+                    )
+                  ],
+                ),
+              ),
                Container(//Profile picture container............................................................!
                  width: GeneralMeasurements.deviceWidth/7*6,
-                 height: GeneralMeasurements.deviceHeight/100*25,
+                 height: GeneralMeasurements.deviceHeight/100*24,
                  decoration: BoxDecoration(
                    borderRadius: const BorderRadius.all(Radius.circular(15)),
                    color: Colors.white,
@@ -57,20 +67,27 @@ class _ProfileState extends State<Profile> {
                    ]
                  ),
                  child: Column(
-                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                   children: [
-                      const CircleAvatar(
-                        backgroundColor: Colors.grey,
-                            radius: 60,
-                            backgroundImage: AssetImage('assets/images/nvvr_zurag.jpg'),
-                     ).pressExtention((){
-                       print('zuragaa solih');
-                     }),
-                    const SizedBox(width: 1, height: 1,),
-                    const Text('Mandah', style: TextStyle(fontWeight: FontWeight.bold),),
-                    const Text('95258154', style: TextStyle(fontWeight: FontWeight.bold),),
-                     ],
-                 ),
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                          GetX<ImageController>(builder: (imageController){
+                            return   CircleAvatar(
+                          backgroundColor: Colors.grey,
+                          radius: 60,
+                          backgroundImage: const AssetImage('assets/images/user_default.png'),
+                             child: ClipRRect(
+                               child: imageController.imageFile == null? const Placeholder(strokeWidth: 0, color: Colors.grey,) 
+                               : AspectRatio(aspectRatio: 1 / 1, child: Image.file(imageController.imageFile.value, fit: BoxFit.fill,)),
+                               borderRadius: BorderRadius.circular(90.0),
+                               ),  
+                       ).pressExtention((){
+                         imageController.cameraAndGallery();
+                       });
+                          }),
+                          const SizedBox(width: 1, height: 1,),
+                          const Text('Mandah', style: TextStyle(fontWeight: FontWeight.bold),),
+                          const Text('95258154', style: TextStyle(fontWeight: FontWeight.bold),),
+                       ],
+                                      ),
                ),
                const SizedBox(width: 1, height: 40,),
                SizedBox(
@@ -96,3 +113,9 @@ class _ProfileState extends State<Profile> {
     );
   }
 }
+
+
+
+
+
+

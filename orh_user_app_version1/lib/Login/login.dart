@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
 import 'package:get/get.dart';
+import 'package:orh_user_app_version1/GlobalControllers/image_controller.dart';
 import 'package:orh_user_app_version1/global_constant.dart';
 import '../Helpers/CreatedGlobalWidgets/scroll_behavior.dart';
 import 'controller.dart';
@@ -20,6 +21,8 @@ class _LoginState extends State<Login>with SingleTickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
+    Get.put(LoginController());
+    Get.put(ImageController());
     _controller = AnimationController(
       vsync: this,
       duration: const Duration(seconds: 3),

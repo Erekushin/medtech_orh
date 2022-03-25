@@ -18,7 +18,6 @@ import 'Profile/profile_info.dart';
 import 'Profile/profile_lifetoken.dart';
 import 'TimeSequence/time_sequence.dart';
 import 'VideoCall/camera_ex.dart';
-import 'VideoCall/stun_check.dart';
 import 'VideoCall/video_call.dart';
 import 'global_constant.dart';
 import 'dart:async';
@@ -78,7 +77,7 @@ class MyApp extends StatelessWidget {
         // GetPage(name: "/loginforvchat", page: ()=> LoginView()),
         // GetPage(name: "/", page: ()=> LoginView()),
         GetPage(name: "/meeting", page: ()=> MeetingView()),
-        GetPage(name: "/stun", page: ()=> const StunCheck()),
+        GetPage(name: "/stun", page: ()=> const CalculatorHome()),
         // GetPage(name: "/login", page: ()=> LoginView()),
         GetPage(name: "/camera", page: ()=> CameraApp()),
       ],

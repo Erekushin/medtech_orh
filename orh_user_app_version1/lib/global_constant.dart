@@ -33,6 +33,8 @@ class RouteUnits{
 
 class CommonColors{
   static Color geregeBlue = const Color(0xFF0072FE);
+  static Color yellow = const Color(0xFFFEC07B);
+  static Color deepPink = const Color(0xFFFF4484);
 }
 
 class GeneralMeasurements{
