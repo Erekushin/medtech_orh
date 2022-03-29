@@ -5,18 +5,17 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../GlobalControllers/request_controller.dart';
 import '../global_constant.dart';
-import 'model.dart';
+import '../global_helpers.dart';
 import 'package:crypto/crypto.dart';
+import '../models/gerege_user.dart';
 
 class LoginController extends GetxController{
+  LoginModel model =  LoginModel();
   var loginloading = false.obs;
   var username = TextEditingController(); //Регистэр
   var pass = TextEditingController(); //Нууц үг
-  final getDataaaa = Get.put(PostRequestGeneral());
-  static LoginModel model =  LoginModel();
-  Map<String, dynamic> toJsonn(){
+  Map<String, dynamic> loginBody(){
     String? searchText = username.text.toString();
     String? hushedPass = md5.convert(utf8.encode(pass.text.toString())).toString();
     // String? terminalID = LoginController.model.terminalID;
@@ -26,63 +25,58 @@ class LoginController extends GetxController{
     // data['terminal_id'] = terminalID;
     data['password'] = hushedPass;
     data['app_id'] = 4402;
-    print(data);
-    print('oorchlolt iig save deerfee haruulj bgaa eseh');
     return data;
   }
-  Future<bool> getdata() async{
+  Future getdata() async{
     loginloading.value = true;
     if(username.text.isNotEmpty && pass.text.isNotEmpty){
       // var data = await getData.getdata(toJsonn(), "203801", MedTechUri);
-      var data = await getDataaaa.getdata(toJsonn(), "", UriAdresses.geregeUserLoginUri);
+      var data = await GlobalHelpers.postRequestGeneral.getdata(loginBody(), "", UriAdresses.geregeUserLoginUri);
       print("logiin response" + data);
       model = LoginModel.fromJson(jsonDecode(data.toString()));
-      switch(LoginController.model.code){
+      switch(model.code){
         case 200:
-        loginloading.value = false;
-         Get.offNamed(RouteUnits.home);
-         username.clear();
+          loginloading.value = false;
+          Get.offNamed(RouteUnits.home);
+          username.clear();
           pass.clear();
-         return true;
+          break;
         case 403:
-        loginloading.value = false; 
+          loginloading.value = false; 
           Get.snackbar('Хэрэглэгч бүртгэлгүй байна', 'Бүртгэл үүсгэхийн тулд Gerege App ыг суулгана уу!', snackPosition: SnackPosition.BOTTOM,
-          
           colorText: Colors.white, backgroundColor: Colors.grey[900], margin:  const EdgeInsets.all(5));
           username.clear();
           pass.clear();
-          return false;
-           case 100:
-        loginloading.value = false; 
+          break;
+        case 100:
+          loginloading.value = false; 
           Get.snackbar('Интернет Алдаа', 'Та интернетээ шалгана уу!', snackPosition: SnackPosition.BOTTOM,
           colorText: Colors.white, backgroundColor: Colors.grey[900], margin:  const EdgeInsets.all(5));
           username.clear();
           pass.clear();
-          return false;
-           case 101:
-        loginloading.value = false; 
+          break;
+        case 101:
+          loginloading.value = false; 
           Get.snackbar('Интернет Алдаа', 'Та интернетээ шалгана уу!', snackPosition: SnackPosition.BOTTOM,
           colorText: Colors.white, backgroundColor: Colors.grey[900], margin:  const EdgeInsets.all(5));
           username.clear();
           pass.clear();
-          return false;
+          break;
         case 400: 
-        loginloading.value = false;
+          loginloading.value = false;
           Get.snackbar(model.message!, 'Нууц үг буруу эсвэл Тэрминал байхгүй', snackPosition: SnackPosition.BOTTOM,
           colorText: Colors.white, backgroundColor: Colors.grey[900], margin:  const EdgeInsets.all(5));
           username.clear();
           pass.clear();
-          return false;
-        default : return false;  
+          break;
+        default : break;  
       }
     }
     else{
       loginloading.value = false;
       Get.toNamed('/home');
       Get.snackbar('Талбаруудын утга хоосон байна', "Хэрэглэгчийн нэр ихэвчлэн Регистрийн дугаараар баталгаажсан байгаа!", snackPosition: SnackPosition.BOTTOM,
-      
           colorText: Colors.white, backgroundColor: Colors.grey[900], margin: const EdgeInsets.all(5));
-      return false;
     }
   }
 }

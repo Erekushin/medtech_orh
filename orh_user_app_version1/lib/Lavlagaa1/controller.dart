@@ -3,15 +3,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-import '../GlobalControllers/request_controller.dart';
+import '../Helpers/request.dart';
 import '../global_constant.dart';
+import '../global_helpers.dart';
 import 'base_data.dart';
 import 'model.dart';
 import 'own_data.dart';
 
 class form1Controller{
   static form1Model model = new form1Model();
-  final postRequestGeneral = Get.find<PostRequestGeneral>();
   // final getData = Get.put(GetData());
   var profession = TextEditingController();//мэргэжил
   var office = TextEditingController();//ажлын газар
@@ -71,9 +71,9 @@ class form1Controller{
   }
   Future<BaseData> getdata() async{
     var body = {};
-    var ownDataString = await postRequestGeneral.getdata(toJsonn(), '203842', UriAdresses.medTechUri);
+    var ownDataString = await GlobalHelpers.postRequestGeneral.getdata(toJsonn(), '203842', UriAdresses.medTechUri);
     ownData = OwnData.fromJson(jsonDecode(ownDataString));
-    var basedataString = await postRequestGeneral.getdata(body, '203828', UriAdresses.medTechUri);
+    var basedataString = await GlobalHelpers.postRequestGeneral.getdata(body, '203828', UriAdresses.medTechUri);
     basedata = BaseData.fromJson(jsonDecode(basedataString));
     return basedata;
   }
@@ -100,12 +100,12 @@ class form1Controller{
     }
   }
   Future<BaseData> pushForm1() async{
-    var pushForm1Response = await postRequestGeneral.getdata(toJson(), '203825', UriAdresses.medTechUri);
+    var pushForm1Response = await GlobalHelpers.postRequestGeneral.getdata(toJson(), '203825', UriAdresses.medTechUri);
     ehbvrtgelResponse = BaseData.fromJson(jsonDecode(pushForm1Response));
     return ehbvrtgelResponse;
   }
   Future<BaseData>SaveChangesOnBack() async {
-    var saveChangesOnBackResponse = await postRequestGeneral.getdata(toJson(), '203847', UriAdresses.medTechUri);
+    var saveChangesOnBackResponse = await GlobalHelpers.postRequestGeneral.getdata(toJson(), '203847', UriAdresses.medTechUri);
     print('abalabadv');
     print(toJson().toString());
     ehbvrtgelZasvarResponse = BaseData.fromJson(jsonDecode(saveChangesOnBackResponse));

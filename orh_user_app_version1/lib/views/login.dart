@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
 import 'package:get/get.dart';
-import 'package:orh_user_app_version1/GlobalControllers/image_controller.dart';
 import 'package:orh_user_app_version1/global_constant.dart';
+import '../Controllers/image_controller.dart';
+import '../Controllers/login_controller.dart';
 import '../Helpers/CreatedGlobalWidgets/scroll_behavior.dart';
-import 'controller.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -15,7 +15,6 @@ class _LoginState extends State<Login>with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _opacity;
   late Animation<double> _transform;
-
   GlobalKey<FormState> loginValidatorKey = GlobalKey<FormState>();
   @override
   void initState() {
@@ -113,8 +112,7 @@ class _LoginState extends State<Login>with SingleTickerProviderStateMixin {
                                   highlightColor: Colors.transparent,
                                   splashColor: Colors.transparent,
                                   onTap: (){
-                                    loginValidatorKey.currentState?.validate();
-                                    Get.find<LoginController>().getdata();
+                                    logincontroller.getdata();
                                     print('sddfdf');
                                   },
                                   child: Container(
@@ -167,8 +165,7 @@ class _LoginState extends State<Login>with SingleTickerProviderStateMixin {
                             // })
                             GetX<LoginController>(builder: (builder){
                               return builder.loginloading.isTrue? const CircularProgressIndicator() : const SizedBox();
-                            })
-                            
+                            }),
                           ],
                         ),
                       )

@@ -1,11 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:orh_user_app_version1/Profile/profile.dart';
-import 'package:orh_user_app_version1/VideoCall/login_test.dart';
 import 'package:orh_user_app_version1/global_constant.dart';
-
-import '../../Home/home.dart';
-import '../../Login/login.dart';
 
 class MyBottomNavBarController extends GetxController{
   int _currentIndex = 4;

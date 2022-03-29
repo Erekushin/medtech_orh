@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:orh_user_app_version1/GlobalControllers/image_controller.dart';
 import 'package:orh_user_app_version1/global_constant.dart';
+import '../Controllers/image_controller.dart';
 import '../Helpers/CreatedGlobalWidgets/bottom_nav_bar.dart';
 import 'created_widgets.dart';
 import 'package:orh_user_app_version1/Helpers/CreatedGlobalWidgets/on_press_extention.dart';

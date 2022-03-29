@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter/services.dart';
-import 'Login/controller.dart';
+import 'Controllers/login_controller.dart';
 import 'global_constant.dart';
 import 'package:unique_identifier/unique_identifier.dart';
 import 'package:device_information/device_information.dart';
@@ -46,7 +46,7 @@ class _MyCustomSplashScreenState extends State<MyCustomSplashScreen>
     setState(() {
       _identifier = identifier;
     });
-    LoginController.model.terminalID = _identifier;
+    // Get.find<LoginController>().model.terminalID = _identifier;  
   }
 
 

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:orh_user_app_version1/GlobalControllers/image_controller.dart';
 import 'package:orh_user_app_version1/Helpers/CreatedGlobalWidgets/on_press_extention.dart';
+
+import '../../Controllers/image_controller.dart';
 
 class BasicProfileData1 extends StatelessWidget {
   const BasicProfileData1({ Key? key }) : super(key: key);
