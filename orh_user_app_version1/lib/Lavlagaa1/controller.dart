@@ -3,8 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-
-import '../Helpers/Api/post_request_general.dart';
+import '../GlobalControllers/request_controller.dart';
 import '../global_constant.dart';
 import 'base_data.dart';
 import 'model.dart';

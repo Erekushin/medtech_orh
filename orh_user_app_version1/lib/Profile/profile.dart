@@ -75,8 +75,7 @@ class _ProfileState extends State<Profile> {
                           radius: 60,
                           backgroundImage: const AssetImage('assets/images/user_default.png'),
                              child: ClipRRect(
-                               child: imageController.imageFile == null? const Placeholder(strokeWidth: 0, color: Colors.grey,) 
-                               : AspectRatio(aspectRatio: 1 / 1, child: Image.file(imageController.imageFile.value, fit: BoxFit.fill,)),
+                               child: AspectRatio(aspectRatio: 1 / 1, child: Image.file(imageController.imageFile.value, fit: BoxFit.fill,)),
                                borderRadius: BorderRadius.circular(90.0),
                                ),  
                        ).pressExtention((){

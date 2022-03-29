@@ -19,16 +19,12 @@ import 'Profile/profile_lifetoken.dart';
 import 'TimeSequence/time_sequence.dart';
 import 'VideoCall/camera_ex.dart';
 import 'VideoCall/video_call.dart';
+import 'file_check_ui.dart';
 import 'global_constant.dart';
 import 'dart:async';
 import 'package:camera/camera.dart';
 
-//i'm gonna do what ever i want because it is working_with_local branch so let's break it 
-
-
-
-
- 
+// this is fucking working_with_local branch
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   cameras = await availableCameras();
@@ -83,7 +79,7 @@ class MyApp extends StatelessWidget {
         // GetPage(name: "/loginforvchat", page: ()=> LoginView()),
         // GetPage(name: "/", page: ()=> LoginView()),
         GetPage(name: "/meeting", page: ()=> MeetingView()),
-        GetPage(name: "/stun", page: ()=> const CalculatorHome()),
+        GetPage(name: "/localcheck", page: ()=> MyAppForCheckFilePath()),
         // GetPage(name: "/login", page: ()=> LoginView()),
         GetPage(name: "/camera", page: ()=> CameraApp()),
       ],

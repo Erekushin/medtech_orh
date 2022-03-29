@@ -5,7 +5,6 @@ import 'package:orh_user_app_version1/GlobalControllers/image_controller.dart';
 import 'package:orh_user_app_version1/global_constant.dart';
 import '../Helpers/CreatedGlobalWidgets/scroll_behavior.dart';
 import 'controller.dart';
-import 'model.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -169,6 +168,7 @@ class _LoginState extends State<Login>with SingleTickerProviderStateMixin {
                             GetX<LoginController>(builder: (builder){
                               return builder.loginloading.isTrue? const CircularProgressIndicator() : const SizedBox();
                             })
+                            
                           ],
                         ),
                       )

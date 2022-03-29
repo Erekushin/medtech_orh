@@ -5,18 +5,12 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:orh_user_app_version1/Login/login.dart';
-import '../Helpers/Api/post_request_general.dart';
-import '../Home/home.dart';
+import '../GlobalControllers/request_controller.dart';
 import '../global_constant.dart';
 import 'model.dart';
 import 'package:crypto/crypto.dart';
 
 class LoginController extends GetxController{
-  var currentIndex = 4.obs;
-  void jj(){
-    currentIndex++;
-  }
   var loginloading = false.obs;
   var username = TextEditingController(); //Регистэр
   var pass = TextEditingController(); //Нууц үг
@@ -38,7 +32,6 @@ class LoginController extends GetxController{
   }
   Future<bool> getdata() async{
     loginloading.value = true;
-    print(loginloading.toString());
     if(username.text.isNotEmpty && pass.text.isNotEmpty){
       // var data = await getData.getdata(toJsonn(), "203801", MedTechUri);
       var data = await getDataaaa.getdata(toJsonn(), "", UriAdresses.geregeUserLoginUri);
@@ -55,6 +48,20 @@ class LoginController extends GetxController{
         loginloading.value = false; 
           Get.snackbar('Хэрэглэгч бүртгэлгүй байна', 'Бүртгэл үүсгэхийн тулд Gerege App ыг суулгана уу!', snackPosition: SnackPosition.BOTTOM,
           
+          colorText: Colors.white, backgroundColor: Colors.grey[900], margin:  const EdgeInsets.all(5));
+          username.clear();
+          pass.clear();
+          return false;
+           case 100:
+        loginloading.value = false; 
+          Get.snackbar('Интернет Алдаа', 'Та интернетээ шалгана уу!', snackPosition: SnackPosition.BOTTOM,
+          colorText: Colors.white, backgroundColor: Colors.grey[900], margin:  const EdgeInsets.all(5));
+          username.clear();
+          pass.clear();
+          return false;
+           case 101:
+        loginloading.value = false; 
+          Get.snackbar('Интернет Алдаа', 'Та интернетээ шалгана уу!', snackPosition: SnackPosition.BOTTOM,
           colorText: Colors.white, backgroundColor: Colors.grey[900], margin:  const EdgeInsets.all(5));
           username.clear();
           pass.clear();
