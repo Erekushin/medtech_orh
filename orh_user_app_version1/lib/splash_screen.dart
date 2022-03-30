@@ -19,33 +19,33 @@ class _MyCustomSplashScreenState extends State<MyCustomSplashScreen>
   double _containerSize = 1.5;
   double _textOpacity = 0.0;
   double _containerOpacity = 0.0;
-  String? _identifier = 'UnknownUngaBanga';
+  // String? _identifier = 'UnknownUngaBanga';
   String uniqueId = "Unknown";
   Future<void> initUniqueIdentifierState() async {
-    String? identifier;
+    // String? identifier;
 
-     try {
-      String platformVersion = await DeviceInformation.platformVersion;
-      String imeiNo = await DeviceInformation.deviceIMEINumber;
-      String modelName = await DeviceInformation.deviceModel;
-      String manufacturer = await DeviceInformation.deviceManufacturer;
-      String apiLevel =  await DeviceInformation.apiLevel;
-      String deviceName = await DeviceInformation.deviceName;
-      String productName = await DeviceInformation.productName;
-      String cpuType = await DeviceInformation.cpuName;
-      String hardware = await DeviceInformation.hardware;
-    } on PlatformException {
-      String ee = 'Failed to get platform version.';
-    }
-    try {
-      identifier = await UniqueIdentifier.serial;
-    } on PlatformException {
-      identifier = 'Failed to get Unique Identifier';
-    }
-    if (!mounted) return;
-    setState(() {
-      _identifier = identifier;
-    });
+    //  try {
+    //   String platformVersion = await DeviceInformation.platformVersion;
+    //   String imeiNo = await DeviceInformation.deviceIMEINumber;
+    //   String modelName = await DeviceInformation.deviceModel;
+    //   String manufacturer = await DeviceInformation.deviceManufacturer;
+    //   String apiLevel =  await DeviceInformation.apiLevel;
+    //   String deviceName = await DeviceInformation.deviceName;
+    //   String productName = await DeviceInformation.productName;
+    //   String cpuType = await DeviceInformation.cpuName;
+    //   String hardware = await DeviceInformation.hardware;
+    // } on PlatformException {
+    //   String ee = 'Failed to get platform version.';
+    // }
+    // try {
+    //   identifier = await UniqueIdentifier.serial;
+    // } on PlatformException {
+    //   identifier = 'Failed to get Unique Identifier';
+    // }
+    // if (!mounted) return;
+    // setState(() {
+    //   _identifier = identifier;
+    // });
     // Get.find<LoginController>().model.terminalID = _identifier;  
   }
 
@@ -148,30 +148,6 @@ class _MyCustomSplashScreenState extends State<MyCustomSplashScreen>
       ),
     );
   }
-}
-
-class PageTransition extends PageRouteBuilder {
-  final Widget page;
-
-  PageTransition(this.page)
-      : super(
-    pageBuilder: (context, animation, anotherAnimation) => page,
-    transitionDuration: const Duration(milliseconds: 2000),
-    transitionsBuilder: (context, animation, anotherAnimation, child) {
-      animation = CurvedAnimation(
-        curve: Curves.fastLinearToSlowEaseIn,
-        parent: animation,
-      );
-      return Align(
-        alignment: Alignment.bottomCenter,
-        child: SizeTransition(
-          sizeFactor: animation,
-          child: page,
-          axisAlignment: 0,
-        ),
-      );
-    },
-  );
 }
 
 

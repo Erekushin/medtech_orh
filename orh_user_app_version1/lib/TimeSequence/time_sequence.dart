@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-
-import '../Helpers/CreatedGlobalWidgets/bottom_nav_bar.dart';
 import 'CreatedWidgets/circle_day_presenter.dart';
 import 'CreatedWidgets/time_squence_cell.dart';
 class DoctorTimeSequence extends StatefulWidget {
@@ -22,7 +20,6 @@ class _DoctorTimeSequenceState extends State<DoctorTimeSequence> {
   @override
   Widget build(BuildContext context){
     return Scaffold(
-      bottomNavigationBar: MyBottomNavbar(),
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,

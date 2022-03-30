@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../Helpers/CreatedGlobalWidgets/bottom_nav_bar.dart';
 
 class DoctorProfile extends StatefulWidget {
   const DoctorProfile({Key? key}) : super(key: key);
@@ -32,7 +31,6 @@ class _DoctorProfileState extends State<DoctorProfile> {
           onPressed: () => Navigator.maybePop(context),
         ),
       ),
-      bottomNavigationBar: MyBottomNavbar(),
       body: Container(
         child: Center(
           child: Text('Doctor Profile Page'),

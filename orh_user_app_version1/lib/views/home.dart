@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'dart:ui';
-import '../Helpers/CreatedGlobalWidgets/bottom_nav_bar.dart';
 import '../global_constant.dart';
+import '../global_helpers.dart';
 
 
 class Home extends StatefulWidget {
@@ -12,10 +12,10 @@ class Home extends StatefulWidget {
   _HomeState createState() => _HomeState();
 }
 class _HomeState extends State<Home> with SingleTickerProviderStateMixin{
-  Future<bool>CloaseTheApp(BuildContext context) async {
+  Future<bool>cloaseTheApp(BuildContext context) async {
     return await Get.defaultDialog(title: 'Эрүүл Gerege ийг хаах уу?', content: Image.asset('assets/images/thinkingBoy.png'),
     actions: <Widget>[TextButton(onPressed: (){SystemNavigator.pop();}, child: const Text("ok", style: TextStyle(fontSize: 20),)), 
-    TextButton(onPressed: (){Get.back();}, child: const Text("cancel", style: TextStyle(fontSize: 20)))]);
+    TextButton(onPressed: (){Get.back(closeOverlays: true);}, child: const Text("cancel", style: TextStyle(fontSize: 20)))]);
   }
 
 
@@ -30,7 +30,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin{
   }
   @override
   Widget build(BuildContext context) {
-    Get.put(MyBottomNavBarController());
+    // Get.put(MyBottomNavBarController());
     return WillPopScope(
       child: Scaffold(
       backgroundColor: Colors.white,
@@ -140,7 +140,6 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin{
                 //   print(something.loginloading.toString());
                 //   return
                 //   something.loginloading? const SizedBox() : const CircularProgressIndicator();
-                  
                 // }),
                 InkWell(
                   highlightColor: Colors.transparent,
@@ -176,7 +175,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin{
       ),
     ), 
       onWillPop: (){
-        return CloaseTheApp(context);
+        return cloaseTheApp(context);
       });
   }
   Widget homePageCardsGroup(
@@ -210,6 +209,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin{
           highlightColor: Colors.transparent,
           splashColor: Colors.transparent,
           onTap: () {
+            GlobalHelpers.bottomnavbarSwitcher.add(true);
             Get.toNamed(route, arguments: data);
           },
           child: Container(
@@ -263,11 +263,3 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin{
         );
   }
 }
-
-
-
-
-
-
-
-

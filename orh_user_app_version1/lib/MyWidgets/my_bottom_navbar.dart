@@ -2,14 +2,32 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:orh_user_app_version1/global_constant.dart';
 
-class MyBottomNavBarController extends GetxController{
+import '../Controllers/image_controller.dart';
+import '../Controllers/login_controller.dart';
+import '../main.dart';
+class MyBottomNavbar extends StatefulWidget {
+  const MyBottomNavbar({ Key? key }) : super(key: key);
+
+  @override
+  State<MyBottomNavbar> createState() => _MyBottomNavbarState();
+}
+
+class _MyBottomNavbarState extends State<MyBottomNavbar> {
+   final List<IconData> listOfIcons = [
+    Icons.home_rounded,
+    Icons.favorite_rounded,
+    Icons.settings_rounded,
+    Icons.person_rounded,
+  ];
   int _currentIndex = 4;
-  // Route<Profile> profile = const Profile() as Route<Profile>;
   int get currentIndex => _currentIndex;
   routing(int index){
     switch(index){
       case 0 :
+        print('index0');
         Get.offAllNamed(RouteUnits.home);
+        Get.put(LoginController());
+        Get.put(ImageController());
         break;
       case 1 :
         Get.toNamed('/');
@@ -19,29 +37,14 @@ class MyBottomNavBarController extends GetxController{
         break;
       case 3 :
         Get.offNamedUntil(RouteUnits.profile, ModalRoute.withName(RouteUnits.home));
-        
-        // Get.offUntil(profile, (route) => (route as GetPageRoute).routeName == '/home');
         break;
     }
     _currentIndex = index; 
   }
-}
-
-class MyBottomNavbar extends StatelessWidget {
-  MyBottomNavbar({ Key? key }) : super(key: key);
-
-  final List<IconData> listOfIcons = [
-    Icons.home_rounded,
-    Icons.favorite_rounded,
-    Icons.settings_rounded,
-    Icons.person_rounded,
-  ];
-
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-        child: GetBuilder<MyBottomNavBarController>(builder: (bottomNavBar){
-       return Container(
+    return  SizedBox(
+        child: Container(
         margin: const EdgeInsets.all(20),
         height: GeneralMeasurements.deviceHeight/100*7,
         decoration: BoxDecoration(
@@ -61,7 +64,10 @@ class MyBottomNavbar extends StatelessWidget {
           padding: EdgeInsets.symmetric(horizontal: GeneralMeasurements.deviceWidth * .024),
           itemBuilder: (context, index) => InkWell(
             onTap: () {
-              Get.find<MyBottomNavBarController>().routing(index);
+              print('something');
+              setState((){
+                routing(index);
+              });
             },
             splashColor: Colors.transparent,
             highlightColor: Colors.transparent,
@@ -72,12 +78,12 @@ class MyBottomNavbar extends StatelessWidget {
                   duration: const Duration(milliseconds: 1500),
                   curve: Curves.fastLinearToSlowEaseIn,
                   margin: EdgeInsets.only(
-                    bottom: index == bottomNavBar.currentIndex ? 0 : GeneralMeasurements.deviceWidth * .029,
+                    bottom: index == _currentIndex ? 0 : GeneralMeasurements.deviceWidth * .029,
                     right: GeneralMeasurements.deviceWidth * .0422,
                     left: GeneralMeasurements.deviceWidth * .0422,
                   ),
                   width: GeneralMeasurements.deviceWidth * .128,
-                  height: index == bottomNavBar.currentIndex ? GeneralMeasurements.deviceWidth * .014 : 0,
+                  height: index ==  _currentIndex ? GeneralMeasurements.deviceWidth * .014 : 0,
                   decoration: const BoxDecoration(
                     color: Colors.blueAccent,
                     borderRadius: BorderRadius.vertical(
@@ -88,7 +94,7 @@ class MyBottomNavbar extends StatelessWidget {
                 Icon(
                   listOfIcons[index],
                   size: GeneralMeasurements.deviceWidth * .076,
-                  color: index == bottomNavBar.currentIndex
+                  color: index == _currentIndex
                       ?  CommonColors.geregeBlue
                       : Colors.black38,
                 ),
@@ -98,10 +104,10 @@ class MyBottomNavbar extends StatelessWidget {
             
           ),
         ),
-      );
-      }),
+      ),
       );
   }
 }
+
 
 

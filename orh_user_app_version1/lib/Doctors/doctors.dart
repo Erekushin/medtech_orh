@@ -1,7 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-import '../Helpers/CreatedGlobalWidgets/bottom_nav_bar.dart';
 import 'CreatedWidgets/DoctorCard.dart';
 
 class Doctors extends StatefulWidget {
@@ -15,7 +12,6 @@ class _DoctorsState extends State<Doctors> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        bottomNavigationBar: MyBottomNavbar(),
         appBar:  AppBar(
           backgroundColor: Colors.white,
           elevation: 0,

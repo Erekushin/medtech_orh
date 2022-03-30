@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:orh_user_app_version1/splash_screen.dart';
+import 'package:orh_user_app_version1/views/home.dart';
+import 'package:orh_user_app_version1/views/login.dart';
 import 'BasicProfileCreation/basic_profile_data_cards.dart';
+import 'Controllers/image_controller.dart';
+import 'Controllers/login_controller.dart';
 import 'Doctors/doctor_profile.dart';
 import 'Doctors/doctors.dart';
 import 'Helpers/Calculators/CalculatorViews/bmi.dart';
 import 'Helpers/Calculators/CalculatorViews/calculators_home.dart';
-import 'Home/home.dart';
+import 'MyWidgets/my_bottom_navbar.dart';
 import 'Hospitals/hospital_prifile.dart';
 import 'Hospitals/hospitals.dart';
 import 'Lavlagaa1/lavlagaa.dart';
-import 'Login/login.dart';
 import 'Profile/profile.dart';
 import 'Profile/profile_devicelog.dart';
 import 'Profile/profile_diagnosis_history.dart';
@@ -23,6 +26,7 @@ import 'file_check_ui.dart';
 import 'global_constant.dart';
 import 'dart:async';
 import 'package:camera/camera.dart';
+import 'global_helpers.dart';
 
 // this is fucking working_with_local branch
 Future<void> main() async {
@@ -33,16 +37,113 @@ Future<void> main() async {
 // void main() {
 //   runApp(const MyApp());
 // }
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+// class MyApp extends StatelessWidget {
+//   const MyApp({Key? key}) : super(key: key);
+//   @override
+//   Widget build(BuildContext context) {
+//     return  GetMaterialApp(
+//       debugShowCheckedModeBanner: false,
+//       initialRoute: '/',
+//       getPages: [
+//         ///Root
+//         GetPage(name: "/", page: ()=> const MyCustomSplashScreen()),
+//         ///basic profile input
+//         GetPage(name: RouteUnits.basicProfileInput, page: ()=> const BasicPrifileDataCard()),
+//         ///login
+//         GetPage(name: RouteUnits.login, page: ()=> const Login()),
+//         ///home
+//         GetPage(name: RouteUnits.home, page: ()=> const Home()),
+//         ///Profile
+//         GetPage(name: RouteUnits.profile, page: ()=> const Profile()),
+//         GetPage(name: RouteUnits.profileInfo, page: ()=> const ProfileInfo()),
+//         GetPage(name: RouteUnits.profileDiagnosisHistory, page: ()=> const ProfileDiagnosisHistory()),
+//         GetPage(name: RouteUnits.profileLifeToken, page: ()=> const ProfileLifeToken()),
+//         GetPage(name: RouteUnits.profileDeviceLog, page: ()=> const ProfileDevicelog()),
+        
+
+//         ///Үйлчлүүлэгч үзлэгийн цаг захиалах
+//         GetPage(name: RouteUnits.timeOrder + RouteUnits.hospitals, page: ()=> const Hospitals()),
+//         GetPage(name: RouteUnits.timeOrder + RouteUnits.hospitals + RouteUnits.doctors, page: ()=> const Doctors()),
+//         GetPage(name: RouteUnits.timeOrder + RouteUnits.hospitals + RouteUnits.doctors + RouteUnits.timeSequence, page: ()=> const DoctorTimeSequence()),
+//         ///Эмнэлэгүүдийн мэдээлэл
+//         GetPage(name: RouteUnits.hospitals, page: ()=> const Hospitals()),
+//         GetPage(name: RouteUnits.hospitals + RouteUnits.hospitalProfile, page: ()=> const HospitalProfile()),
+//         ///Эмч нарын мsэдээлэл
+//         GetPage(name: RouteUnits.doctors, page: ()=> const Doctors()),
+//         GetPage(name: RouteUnits.doctors + RouteUnits.doctorProfile, page: ()=> const DoctorProfile()),
+//         ///Лавлагаа
+//         GetPage(name: RouteUnits.lavlagaa1, page: ()=> const Lavlagaa()),
+//         ///Calculators
+//         GetPage(name: RouteUnits.calculators, page: ()=> const CalculatorHome()),
+//         GetPage(name: "/bmi", page: ()=> const BMI()),
+//         ///Асуумжууд
+//         GetPage(name: RouteUnits.questions, page: ()=> const Lavlagaa()),
+
+//         ///card test
+//         // GetPage(name: "/loginforvchat", page: ()=> LoginView()),
+//         // GetPage(name: "/", page: ()=> LoginView()),
+//         GetPage(name: "/meeting", page: ()=> MeetingView()),
+//         GetPage(name: "/localcheck", page: ()=> MyAppForCheckFilePath()),
+//         // GetPage(name: "/login", page: ()=> LoginView()),
+//         GetPage(name: "/camera", page: ()=> CameraApp()),
+//       ],
+//     );
+//   }
+// }
+
+
+
+
+class MyApp extends StatefulWidget {
+  const MyApp({ Key? key }) : super(key: key);
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  
+  late Stream<bool> bottomNavbarSwitcher;
+  @override
+  void initState(){
+    super.initState();
+    GlobalHelpers.bottomnavbarSwitcher = StreamController();
+    bottomNavbarSwitcher = GlobalHelpers.bottomnavbarSwitcher.stream;
+    GlobalHelpers.bottomnavbarSwitcher.add(false);
+  }
+  static bottomNavbarRouting(int index){
+    switch(index){
+      case 0 :
+        print('index0');
+        Get.offAllNamed(RouteUnits.home);
+        Get.put(LoginController());
+        Get.put(ImageController());
+        break;
+      case 1 :
+        Get.toNamed('/');
+        break;
+      case 2 :
+        Get.toNamed('/');
+        break;
+      case 3 :
+        Get.offNamedUntil(RouteUnits.profile, ModalRoute.withName(RouteUnits.home));
+        break;
+    }
+  }
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
+    
+
+    return  MaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: '/',
+      home: Scaffold(
+        body: Stack(
+        children: [
+          GetMaterialApp(
+      debugShowCheckedModeBanner: false,
+      initialRoute: '/splashScreen',
       getPages: [
         ///Root
-        GetPage(name: "/", page: ()=> const MyCustomSplashScreen()),
+        GetPage(name: "/splashScreen", page: ()=> const MyCustomSplashScreen()),
         ///basic profile input
         GetPage(name: RouteUnits.basicProfileInput, page: ()=> const BasicPrifileDataCard()),
         ///login
@@ -79,10 +180,25 @@ class MyApp extends StatelessWidget {
         // GetPage(name: "/loginforvchat", page: ()=> LoginView()),
         // GetPage(name: "/", page: ()=> LoginView()),
         GetPage(name: "/meeting", page: ()=> MeetingView()),
-        GetPage(name: "/localcheck", page: ()=> MyAppForCheckFilePath()),
+        GetPage(name: "/localcheck", page: ()=> const MyAppForCheckFilePath()),
         // GetPage(name: "/login", page: ()=> LoginView()),
         GetPage(name: "/camera", page: ()=> CameraApp()),
       ],
+    ),
+        StreamBuilder<bool>(
+          stream: bottomNavbarSwitcher,
+          builder: (context, snapshot){
+            if (snapshot.data == true) 
+            {
+              return const Align(alignment: Alignment.bottomCenter, child: MyBottomNavbar(),);
+            }
+            else {
+              return const SizedBox();
+            }
+          })
+        ],
+      ),
+      ),
     );
   }
 }

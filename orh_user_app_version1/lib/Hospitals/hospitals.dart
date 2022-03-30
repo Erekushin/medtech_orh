@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:orh_user_app_version1/Helpers/CreatedGlobalWidgets/on_press_extention.dart';
 import 'package:orh_user_app_version1/Hospitals/side_search_address.dart';
 import 'package:orh_user_app_version1/Hospitals/side_search_name.dart';
-import '../Helpers/CreatedGlobalWidgets/bottom_nav_bar.dart';
 import '../global_constant.dart';
 import 'created_widgets.dart';
 
@@ -39,7 +38,6 @@ class _HospitalsState extends State<Hospitals> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        bottomNavigationBar: MyBottomNavbar(),
         key: sidePageKey,
         endDrawer : sideBarToggler? const SidePageForName() : const SidePageForAddress(),
         appBar: AppBar(

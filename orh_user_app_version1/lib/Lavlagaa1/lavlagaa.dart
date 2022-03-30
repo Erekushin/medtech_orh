@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import '../Helpers/CreatedGlobalWidgets/bottom_nav_bar.dart';
 import '../Helpers/CreatedGlobalWidgets/waiting_screen.dart';
 import 'CreatedWidget/dropdown.dart';
-import 'CreatedWidget/radio_btn.dart';
 import 'CreatedWidget/text_input.dart';
 import 'base_data.dart';
 import 'controller.dart';
@@ -27,7 +25,6 @@ class _LavlagaaState extends State<Lavlagaa> {
         return controller.SaveOnBack(context);
       },
       child: Scaffold(
-        bottomNavigationBar: MyBottomNavbar(),
         appBar: AppBar(
           backgroundColor: Colors.white,
           elevation: 0,

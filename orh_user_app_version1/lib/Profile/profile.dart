@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:orh_user_app_version1/global_constant.dart';
 import '../Controllers/image_controller.dart';
-import '../Helpers/CreatedGlobalWidgets/bottom_nav_bar.dart';
 import 'created_widgets.dart';
 import 'package:orh_user_app_version1/Helpers/CreatedGlobalWidgets/on_press_extention.dart';
 
@@ -17,10 +16,8 @@ class _ProfileState extends State<Profile> {
   PageController pageController = PageController(viewportFraction: 0.85);
   @override
   Widget build(BuildContext context) {
-    Get.find<MyBottomNavBarController>();
+    // Get.find<MyBottomNavBarController>();
     return Scaffold(
-      
-      bottomNavigationBar: MyBottomNavbar(),
       body: Stack(
         children: [
           Container(
