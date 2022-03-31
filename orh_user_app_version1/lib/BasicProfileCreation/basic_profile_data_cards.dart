@@ -58,7 +58,7 @@ class _BasicPrifileDataCardState extends State<BasicPrifileDataCard> {
                     );
                   },
                   onStackFinished: () {
-                    Get.toNamed('/splashScreen');
+                    Get.toNamed('/splashScreen ');
                     Get.snackbar('Баяр хүргэе', 'Бүртгэл үүслээ', snackPosition: SnackPosition.BOTTOM,
                         colorText: Colors.white, backgroundColor: Colors.grey[900], margin: EdgeInsets.all(5));
                   },

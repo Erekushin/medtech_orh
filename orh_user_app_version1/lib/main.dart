@@ -34,66 +34,6 @@ Future<void> main() async {
   cameras = await availableCameras();
   runApp(const MyApp());
 }
-// void main() {
-//   runApp(const MyApp());
-// }
-// class MyApp extends StatelessWidget {
-//   const MyApp({Key? key}) : super(key: key);
-//   @override
-//   Widget build(BuildContext context) {
-//     return  GetMaterialApp(
-//       debugShowCheckedModeBanner: false,
-//       initialRoute: '/',
-//       getPages: [
-//         ///Root
-//         GetPage(name: "/", page: ()=> const MyCustomSplashScreen()),
-//         ///basic profile input
-//         GetPage(name: RouteUnits.basicProfileInput, page: ()=> const BasicPrifileDataCard()),
-//         ///login
-//         GetPage(name: RouteUnits.login, page: ()=> const Login()),
-//         ///home
-//         GetPage(name: RouteUnits.home, page: ()=> const Home()),
-//         ///Profile
-//         GetPage(name: RouteUnits.profile, page: ()=> const Profile()),
-//         GetPage(name: RouteUnits.profileInfo, page: ()=> const ProfileInfo()),
-//         GetPage(name: RouteUnits.profileDiagnosisHistory, page: ()=> const ProfileDiagnosisHistory()),
-//         GetPage(name: RouteUnits.profileLifeToken, page: ()=> const ProfileLifeToken()),
-//         GetPage(name: RouteUnits.profileDeviceLog, page: ()=> const ProfileDevicelog()),
-        
-
-//         ///Үйлчлүүлэгч үзлэгийн цаг захиалах
-//         GetPage(name: RouteUnits.timeOrder + RouteUnits.hospitals, page: ()=> const Hospitals()),
-//         GetPage(name: RouteUnits.timeOrder + RouteUnits.hospitals + RouteUnits.doctors, page: ()=> const Doctors()),
-//         GetPage(name: RouteUnits.timeOrder + RouteUnits.hospitals + RouteUnits.doctors + RouteUnits.timeSequence, page: ()=> const DoctorTimeSequence()),
-//         ///Эмнэлэгүүдийн мэдээлэл
-//         GetPage(name: RouteUnits.hospitals, page: ()=> const Hospitals()),
-//         GetPage(name: RouteUnits.hospitals + RouteUnits.hospitalProfile, page: ()=> const HospitalProfile()),
-//         ///Эмч нарын мsэдээлэл
-//         GetPage(name: RouteUnits.doctors, page: ()=> const Doctors()),
-//         GetPage(name: RouteUnits.doctors + RouteUnits.doctorProfile, page: ()=> const DoctorProfile()),
-//         ///Лавлагаа
-//         GetPage(name: RouteUnits.lavlagaa1, page: ()=> const Lavlagaa()),
-//         ///Calculators
-//         GetPage(name: RouteUnits.calculators, page: ()=> const CalculatorHome()),
-//         GetPage(name: "/bmi", page: ()=> const BMI()),
-//         ///Асуумжууд
-//         GetPage(name: RouteUnits.questions, page: ()=> const Lavlagaa()),
-
-//         ///card test
-//         // GetPage(name: "/loginforvchat", page: ()=> LoginView()),
-//         // GetPage(name: "/", page: ()=> LoginView()),
-//         GetPage(name: "/meeting", page: ()=> MeetingView()),
-//         GetPage(name: "/localcheck", page: ()=> MyAppForCheckFilePath()),
-//         // GetPage(name: "/login", page: ()=> LoginView()),
-//         GetPage(name: "/camera", page: ()=> CameraApp()),
-//       ],
-//     );
-//   }
-// }
-
-
-
-
 class MyApp extends StatefulWidget {
   const MyApp({ Key? key }) : super(key: key);
   @override
@@ -103,6 +43,8 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   
   late Stream<bool> bottomNavbarSwitcher;
+
+  CounterStorage sstorage = CounterStorage();
   @override
   void initState(){
     super.initState();
@@ -119,10 +61,10 @@ class _MyAppState extends State<MyApp> {
         Get.put(ImageController());
         break;
       case 1 :
-        Get.toNamed('/');
+        Get.toNamed('/splashScreen');
         break;
       case 2 :
-        Get.toNamed('/');
+        Get.toNamed('/splashScreen');
         break;
       case 3 :
         Get.offNamedUntil(RouteUnits.profile, ModalRoute.withName(RouteUnits.home));
@@ -180,7 +122,7 @@ class _MyAppState extends State<MyApp> {
         // GetPage(name: "/loginforvchat", page: ()=> LoginView()),
         // GetPage(name: "/", page: ()=> LoginView()),
         GetPage(name: "/meeting", page: ()=> MeetingView()),
-        GetPage(name: "/localcheck", page: ()=> const MyAppForCheckFilePath()),
+        GetPage(name: "/localcheck", page: ()=> FlutterDemo(storage: sstorage,)),
         // GetPage(name: "/login", page: ()=> LoginView()),
         GetPage(name: "/camera", page: ()=> CameraApp()),
       ],
@@ -188,7 +130,7 @@ class _MyAppState extends State<MyApp> {
         StreamBuilder<bool>(
           stream: bottomNavbarSwitcher,
           builder: (context, snapshot){
-            if (snapshot.data == true) 
+            if (snapshot.data == false) 
             {
               return const Align(alignment: Alignment.bottomCenter, child: MyBottomNavbar(),);
             }
