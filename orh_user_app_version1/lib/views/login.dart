@@ -19,8 +19,6 @@ class _LoginState extends State<Login>with SingleTickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
-    Get.put(LoginController());
-    Get.put(ImageController());
     _controller = AnimationController(
       vsync: this,
       duration: const Duration(seconds: 3),

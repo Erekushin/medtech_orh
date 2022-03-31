@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:orh_user_app_version1/global_constant.dart';
@@ -59,13 +61,8 @@ class Profile extends StatefulWidget {
 
 class _ProfileState extends State<Profile> {
   PageController pageController = PageController(viewportFraction: 0.85);
-  // Future<bool>cloaseTheApp(BuildContext context) async {
-  //   GlobalHelpers.bottomnavbarSwitcher.add(false);
-  //   return true;
-  // }
   @override
   Widget build(BuildContext context) {
-    // Get.find<MyBottomNavBarController>();
     return WillPopScope(
       onWillPop: () async{
         GlobalHelpers.bottomnavbarSwitcher.add(false);
@@ -124,15 +121,16 @@ class _ProfileState extends State<Profile> {
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                             GetX<ImageController>(builder: (imageController){
-                              return   CircleAvatar(
+                            return   CircleAvatar(
                             backgroundColor: Colors.grey,
                             radius: 60,
                             backgroundImage: const AssetImage('assets/images/user_default.png'),
-                               child: ClipRRect(
-                                 child: AspectRatio(aspectRatio: 1 / 1, child: Image.file(imageController.imageFile.value, fit: BoxFit.fill,)),
-                                 borderRadius: BorderRadius.circular(90.0),
-                                 ),  
+                            child: GlobalHelpers.imageFileSwitcher? ClipRRect(
+                            child: AspectRatio(aspectRatio: 1 / 1, child: Image.file(imageController.imageFile.value, fit: BoxFit.fill,)),
+                            borderRadius: BorderRadius.circular(90.0),
+                            ) : Container(width: 5, height: 5, color: Colors.blue, child: Text(imageController.imageFile.value.toString()),),
                          ).pressExtention((){
+                           GlobalHelpers.imageFileSwitcher = true;
                            imageController.cameraAndGallery();
                          });
                             }),

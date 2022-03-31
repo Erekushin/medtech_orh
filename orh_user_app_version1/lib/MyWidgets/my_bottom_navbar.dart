@@ -27,7 +27,7 @@ class _MyBottomNavbarState extends State<MyBottomNavbar> {
         GlobalHelpers.bottomnavbarSwitcher.add(false);
         Get.offAllNamed(RouteUnits.home);
         Get.put(LoginController());
-        Get.put(ImageController());
+       
         break;
       case 1 :
         Get.toNamed('/');

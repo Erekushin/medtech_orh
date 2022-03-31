@@ -330,6 +330,7 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:orh_user_app_version1/global_helpers.dart';
 import 'package:path_provider/path_provider.dart';
 
 // void main() {
@@ -343,6 +344,11 @@ import 'package:path_provider/path_provider.dart';
 
 class CounterStorage {
   //os iin ogch bgaa path iig avch bgaa
+  
+}
+
+class FlutterDemo extends StatefulWidget {
+  const FlutterDemo({Key? key,}) : super(key: key);
   Future<String> get _localPath async {
     final directory = await getTemporaryDirectory();
     return directory.path;
@@ -374,12 +380,7 @@ class CounterStorage {
       return 'something is wrong';
     }
   }
-}
 
-class FlutterDemo extends StatefulWidget {
-  const FlutterDemo({Key? key,required this.storage}) : super(key: key);
-
-  final CounterStorage storage;
   
 
   @override
@@ -387,27 +388,11 @@ class FlutterDemo extends StatefulWidget {
 }
 
 class _FlutterDemoState extends State<FlutterDemo> {
-  String _counter = 'empty';
-
+  String readData = 'empty';
   @override
-  void initState() {
+  void initState(){
     super.initState();
-    widget.storage.readCounter().then((String value) {
-      setState(() {
-        _counter = value;
-      });
-    });
-  }
-
-  Future<File> _incrementCounter() {
-    setState(() {
-      _counter += "h";
-    });
-
-    // Write the variable as a string to the file.
-    return widget.storage.writeCounter(_counter);
-  }
-
+  } 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -418,9 +403,25 @@ class _FlutterDemoState extends State<FlutterDemo> {
         child: Column(
           children: [
             Text(
-          'Button tapped $_counter time${_counter == 1 ? '' : 's'}.',
+          readData,
         ),
-        ElevatedButton(onPressed: (){_incrementCounter();}, child: Text('gfffg'))
+        ElevatedButton(onPressed: (){
+          GlobalHelpers.workWithLocal.writeToLog('something wonderfull gonna happen');
+          print('value is put');
+          }, child: Text('put data')),
+        ElevatedButton(onPressed: ()async{
+          if(await File(await GlobalHelpers.workWithLocal.logPath + "/Log.txt").exists()){
+            GlobalHelpers.workWithLocal.readFromLog().then((String value) {
+            setState(() {
+            print(value + " " + "this is data which i am looking for");
+            readData = value;
+            });
+           }); 
+          }
+          else{
+            print('file maani bhgu bna');
+          }
+          }, child: Text('get data'))
           ],
         )
       ),

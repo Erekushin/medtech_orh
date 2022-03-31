@@ -1,13 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:flutter/services.dart';
-import 'Controllers/login_controller.dart';
 import 'global_constant.dart';
-import 'package:unique_identifier/unique_identifier.dart';
-import 'package:device_information/device_information.dart';
-
-import 'global_helpers.dart';
 
 class MyCustomSplashScreen extends StatefulWidget {
   const MyCustomSplashScreen({Key? key}) : super(key: key);
@@ -55,22 +49,12 @@ class _MyCustomSplashScreenState extends State<MyCustomSplashScreen>
 
   late AnimationController _controller;
   late Animation<double> animation1;
-  fileCheck() async{
-     GlobalHelpers.directoryPath.requestTempDirectory();
-    if(await GlobalHelpers.directoryPath.tempdirectoryGet!.exists()){
-      print('file baih shig bna');
-    }
-    else{
-      GlobalHelpers.directoryPath.tempdirectoryGet!.create(recursive: true);
-      print('file iig vvsgechihshig bolloo');
-    }
-  }
+ 
   @override
   void initState(){
     initUniqueIdentifierState();
     super.initState();
     //file uudaa vvsgeh
-    fileCheck();
     _controller =
         AnimationController(vsync: this, duration: const Duration(seconds: 3));
 

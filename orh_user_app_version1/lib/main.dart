@@ -71,6 +71,11 @@ class _MyAppState extends State<MyApp> {
         break;
     }
   }
+
+  bindInitialControllers(){
+    Get.put(ImageController(), permanent: true);
+    Get.put(LoginController());
+  }
   @override
   Widget build(BuildContext context) {
     
@@ -84,6 +89,7 @@ class _MyAppState extends State<MyApp> {
           GetMaterialApp(
       debugShowCheckedModeBanner: false,
       initialRoute: '/splashScreen',
+      initialBinding: BindingsBuilder(() => bindInitialControllers()),
       getPages: [
         ///Root
         GetPage(name: "/splashScreen", page: ()=> const MyCustomSplashScreen()),
@@ -99,8 +105,6 @@ class _MyAppState extends State<MyApp> {
         GetPage(name: RouteUnits.profileDiagnosisHistory, page: ()=> const ProfileDiagnosisHistory()),
         GetPage(name: RouteUnits.profileLifeToken, page: ()=> const ProfileLifeToken()),
         GetPage(name: RouteUnits.profileDeviceLog, page: ()=> const ProfileDevicelog()),
-        
-
         ///Үйлчлүүлэгч үзлэгийн цаг захиалах
         GetPage(name: RouteUnits.timeOrder + RouteUnits.hospitals, page: ()=> const Hospitals()),
         GetPage(name: RouteUnits.timeOrder + RouteUnits.hospitals + RouteUnits.doctors, page: ()=> const Doctors()),
@@ -123,7 +127,7 @@ class _MyAppState extends State<MyApp> {
         // GetPage(name: "/loginforvchat", page: ()=> LoginView()),
         // GetPage(name: "/", page: ()=> LoginView()),
         GetPage(name: "/meeting", page: ()=> MeetingView()),
-        GetPage(name: "/localcheck", page: ()=> FlutterDemo(storage: sstorage,)),
+        GetPage(name: "/localcheck", page: ()=> FlutterDemo()),
         // GetPage(name: "/login", page: ()=> LoginView()),
         GetPage(name: "/camera", page: ()=> CameraApp()),
       ],
