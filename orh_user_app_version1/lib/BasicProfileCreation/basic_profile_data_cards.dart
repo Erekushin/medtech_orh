@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:swipe_cards/draggable_card.dart';
 import 'package:swipe_cards/swipe_cards.dart';
 import '../global_constant.dart';
+import '../splash_screen.dart';
 import 'SomeSpecificCards/basic_profile_data1.dart';
 import 'SomeSpecificCards/basic_profile_data2.dart';
 
@@ -58,7 +59,7 @@ class _BasicPrifileDataCardState extends State<BasicPrifileDataCard> {
                     );
                   },
                   onStackFinished: () {
-                    Get.toNamed('/splashScreen ');
+                    Get.to(MyCustomSplashScreen());
                     Get.snackbar('Баяр хүргэе', 'Бүртгэл үүслээ', snackPosition: SnackPosition.BOTTOM,
                         colorText: Colors.white, backgroundColor: Colors.grey[900], margin: EdgeInsets.all(5));
                   },

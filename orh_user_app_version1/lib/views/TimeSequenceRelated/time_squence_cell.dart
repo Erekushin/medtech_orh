@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:orh_user_app_version1/global_constant.dart';
 
-import '../time_sequence.dart';
+import 'time_sequence.dart';
 
 class TimeSequenceCell extends StatefulWidget {
   TimeSequenceCell({Key? key, required this.CellData}) : super(key: key);
@@ -14,7 +15,6 @@ class _TimeSequenceCell extends State<TimeSequenceCell> {
   Color CellColor = Color(0xFFE6E7E8);
   @override
   void initState() {
-    print('initees');
     if(widget.CellData?.Status == 0){
       CellColor = Color(0xFFE6E7E8);
     }
@@ -29,7 +29,6 @@ class _TimeSequenceCell extends State<TimeSequenceCell> {
 
   @override
   Widget build(BuildContext context) {
-    print('buildees');
     return Container(
       decoration: BoxDecoration(
           border: Border.all(color: Colors.white),
@@ -39,11 +38,11 @@ class _TimeSequenceCell extends State<TimeSequenceCell> {
     ).ripple((){
       if(widget.CellData?.Status == 0){
         Get.snackbar('Захиалагдсан цаг', 'Энэ цаг дээр эмч өөр өвчтөн дээр цаг товлосон байна!', snackPosition: SnackPosition.BOTTOM,
-            colorText: Colors.white, backgroundColor: Colors.grey[900], margin: EdgeInsets.all(5));
+            colorText: Colors.white, backgroundColor: Colors.grey[900], margin: EdgeInsets.only(left: 5, right: 5, bottom: GeneralMeasurements.deviceHeight/100*12));
       }
       else if(widget.CellData?.Status == 1){
         Get.snackbar('Цаг захиалах хүсэлт илгээгдлээ', 'Эмч уг хүсэлтийг зөвшөөрөх хүртэл түр хүлээнүү!', snackPosition: SnackPosition.BOTTOM,
-            colorText: Colors.white, backgroundColor: Colors.grey[900], margin: EdgeInsets.all(5));
+            colorText: Colors.white, backgroundColor: Colors.grey[900], margin: EdgeInsets.only(left: 5, right: 5, bottom: GeneralMeasurements.deviceHeight/100*12));
         setState(() {
           widget.CellData?.Status = 2;
           CellColor = Colors.yellow;
@@ -51,7 +50,7 @@ class _TimeSequenceCell extends State<TimeSequenceCell> {
       }
       else if(widget.CellData?.Status == 2){
         Get.snackbar('Таны сонгосон цагийг цуцаллаа', 'Эмчид илгээсэн хүсэлтийг цуцаллаа!', snackPosition: SnackPosition.BOTTOM,
-            colorText: Colors.white, backgroundColor: Colors.grey[900], margin: EdgeInsets.all(5));
+            colorText: Colors.white, backgroundColor: Colors.grey[900], margin: EdgeInsets.only(left: 5, right: 5, bottom: GeneralMeasurements.deviceHeight/100*12));
         setState(() {
           widget.CellData?.Status = 1;
           CellColor = Colors.pinkAccent;

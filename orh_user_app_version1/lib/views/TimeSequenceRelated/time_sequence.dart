@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'CreatedWidgets/circle_day_presenter.dart';
-import 'CreatedWidgets/time_squence_cell.dart';
+import 'package:orh_user_app_version1/global_helpers.dart';
+import 'package:orh_user_app_version1/views/TimeSequenceRelated/circle_day_presenter.dart';
+import 'package:orh_user_app_version1/views/TimeSequenceRelated/time_squence_cell.dart';
 class DoctorTimeSequence extends StatefulWidget {
   const DoctorTimeSequence({Key? key}) : super(key: key);
   @override
@@ -19,72 +20,77 @@ class _DoctorTimeSequenceState extends State<DoctorTimeSequence> {
   }
   @override
   Widget build(BuildContext context){
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        centerTitle: true,
-        shadowColor: Colors.black.withOpacity(.5),
-        title: Text(
-          'Цагийн хуваарь',
-          style: TextStyle(
-              color: Colors.black.withOpacity(.7),
-              fontWeight: FontWeight.w600,
-              letterSpacing: 1),
-        ),
-        leading: IconButton(
-          icon: Icon(
-            Icons.arrow_back,
-            color: Colors.black.withOpacity(.4),
+    return WillPopScope(
+      onWillPop: () async{
+        return true;
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.white,
+          elevation: 0,
+          centerTitle: true,
+          shadowColor: Colors.black.withOpacity(.5),
+          title: Text(
+            'Цагийн хуваарь',
+            style: TextStyle(
+                color: Colors.black.withOpacity(.7),
+                fontWeight: FontWeight.w600,
+                letterSpacing: 1),
           ),
-          onPressed: () => Navigator.maybePop(context),
+          leading: IconButton(
+            icon: Icon(
+              Icons.arrow_back,
+              color: Colors.black.withOpacity(.4),
+            ),
+            onPressed: () => Navigator.maybePop(context),
+          ),
         ),
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-            children: [
-              Container(
-                child: Column(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Container(margin: EdgeInsets.all(10), width: 20, height: 20,
-                          decoration: BoxDecoration(color: Colors.pinkAccent,
-                              borderRadius: BorderRadius.all(Radius.circular(10))),),
-                        Text('Сонгох боломжтой цаг')
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Container(margin: EdgeInsets.all(10), width: 20, height: 20,
-                          decoration: BoxDecoration(color: Colors.yellow,
-                              borderRadius: BorderRadius.all(Radius.circular(10))),),
-                        Text('Таны сонгосон цаг')
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Container(margin: EdgeInsets.all(10), width: 20, height: 20,
-                          decoration: BoxDecoration(color: Color(0xFFE6E7E8),
-                              borderRadius: BorderRadius.all(Radius.circular(10))),),
-                        Text('Сонгох боломжгүй цаг')
-                      ],
-                    )
-                  ],
+        body: SingleChildScrollView(
+          child: Column(
+              children: [
+                Container(
+                  child: Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Container(margin: EdgeInsets.all(10), width: 20, height: 20,
+                            decoration: BoxDecoration(color: Colors.pinkAccent,
+                                borderRadius: BorderRadius.all(Radius.circular(10))),),
+                          Text('Сонгох боломжтой цаг')
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Container(margin: EdgeInsets.all(10), width: 20, height: 20,
+                            decoration: BoxDecoration(color: Colors.yellow,
+                                borderRadius: BorderRadius.all(Radius.circular(10))),),
+                          Text('Таны сонгосон цаг')
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Container(margin: EdgeInsets.all(10), width: 20, height: 20,
+                            decoration: BoxDecoration(color: Color(0xFFE6E7E8),
+                                borderRadius: BorderRadius.all(Radius.circular(10))),),
+                          Text('Сонгох боломжгүй цаг')
+                        ],
+                      )
+                    ],
+                  ),
                 ),
-              ),
-              PaginatedDataTable(
-                columnSpacing: 10,
-                horizontalMargin: 10,
-                rowsPerPage: 9,
-                showCheckboxColumn: false,
-                columns: GenerateDateBasedColumns(),
-                source: DessertDataSource(),
-              ),
-            ]
+                PaginatedDataTable(
+                  columnSpacing: 10,
+                  horizontalMargin: 10,
+                  rowsPerPage: 9,
+                  showCheckboxColumn: false,
+                  columns: GenerateDateBasedColumns(),
+                  source: DessertDataSource(),
+                ),
+              ]
+          ),
         ),
       ),
     );

@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:orh_user_app_version1/global_constant.dart';
-
+import 'package:orh_user_app_version1/global_helpers.dart';
 import '../Controllers/image_controller.dart';
 import '../Controllers/login_controller.dart';
-import '../main.dart';
 class MyBottomNavbar extends StatefulWidget {
   const MyBottomNavbar({ Key? key }) : super(key: key);
 
@@ -25,6 +24,7 @@ class _MyBottomNavbarState extends State<MyBottomNavbar> {
     switch(index){
       case 0 :
         print('index0');
+        GlobalHelpers.bottomnavbarSwitcher.add(false);
         Get.offAllNamed(RouteUnits.home);
         Get.put(LoginController());
         Get.put(ImageController());

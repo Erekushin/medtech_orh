@@ -6,6 +6,93 @@ import '../global_constant.dart';
 import '../global_helpers.dart';
 
 
+ Widget homePageCardsGroup(
+      String data,
+      String route,
+      Color color,
+      IconData icon,
+      String title,
+      BuildContext context,
+      String data2,
+      String route2,
+      Color color2,
+      IconData icon2,
+      String title2,) {
+    double _w = MediaQuery.of(context).size.width;
+    return Padding(
+      padding: EdgeInsets.only(bottom: _w / 17),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          homePageCard(data, route, color, icon, title, context),
+          homePageCard(data2, route2, color2, icon2, title2, context),
+        ],
+      ),
+    );
+  }
+  Widget homePageCard(String data, String route, Color color, IconData icon, String title,
+      BuildContext context) {
+    double _w = MediaQuery.of(context).size.width;
+    return InkWell(
+          highlightColor: Colors.transparent,
+          splashColor: Colors.transparent,
+          onTap: () {
+            GlobalHelpers.bottomnavbarSwitcher.add(true);
+            Get.toNamed(route, arguments: data);
+          },
+          child: Container(
+            padding: const EdgeInsets.all(15),
+            height: _w / 2,
+            width: _w / 2.4,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              boxShadow: [
+                BoxShadow(
+                  color: const Color(0xff040039).withOpacity(.15),
+                  blurRadius: 99,
+                ),
+              ],
+              borderRadius: const BorderRadius.all(
+                Radius.circular(25),
+              ),
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                const SizedBox(),
+                Container(
+                  height: _w / 8,
+                  width: _w / 8,
+                  decoration: BoxDecoration(
+                    color: color.withOpacity(.1),
+                    shape: BoxShape.circle,
+                  ),
+                  child: Icon(
+                    icon,
+                    color: color.withOpacity(.6),
+                  ),
+                ),
+                Text(
+                  title,
+                  maxLines: 4,
+                  softWrap: true,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    fontSize: 18,
+                    color: Colors.black.withOpacity(.5),
+                    fontWeight: FontWeight.w700,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(),
+              ],
+            ),
+          ),
+        );
+  }
+
+
+
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
   @override
@@ -14,11 +101,10 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> with SingleTickerProviderStateMixin{
   Future<bool>cloaseTheApp(BuildContext context) async {
     return await Get.defaultDialog(title: 'Эрүүл Gerege ийг хаах уу?', content: Image.asset('assets/images/thinkingBoy.png'),
-    actions: <Widget>[TextButton(onPressed: (){SystemNavigator.pop();}, child: const Text("ok", style: TextStyle(fontSize: 20),)), 
-    TextButton(onPressed: (){Get.back(closeOverlays: true);}, child: const Text("cancel", style: TextStyle(fontSize: 20)))]);
+    actions: <Widget>[TextButton(onPressed: (){SystemNavigator.pop();}, child: const Text("exit", style: TextStyle(fontSize: 20),)), 
+    ]);
   }
-
-
+  
   @override
   void initState() {
     super.initState();
@@ -177,89 +263,5 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin{
       onWillPop: (){
         return cloaseTheApp(context);
       });
-  }
-  Widget homePageCardsGroup(
-      String data,
-      String route,
-      Color color,
-      IconData icon,
-      String title,
-      BuildContext context,
-      String data2,
-      String route2,
-      Color color2,
-      IconData icon2,
-      String title2,) {
-    double _w = MediaQuery.of(context).size.width;
-    return Padding(
-      padding: EdgeInsets.only(bottom: _w / 17),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          homePageCard(data, route, color, icon, title, context),
-          homePageCard(data2, route2, color2, icon2, title2, context),
-        ],
-      ),
-    );
-  }
-  Widget homePageCard(String data, String route, Color color, IconData icon, String title,
-      BuildContext context) {
-    double _w = MediaQuery.of(context).size.width;
-    return InkWell(
-          highlightColor: Colors.transparent,
-          splashColor: Colors.transparent,
-          onTap: () {
-            GlobalHelpers.bottomnavbarSwitcher.add(true);
-            Get.toNamed(route, arguments: data);
-          },
-          child: Container(
-            padding: const EdgeInsets.all(15),
-            height: _w / 2,
-            width: _w / 2.4,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              boxShadow: [
-                BoxShadow(
-                  color: const Color(0xff040039).withOpacity(.15),
-                  blurRadius: 99,
-                ),
-              ],
-              borderRadius: const BorderRadius.all(
-                Radius.circular(25),
-              ),
-            ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                const SizedBox(),
-                Container(
-                  height: _w / 8,
-                  width: _w / 8,
-                  decoration: BoxDecoration(
-                    color: color.withOpacity(.1),
-                    shape: BoxShape.circle,
-                  ),
-                  child: Icon(
-                    icon,
-                    color: color.withOpacity(.6),
-                  ),
-                ),
-                Text(
-                  title,
-                  maxLines: 4,
-                  softWrap: true,
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                    fontSize: 18,
-                    color: Colors.black.withOpacity(.5),
-                    fontWeight: FontWeight.w700,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-                const SizedBox(),
-              ],
-            ),
-          ),
-        );
   }
 }

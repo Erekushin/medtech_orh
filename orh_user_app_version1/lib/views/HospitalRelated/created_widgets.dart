@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import '../global_constant.dart';
+import '../../global_constant.dart';
 
-Widget eachHospital(){
+ Widget eachHospital(){
   return Container(
       margin: const EdgeInsets.all(10),
       padding: const EdgeInsets.all(5),
@@ -47,4 +47,3 @@ Widget searchBtn(String btntext, Color btncolor){
               )
           );
 }
-

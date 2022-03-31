@@ -15,12 +15,9 @@ class DirectoryPath{
   }
 
 
-
-
-
-
-
   Directory? _appSupportDirectory;
+
+  
   Directory? _appLibraryDirectory;
   Directory? _appDocumentsDirectory;
   Directory? _externalDocumentsDirectory;

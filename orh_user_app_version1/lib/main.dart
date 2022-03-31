@@ -1,25 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:orh_user_app_version1/splash_screen.dart';
+import 'package:orh_user_app_version1/views/ProfileRelated/profile.dart';
 import 'package:orh_user_app_version1/views/home.dart';
 import 'package:orh_user_app_version1/views/login.dart';
 import 'BasicProfileCreation/basic_profile_data_cards.dart';
 import 'Controllers/image_controller.dart';
 import 'Controllers/login_controller.dart';
-import 'Doctors/doctor_profile.dart';
-import 'Doctors/doctors.dart';
+import 'views/DoctorRelated/doctor_profile.dart';
+import 'views/DoctorRelated/doctors.dart';
 import 'Helpers/Calculators/CalculatorViews/bmi.dart';
 import 'Helpers/Calculators/CalculatorViews/calculators_home.dart';
 import 'MyWidgets/my_bottom_navbar.dart';
-import 'Hospitals/hospital_prifile.dart';
-import 'Hospitals/hospitals.dart';
+import 'views/HospitalRelated/hospital_prifile.dart';
+import 'views/HospitalRelated/hospitals.dart';
 import 'Lavlagaa1/lavlagaa.dart';
-import 'Profile/profile.dart';
-import 'Profile/profile_devicelog.dart';
-import 'Profile/profile_diagnosis_history.dart';
-import 'Profile/profile_info.dart';
-import 'Profile/profile_lifetoken.dart';
-import 'TimeSequence/time_sequence.dart';
+import 'views/ProfileRelated/profile_devicelog.dart';
+import 'views/ProfileRelated/profile_diagnosis_history.dart';
+import 'views/ProfileRelated/profile_info.dart';
+import 'views/ProfileRelated/profile_lifetoken.dart';
+import 'views/TimeSequenceRelated/time_sequence.dart';
 import 'VideoCall/camera_ex.dart';
 import 'VideoCall/video_call.dart';
 import 'file_check_ui.dart';
@@ -78,6 +78,7 @@ class _MyAppState extends State<MyApp> {
     return  MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
+        resizeToAvoidBottomInset: false,
         body: Stack(
         children: [
           GetMaterialApp(
@@ -130,12 +131,12 @@ class _MyAppState extends State<MyApp> {
         StreamBuilder<bool>(
           stream: bottomNavbarSwitcher,
           builder: (context, snapshot){
-            if (snapshot.data == false) 
+            if (snapshot.data == true) 
             {
               return const Align(alignment: Alignment.bottomCenter, child: MyBottomNavbar(),);
             }
             else {
-              return const SizedBox();
+              return const SizedBox(height: 1);
             }
           })
         ],
