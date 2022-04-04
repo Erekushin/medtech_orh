@@ -4,12 +4,13 @@ import 'package:orh_user_app_version1/splash_screen.dart';
 import 'package:orh_user_app_version1/views/ProfileRelated/profile.dart';
 import 'package:orh_user_app_version1/views/home.dart';
 import 'package:orh_user_app_version1/views/login.dart';
+import 'package:orh_user_app_version1/views/setting.dart';
 import 'BasicProfileCreation/basic_profile_data_cards.dart';
 import 'Controllers/image_controller.dart';
 import 'Controllers/login_controller.dart';
+import 'MyWidgets/my_switcher.dart';
 import 'views/DoctorRelated/doctor_profile.dart';
 import 'views/DoctorRelated/doctors.dart';
-import 'Helpers/Calculators/CalculatorViews/bmi.dart';
 import 'Helpers/Calculators/CalculatorViews/calculators_home.dart';
 import 'MyWidgets/my_bottom_navbar.dart';
 import 'views/HospitalRelated/hospital_prifile.dart';
@@ -119,9 +120,11 @@ class _MyAppState extends State<MyApp> {
         GetPage(name: RouteUnits.lavlagaa1, page: ()=> const Lavlagaa()),
         ///Calculators
         GetPage(name: RouteUnits.calculators, page: ()=> const CalculatorHome()),
-        GetPage(name: "/bmi", page: ()=> const BMI()),
+        GetPage(name: "/bmi", page: ()=> const MySwitcher()),
         ///Асуумжууд
         GetPage(name: RouteUnits.questions, page: ()=> const Lavlagaa()),
+        ///Setting
+        GetPage(name: RouteUnits.setting, page: ()=> const Setting()),
 
         ///card test
         // GetPage(name: "/loginforvchat", page: ()=> LoginView()),

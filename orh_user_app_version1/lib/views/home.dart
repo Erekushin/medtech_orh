@@ -231,6 +231,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin{
                   highlightColor: Colors.transparent,
                   splashColor: Colors.transparent,
                   onTap: () {
+                    Get.toNamed(RouteUnits.setting);
                   },
                   child: ClipRRect(
                     borderRadius: const BorderRadius.all(Radius.circular(99)),

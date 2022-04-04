@@ -29,6 +29,7 @@ class RouteUnits{
   static String basicProfileInput = "/basicProfileInput";
   static String calculators = "/calculators";
   static String questions = "/questions";
+  static String setting = "/setting";
 }
 
 class CommonColors{

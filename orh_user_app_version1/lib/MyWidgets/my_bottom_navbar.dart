@@ -32,7 +32,7 @@ class _MyBottomNavbarState extends State<MyBottomNavbar> {
       case 1 :
         Get.toNamed('/');
         break;
-      case 2 :
+      case 2 : 
         Get.toNamed('/');
         break;
       case 3 :
