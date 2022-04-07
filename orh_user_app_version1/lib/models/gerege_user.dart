@@ -60,7 +60,7 @@ class Result {
     firstName = json['first_name'];
     lastName = json['last_name'];
     familyName = json['family_name'];
-    phone = json['phone'];
+    phone = json['phone_no'];
     civilId = json['civil_id'];
     userName = json['user_name'];
     birthDate = json['birth_date'];

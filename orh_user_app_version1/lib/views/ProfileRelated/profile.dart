@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:orh_user_app_version1/Controllers/login_controller.dart';
 import 'package:orh_user_app_version1/global_constant.dart';
 import 'package:orh_user_app_version1/global_helpers.dart';
 
@@ -107,7 +108,9 @@ class _ProfileState extends State<Profile> {
                     ],
                   ),
                 ),
-                 Container(//Profile picture container............................................................!
+                GetBuilder<LoginController>(
+                  builder: (loginController){
+                    return  Container(//Profile picture container............................................................!
                    width: GeneralMeasurements.deviceWidth/7*6,
                    height: GeneralMeasurements.deviceHeight/100*24,
                    decoration: BoxDecoration(
@@ -124,7 +127,7 @@ class _ProfileState extends State<Profile> {
                             return   CircleAvatar(
                             backgroundColor: Colors.grey,
                             radius: 60,
-                            backgroundImage: const AssetImage('assets/images/user_default.png'),
+                            backgroundImage: const AssetImage('assets/images/user_default.png'),  
                             child: GlobalHelpers.imageFileSwitcher? ClipRRect(
                             child: AspectRatio(aspectRatio: 1 / 1, child: Image.file(imageController.imageFile.value, fit: BoxFit.fill,)),
                             borderRadius: BorderRadius.circular(90.0),
@@ -135,11 +138,12 @@ class _ProfileState extends State<Profile> {
                          });
                             }),
                             const SizedBox(width: 1, height: 1,),
-                            const Text('Mandah', style: TextStyle(fontWeight: FontWeight.bold),),
-                            const Text('95258154', style: TextStyle(fontWeight: FontWeight.bold),),
+                            Text(loginController.model.result!.firstName?? '', style: const TextStyle(fontWeight: FontWeight.bold),),
+                            Text(loginController.model.result!.phone?? '', style: const TextStyle(fontWeight: FontWeight.bold),),
                          ],
                                         ),
-                 ),
+                 );
+                    }),
                  const SizedBox(width: 1, height: 40,),
                  SizedBox(
                    width: GeneralMeasurements.deviceWidth/7*6,

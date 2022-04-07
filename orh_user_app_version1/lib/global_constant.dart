@@ -5,6 +5,7 @@ class UriAdresses{
 static const String medTechUri = "http://10.0.0.116:8080/ords/medical_backend/request/make";
 static const String geregeUserUri = "https://iam.gerege.mn/api/public/user/login";
 static const String geregeUserLoginUri = "https://iam.gerege.mn/api/public/user/login/username";//нууц үг шаарддаг Uri
+static const String CovidBackEnd = "http://203.26.189.133:8080/ords/covid_backend/request/make";
 }
 
 class RouteUnits{
@@ -41,4 +42,9 @@ class CommonColors{
 class GeneralMeasurements{
   static late double deviceHeight;
   static late double deviceWidth;
+}
+
+class AllSizes {
+ static const double bigHeader = 25;
+ static const double queryTxtSize = 16;
 }

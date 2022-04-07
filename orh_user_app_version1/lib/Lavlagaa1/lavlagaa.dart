@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import '../Helpers/CreatedGlobalWidgets/waiting_screen.dart';
-import 'CreatedWidget/dropdown.dart';
-import 'CreatedWidget/text_input.dart';
 import 'base_data.dart';
 import 'controller.dart';
 import 'model.dart';
@@ -75,24 +73,24 @@ class _LavlagaaState extends State<Lavlagaa> {
                     controller.number_families.text = form1Controller.ownData.result?.list?[0].numberFamilies ?? "";
                     return Column(
                       children: [
-                        MyTextField(w: _w, controller: controller.profession, label: "мэргэжил оруулна уу?", hint: "мэргэжил",),
-                        MyTextField(w: _w, controller: controller.office, label: "ажилладаг газрын нэр?", hint: "ажил",),
-                        myDropDown(mark: 'боловсрол байдал', dropDownHint: form1Controller.basedata.result?.items?[6].name??
-                            "сонголт байхгүй", w: _w, listitems: form1Controller.basedata.result?.items?[6].views,
-                          currentValue: form1Controller.ownData.result?.list?[0].workingConditions),
-                        MyTextField(w: _w, controller: controller.position, label: "албан тушаал?", hint: "албан тушаал",),
-                        MyTextField(w: _w, controller: controller.phone, label: "ажлын утас?", hint: "утас",),
-                        myDropDown(mark: 'хөдөлмөр эрхлэлтийн байдал', dropDownHint: form1Controller.basedata.result?.items?[3].name?? "сонголт байхгүй",
-                          w: _w, listitems: form1Controller.basedata.result?.items?[3].views, currentValue: form1Controller.ownData.result?.list?[0].reasonNotEmployment,),
-                        myDropDown(mark: 'хөдөлмөр эрхлэхгүй шалтгаан', dropDownHint: form1Controller.basedata.result?.items?[0].name?? "сонголт байхгүй",
-                          w: _w, listitems: form1Controller.basedata.result?.items?[0].views, currentValue: form1Controller.ownData.result?.list?[0].employment,),
-                        myDropDown(mark: 'гэр бүлийн байдал', dropDownHint: form1Controller.basedata.result?.items?[1].name?? "сонголт байхгүй",
-                          w: _w, listitems: form1Controller.basedata.result?.items?[1].views, currentValue: form1Controller.ownData.result?.list?[0].educationSituation,),
-                        // RadioBtn(w: _w, name: form1Controller.basedata.result?.items?[2].name, listitems: form1Controller.basedata.result?.items?[2].views),
-                        myDropDown(mark: 'ажлын нөхцөл', dropDownHint: form1Controller.basedata.result?.items?[4].name?? "сонголт байхгүй",
-                          w: _w, listitems: form1Controller.basedata.result?.items?[4].views, currentValue: form1Controller.ownData.result?.list?[0].maritalStatus,),
-                        MyTextField(w: _w, controller: controller.number_families, label: "гэр бүлийн тоо?", hint: "тоо",),
-                        MyTextField(w: _w, controller: controller.nationality, label: "яс үндэс?", hint: "яс үндэс",),
+                        // MyTextField(w: _w, controller: controller.profession, label: "мэргэжил оруулна уу?", hint: "мэргэжил",),
+                        // MyTextField(w: _w, controller: controller.office, label: "ажилладаг газрын нэр?", hint: "ажил",),
+                        // myDropDown(mark: 'боловсрол байдал', dropDownHint: form1Controller.basedata.result?.items?[6].name??
+                        //     "сонголт байхгүй", w: _w, listitems: form1Controller.basedata.result?.items?[6].views,
+                        //   currentValue: form1Controller.ownData.result?.list?[0].workingConditions),
+                        // MyTextField(w: _w, controller: controller.position, label: "албан тушаал?", hint: "албан тушаал",),
+                        // MyTextField(w: _w, controller: controller.phone, label: "ажлын утас?", hint: "утас",),
+                        // myDropDown(mark: 'хөдөлмөр эрхлэлтийн байдал', dropDownHint: form1Controller.basedata.result?.items?[3].name?? "сонголт байхгүй",
+                        //   w: _w, listitems: form1Controller.basedata.result?.items?[3].views, currentValue: form1Controller.ownData.result?.list?[0].reasonNotEmployment,),
+                        // myDropDown(mark: 'хөдөлмөр эрхлэхгүй шалтгаан', dropDownHint: form1Controller.basedata.result?.items?[0].name?? "сонголт байхгүй",
+                        //   w: _w, listitems: form1Controller.basedata.result?.items?[0].views, currentValue: form1Controller.ownData.result?.list?[0].employment,),
+                        // myDropDown(mark: 'гэр бүлийн байдал', dropDownHint: form1Controller.basedata.result?.items?[1].name?? "сонголт байхгүй",
+                        //   w: _w, listitems: form1Controller.basedata.result?.items?[1].views, currentValue: form1Controller.ownData.result?.list?[0].educationSituation,),
+                        // // RadioBtn(w: _w, name: form1Controller.basedata.result?.items?[2].name, listitems: form1Controller.basedata.result?.items?[2].views),
+                        // myDropDown(mark: 'ажлын нөхцөл', dropDownHint: form1Controller.basedata.result?.items?[4].name?? "сонголт байхгүй",
+                        //   w: _w, listitems: form1Controller.basedata.result?.items?[4].views, currentValue: form1Controller.ownData.result?.list?[0].maritalStatus,),
+                        // MyTextField(w: _w, controller: controller.number_families, label: "гэр бүлийн тоо?", hint: "тоо",),
+                        // MyTextField(w: _w, controller: controller.nationality, label: "яс үндэс?", hint: "яс үндэс",),
                         // RadioBtn(w: _w, name: form1Controller.basedata.result?.items?[2].name, listitems: form1Controller.basedata.result?.items?[2].views),
                         // RadioBtn(w: _w, name: form1Controller.basedata.result?.items?[2].name, listitems: form1Controller.basedata.result?.items?[2].views),
                         // RadioBtn(w: _w, name: form1Controller.basedata.result?.items?[2].name, listitems: form1Controller.basedata.result?.items?[2].views),

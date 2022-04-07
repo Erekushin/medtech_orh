@@ -33,7 +33,7 @@ class Setting extends StatelessWidget {
         body: Column(
           children: [
             Container(
-              child: MyDropdown(dropDownHint: "Хэл Солих", w: 5, listitems: [], currentValue: 5, mark: "",)
+              // child: MyDropdown(dropDownHint: "Хэл Солих", w: 5, listitems: [], currentValue: 5, mark: "",)
             ),
             
           ],

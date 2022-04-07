@@ -35,21 +35,20 @@ class _BasicPrifileDataCardState extends State<BasicPrifileDataCard> {
   }
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     return Scaffold(
         key: _scaffoldKey,
         body: Container(///background container
             color: CommonColors.geregeBlue,
             child: Center(
               child: Container(///Картуудыг агуулах Container
-                width: size.width * .9,
-                height: size.width * 1.1,
+                width: GeneralMeasurements.deviceWidth/100*90,
+                height: GeneralMeasurements.deviceHeight/100*60,
                 child: SwipeCards(///Картууд
                   matchEngine: _matchEngine!,
                   itemBuilder: (BuildContext context, int index) {
                     return Container(
-                        width: size.width * .9,
-                        height: size.width * 1.1,
+                        width: GeneralMeasurements.deviceWidth/100*90,
+                        height: GeneralMeasurements.deviceHeight/100*60,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.all(Radius.circular(20)),
                           color: Colors.white,

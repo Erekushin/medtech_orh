@@ -19,9 +19,11 @@ class _LoginState extends State<Login>with SingleTickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
+    Get.put(LoginController());
     _controller = AnimationController(
       vsync: this,
       duration: const Duration(seconds: 3),
+      
     );
     _opacity = Tween<double>(begin: 0, end: 1).animate(
       CurvedAnimation(
@@ -72,8 +74,8 @@ class _LoginState extends State<Login>with SingleTickerProviderStateMixin {
                 child: Transform.scale(
                   scale: _transform.value,
                   child: Container(
-                      width: GeneralMeasurements.deviceWidth * .9,
-                      height: GeneralMeasurements.deviceWidth * 1.1,
+                      width: GeneralMeasurements.deviceWidth/100*90,
+                      height: GeneralMeasurements.deviceHeight/100*60,
                       decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(15),
@@ -114,16 +116,16 @@ class _LoginState extends State<Login>with SingleTickerProviderStateMixin {
                                     print('sddfdf');
                                   },
                                   child: Container(
-                                    height: GeneralMeasurements.deviceWidth / 8,
-                                    width: GeneralMeasurements.deviceWidth / 2.6,
+                                    height: GeneralMeasurements.deviceHeight/100*6,
+                                    width: GeneralMeasurements.deviceWidth/100*36,
                                     alignment: Alignment.center,
                                     decoration: BoxDecoration(
                                       color: const Color(0xff4796ff),
                                       borderRadius: BorderRadius.circular(10),
                                     ),
-                                    child: Text(
+                                    child: const Text(
                                       "LOGIN",
-                                      style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w600),
+                                      style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600),
                                     ),
                                   ),
                                 ),
@@ -181,8 +183,8 @@ class _LoginState extends State<Login>with SingleTickerProviderStateMixin {
   Widget component1(
       IconData icon, String hintText, bool isPassword, bool isEmail, TextEditingController controller) {
     return Container(
-      height: GeneralMeasurements.deviceWidth / 8,
-      width: GeneralMeasurements.deviceWidth / 1.22,
+      height: GeneralMeasurements.deviceHeight /100*7,
+      width: GeneralMeasurements.deviceWidth /100*80,
       alignment: Alignment.center,
       padding: EdgeInsets.only(right: GeneralMeasurements.deviceWidth / 30),
       decoration: BoxDecoration(

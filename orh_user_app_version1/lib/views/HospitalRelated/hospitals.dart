@@ -87,7 +87,7 @@ class _HospitalsState extends State<Hospitals> {
                           ),
                           Container(
                             margin: const EdgeInsets.only(top: 10),
-                            height: 220,
+                            height: GeneralMeasurements.deviceHeight/100*30,
                             child: PageView.builder(
                                 controller: pageController,
                                 itemCount: 4,

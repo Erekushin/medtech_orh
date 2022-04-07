@@ -27,6 +27,13 @@ class LoginController extends GetxController{
     data['app_id'] = 4402;
     return data;
   }
+  Map<String, dynamic> childHeartQueryResearchertestbody(){
+    String? keytxt = model.result!.id.toString();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['request_user_id'] = '10200801060556657116';
+    return data;
+  }
+
   Future getdata() async{
     loginloading.value = true;
     if(username.text.isNotEmpty && pass.text.isNotEmpty){
@@ -79,4 +86,18 @@ class LoginController extends GetxController{
           colorText: Colors.white, backgroundColor: Colors.grey[900], margin: const EdgeInsets.all(5));
     }
   }
+
+  Future childHeartQueryResearchertest() async{
+    var data = await GlobalHelpers.postRequestGeneral.getdata(childHeartQueryResearchertestbody(), "2035232", UriAdresses.CovidBackEnd);
+    var response = LoginModel.fromJson(jsonDecode(data.toString()));
+    if(response.code == 200){
+      Get.toNamed('/localcheck', arguments: "fromHospitals");
+    }
+    else if(response.code == 400){
+      Get.defaultDialog(title: 'Таньд судалгаа авах эрх үүсээгүй байна', content: Image.asset('assets/images/thinkingBoy.png'));
+    }
+  }
+
+
+
 }

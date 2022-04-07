@@ -1,44 +1,45 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:orh_user_app_version1/Controllers/login_controller.dart';
 import 'dart:ui';
+import '../Controllers/child_heart_query_controller.dart';
 import '../global_constant.dart';
 import '../global_helpers.dart';
 
 
  Widget homePageCardsGroup(
-      String data,
-      String route,
+     
       Color color,
       IconData icon,
       String title,
       BuildContext context,
-      String data2,
-      String route2,
+      Function func,
       Color color2,
       IconData icon2,
-      String title2,) {
+      String title2,
+      Function func2,) {
     double _w = MediaQuery.of(context).size.width;
     return Padding(
       padding: EdgeInsets.only(bottom: _w / 17),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          homePageCard(data, route, color, icon, title, context),
-          homePageCard(data2, route2, color2, icon2, title2, context),
+          homePageCard(color, icon, title, context, func),
+          homePageCard(color2, icon2, title2, context, func2),
         ],
       ),
     );
   }
-  Widget homePageCard(String data, String route, Color color, IconData icon, String title,
-      BuildContext context) {
+  Widget homePageCard(Color color, IconData icon, String title,
+      BuildContext context, Function func) {
     double _w = MediaQuery.of(context).size.width;
     return InkWell(
           highlightColor: Colors.transparent,
           splashColor: Colors.transparent,
           onTap: () {
+            func();
             GlobalHelpers.bottomnavbarSwitcher.add(true);
-            Get.toNamed(route, arguments: data);
           },
           child: Container(
             padding: const EdgeInsets.all(15),
@@ -108,6 +109,8 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin{
   @override
   void initState() {
     super.initState();
+    final childHeartQueryController = Get.find<ChildHeartQueryController>();
+    childHeartQueryController.getAimagList();
   }
   @override
   void dispose() {
@@ -153,66 +156,60 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin{
                 ),
               ),
               homePageCardsGroup(
-                'profile',
-                '/profile',
                 const Color(0xFF12C0A1),
                 Icons.person,
                 'Профайл',
                 context,
-                'firstPage',
-                RouteUnits.calculators,
+                (){Get.toNamed('/profile', arguments: "profile");},
                 const Color(0xffFF6D6D),
                 Icons.analytics_outlined,
                 'Calculators',
+                (){Get.toNamed(RouteUnits.calculators, arguments: "firstPage");}
               ),
               homePageCardsGroup(
-                  'fromTimeOrder',
-                  RouteUnits.timeOrder + RouteUnits.hospitals,
                   Colors.lightGreen,
                   Icons.calendar_today_sharp,
                   'Цаг авах',
                   context,
-                  'fromHospitals',
-                  RouteUnits.hospitals,
+                  (){Get.toNamed(RouteUnits.timeOrder + RouteUnits.hospitals, arguments: "fromTimeOrder");},
                   const Color(0xffffa700),
                   Icons.article,
-                  'Эмнэлэгүүд',),
+                  'Эмнэлэгүүд',
+                  (){Get.toNamed(RouteUnits.hospitals, arguments: "fromHospitals");},),
               homePageCardsGroup(
-                  'fromlavlagaa1',
-                  RouteUnits.lavlagaa1,
                   const Color(0xff63ace5),
                   Icons.ad_units_outlined,
                   'Лавлагаа 1',
                   context,
-                  'fromDoctors',
-                  RouteUnits.doctors,
+                  (){Get.toNamed(RouteUnits.lavlagaa1, arguments: "fromlavlagaa1");},
                   const Color(0xfff37736),
                   Icons.article_sharp,
-                  'Эмч нар',),
+                  'Эмч нар',
+                  (){Get.toNamed(RouteUnits.doctors, arguments: "fromDoctors");},),
               homePageCardsGroup(
-                  'fromHospitals',
-                  '/camera',
                   const Color(0xffFF6D6D),
                   Icons.android,
                   'camera',
                   context,
-                  'fromHospitals',
-                  '/login',
+                  (){Get.toNamed('/camera', arguments: "fromHospitals");},
                   Colors.lightGreen,
                   Icons.text_format,
-                  'ionDemo',),
+                  'ionDemo',
+                  (){Get.toNamed('/login', arguments: "fromHospitals");},),
               homePageCardsGroup(
-                  'fromHospitals',
-                  RouteUnits.questions,
                   const Color(0xffffa700),
                   Icons.text_fields,
-                  'Асуумжууд',
+                  'tsag avah',
                   context,
-                  'fromHospitals',
-                  '/localcheck',
+                  (){Get.toNamed('/tsagavah', arguments: "fromHospitals");},
                   const Color(0xff63ace5),
                   Icons.gamepad_outlined,
-                    'local check',),
+                    'local check',
+                    (){
+                      print('object');
+                      
+                      Get.find<LoginController>().childHeartQueryResearchertest();
+                    },),
               SizedBox(height:  GeneralMeasurements.deviceWidth/ 20),
             ],
           ),

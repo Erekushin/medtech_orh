@@ -57,7 +57,7 @@ class _BasicProfileData2 extends State<BasicProfileData2> {
                       ),
                     ),
                   ),
-                  MyDropdown(dropDownHint: "үсний өнгө", w: 5, listitems: [], currentValue: 5, mark: "",),
+                  // MyDropdown(dropDownHint: "үсний өнгө", w: 5, listitems: [], currentValue: 5, mark: "",),
                   SizedBox(height: 40,),
                 ],
               ),

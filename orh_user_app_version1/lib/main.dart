@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:orh_user_app_version1/Controllers/child_heart_query_controller.dart';
 import 'package:orh_user_app_version1/splash_screen.dart';
+import 'package:orh_user_app_version1/views/100AsuultRelated/child_heart_query.dart';
+import 'package:orh_user_app_version1/views/PCR_Related/pcr_view.dart';
 import 'package:orh_user_app_version1/views/ProfileRelated/profile.dart';
 import 'package:orh_user_app_version1/views/home.dart';
 import 'package:orh_user_app_version1/views/login.dart';
@@ -76,6 +79,7 @@ class _MyAppState extends State<MyApp> {
   bindInitialControllers(){
     Get.put(ImageController(), permanent: true);
     Get.put(LoginController());
+    Get.put(ChildHeartQueryController());
   }
   @override
   Widget build(BuildContext context) {
@@ -93,6 +97,7 @@ class _MyAppState extends State<MyApp> {
       initialBinding: BindingsBuilder(() => bindInitialControllers()),
       getPages: [
         ///Root
+        //TODO splash aa zasna
         GetPage(name: "/splashScreen", page: ()=> const MyCustomSplashScreen()),
         ///basic profile input
         GetPage(name: RouteUnits.basicProfileInput, page: ()=> const BasicPrifileDataCard()),
@@ -130,7 +135,8 @@ class _MyAppState extends State<MyApp> {
         // GetPage(name: "/loginforvchat", page: ()=> LoginView()),
         // GetPage(name: "/", page: ()=> LoginView()),
         GetPage(name: "/meeting", page: ()=> MeetingView()),
-        GetPage(name: "/localcheck", page: ()=> FlutterDemo()),
+        GetPage(name: "/localcheck", page: ()=> ChildHeartQuery()),
+        GetPage(name: "/tsagavah", page: ()=> const PCRView()),
         // GetPage(name: "/login", page: ()=> LoginView()),
         GetPage(name: "/camera", page: ()=> CameraApp()),
       ],
