@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:orh_user_app_version1/Controllers/setting_controller.dart';
+import 'package:orh_user_app_version1/MyWidgets/my_text.dart';
 
-import '../MyWidgets/my_dropdown.dart';
+import '../../MyWidgets/my_switcher.dart';
 
 class Setting extends StatelessWidget {
   const Setting({ Key? key }) : super(key: key);
@@ -11,7 +14,8 @@ class Setting extends StatelessWidget {
       onWillPop: () async{
         return true;
       },
-      child: Scaffold(
+      child: GetBuilder<SettingController>(builder: (settingController){
+        return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.white,
           centerTitle: true,
@@ -31,14 +35,22 @@ class Setting extends StatelessWidget {
             ),
         ),
         body: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Container(
-              // child: MyDropdown(dropDownHint: "Хэл Солих", w: 5, listitems: [], currentValue: 5, mark: "",)
-            ),
-            
+              margin: const EdgeInsets.only(left: 20, right: 20, top: 5, bottom: 5),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  myText('Иргэний мэдээллийн сан', 15, 1, FontWeight.bold),
+                   MySwitcher(keyDirection: 'xyrServiceSwitcher', switcherValue: settingController.xyrServiceSwitcher.value,),
+                ],
+              ),
+            )
           ],
-        ),
-      ),
+        )
+      );
+      }),
     );
   }
 }

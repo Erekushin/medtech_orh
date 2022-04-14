@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:orh_user_app_version1/Controllers/child_heart_query_controller.dart';
-import 'package:orh_user_app_version1/splash_screen.dart';
-import 'package:orh_user_app_version1/views/100AsuultRelated/child_heart_query.dart';
-import 'package:orh_user_app_version1/views/PCR_Related/pcr_view.dart';
+import 'package:orh_user_app_version1/Controllers/query_controller.dart';
+import 'package:orh_user_app_version1/Controllers/setting_controller.dart';
+import 'package:orh_user_app_version1/views/QueryRelated/query.dart';
+import 'package:orh_user_app_version1/views/QueryRelated/query_list.dart';
+import 'package:orh_user_app_version1/views/splash_screen.dart';
 import 'package:orh_user_app_version1/views/ProfileRelated/profile.dart';
 import 'package:orh_user_app_version1/views/home.dart';
-import 'package:orh_user_app_version1/views/login.dart';
-import 'package:orh_user_app_version1/views/setting.dart';
+import 'package:orh_user_app_version1/views/LoginRelatedViews/login.dart';
+import 'package:orh_user_app_version1/views/SettingsRelatedViews/setting.dart';
 import 'BasicProfileCreation/basic_profile_data_cards.dart';
 import 'Controllers/image_controller.dart';
 import 'Controllers/login_controller.dart';
@@ -18,7 +19,6 @@ import 'Helpers/Calculators/CalculatorViews/calculators_home.dart';
 import 'MyWidgets/my_bottom_navbar.dart';
 import 'views/HospitalRelated/hospital_prifile.dart';
 import 'views/HospitalRelated/hospitals.dart';
-import 'Lavlagaa1/lavlagaa.dart';
 import 'views/ProfileRelated/profile_devicelog.dart';
 import 'views/ProfileRelated/profile_diagnosis_history.dart';
 import 'views/ProfileRelated/profile_info.dart';
@@ -43,11 +43,8 @@ class MyApp extends StatefulWidget {
   @override
   State<MyApp> createState() => _MyAppState();
 }
-
 class _MyAppState extends State<MyApp> {
-  
   late Stream<bool> bottomNavbarSwitcher;
-
   CounterStorage sstorage = CounterStorage();
   @override
   void initState(){
@@ -56,35 +53,14 @@ class _MyAppState extends State<MyApp> {
     bottomNavbarSwitcher = GlobalHelpers.bottomnavbarSwitcher.stream;
     GlobalHelpers.bottomnavbarSwitcher.add(false);
   }
-  static bottomNavbarRouting(int index){
-    switch(index){
-      case 0 :
-        print('index0');
-        Get.offAllNamed(RouteUnits.home);
-        Get.put(LoginController());
-        Get.put(ImageController());
-        break;
-      case 1 :
-        Get.toNamed('/splashScreen');
-        break;
-      case 2 :
-        Get.toNamed('/splashScreen');
-        break;
-      case 3 :
-        Get.offNamedUntil(RouteUnits.profile, ModalRoute.withName(RouteUnits.home));
-        break;
-    }
-  }
-
   bindInitialControllers(){
     Get.put(ImageController(), permanent: true);
-    Get.put(LoginController());
-    Get.put(ChildHeartQueryController());
+    Get.put(LoginController(), permanent: true);
+    Get.put(SettingController(), permanent: true);
+    Get.put(SurveyController());
   }
   @override
   Widget build(BuildContext context) {
-    
-
     return  MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
@@ -93,53 +69,49 @@ class _MyAppState extends State<MyApp> {
         children: [
           GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: '/splashScreen',
+      initialRoute: RouteUnits.splashScreen,
       initialBinding: BindingsBuilder(() => bindInitialControllers()),
       getPages: [
-        ///Root
-        //TODO splash aa zasna
-        GetPage(name: "/splashScreen", page: ()=> const MyCustomSplashScreen()),
-        ///basic profile input
+        GetPage(name: RouteUnits.splashScreen, page: ()=> const MyCustomSplashScreen()),
+        //basic profile input
         GetPage(name: RouteUnits.basicProfileInput, page: ()=> const BasicPrifileDataCard()),
-        ///login
+        //login
         GetPage(name: RouteUnits.login, page: ()=> const Login()),
-        ///home
+        //home
         GetPage(name: RouteUnits.home, page: ()=> const Home()),
-        ///Profile
+        //Profile
         GetPage(name: RouteUnits.profile, page: ()=> const Profile()),
         GetPage(name: RouteUnits.profileInfo, page: ()=> const ProfileInfo()),
         GetPage(name: RouteUnits.profileDiagnosisHistory, page: ()=> const ProfileDiagnosisHistory()),
         GetPage(name: RouteUnits.profileLifeToken, page: ()=> const ProfileLifeToken()),
         GetPage(name: RouteUnits.profileDeviceLog, page: ()=> const ProfileDevicelog()),
-        ///Үйлчлүүлэгч үзлэгийн цаг захиалах
+        //Үйлчлүүлэгч үзлэгийн цаг захиалах
         GetPage(name: RouteUnits.timeOrder + RouteUnits.hospitals, page: ()=> const Hospitals()),
         GetPage(name: RouteUnits.timeOrder + RouteUnits.hospitals + RouteUnits.doctors, page: ()=> const Doctors()),
         GetPage(name: RouteUnits.timeOrder + RouteUnits.hospitals + RouteUnits.doctors + RouteUnits.timeSequence, page: ()=> const DoctorTimeSequence()),
-        ///Эмнэлэгүүдийн мэдээлэл
+        //Эмнэлэгүүдийн мэдээлэл
         GetPage(name: RouteUnits.hospitals, page: ()=> const Hospitals()),
         GetPage(name: RouteUnits.hospitals + RouteUnits.hospitalProfile, page: ()=> const HospitalProfile()),
-        ///Эмч нарын мsэдээлэл
+        //Эмч нарын мsэдээлэл
         GetPage(name: RouteUnits.doctors, page: ()=> const Doctors()),
         GetPage(name: RouteUnits.doctors + RouteUnits.doctorProfile, page: ()=> const DoctorProfile()),
-        ///Лавлагаа
-        GetPage(name: RouteUnits.lavlagaa1, page: ()=> const Lavlagaa()),
-        ///Calculators
+        //Судалгаанууд
+        GetPage(name: RouteUnits.queries, page: ()=> const QueryList()),
+        GetPage(name: RouteUnits.queries + RouteUnits.individualQuery, page: ()=> const QueryUnit()),
+        //Calculators
         GetPage(name: RouteUnits.calculators, page: ()=> const CalculatorHome()),
-        GetPage(name: "/bmi", page: ()=> const MySwitcher()),
-        ///Асуумжууд
-        GetPage(name: RouteUnits.questions, page: ()=> const Lavlagaa()),
-        ///Setting
+        //Setting
         GetPage(name: RouteUnits.setting, page: ()=> const Setting()),
 
-        ///card test
+        //card test
         // GetPage(name: "/loginforvchat", page: ()=> LoginView()),
         // GetPage(name: "/", page: ()=> LoginView()),
         GetPage(name: "/meeting", page: ()=> MeetingView()),
-        GetPage(name: "/localcheck", page: ()=> ChildHeartQuery()),
-        GetPage(name: "/tsagavah", page: ()=> const PCRView()),
+        
+        // GetPage(name: "/tsagavah", page: ()=> const PCRView()),
         // GetPage(name: "/login", page: ()=> LoginView()),
-        GetPage(name: "/camera", page: ()=> CameraApp()),
-      ],
+        GetPage(name: "/camera", page: ()=> (CameraApp())),
+      ], 
     ),
         StreamBuilder<bool>(
           stream: bottomNavbarSwitcher,

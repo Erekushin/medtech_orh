@@ -102,7 +102,7 @@ class _ProfileState extends State<Profile> {
                             GlobalHelpers.bottomnavbarSwitcher.add(false);
                             Get.offAllNamed(RouteUnits.login);
                             }, 
-                          child: Text('change account', style: TextStyle(color: Colors.white),))
+                          child: const Text('change account', style: TextStyle(color: Colors.white),))
                         ],
                       )
                     ],
@@ -138,8 +138,8 @@ class _ProfileState extends State<Profile> {
                          });
                             }),
                             const SizedBox(width: 1, height: 1,),
-                            Text(loginController.model.result!.firstName?? '', style: const TextStyle(fontWeight: FontWeight.bold),),
-                            Text(loginController.model.result!.phone?? '', style: const TextStyle(fontWeight: FontWeight.bold),),
+                            Text(loginController.geregeUser.result!.firstName?? '', style: const TextStyle(fontWeight: FontWeight.bold),),
+                            Text(loginController.geregeUser.result!.phoneNo?? '', style: const TextStyle(fontWeight: FontWeight.bold),),
                          ],
                                         ),
                  );

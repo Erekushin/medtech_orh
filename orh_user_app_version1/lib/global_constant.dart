@@ -2,16 +2,17 @@ import 'package:flutter/material.dart';
 
 
 class UriAdresses{
-static const String medTechUri = "http://10.0.0.116:8080/ords/medical_backend/request/make";
-static const String geregeUserUri = "https://iam.gerege.mn/api/public/user/login";
-static const String geregeUserLoginUri = "https://iam.gerege.mn/api/public/user/login/username";//нууц үг шаарддаг Uri
-static const String CovidBackEnd = "http://203.26.189.133:8080/ords/covid_backend/request/make";
+// static const String tokenTestXyrinfo = "https://iam.gerege.mn/api/request/make";
+// static const String tokenTestlogin = "https://iam.gerege.mn/api/public/user/login";
+
+static const String geregeUserLoginUri = "https://cvd.gov.mn/api/public/user/login/username";
+static const String covidBackEnd = "https://cvd.gov.mn/api/request/make";
 }
 
 class RouteUnits{
+  static String splashScreen = "/splashScreen";
   static String login = "/login";
   static String home = "/home";
-
 
   //Profile routes
   static String profile = "/profile";
@@ -26,7 +27,8 @@ class RouteUnits{
   static String hospitals = "/hospitals";
   static String hospitalProfile = "/hospitalProfile";
   static String timeSequence = "/doctorTimeSequence";
-  static String lavlagaa1 = "/lavlagaa1";
+  static String queries = "/queries";
+  static String individualQuery ="/eachQuery";
   static String basicProfileInput = "/basicProfileInput";
   static String calculators = "/calculators";
   static String questions = "/questions";
@@ -42,9 +44,11 @@ class CommonColors{
 class GeneralMeasurements{
   static late double deviceHeight;
   static late double deviceWidth;
+  static double snackbarBottomMargin = deviceHeight*.12;
 }
 
 class AllSizes {
  static const double bigHeader = 25;
  static const double queryTxtSize = 16;
+ static const int pageQuestionCount = 10;
 }

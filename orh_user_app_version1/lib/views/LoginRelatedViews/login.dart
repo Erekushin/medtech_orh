@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
 import 'package:get/get.dart';
 import 'package:orh_user_app_version1/global_constant.dart';
-import '../Controllers/image_controller.dart';
-import '../Controllers/login_controller.dart';
-import '../Helpers/CreatedGlobalWidgets/scroll_behavior.dart';
+import '../../Controllers/login_controller.dart';
+import '../../Helpers/CreatedGlobalWidgets/scroll_behavior.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -112,7 +111,7 @@ class _LoginState extends State<Login>with SingleTickerProviderStateMixin {
                                   highlightColor: Colors.transparent,
                                   splashColor: Colors.transparent,
                                   onTap: (){
-                                    logincontroller.getdata();
+                                    logincontroller.geregeUserLogin((){Get.offNamed(RouteUnits.home);});
                                     print('sddfdf');
                                   },
                                   child: Container(

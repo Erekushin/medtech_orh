@@ -1,24 +1,16 @@
 import 'package:flutter/material.dart';
-import '../global_constant.dart';
 
-class MyButton extends StatelessWidget {
-  const MyButton({ Key? key, required this.givenWidth, required this.givenHeight, 
-                             required this.btntext, required this.btncolor, required this.givenRadius, required this.givenfontSize }) : super(key: key);
-  final double givenWidth;
-  final double givenHeight;
-  final Color btncolor;
-  final String btntext;
-  final double givenRadius;
-  final double givenfontSize;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
+Widget myBtn(Color borderColor, double givenWidth, double givenHeight, Color btncolor, 
+             Color textColor, String btntext,[double givenRadius = 10, double givenfontSize = 15]){
+  return Container(
             margin: const EdgeInsets.all(10),
             height: givenHeight,
             width: givenWidth,
             decoration: BoxDecoration(
               color: btncolor,
+              border: Border.all(
+                color: borderColor
+              ),
               boxShadow: [
                 BoxShadow(color: btncolor.withOpacity(0.6), spreadRadius: 0.1, blurRadius: 10, offset: const Offset(0, 7))
                 ],
@@ -27,10 +19,9 @@ class MyButton extends StatelessWidget {
             child:  Center(
               child: Text(btntext,
                 style: TextStyle(
-                  color: Colors.white,
+                  color: textColor,
                   fontWeight: FontWeight.bold,
                   fontSize: givenfontSize),),
               )
           );
-  }
 }

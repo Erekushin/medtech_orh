@@ -1,9 +1,12 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:orh_user_app_version1/Controllers/login_controller.dart';
+import 'package:orh_user_app_version1/Helpers/CreatedGlobalWidgets/on_press_extention.dart';
 import 'dart:ui';
-import '../Controllers/child_heart_query_controller.dart';
+import '../Controllers/login_controller.dart';
+import '../Controllers/query_controller.dart';
+import '../MyWidgets/my_text.dart';
 import '../global_constant.dart';
 import '../global_helpers.dart';
 
@@ -19,9 +22,8 @@ import '../global_helpers.dart';
       IconData icon2,
       String title2,
       Function func2,) {
-    double _w = MediaQuery.of(context).size.width;
     return Padding(
-      padding: EdgeInsets.only(bottom: _w / 17),
+      padding: EdgeInsets.only(bottom: GeneralMeasurements.deviceWidth / 17),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
@@ -91,9 +93,6 @@ import '../global_helpers.dart';
           ),
         );
   }
-
-
-
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
   @override
@@ -109,7 +108,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin{
   @override
   void initState() {
     super.initState();
-    final childHeartQueryController = Get.find<ChildHeartQueryController>();
+    final childHeartQueryController = Get.find<SurveyController>();
     childHeartQueryController.getAimagList();
   }
   @override
@@ -144,7 +143,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin{
                     ),
                     SizedBox(height: GeneralMeasurements.deviceWidth / 35),
                     Text(
-                      'Таний эрүүл мэндийн дэжитал туслах.',
+                      'Таны эрүүл мэндийн дижитал туслах.',
                       style: TextStyle(
                         fontSize: 19,
                         color: Colors.black.withOpacity(.5),
@@ -155,61 +154,59 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin{
                   ],
                 ),
               ),
-              homePageCardsGroup(
-                const Color(0xFF12C0A1),
-                Icons.person,
-                'Профайл',
-                context,
-                (){Get.toNamed('/profile', arguments: "profile");},
-                const Color(0xffFF6D6D),
-                Icons.analytics_outlined,
-                'Calculators',
-                (){Get.toNamed(RouteUnits.calculators, arguments: "firstPage");}
-              ),
-              homePageCardsGroup(
-                  Colors.lightGreen,
-                  Icons.calendar_today_sharp,
-                  'Цаг авах',
-                  context,
-                  (){Get.toNamed(RouteUnits.timeOrder + RouteUnits.hospitals, arguments: "fromTimeOrder");},
-                  const Color(0xffffa700),
-                  Icons.article,
-                  'Эмнэлэгүүд',
-                  (){Get.toNamed(RouteUnits.hospitals, arguments: "fromHospitals");},),
+              // homePageCardsGroup(
+              //   const Color(0xFF12C0A1),
+              //   Icons.person,
+              //   'Профайл',
+              //   context,
+              //   (){Get.toNamed('/profile', arguments: "profile");},
+              //   const Color(0xffFF6D6D),
+              //   Icons.analytics_outlined,
+              //   'Calculators',
+              //   (){Get.toNamed(RouteUnits.calculators, arguments: "firstPage");}
+              // ),
+              // homePageCardsGroup(
+              //     Colors.lightGreen,
+              //     Icons.calendar_today_sharp,
+              //     'Цаг авах',
+              //     context,
+              //     (){Get.toNamed(RouteUnits.timeOrder + RouteUnits.hospitals, arguments: "fromTimeOrder");},
+              //     const Color(0xffffa700),
+              //     Icons.article,
+              //     'Эмнэлэгүүд',
+              //     (){Get.toNamed(RouteUnits.hospitals, arguments: "fromHospitals");},),
               homePageCardsGroup(
                   const Color(0xff63ace5),
                   Icons.ad_units_outlined,
-                  'Лавлагаа 1',
+                  'Судалгаа',
                   context,
-                  (){Get.toNamed(RouteUnits.lavlagaa1, arguments: "fromlavlagaa1");},
+                  (){Get.toNamed(RouteUnits.queries, arguments: "");},
                   const Color(0xfff37736),
                   Icons.article_sharp,
-                  'Эмч нар',
+                  'Эмч нарl',
                   (){Get.toNamed(RouteUnits.doctors, arguments: "fromDoctors");},),
-              homePageCardsGroup(
-                  const Color(0xffFF6D6D),
-                  Icons.android,
-                  'camera',
-                  context,
-                  (){Get.toNamed('/camera', arguments: "fromHospitals");},
-                  Colors.lightGreen,
-                  Icons.text_format,
-                  'ionDemo',
-                  (){Get.toNamed('/login', arguments: "fromHospitals");},),
-              homePageCardsGroup(
-                  const Color(0xffffa700),
-                  Icons.text_fields,
-                  'tsag avah',
-                  context,
-                  (){Get.toNamed('/tsagavah', arguments: "fromHospitals");},
-                  const Color(0xff63ace5),
-                  Icons.gamepad_outlined,
-                    'local check',
-                    (){
-                      print('object');
-                      
-                      Get.find<LoginController>().childHeartQueryResearchertest();
-                    },),
+              // homePageCardsGroup(
+              //     const Color(0xffFF6D6D),
+              //     Icons.android,
+              //     'camera',
+              //     context,
+              //     (){Get.toNamed('/camera', arguments: "fromHospitals");},
+              //     Colors.lightGreen,
+              //     Icons.text_format,
+              //     'ionDemo',
+              //     (){Get.toNamed('/login', arguments: "fromHospitals");},),
+              // homePageCardsGroup(
+              //     const Color(0xffffa700),
+              //     Icons.text_fields,
+              //     'tsag avah',
+              //     context,
+              //     (){Get.toNamed('/tsagavah', arguments: "fromHospitals");},
+              //     const Color(0xff63ace5),
+              //     Icons.gamepad_outlined,
+              //       'local check',
+              //       (){
+              //         print('object');
+              //       },),
               SizedBox(height:  GeneralMeasurements.deviceWidth/ 20),
             ],
           ),

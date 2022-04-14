@@ -1,27 +1,32 @@
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:orh_user_app_version1/Controllers/setting_controller.dart';
 
 class MySwitcher extends StatefulWidget {
-  const MySwitcher({Key? key}) : super(key: key);
-
+  MySwitcher({Key? key, required this.keyDirection, required this.switcherValue}) : super(key: key);
+  String keyDirection;
+  bool switcherValue;
   @override
   _MySwitcher createState() => _MySwitcher();
 }
 
 class _MySwitcher extends State<MySwitcher>
     with TickerProviderStateMixin {
-  bool isChecked = false;
-  final _duration = const Duration(milliseconds: 370);
+  final _duration = const Duration(milliseconds: 1);
   late Animation<Alignment> _animation;
   late AnimationController _animationController;
-
+  var settingController =  Get.find<SettingController>();
+  late bool switcherValue;
   @override
   void initState() {
     super.initState();
+    switcherValue = widget.switcherValue;
     _animationController =
         AnimationController(vsync: this, duration: _duration);
     _animation =
-        AlignmentTween(begin: Alignment.centerLeft, end: Alignment.centerRight)
+        AlignmentTween(begin: switcherValue? Alignment.centerRight : Alignment.centerLeft, 
+                       end: switcherValue? Alignment.centerLeft : Alignment.centerRight)
             .animate(
       CurvedAnimation(
         parent: _animationController,
@@ -30,18 +35,14 @@ class _MySwitcher extends State<MySwitcher>
       ),
     );
   }
-
   @override
   void dispose() {
     _animationController.dispose();
     super.dispose();
   }
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: AnimatedBuilder(
+    return AnimatedBuilder(
           animation: _animationController,
           builder: (context, child) {
             return Center(
@@ -51,12 +52,28 @@ class _MySwitcher extends State<MySwitcher>
                 onTap: () {
                   setState(
                     () {
-                      if (_animationController.isCompleted) {
+                      if (settingController.xyrServiceSwitcher.value) {
+                        print('untraah daralt');
+                         switch(widget.keyDirection){
+                          case 'xyrServiceSwitcher':
+                          settingController.xyrServiceSwitcher.value = false;
+                          switcherValue = false;
+                          print('xyr server untraah daralt');
+                          print(settingController.xyrServiceSwitcher.value);
+                        }
                         _animationController.reverse();
+                        
                       } else {
+                        print('idvehjvvleh daralt');
+                        switch(widget.keyDirection){
+                          case 'xyrServiceSwitcher':
+                            settingController.xyrServiceSwitcher.value = true;
+                            switcherValue = true;
+                            print('xyr server asaah daralt');
+                            print(settingController.xyrServiceSwitcher.value);
+                        }
                         _animationController.forward();
                       }
-                      isChecked = !isChecked;
                     },
                   );
                 },
@@ -65,13 +82,13 @@ class _MySwitcher extends State<MySwitcher>
                   height: 25,
                   padding: const EdgeInsets.fromLTRB(0, 6, 0, 6),
                   decoration: BoxDecoration(
-                    color: isChecked ? Colors.green : Colors.red,
+                    color:switcherValue ? Colors.green : Colors.red,
                     borderRadius: const BorderRadius.all(
                       Radius.circular(99),
                     ),
                     boxShadow: [
                       BoxShadow(
-                        color: isChecked
+                        color: switcherValue
                             ? Colors.green.withOpacity(0.5)
                             : Colors.red.withOpacity(0.5),
                         blurRadius: 5,
@@ -79,24 +96,9 @@ class _MySwitcher extends State<MySwitcher>
                       )
                     ],
                   ),
-                  child: Stack(
-                    children: [
-                      Align(
-                        alignment: _animation.value,
-                        child: GestureDetector(
-                          onTap: () {
-                            setState(
-                              () {
-                                if (_animationController.isCompleted) {
-                                  _animationController.reverse();
-                                } else {
-                                  _animationController.forward();
-                                }
-                                isChecked = !isChecked;
-                              },
-                            );
-                          },
-                          child: Container(
+                  child:  Align(
+                        alignment: switcherValue? Alignment.centerRight : Alignment.centerLeft,
+                        child: Container(
                             width: 25,
                             height: 25,
                             decoration: const BoxDecoration(
@@ -104,17 +106,12 @@ class _MySwitcher extends State<MySwitcher>
                               color: Colors.white,
                             ),
                           ),
-                        ),
                       ),
-                    ],
-                  ),
                 ),
               ),
             );
           },
-        ),
-      ),
-    );
+        );
   }
 }
 

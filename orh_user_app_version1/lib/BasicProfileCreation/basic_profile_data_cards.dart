@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:swipe_cards/draggable_card.dart';
 import 'package:swipe_cards/swipe_cards.dart';
 import '../global_constant.dart';
-import '../splash_screen.dart';
+import '../views/splash_screen.dart';
 import 'SomeSpecificCards/basic_profile_data1.dart';
 import 'SomeSpecificCards/basic_profile_data2.dart';
 

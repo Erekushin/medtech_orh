@@ -31,7 +31,7 @@ class _MyBottomNavbarState extends State<MyBottomNavbar> {
         Get.toNamed('/');
         break;
       case 2 : 
-        Get.toNamed('/');
+        Get.toNamed(RouteUnits.setting);
         break;
       case 3 :
         Get.offNamedUntil(RouteUnits.profile, ModalRoute.withName(RouteUnits.home));
