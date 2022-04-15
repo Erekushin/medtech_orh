@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:orh_user_app_version1/GlobalControllers/image_controller.dart';
 import 'package:orh_user_app_version1/Helpers/CreatedGlobalWidgets/on_press_extention.dart';
+import 'package:orh_user_app_version1/global_helpers.dart';
+
+import '../../Controllers/image_controller.dart';
 
 class BasicProfileData1 extends StatelessWidget {
   const BasicProfileData1({ Key? key }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    GlobalHelpers.imageFileSwitcher = false;
     return Container(
       child: Center(
         child: Column(
@@ -21,12 +24,12 @@ class BasicProfileData1 extends StatelessWidget {
                   backgroundColor: Colors.grey,
                   radius: 40,
                   backgroundImage: const AssetImage('assets/images/user_default.png'),
-                  child:  ClipRRect(
-                               child: imageController.imageFile == null? const Placeholder(strokeWidth: 0, color: Colors.grey,) 
-                               : AspectRatio(aspectRatio: 1 / 1, child: Image.file(imageController.imageFile.value, fit: BoxFit.fill,)),
-                               borderRadius: BorderRadius.circular(90.0),
-                               ),
+                  child:  GlobalHelpers.imageFileSwitcher? ClipRRect(
+                               child: AspectRatio(aspectRatio: 1 / 1, child: Image.file(imageController.imageFile.value, fit: BoxFit.fill,)),
+                               borderRadius: BorderRadius.circular(90.0)
+                               ): Container(color: Colors.blue, width: 1, height: 1, child: Text(imageController.imageFile.value.toString()),)
                   ).pressExtention((){
+                    GlobalHelpers.imageFileSwitcher = true;
                     imageController.cameraAndGallery();
                   });
                 })
