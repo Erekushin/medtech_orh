@@ -34,7 +34,7 @@ class _MyDropDownState extends State<MyDropdown> {
     //     selectval = element.name;
     //   }
     // });
-    selectval = null;
+    // queryController.dropvalueList[widget.answerIndex].value  =  null;
   }
   void transferDataToModul(){
 
@@ -63,7 +63,7 @@ class _MyDropDownState extends State<MyDropdown> {
 
   }
 
-  String? selectval;
+  // String? selectval;
   int? SelectedID;
   @override
   Widget build(BuildContext context) {
@@ -96,7 +96,7 @@ class _MyDropDownState extends State<MyDropdown> {
         ),
         margin: EdgeInsets.only(left: widget.marginl, right: widget.marginr, 
                               top: widget.margint, bottom: widget.marginb),
-        padding: EdgeInsets.only(left: 10, right: 0, top:5, bottom: 0),                      
+        padding: const EdgeInsets.only(left: 10, right: 0, top:5, bottom: 0),                      
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -104,11 +104,11 @@ class _MyDropDownState extends State<MyDropdown> {
             myText(widget.dropDownHint!, 11, 1, FontWeight.bold),
             DropdownButton<String>(
           hint: myText(widget.dropDownHint?? '', 16, 1),
-          value: selectval,
+          value: queryController.dropvalueList[widget.answerIndex].value,
           onChanged: (String? newValue) {
             setState(() {
               transferDataToModul();
-              selectval = newValue.toString();
+              queryController.dropvalueList[widget.answerIndex].value = newValue.toString();
             });
           },
           underline: const SizedBox(),

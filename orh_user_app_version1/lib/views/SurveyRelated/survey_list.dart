@@ -62,7 +62,7 @@ class _SurveyListState extends State<SurveyList> {
                   const SizedBox(width: 10,),
                   SizedBox(
                     width: GeneralMeasurements.deviceWidth*.7,
-                    child: myText('Судалгааны нэр мэдэгдэхгүй байна', 17, 1, FontWeight.w700), //queryController.childHeartQuery.result!.title??
+                    child: myText('Хүүхдийн зүрхний эмгэг илрүүлэх судалгаа', 17, 1, FontWeight.w700), //queryController.childHeartQuery.result!.title??
                   )
               ],)
             ).pressExtention((){

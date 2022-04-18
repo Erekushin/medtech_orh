@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:orh_user_app_version1/Controllers/setting_controller.dart';
 import '../Controllers/query_controller.dart';
 Widget myTextField(String hinttxt, TextEditingController txtController, double margint, 
                    double marginb, double marginr, double marginl, int questionID,
                    int answerIndex, String mark){
                      
   final queryController = Get.find<SurveyController>(); 
+  final settingsController = Get.find<SettingController>();
   switch(mark){
     case 'query' :
      return Container(
@@ -29,8 +31,10 @@ Widget myTextField(String hinttxt, TextEditingController txtController, double m
     child: TextField(
       maxLength: 10,
       onChanged: (value){
-          if(txtController.text.length == 10){
+          if(settingsController.xyrServiceSwitcher.value){
+            if(txtController.text.length == 10){
             queryController.xyrInfoGet();
+          }
           }
         },
       controller: txtController,

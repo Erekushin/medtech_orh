@@ -14,6 +14,11 @@ import '../models/childHeartQueryRelated/childheartquey.dart';
 import '../models/childHeartQueryRelated/researcherDefault.dart';
 
 
+class DropSelectVal{
+  String? value;
+}
+
+
 class SurveyController extends GetxController{
  //xyr ajillahgvi vyd ajillah textfieldvvdiin controller
   var lastName = TextEditingController();
@@ -22,8 +27,9 @@ class SurveyController extends GetxController{
   var gender = TextEditingController();
 
 
-
+  List<DropSelectVal> dropvalueList = [];
   List<TextEditingController> textEditingControllers = [];
+
   ResearcherDefaultData researcherDefaultData = ResearcherDefaultData();
   XyrInfo xyrInfo = XyrInfo();
   QueryQuestions queryQuestions = QueryQuestions(); 
@@ -34,8 +40,10 @@ class SurveyController extends GetxController{
   var chosenAimag = 0.obs; 
   ///researcher iin default data bvten bgaa esehiig sonsoh stream
   var haveDefaultData = false.obs;
+  var greenCheckIcon = false.obs;
   var xyrName = ''.obs;
   var childHeartQuerybtnloading = false.obs;
+  var pushDataBtn = true.obs;
   DateTime currentDate = DateTime.now();
   Future<String>_loadFromAsset() async {
       return await rootBundle.loadString("assets/file/addresses.json");
@@ -48,7 +56,7 @@ class SurveyController extends GetxController{
   checkData(){
     if(researcherDefaultData.result!.aimagCode != null && researcherDefaultData.result!.sumCode != null
         && researcherDefaultData.result!.currentDate != null){
-      haveDefaultData.value = true;
+      greenCheckIcon.value = true;
     }
   }
    Map<String, dynamic> geregeId(){
@@ -116,8 +124,12 @@ class SurveyController extends GetxController{
   Future researcherDefaultDataUpdateAndPush() async{
     var jsondata = await GlobalHelpers.postRequestGeneral.getdata(researcherDefaultData.result!.toJson(), "2035231", UriAdresses.covidBackEnd);
     generalResponse = GeneralResponse.fromJson(jsonDecode(jsondata.toString()));
+    log(json.encode(researcherDefaultData.result!.toJson()));
+    print(generalResponse.code! + "dfdfdfdf");
     switch(generalResponse.code){
        case '200':
+          Get.snackbar('Байршилын мэдээллийг хадгаллаа', '', snackPosition: SnackPosition.BOTTOM,
+          colorText: Colors.white, backgroundColor: Colors.grey[900], margin:  const EdgeInsets.all(5));
         GlobalHelpers.loopCheck = 0;
         break;
       case 'Unauthorized':
@@ -169,13 +181,17 @@ class SurveyController extends GetxController{
     var jsondata = await GlobalHelpers.postRequestGeneral.getdata(queryAnswer.toJson(), "2035233", UriAdresses.covidBackEnd);
     log(jsonEncode(queryAnswer.toJson()));
     print(jsondata.toString()+' '+'hariugaa yavuulsanii hariu');
+    print(jsondata);
+    //fgfgfgfg
     generalResponse = GeneralResponse.fromJson(jsonDecode(jsondata));
     switch(generalResponse.code){
       case '200':
+          pushDataBtn.value = true;
           Get.snackbar('Амжилттай бүртгэгдлээ', '', snackPosition: SnackPosition.BOTTOM,
           colorText: Colors.white, backgroundColor: Colors.grey[900], margin: EdgeInsets.only(bottom: GeneralMeasurements.snackbarBottomMargin, left: 5, right: 5,));
           rdTxtController.clear();
           textEditingControllers.clear();
+          dropvalueList.clear();
           lastName.clear();
           firstName.clear(); 
           age.clear(); 
@@ -190,6 +206,10 @@ class SurveyController extends GetxController{
           break;
       case '101':
           Get.snackbar('Интернет Алдаа', 'Та интернетээ шалгана уу!', snackPosition: SnackPosition.BOTTOM,
+          colorText: Colors.white, backgroundColor: Colors.grey[900], margin: EdgeInsets.only(bottom: GeneralMeasurements.snackbarBottomMargin, left: 5, right: 5,));
+          break;
+      case '400':
+          Get.snackbar('Талбарууд бөглөгдөөгүй байна', '', snackPosition: SnackPosition.BOTTOM,
           colorText: Colors.white, backgroundColor: Colors.grey[900], margin: EdgeInsets.only(bottom: GeneralMeasurements.snackbarBottomMargin, left: 5, right: 5,));
           break;
       case 'Unauthorized':
@@ -218,12 +238,19 @@ class SurveyController extends GetxController{
     var jsondata = await GlobalHelpers.postRequestGeneral.getdata(geregeId(), "2035226", UriAdresses.covidBackEnd);
     researcherDefaultData = ResearcherDefaultData.fromJson(jsonDecode(jsondata.toString()));
     researcherDefaultData.result!.currentDate = currentDate.toString().substring(0, 10);
+    var a = researcherDefaultData.code;
+    print(' default data nii code $a');
     switch(researcherDefaultData.code){
-        case 100:
+      case 200:
+          haveDefaultData.value = true;
+          Get.snackbar('Байршилын мэдээллийг авлаа', '', snackPosition: SnackPosition.BOTTOM,
+          colorText: Colors.white, backgroundColor: Colors.grey[900], margin:  const EdgeInsets.only(left: 5, top: 5, bottom: 75));
+          break;
+      case 100:
           Get.snackbar('Интернет Алдаа', 'Та интернетээ шалгана уу!', snackPosition: SnackPosition.BOTTOM,
           colorText: Colors.white, backgroundColor: Colors.grey[900], margin:  const EdgeInsets.only(left: 5, top: 5, bottom: 75));
           break;
-        case 101: 
+      case 101: 
           Get.snackbar('Интернет Алдаа', 'Та интернетээ шалгана уу!', snackPosition: SnackPosition.BOTTOM,
           colorText: Colors.white, backgroundColor: Colors.grey[900], margin: EdgeInsets.only(bottom: GeneralMeasurements.snackbarBottomMargin, left: 5, right: 5,));
           break;
