@@ -6,14 +6,14 @@ import '../../MyWidgets/my_text.dart';
 import '../../global_constant.dart';
 import '../../global_helpers.dart';
 
-class QueryList extends StatefulWidget {
-  const QueryList({ Key? key }) : super(key: key);
+class SurveyList extends StatefulWidget {
+  const SurveyList({ Key? key }) : super(key: key);
 
   @override
-  State<QueryList> createState() => _QueryListState();
+  State<SurveyList> createState() => _SurveyListState();
 }
 
-class _QueryListState extends State<QueryList> {
+class _SurveyListState extends State<SurveyList> {
   final queryController = Get.find<SurveyController>();
   @override
   Widget build(BuildContext context) {
