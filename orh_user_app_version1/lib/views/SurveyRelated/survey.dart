@@ -21,12 +21,12 @@ import '../../models/childHeartQueryRelated/aimags.dart';
 
 ///Асуулгаас бүтсэн нэг бие сэдэв бүхий бүртгэлийн 
 ///болон судалгааны асуултуудыг олон хуудасанд хуваан харуулах.
-class QueryUnit extends StatefulWidget {
-  const QueryUnit({ Key? key }) : super(key: key);
+class SurveyUnit extends StatefulWidget {
+  const SurveyUnit({ Key? key }) : super(key: key);
   @override
-  State<QueryUnit> createState() => _QueryUnit();
+  State<SurveyUnit> createState() => _SurveyUnit();
 }
-class _QueryUnit extends State<QueryUnit> {
+class _SurveyUnit extends State<SurveyUnit> {
   var pageController = PageController();
   final queryController = Get.find<SurveyController>();
   @override

@@ -62,11 +62,18 @@ class Profile extends StatefulWidget {
 
 class _ProfileState extends State<Profile> {
   PageController pageController = PageController(viewportFraction: 0.85);
+  var argu = Get.arguments;
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async{
-        GlobalHelpers.bottomnavbarSwitcher.add(false);
+        if(argu == RouteUnits.home){
+          GlobalHelpers.bottomnavbarSwitcher.add(false);
+        }
+        else{
+          print('buruu yavlaa');
+        }
+        
         return true;
       },
       child: Scaffold(
@@ -100,6 +107,8 @@ class _ProfileState extends State<Profile> {
                         children: [
                           TextButton(onPressed: (){
                             GlobalHelpers.bottomnavbarSwitcher.add(false);
+                            Get.find<LoginController>().username.clear();
+                            Get.find<LoginController>().pass.clear();
                             Get.offAllNamed(RouteUnits.login);
                             }, 
                           child: const Text('change account', style: TextStyle(color: Colors.white),))

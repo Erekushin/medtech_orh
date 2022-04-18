@@ -21,6 +21,9 @@ class RouteUnits{
   static String profileLifeToken = "/profileLifeToken";
   static String profileDeviceLog = "/profileDeviceLog";
 
+  //Урьдчилан сэргийлэх үзлэг
+  static String preDiagnosis = "/preDiagnosis";
+
   static String timeOrder = "/timeOrder";
   static String doctors = "/doctors";
   static String doctorProfile = "/doctorProfile";

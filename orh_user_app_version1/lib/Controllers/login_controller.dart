@@ -76,42 +76,4 @@ class LoginController extends GetxController{
           colorText: Colors.white, backgroundColor: Colors.grey[900], margin: const EdgeInsets.all(5));
     }
   }
-  // Future getGeregeUserinfoLittle() async{
-  //   loginloading.value = true;
-  //   var data = await GlobalHelpers.postRequestGeneral.getdata(loginBodyLitle(), "", UriAdresses.geregeUserLoginUri);
-  //     log(jsonEncode(loginBodyLitle()));
-  //     print(GlobalHelpers.pass + 'pass');
-  //     print(GlobalHelpers.userName + 'username');
-  //     print("logiin response" + data);
-  //     geregeUser = GeregeUser.fromJson(jsonDecode(data.toString()));
-  //     switch(geregeUser.code){
-  //       case 200:
-  //         loginloading.value = false;
-  //         GlobalHelpers.auth = 'bearer ' + geregeUser.result!.token!.token!;
-  //         Get.find<QueryController>().xyrInfoGet();
-  //         print('shine auth token' + GlobalHelpers.auth);
-  //         username.clear();
-  //         pass.clear();
-  //         break;
-  //     }
-  // }
-  // Future getGeregeUserinfoLittlepush() async{
-  //   loginloading.value = true;
-  //   var data = await GlobalHelpers.postRequestGeneral.getdata(loginBodyLitle(), "", UriAdresses.geregeUserLoginUri);
-  //     log(jsonEncode(loginBodyLitle()));
-  //     print(GlobalHelpers.pass + 'pass');
-  //     print(GlobalHelpers.userName + 'username');
-  //     print("logiin response" + data);
-  //     geregeUser = GeregeUser.fromJson(jsonDecode(data.toString()));
-  //     switch(geregeUser.code){
-  //       case 200:
-  //         loginloading.value = false;
-  //         GlobalHelpers.auth = 'bearer ' + geregeUser.result!.token!.token!;
-  //         Get.find<QueryController>().surveyAnswersPush();
-  //         print('shine auth token' + GlobalHelpers.auth);
-  //         username.clear();
-  //         pass.clear();
-  //         break;
-  //     }
-  // }
 }

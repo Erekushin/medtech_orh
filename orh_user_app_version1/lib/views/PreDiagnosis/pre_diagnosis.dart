@@ -8,14 +8,14 @@ import '../../MyWidgets/text_input.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../global_constant.dart';
 
-class PCRView extends StatefulWidget {
-  const PCRView({ Key? key }) : super(key: key);
+class PreDiagnosis extends StatefulWidget {
+  const PreDiagnosis({ Key? key }) : super(key: key);
 
   @override
-  State<PCRView> createState() => _PCRViewState();
+  State<PreDiagnosis> createState() => _PreDiagnosis();
 }
 
-class _PCRViewState extends State<PCRView> {
+class _PreDiagnosis extends State<PreDiagnosis> {
   var otrController = TextEditingController();
   @override
   Widget build(BuildContext context) {
@@ -92,7 +92,7 @@ class _PCRViewState extends State<PCRView> {
           child: Container(
             margin: const EdgeInsets.only(bottom: 80, right: 15),
             child: myBtn(CommonColors.geregeBlue, 100, 30, CommonColors.geregeBlue, Colors.white, 'Цаг авах').pressExtention((){
-              Get.toNamed(RouteUnits.timeOrder + RouteUnits.hospitals, );
+              Get.toNamed(RouteUnits.timeOrder + RouteUnits.hospitals, arguments: RouteUnits.preDiagnosis );
             })
             ))
             ],

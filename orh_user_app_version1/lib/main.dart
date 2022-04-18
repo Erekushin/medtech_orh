@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:orh_user_app_version1/Controllers/query_controller.dart';
 import 'package:orh_user_app_version1/Controllers/setting_controller.dart';
-import 'package:orh_user_app_version1/views/QueryRelated/query.dart';
-import 'package:orh_user_app_version1/views/QueryRelated/query_list.dart';
+import 'package:orh_user_app_version1/views/PCR_Related/pcr_view.dart';
+import 'package:orh_user_app_version1/views/PreDiagnosis/pre_diagnosis.dart';
+import 'package:orh_user_app_version1/views/SurveyRelated/survey.dart';
+import 'package:orh_user_app_version1/views/SurveyRelated/survey_list.dart';
 import 'package:orh_user_app_version1/views/splash_screen.dart';
 import 'package:orh_user_app_version1/views/ProfileRelated/profile.dart';
 import 'package:orh_user_app_version1/views/home.dart';
@@ -74,7 +76,7 @@ class _MyAppState extends State<MyApp> {
       getPages: [
         GetPage(name: RouteUnits.splashScreen, page: ()=> const MyCustomSplashScreen()),
         //basic profile input
-        GetPage(name: RouteUnits.basicProfileInput, page: ()=> const BasicPrifileDataCard()),
+        GetPage(name: RouteUnits.basicProfileInput, page: ()=> const BasicPrifileDataCard(), ),
         //login
         GetPage(name: RouteUnits.login, page: ()=> const Login()),
         //home
@@ -97,11 +99,13 @@ class _MyAppState extends State<MyApp> {
         GetPage(name: RouteUnits.doctors + RouteUnits.doctorProfile, page: ()=> const DoctorProfile()),
         //Судалгаанууд
         GetPage(name: RouteUnits.queries, page: ()=> const QueryList()),
-        GetPage(name: RouteUnits.queries + RouteUnits.individualQuery, page: ()=> const QueryUnit()),
+        GetPage(name: RouteUnits.queries + RouteUnits.individualQuery, page: ()=> const SurveyUnit()),
         //Calculators
         GetPage(name: RouteUnits.calculators, page: ()=> const CalculatorHome()),
         //Setting
         GetPage(name: RouteUnits.setting, page: ()=> const Setting()),
+        //Урьдчилан сэргийлэх үзлэг
+        GetPage(name: RouteUnits.preDiagnosis, page: ()=> const PreDiagnosis()),
 
         //card test
         // GetPage(name: "/loginforvchat", page: ()=> LoginView()),
@@ -111,6 +115,7 @@ class _MyAppState extends State<MyApp> {
         // GetPage(name: "/tsagavah", page: ()=> const PCRView()),
         // GetPage(name: "/login", page: ()=> LoginView()),
         GetPage(name: "/camera", page: ()=> (CameraApp())),
+        GetPage(name: "/pcrView", page: ()=> const PCRView()),
       ], 
     ),
         StreamBuilder<bool>(

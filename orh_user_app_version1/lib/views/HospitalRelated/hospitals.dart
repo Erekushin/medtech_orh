@@ -14,9 +14,6 @@ class Hospitals extends StatefulWidget {
 }
 
 class _HospitalsState extends State<Hospitals> {
- 
-
-
   bool sideBarToggler = false;
   GlobalKey<ScaffoldState> sidePageKey = GlobalKey<ScaffoldState>();
   PageController pageController = PageController(viewportFraction: 0.85);
@@ -41,9 +38,13 @@ class _HospitalsState extends State<Hospitals> {
   }
   @override
   Widget build(BuildContext context) {
+    var argu = Get.parameters;
     return WillPopScope(
       onWillPop: () async{
-        GlobalHelpers.bottomnavbarSwitcher.add(false);
+        print(argu.toString());
+        if(argu == RouteUnits.home){
+          GlobalHelpers.bottomnavbarSwitcher.add(false);
+        }
         return true;
       },
       child: Scaffold(
@@ -178,8 +179,3 @@ class _HospitalsState extends State<Hospitals> {
     );
   }
 }
-
-
-
-
-
