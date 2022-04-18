@@ -34,7 +34,7 @@ import 'dart:async';
 import 'package:camera/camera.dart';
 import 'global_helpers.dart';
 
-// this is fucking working_with_local branch ..
+// this is fucking 4.18hotfix branch ..
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   cameras = await availableCameras();
