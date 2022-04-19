@@ -21,14 +21,15 @@ import '../../models/childHeartQueryRelated/aimags.dart';
 
 ///Асуулгаас бүтсэн нэг бие сэдэв бүхий бүртгэлийн 
 ///болон судалгааны асуултуудыг олон хуудасанд хуваан харуулах.
-class QueryUnit extends StatefulWidget {
-  const QueryUnit({ Key? key }) : super(key: key);
+class SurveyUnit extends StatefulWidget {
+  const SurveyUnit({ Key? key }) : super(key: key);
   @override
-  State<QueryUnit> createState() => _QueryUnit();
+  State<SurveyUnit> createState() => _SurveyUnit();
 }
-class _QueryUnit extends State<QueryUnit> {
+class _SurveyUnit extends State<SurveyUnit> {
   var pageController = PageController();
   final queryController = Get.find<SurveyController>();
+  final settingsController = Get.find<SettingController>();
   @override
   void initState() {
     super.initState();
@@ -41,8 +42,12 @@ class _QueryUnit extends State<QueryUnit> {
         body: PageView.builder(
               controller: pageController,
               onPageChanged: (index){
-                if(index == 1){
-                  queryController.xyrInfoGet();
+                switch(index){
+                  case 1:
+                    if(settingsController.xyrServiceSwitcher.value){
+                     queryController.xyrInfoGet();
+                    }
+                  break;
                 }
               },
               itemCount: GlobalHelpers.queryPageCount,
@@ -69,6 +74,74 @@ class _PageUnitState extends State<PageUnit> {
   bool infoContainerSwitch = false;
   var settingsControllerOut = Get.find<SettingController>();
   var surveyControllerOut = Get.find<SurveyController>(); 
+  void pushData(){
+    surveyControllerOut.pushDataBtn.value = false;
+    if(surveyControllerOut.haveDefaultData.value){//default aa shalgaad 
+                            surveyControllerOut.queryAnswer.researcherGeregeID = Get.find<LoginController>().geregeUser.result!.id;
+                            surveyControllerOut.queryAnswer.aimagCode = surveyControllerOut.researcherDefaultData.result!.aimagCode; 
+                            surveyControllerOut.queryAnswer.aimagName = surveyControllerOut.researcherDefaultData.result!.aimagName;
+                            surveyControllerOut.queryAnswer.sumCode = surveyControllerOut.researcherDefaultData.result!.sumCode;
+                            surveyControllerOut.queryAnswer.sumName = surveyControllerOut.researcherDefaultData.result!.sumName;
+                            surveyControllerOut.queryAnswer.regNo = surveyControllerOut.rdTxtController.text;
+                            surveyControllerOut.queryAnswer .surveyId = '4'; // saijruulna
+                        if(settingsControllerOut.xyrServiceSwitcher.value){//xyr aa asaasan vgvvgee shalgaad 
+                          if(GlobalHelpers.isXyrNull){
+                             try{
+                              surveyControllerOut.queryAnswer.gender = surveyControllerOut.xyrInfo.result!.gender.toString();
+                              surveyControllerOut.queryAnswer.age = surveyControllerOut.xyrInfo.result!.age;
+                              surveyControllerOut.queryAnswer.fistName = surveyControllerOut.xyrInfo.result!.firstName;
+                              surveyControllerOut.queryAnswer.lastName = surveyControllerOut.xyrInfo.result!.lastName;
+                              surveyControllerOut.surveyAnswersPush();
+                              print('huraa avsan');
+                            }
+                            catch(e){
+                               Get.snackbar('Алдаа', '$e!', snackPosition: SnackPosition.BOTTOM,
+                               colorText: Colors.white, backgroundColor: Colors.grey[900], margin:  const EdgeInsets.all(5));
+                            }
+                            }
+                          else{
+                                Get.snackbar('Талбарын мэдээлэл дутуу байна', 'Судалгаанд оролцогчийн Регистрийн дугаарыг оруулна уу!', snackPosition: SnackPosition.BOTTOM,
+                                colorText: Colors.white, backgroundColor: Colors.grey[900], margin:  const EdgeInsets.all(5));
+                          }
+                        }
+                        else{
+                          if(surveyControllerOut.gender.text != '' && surveyControllerOut.age.text != ''&&
+                             surveyControllerOut.firstName.text != '' && surveyControllerOut.lastName.text != '' && 
+                             surveyControllerOut.rdTxtController.text != ''){
+                             try{
+                                surveyControllerOut.queryAnswer.gender = surveyControllerOut.gender.text;
+                                surveyControllerOut.queryAnswer.age = surveyControllerOut.age.text;
+                                surveyControllerOut.queryAnswer.fistName = surveyControllerOut.firstName.text;
+                                surveyControllerOut.queryAnswer.lastName = surveyControllerOut.lastName.text;
+                                surveyControllerOut.surveyAnswersPush();
+                                print('garaas medeelel oruulchaad yavuulah gej bna');
+                            }
+                            catch(e){
+                               Get.snackbar('Алдаа', '$e!', snackPosition: SnackPosition.BOTTOM,
+                               colorText: Colors.white, backgroundColor: Colors.grey[900], margin:  const EdgeInsets.all(5));
+                            }
+                        
+                        }
+                        else{
+                           surveyControllerOut.queryAnswer.researcherGeregeID = '';
+                           surveyControllerOut.queryAnswer.regNo = '';
+                            surveyControllerOut.queryAnswer.aimagCode = ''; 
+                            surveyControllerOut.queryAnswer.aimagName = '';
+                            surveyControllerOut.queryAnswer.sumCode = '';
+                            surveyControllerOut.queryAnswer.sumName = '';
+                            surveyControllerOut.queryAnswer .surveyId = '4'; // saijruulna
+                          Get.snackbar('Талбарын мэдээлэл дутуу байна', 'Судалгаанд оролцогчийн мэдээллийг оруулна уу!', snackPosition: SnackPosition.BOTTOM,
+                                colorText: Colors.white, backgroundColor: Colors.grey[900], margin:  const EdgeInsets.all(5));
+                        }
+                          
+                        }
+                      }
+                      else{
+                        Get.snackbar('Талбарын мэдээлэл дутуу байна', 'Судалгааг авч буй байршилын мэдээллийг оруулна уу!', snackPosition: SnackPosition.BOTTOM,
+                                colorText: Colors.white, backgroundColor: Colors.grey[900], margin:  const EdgeInsets.all(5));
+                      }
+                       
+  }
   List<DropdownMenuItem<String>> aimagItems(List<Aimags> aimagList){
     return aimagList.map((item){
             return DropdownMenuItem(
@@ -157,13 +230,15 @@ class _PageUnitState extends State<PageUnit> {
                                      GetX<SurveyController>(builder: (surveyController){
                                        return  Icon(
                                        Icons.check_circle,
-                                       color: surveyController.haveDefaultData.value? Colors.green : Colors.grey,
+                                       color: surveyController.greenCheckIcon.value? Colors.green : Colors.grey,
                                        ).pressExtention((){
                                        setState(() {
-                                         infoContainerSwitch = false;
-                                         surveyController.haveDefaultData.value = false;
-                                         surveyController.researcherDefaultData.result!.userId = Get.find<LoginController>().geregeUser.result!.id;
-                                         surveyController.researcherDefaultDataUpdateAndPush();
+                                         if(surveyController.greenCheckIcon.value){
+                                            infoContainerSwitch = false;
+                                            surveyController.greenCheckIcon.value = false;
+                                            surveyController.researcherDefaultData.result!.userId = Get.find<LoginController>().geregeUser.result!.id;
+                                            surveyController.researcherDefaultDataUpdateAndPush();
+                                         }
                                        });
                                      });
 
@@ -279,6 +354,7 @@ class _PageUnitState extends State<PageUnit> {
                     final int queryUnitIndex = widget.pageIndex * AllSizes.pageQuestionCount + index;
                     final item =  surveyControllerOut.queryQuestions.result!.questions![queryUnitIndex];
                     surveyControllerOut.textEditingControllers.add(TextEditingController());
+                    surveyControllerOut.dropvalueList.add(DropSelectVal());
                   return RecieverUnit(questionID: item.id!, type: item.type, questionText: item.questionText, 
                                       questionIndex: queryUnitIndex, options: item.options);
                 }),
@@ -290,48 +366,10 @@ class _PageUnitState extends State<PageUnit> {
                     margin: const EdgeInsets.only(right: 25),
                     child: myBtn(CommonColors.geregeBlue, GeneralMeasurements.deviceWidth*.2, GeneralMeasurements.deviceHeight*.05, 
                     CommonColors.geregeBlue, Colors.white, 'Done').pressExtention((){
-                      surveyControllerOut.checkData();
-                      if(surveyControllerOut.haveDefaultData.value){
-                        if(GlobalHelpers.isXyrNull || surveyControllerOut.rdTxtController.text != ''){
-                               try{
-                                 surveyControllerOut.queryAnswer.regNo = surveyControllerOut.rdTxtController.text;
-                                 if(settingsControllerOut.xyrServiceSwitcher.value){
-                                   surveyControllerOut.queryAnswer.gender = surveyControllerOut.xyrInfo.result!.gender.toString();
-                                   surveyControllerOut.queryAnswer.age = surveyControllerOut.xyrInfo.result!.age;
-                                   surveyControllerOut.queryAnswer.fistName = surveyControllerOut.xyrInfo.result!.firstName;
-                                   surveyControllerOut.queryAnswer.lastName = surveyControllerOut.xyrInfo.result!.lastName;
-                                 }
-                                 else{
-                                   surveyControllerOut.queryAnswer.gender = surveyControllerOut.gender.text;
-                                   surveyControllerOut.queryAnswer.age = surveyControllerOut.age.text;
-                                   surveyControllerOut.queryAnswer.fistName = surveyControllerOut.firstName.text;
-                                   surveyControllerOut.queryAnswer.lastName = surveyControllerOut.lastName.text;
-                                 }
-                            
-                            surveyControllerOut.queryAnswer.researcherGeregeID = Get.find<LoginController>().geregeUser.result!.id;
-                            surveyControllerOut.queryAnswer.aimagCode = surveyControllerOut.researcherDefaultData.result!.aimagCode; 
-                            surveyControllerOut.queryAnswer.aimagName = surveyControllerOut.researcherDefaultData.result!.aimagName;
-                            surveyControllerOut.queryAnswer.sumCode = surveyControllerOut.researcherDefaultData.result!.sumCode;
-                            surveyControllerOut.queryAnswer.sumName = surveyControllerOut.researcherDefaultData.result!.sumName;
-                            surveyControllerOut.queryAnswer .surveyId = '4'; // saijruulna
-                            surveyControllerOut.surveyAnswersPush();
-                            print('huraa avsan');
-                            }
-                            catch(e){
-                               Get.snackbar('Алдаа', '$e!', snackPosition: SnackPosition.BOTTOM,
-                               colorText: Colors.white, backgroundColor: Colors.grey[900], margin:  const EdgeInsets.all(5));
-                            }
-                            }
-                            else{
-                                Get.snackbar('Талбарын мэдээлэл дутуу байна', 'Судалгаанд оролцогчийн Регистрийн дугаарыг оруулна уу!', snackPosition: SnackPosition.BOTTOM,
-                                colorText: Colors.white, backgroundColor: Colors.grey[900], margin:  const EdgeInsets.all(5));
-                            };
+                      if(surveyControllerOut.pushDataBtn.value){
+                        pushData();
+                        Future.delayed(const Duration(seconds: 3),(){surveyControllerOut.pushDataBtn.value = true;});
                       }
-                      else{
-                        Get.snackbar('Талбарын мэдээлэл дутуу байна', 'Судалгааг авч буй байршилын мэдээллийг оруулна уу!', snackPosition: SnackPosition.BOTTOM,
-                                colorText: Colors.white, backgroundColor: Colors.grey[900], margin:  const EdgeInsets.all(5));
-                      }
-                       
                     }),
                   )
                 ],) :  const SizedBox()
@@ -405,7 +443,7 @@ class _RecieverUnit extends State<RecieverUnit> {
         default: return MyDropdown(dropDownHint: widget.questionText, listitems: widget.options, 
                               currentValue: 0, mark: 'mark', givenModelType: Options, 
                               margint: 5, marginb: 5, marginr: 20, marginl: 20, questionID: widget.questionID,
-                              answerIndex: widget.questionIndex,);
+                              answerIndex: widget.questionIndex);
                         // MyRadioBtn(w: 1, title: widget.questionText, optionItems: widget.options,
                         //             questionID:  widget.questionID, questionIndex: widget.questionIndex,);        
       } 

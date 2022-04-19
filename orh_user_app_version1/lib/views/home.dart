@@ -183,7 +183,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin{
                   (){Get.toNamed(RouteUnits.queries, arguments: "");},
                   const Color(0xfff37736),
                   Icons.article_sharp,
-                  'Эмч нарl',
+                  'Эмч нар',
                   (){Get.toNamed(RouteUnits.doctors, arguments: "fromDoctors");},),
               homePageCardsGroup(
                   const Color(0xffFF6D6D),

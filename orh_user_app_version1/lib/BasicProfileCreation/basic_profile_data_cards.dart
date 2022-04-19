@@ -40,7 +40,7 @@ class _BasicPrifileDataCardState extends State<BasicPrifileDataCard> {
         body: Container(///background container
             color: CommonColors.geregeBlue,
             child: Center(
-              child: Container(///Картуудыг агуулах Container
+              child: SizedBox(///Картуудыг агуулах Container
                 width: GeneralMeasurements.deviceWidth/100*90,
                 height: GeneralMeasurements.deviceHeight/100*60,
                 child: SwipeCards(///Картууд
@@ -49,7 +49,7 @@ class _BasicPrifileDataCardState extends State<BasicPrifileDataCard> {
                     return Container(
                         width: GeneralMeasurements.deviceWidth/100*90,
                         height: GeneralMeasurements.deviceHeight/100*60,
-                        decoration: BoxDecoration(
+                        decoration: const BoxDecoration(
                           borderRadius: BorderRadius.all(Radius.circular(20)),
                           color: Colors.white,
                         ),

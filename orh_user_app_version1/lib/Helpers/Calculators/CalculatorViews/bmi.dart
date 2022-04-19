@@ -10,7 +10,7 @@ class BMI extends StatelessWidget {
         color: Colors.amber,
         child: Center(
           child: Column(
-            children: [
+            children: const [
               Text('Биеийн жин (kg)'),
               TextField(),
               Text('Өндөр'),

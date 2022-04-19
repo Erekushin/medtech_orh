@@ -2,12 +2,9 @@ import 'package:get/get.dart';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:orh_user_app_version1/global_helpers.dart';
 
 
 class ImageController extends GetxController{
-  //TODO base aas datagaa avaad ajillahaar ene model dotorh tsogts datanii neg heseg bolno
-  // ter vyd bas static imageswitcher iig auto false bh esehiig shiidne gesen vg
  var imageFile = File('').obs;
  final _picker = ImagePicker();
  Future<void> pickImageFromGallery() async {

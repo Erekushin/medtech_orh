@@ -11,14 +11,14 @@ class BasicProfileData1 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     GlobalHelpers.imageFileSwitcher = false;
-    return Container(
+    return SizedBox(
       child: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Column(
               children: [
-                SizedBox(height: 20,),
+                const SizedBox(height: 20,),
                 GetX<ImageController>(builder: (imageController){
                   return CircleAvatar(
                   backgroundColor: Colors.grey,
@@ -36,8 +36,8 @@ class BasicProfileData1 extends StatelessWidget {
               ],
             ),
             Container(
-              padding: EdgeInsets.only(left: 50, right: 50, top: 10, bottom: 0),
-              child: TextField(
+              padding: const EdgeInsets.only(left: 50, right: 50, top: 10, bottom: 0),
+              child: const TextField(
                 decoration: InputDecoration(
                   hintText: 'Өндөр',
                 ),
