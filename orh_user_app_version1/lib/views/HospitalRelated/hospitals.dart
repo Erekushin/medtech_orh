@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:orh_user_app_version1/Helpers/CreatedGlobalWidgets/on_press_extention.dart';
@@ -8,7 +10,7 @@ import '../../global_constant.dart';
 import 'created_widgets.dart';
 
 class Hospitals extends StatefulWidget {
-  const Hospitals({Key? key}) : super(key: key);
+  Hospitals({Key? key}) : super(key: key);
   @override
   _HospitalsState createState() => _HospitalsState();
 }
@@ -22,6 +24,7 @@ class _HospitalsState extends State<Hospitals> {
   final double _height = 120;
   bool isTapped = true;
   bool isExpanded = false;
+  final description = Get.arguments as String;
   @override
   void initState(){
     super.initState();
@@ -38,12 +41,16 @@ class _HospitalsState extends State<Hospitals> {
   }
   @override
   Widget build(BuildContext context) {
-    var argu = Get.parameters;
     return WillPopScope(
       onWillPop: () async{
-        print(argu.toString());
-        if(argu == RouteUnits.home){
-          GlobalHelpers.bottomnavbarSwitcher.add(false);
+        log(description);
+        switch(description){
+          case RouteUnits.fromHospitals:
+            GlobalHelpers.bottomnavbarSwitcher.add(false);
+            break;
+          case RouteUnits.fromTimeOrder:
+           GlobalHelpers.bottomnavbarSwitcher.add(false);
+            break;
         }
         return true;
       },
@@ -167,12 +174,11 @@ class _HospitalsState extends State<Hospitals> {
             color: index.isEven? const Color(0xFFC9DAED): const Color(0xFFE6CF9B)
         ),
       ).pressExtention((){
-        final description = Get.arguments as String;
         switch(description){
-          case "fromHospitals":
+          case RouteUnits.fromHospitals:
             Get.toNamed(RouteUnits.hospitals + RouteUnits.hospitalProfile, arguments: '');
             break;
-          case "fromTimeOrder":
+          case RouteUnits.fromTimeOrder:
             Get.toNamed(RouteUnits.timeOrder + RouteUnits.hospitals + RouteUnits.doctors, arguments: 'fromTimeOrder');
         }
       }),

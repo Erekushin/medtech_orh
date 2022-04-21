@@ -88,11 +88,11 @@ class _MyAppState extends State<MyApp> {
         GetPage(name: RouteUnits.profileLifeToken, page: ()=> const ProfileLifeToken()),
         GetPage(name: RouteUnits.profileDeviceLog, page: ()=> const ProfileDevicelog()),
         //Үйлчлүүлэгч үзлэгийн цаг захиалах
-        GetPage(name: RouteUnits.timeOrder + RouteUnits.hospitals, page: ()=> const Hospitals()),
+        GetPage(name: RouteUnits.timeOrder + RouteUnits.hospitals, page: ()=> Hospitals()),
         GetPage(name: RouteUnits.timeOrder + RouteUnits.hospitals + RouteUnits.doctors, page: ()=> const Doctors()),
         GetPage(name: RouteUnits.timeOrder + RouteUnits.hospitals + RouteUnits.doctors + RouteUnits.timeSequence, page: ()=> const DoctorTimeSequence()),
         //Эмнэлэгүүдийн мэдээлэл
-        GetPage(name: RouteUnits.hospitals, page: ()=> const Hospitals()),
+        GetPage(name: RouteUnits.hospitals, page: ()=> Hospitals()),
         GetPage(name: RouteUnits.hospitals + RouteUnits.hospitalProfile, page: ()=> const HospitalProfile()),
         //Эмч нарын мsэдээлэл
         GetPage(name: RouteUnits.doctors, page: ()=> const Doctors()),

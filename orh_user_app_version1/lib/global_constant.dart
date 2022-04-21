@@ -36,6 +36,12 @@ class RouteUnits{
   static String calculators = "/calculators";
   static String questions = "/questions";
   static String setting = "/setting";
+
+
+  //const
+  static const String fromHospitals = 'fromHospitals';
+  static const String fromTimeOrder = 'fromTimeOrder';
+  static const String fromPreDiagnosis = 'fromPreDiagnosis';
 }
 
 class CommonColors{
