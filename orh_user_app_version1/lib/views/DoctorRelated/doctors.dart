@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:orh_user_app_version1/global_constant.dart';
 import 'package:orh_user_app_version1/global_helpers.dart';
 import 'DoctorCard.dart';
 
@@ -10,11 +12,14 @@ class Doctors extends StatefulWidget {
 }
 
 class _DoctorsState extends State<Doctors> {
+  final argu = Get.arguments as String;
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async{
-        GlobalHelpers.bottomnavbarSwitcher.add(false);
+        if(argu == RouteUnits.fromDoctors){
+          GlobalHelpers.bottomnavbarSwitcher.add(false);
+        }
         return true;
       },
       child: Scaffold(

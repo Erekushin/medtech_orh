@@ -2,10 +2,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:orh_user_app_version1/Helpers/CreatedGlobalWidgets/on_press_extention.dart';
+import 'package:orh_user_app_version1/Controllers/sql_controller.dart';
 import 'dart:ui';
 import '../Controllers/login_controller.dart';
-import '../Controllers/query_controller.dart';
+import '../Controllers/survey_controller.dart';
 import '../MyWidgets/my_text.dart';
 import '../global_constant.dart';
 import '../global_helpers.dart';
@@ -16,8 +16,8 @@ import '../global_helpers.dart';
       Color color,
       IconData icon,
       String title,
-      BuildContext context,
       Function func,
+      BuildContext context,
       Color color2,
       IconData icon2,
       String title2,
@@ -99,6 +99,7 @@ class Home extends StatefulWidget {
   _HomeState createState() => _HomeState();
 }
 class _HomeState extends State<Home> with SingleTickerProviderStateMixin{
+  var sqlController = Get.find<SqlController>();
   Future<bool>cloaseTheApp(BuildContext context) async {
     return await Get.defaultDialog(title: 'Эрүүл Gerege ийг хаах уу?', content: Image.asset('assets/images/thinkingBoy.png'),
     actions: <Widget>[TextButton(onPressed: (){SystemNavigator.pop();}, child: const Text("exit", style: TextStyle(fontSize: 20),)), 
@@ -158,55 +159,53 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin{
                 const Color(0xFF12C0A1),
                 Icons.person,
                 'Профайл',
+                (){Get.toNamed('/profile', arguments: RouteUnits.profile);},
                 context,
-                (){Get.toNamed('/profile', arguments: "profile");},
-                const Color(0xffFF6D6D),
-                Icons.analytics_outlined,
-                'Calculators',
-                (){Get.toNamed(RouteUnits.calculators, arguments: "firstPage");}
+                const Color(0xff63ace5),
+                Icons.ad_units_outlined,
+                'Судалгаа',
+                (){Get.toNamed(RouteUnits.surveyList, arguments: "");},
               ),
               homePageCardsGroup(
-                  Colors.lightGreen,
-                  Icons.calendar_today_sharp,
-                  'Цаг авах',
-                  context,
-                  (){Get.toNamed(RouteUnits.timeOrder + RouteUnits.hospitals, arguments: RouteUnits.fromTimeOrder);},
                   const Color(0xffffa700),
                   Icons.article,
                   'Эмнэлэгүүд',
-                  (){Get.toNamed(RouteUnits.hospitals, arguments: RouteUnits.fromHospitals);},),
-              homePageCardsGroup(
-                  const Color(0xff63ace5),
-                  Icons.ad_units_outlined,
-                  'Судалгаа',
-                  context,
-                  (){Get.toNamed(RouteUnits.queries, arguments: "");},
+                  (){Get.toNamed(RouteUnits.hospitals, arguments: RouteUnits.fromHospitals);},
+                   context,
                   const Color(0xfff37736),
                   Icons.article_sharp,
                   'Эмч нар',
-                  (){Get.toNamed(RouteUnits.doctors, arguments: "fromDoctors");},),
-              homePageCardsGroup(
-                  const Color(0xffFF6D6D),
-                  Icons.android,
-                  'camera',
-                  context,
-                  (){Get.toNamed('/camera', arguments: "fromHospitals");},
-                  Colors.lightGreen,
-                  Icons.text_format,
-                  'ionDemo',
-                  (){Get.toNamed('/login', arguments: "fromHospitals");},),
+                  (){Get.toNamed(RouteUnits.doctors, arguments: RouteUnits.fromDoctors);},
+                  ),
               homePageCardsGroup(
                   const Color(0xffffa700),
                   Icons.text_fields,
                   'Урьдчилан сэргийлэх үзлэг',
-                  context,
+                 
                   (){Get.toNamed(RouteUnits.preDiagnosis, arguments: RouteUnits.home);},
-                  const Color(0xff63ace5),
+                   context,
+                     const Color(0xffFF6D6D),
+                   Icons.analytics_outlined,
+                   'Жорын бичиг',
+                   () async{
+                     await sqlController.readAllNotes();
+                      Get.toNamed(RouteUnits.treatmentRecipe, arguments: "firstPage");
+                     },
+                  ),
+              homePageCardsGroup(
+                  const Color(0xffFF6D6D),
+                  Icons.android,
+                  'camera',
+                  (){Get.toNamed('/camera', arguments: "fromHospitals");},
+                   context,
+                   const Color(0xff63ace5),
                   Icons.gamepad_outlined,
                     'local check',
                     (){
                       print('object');
-                    },),
+                    },
+                  ),
+            
               SizedBox(height:  GeneralMeasurements.deviceWidth/ 20),
             ],
           ),
@@ -225,7 +224,9 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin{
                   highlightColor: Colors.transparent,
                   splashColor: Colors.transparent,
                   onTap: () {
-                    Get.toNamed(RouteUnits.setting);
+                    Get.toNamed(RouteUnits.setting, arguments: RouteUnits.fromHome);
+                    GlobalHelpers.bottomnavbarSwitcher.add(true);
+
                   },
                   child: ClipRRect(
                     borderRadius: const BorderRadius.all(Radius.circular(99)),

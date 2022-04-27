@@ -3,7 +3,9 @@ import 'package:flutter/gestures.dart';
 import 'package:get/get.dart';
 import 'package:orh_user_app_version1/global_constant.dart';
 import '../../Controllers/login_controller.dart';
-import '../../Helpers/CreatedGlobalWidgets/scroll_behavior.dart';
+import '../../Helpers/scroll_behavior.dart';
+import '../../Helpers/logging.dart';
+import 'package:logger/logger.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -11,6 +13,8 @@ class Login extends StatefulWidget {
   _LoginState createState() => _LoginState();
 }
 class _LoginState extends State<Login>with SingleTickerProviderStateMixin {
+  
+  final log = logger(Login);
   late AnimationController _controller;
   late Animation<double> _opacity;
   late Animation<double> _transform;
@@ -110,9 +114,9 @@ class _LoginState extends State<Login>with SingleTickerProviderStateMixin {
                                 InkWell(
                                   highlightColor: Colors.transparent,
                                   splashColor: Colors.transparent,
-                                  onTap: (){
-                                    logincontroller.geregeUserLogin((){Get.offNamed(RouteUnits.home);});
-                                    print('sddfdf');
+                                  onTap:(){
+                                     logincontroller.geregeUserLogin((){Get.offNamed(RouteUnits.home);});
+                                     log.d('log in');
                                   },
                                   child: Container(
                                     height: GeneralMeasurements.deviceHeight/100*6,
@@ -154,7 +158,7 @@ class _LoginState extends State<Login>with SingleTickerProviderStateMixin {
                                 ),
                                 recognizer: TapGestureRecognizer()
                                   ..onTap = () {
-                                  Get.toNamed(RouteUnits.basicProfileInput);
+                                  Get.toNamed(RouteUnits.answerform);
                                   },
                               ),
                             ),

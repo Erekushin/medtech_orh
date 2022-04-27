@@ -76,11 +76,6 @@ class SurveyController extends GetxController{
     return data;
   }
 
-
-
-
-
-
   Future isResearcherAuth() async{
     childHeartQuerybtnloading.value = true;
     var data = await GlobalHelpers.postRequestGeneral.getdata(geregeId(), "2035232", UriAdresses.covidBackEnd);
@@ -89,8 +84,8 @@ class SurveyController extends GetxController{
     switch(response.code){
        case '200':
           childHeartQuerybtnloading.value = false;
-          Get.find<SurveyController>().researcherDefaultDataGet();
-          Get.find<SurveyController>().surveyQuestionsGet();
+          researcherDefaultDataGet();
+          surveyQuestionsGet();
           GlobalHelpers.loopCheck = 0;
           break;
         case '100':
@@ -225,15 +220,6 @@ class SurveyController extends GetxController{
     }
 
   }
-
-
-
-
-
-
-
-
-
   Future researcherDefaultDataGet() async{
     var jsondata = await GlobalHelpers.postRequestGeneral.getdata(geregeId(), "2035226", UriAdresses.covidBackEnd);
     researcherDefaultData = ResearcherDefaultData.fromJson(jsonDecode(jsondata.toString()));
@@ -260,7 +246,8 @@ class SurveyController extends GetxController{
   Future surveyQuestionsGet() async{
     var jsondata = await GlobalHelpers.postRequestGeneral.getdata(queryPayload(), "2035225", UriAdresses.covidBackEnd);
     queryQuestions = QueryQuestions.fromJson(jsonDecode(jsondata.toString()));
-    Get.toNamed(RouteUnits.queries + RouteUnits.individualQuery, arguments: "");
+    Get.toNamed(RouteUnits.surveyList + RouteUnits.individualSurvey, arguments: "");
+    // Get.toNamed(RouteUnits.answerform);
     GlobalHelpers.bottomnavbarSwitcher.add(false);
     queryAnswer.answers = List<Answers>.generate(queryQuestions.result!.questions!.length, ((index) => Answers()));
   }

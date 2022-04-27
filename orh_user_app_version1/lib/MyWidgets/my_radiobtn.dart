@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:orh_user_app_version1/MyWidgets/my_text.dart';
 import 'package:orh_user_app_version1/global_constant.dart';
-import '../Controllers/query_controller.dart';
+import '../Controllers/survey_controller.dart';
 class MyRadioBtn extends StatefulWidget {
   MyRadioBtn({ Key? key,required this.w, this.optionItems, required this.title, 
                      required this.questionID, required this.questionIndex}) : super(key: key);

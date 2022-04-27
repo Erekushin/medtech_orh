@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:orh_user_app_version1/Controllers/query_controller.dart';
+import 'package:orh_user_app_version1/Controllers/survey_controller.dart';
 import '../models/childHeartQueryRelated/childheartquey.dart';
 import 'my_text.dart';
 import 'package:get/get.dart';

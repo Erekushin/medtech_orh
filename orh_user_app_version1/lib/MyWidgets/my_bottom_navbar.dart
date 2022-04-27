@@ -28,13 +28,15 @@ class _MyBottomNavbarState extends State<MyBottomNavbar> {
        
         break;
       case 1 :
-        Get.toNamed('/');
+        Get.toNamed(RouteUnits.home);
         break;
       case 2 : 
-        Get.toNamed(RouteUnits.setting);
+        Get.toNamed(RouteUnits.setting, arguments: RouteUnits.fromBottomnavbar);
         break;
       case 3 :
-        Get.offNamedUntil(RouteUnits.profile, ModalRoute.withName(RouteUnits.home));
+        Get.toNamed(RouteUnits.profile, arguments: RouteUnits.fromBottomnavbar);
+        //Get.offNamedUntil(RouteUnits.profile, ModalRoute.withName(RouteUnits.home), arguments: RouteUnits.fromBottomnavbar);
+        //home oos busad instance vvdee ustgaj bsan
         break;
     }
     _currentIndex = index; 

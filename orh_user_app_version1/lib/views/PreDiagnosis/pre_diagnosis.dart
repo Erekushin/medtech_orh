@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:orh_user_app_version1/Helpers/CreatedGlobalWidgets/on_press_extention.dart';
 import 'package:orh_user_app_version1/MyWidgets/my_text.dart';
 import 'package:orh_user_app_version1/global_constant.dart';
 import 'package:get/get.dart';
 import 'package:orh_user_app_version1/global_helpers.dart';
 import '../../MyWidgets/my_button.dart';
-import '../../MyWidgets/text_input.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../global_constant.dart';
 
@@ -98,9 +96,12 @@ class _PreDiagnosis extends State<PreDiagnosis> {
             alignment: Alignment.bottomRight,
             child: Container(
               margin: const EdgeInsets.only(bottom: 80, right: 15),
-              child: myBtn(CommonColors.geregeBlue, 100, 30, CommonColors.geregeBlue, Colors.white, 'Цаг авах').pressExtention((){
-                Get.toNamed(RouteUnits.timeOrder + RouteUnits.hospitals, arguments: RouteUnits.preDiagnosis );
-              })
+              child: InkWell(
+                onTap: (){
+                  Get.toNamed(RouteUnits.timeOrder + RouteUnits.hospitals, arguments: RouteUnits.fromTimeOrder );
+                },
+                child: myBtn(CommonColors.geregeBlue, 100, 30, CommonColors.geregeBlue, Colors.white, 'Цаг авах'),
+              )
               ))
               ],
             ),

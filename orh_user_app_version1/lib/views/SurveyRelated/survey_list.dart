@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:orh_user_app_version1/Helpers/CreatedGlobalWidgets/on_press_extention.dart';
-import '../../Controllers/query_controller.dart';
+import '../../Controllers/survey_controller.dart';
 import '../../MyWidgets/my_text.dart';
 import '../../global_constant.dart';
 import '../../global_helpers.dart';
@@ -29,7 +28,17 @@ class _SurveyListState extends State<SurveyList> {
               const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
           children: [
              GetX<SurveyController>(builder: (queryController){
-                  return Container( //child heart query btn
+                  return InkWell(
+                    onTap: (){
+                       try{
+                        queryController.isResearcherAuth();
+                       }
+                       catch(e){
+                        Get.snackbar('Алдаа', '$e', snackPosition: SnackPosition.BOTTOM,
+                        colorText: Colors.white, backgroundColor: Colors.grey[900], margin: EdgeInsets.only(left: 5, right: 5, bottom: GeneralMeasurements.snackbarBottomMargin));
+                       }
+                    },
+                    child: Container( //child heart query btn
                   margin: EdgeInsets.all(GeneralMeasurements.deviceWidth*.05),
                   height: GeneralMeasurements.deviceHeight*.1,
                   decoration: BoxDecoration(
@@ -65,16 +74,8 @@ class _SurveyListState extends State<SurveyList> {
                     child: myText('Хүүхдийн зүрхний эмгэг илрүүлэх судалгаа', 17, 1, FontWeight.w700), //queryController.childHeartQuery.result!.title??
                   )
               ],)
-            ).pressExtention((){
-              try{
-                queryController.isResearcherAuth();
-              }
-              catch(e){
-                Get.snackbar('Алдаа', '$e', snackPosition: SnackPosition.BOTTOM,
-                colorText: Colors.white, backgroundColor: Colors.grey[900], margin: EdgeInsets.only(left: 5, right: 5, bottom: GeneralMeasurements.snackbarBottomMargin));
-              }
-              
-            });
+            ),
+                  );
                   }),
           ],
         ),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:orh_user_app_version1/Controllers/setting_controller.dart';
-import '../Controllers/query_controller.dart';
+import '../Controllers/survey_controller.dart';
 Widget myTextField(String hinttxt, TextEditingController txtController, double margint, 
                    double marginb, double marginr, double marginl, int questionID,
                    int answerIndex, String mark){

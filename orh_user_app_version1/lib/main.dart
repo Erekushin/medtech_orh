@@ -1,23 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:orh_user_app_version1/Controllers/query_controller.dart';
+import 'package:orh_user_app_version1/Controllers/survey_controller.dart';
 import 'package:orh_user_app_version1/Controllers/setting_controller.dart';
-import 'package:orh_user_app_version1/views/PCR_Related/pcr_view.dart';
+import 'package:orh_user_app_version1/views/AnswerFormRelated/answer_form.dart';
 import 'package:orh_user_app_version1/views/PreDiagnosis/pre_diagnosis.dart';
 import 'package:orh_user_app_version1/views/SurveyRelated/survey.dart';
 import 'package:orh_user_app_version1/views/SurveyRelated/survey_list.dart';
+import 'package:orh_user_app_version1/views/TreatmentRecipe/treatment_recipe.dart';
 import 'package:orh_user_app_version1/views/splash_screen.dart';
 import 'package:orh_user_app_version1/views/ProfileRelated/profile.dart';
 import 'package:orh_user_app_version1/views/home.dart';
 import 'package:orh_user_app_version1/views/LoginRelatedViews/login.dart';
 import 'package:orh_user_app_version1/views/SettingsRelatedViews/setting.dart';
-import 'BasicProfileCreation/basic_profile_data_cards.dart';
 import 'Controllers/image_controller.dart';
 import 'Controllers/login_controller.dart';
-import 'MyWidgets/my_switcher.dart';
+import 'Controllers/sql_controller.dart';
 import 'views/DoctorRelated/doctor_profile.dart';
 import 'views/DoctorRelated/doctors.dart';
-import 'Helpers/Calculators/CalculatorViews/calculators_home.dart';
 import 'MyWidgets/my_bottom_navbar.dart';
 import 'views/HospitalRelated/hospital_prifile.dart';
 import 'views/HospitalRelated/hospitals.dart';
@@ -59,6 +58,7 @@ class _MyAppState extends State<MyApp> {
     Get.put(ImageController(), permanent: true);
     Get.put(LoginController(), permanent: true);
     Get.put(SettingController(), permanent: true);
+    Get.put(SqlController(), permanent: true);
     Get.put(SurveyController());
   }
   @override
@@ -76,7 +76,7 @@ class _MyAppState extends State<MyApp> {
       getPages: [
         GetPage(name: RouteUnits.splashScreen, page: ()=> const MyCustomSplashScreen()),
         //basic profile input
-        GetPage(name: RouteUnits.basicProfileInput, page: ()=> const BasicPrifileDataCard(), ),
+        GetPage(name: RouteUnits.answerform, page: ()=> const AnswerForm(),),
         //login
         GetPage(name: RouteUnits.login, page: ()=> const Login()),
         //home
@@ -98,12 +98,12 @@ class _MyAppState extends State<MyApp> {
         GetPage(name: RouteUnits.doctors, page: ()=> const Doctors()),
         GetPage(name: RouteUnits.doctors + RouteUnits.doctorProfile, page: ()=> const DoctorProfile()),
         //Судалгаанууд
-        GetPage(name: RouteUnits.queries, page: ()=> const SurveyList()),
-        GetPage(name: RouteUnits.queries + RouteUnits.individualQuery, page: ()=> const SurveyUnit()),
+        GetPage(name: RouteUnits.surveyList, page: ()=> const SurveyList()),
+        GetPage(name: RouteUnits.surveyList + RouteUnits.individualSurvey, page: ()=> const SurveyUnit()),
         //Calculators
-        GetPage(name: RouteUnits.calculators, page: ()=> const CalculatorHome()),
+        GetPage(name: RouteUnits.treatmentRecipe, page: ()=> const TreatmentRecipe() ),// CalculatorHome()
         //Setting
-        GetPage(name: RouteUnits.setting, page: ()=> const Setting()),
+        GetPage(name: RouteUnits.setting, page: ()=> Setting()),
         //Урьдчилан сэргийлэх үзлэг
         GetPage(name: RouteUnits.preDiagnosis, page: ()=> const PreDiagnosis()),
 
@@ -111,11 +111,8 @@ class _MyAppState extends State<MyApp> {
         // GetPage(name: "/loginforvchat", page: ()=> LoginView()),
         // GetPage(name: "/", page: ()=> LoginView()),
         GetPage(name: "/meeting", page: ()=> MeetingView()),
-        
-        // GetPage(name: "/tsagavah", page: ()=> const PCRView()),
         // GetPage(name: "/login", page: ()=> LoginView()),
         GetPage(name: "/camera", page: ()=> (CameraApp())),
-        GetPage(name: "/pcrView", page: ()=> const PCRView()),
       ], 
     ),
         StreamBuilder<bool>(

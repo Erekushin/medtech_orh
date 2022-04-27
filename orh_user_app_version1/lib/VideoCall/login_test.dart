@@ -1,175 +1,175 @@
-import 'package:flutter/material.dart';
-import 'package:orh_user_app_version1/VideoCall/video_call.dart';
+// import 'package:flutter/material.dart';
+// import 'package:orh_user_app_version1/VideoCall/video_call.dart';
 
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:get/get.dart';
+// import 'package:shared_preferences/shared_preferences.dart';
+// import 'package:get/get.dart';
 
-///utils dotor bsan
+// ///utils dotor bsan
 
-class Logger {
-  // Sample of abstract logging function
-  static void write(String text, {bool isError = false}) {
-    print('** $text, isError [$isError]');
-  }
-}
+// class Logger {
+//   // Sample of abstract logging function
+//   static void write(String text, {bool isError = false}) {
+//     print('** $text, isError [$isError]');
+//   }
+// }
 
-class LoginBinding implements Bindings {
-  @override
-  void dependencies() {
-    Get.lazyPut<LoginController>(() => LoginController());
-    Get.lazyPut<MeetingController>(() => MeetingController());
-  }
-}
+// class LoginBinding implements Bindings {
+//   @override
+//   void dependencies() {
+//     Get.lazyPut<LoginController>(() => LoginController());
+//     Get.lazyPut<MeetingController>(() => MeetingController());
+//   }
+// }
 
-class LoginController extends GetxController {
-  final _meetingController = Get.find<MeetingController>();
-  late SharedPreferences prefs;
-  late var _server = ''.obs;
-  late var _sid = ''.obs;
+// class LoginController extends GetxController {
+//   final _meetingController = Get.find<MeetingController>();
+//   late SharedPreferences prefs;
+//   late var _server = ''.obs;
+//   late var _sid = ''.obs;
 
-  @override
-  @mustCallSuper
-  void onInit() async {
-    super.onInit();
-    prefs = await SharedPreferences.getInstance();
-    _server.value = prefs.getString('server') ?? '127.0.0.1';
-    _sid.value = prefs.getString('room') ?? 'test room';
-  }
+//   @override
+//   @mustCallSuper
+//   void onInit() async {
+//     super.onInit();
+//     prefs = await SharedPreferences.getInstance();
+//     _server.value = prefs.getString('server') ?? '127.0.0.1';
+//     _sid.value = prefs.getString('room') ?? 'test room';
+//   }
 
-  bool handleJoin() {
-    if (_server.value.length == 0 || _sid.value.length == 0) {
-      return false;
-    }
-    prefs.setString('server', _server.value);
-    prefs.setString('room', _sid.value);
-    _meetingController.connect();
-    Get.toNamed('/meeting');
-    return true;
-  }
-}
+//   bool handleJoin() {
+//     if (_server.value.length == 0 || _sid.value.length == 0) {
+//       return false;
+//     }
+//     prefs.setString('server', _server.value);
+//     prefs.setString('room', _sid.value);
+//     _meetingController.connect();
+//     Get.toNamed('/meeting');
+//     return true;
+//   }
+// }
 
-class LoginView extends GetView<LoginController> {
+// class LoginView extends GetView<LoginController> {
 
-  Widget buildJoinView(context) {
-    return Align(
-        alignment: Alignment(0, 0),
-        child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              SizedBox(
-                  width: 260.0,
-                  child: Obx(() => TextField(
-                      keyboardType: TextInputType.text,
-                      textAlign: TextAlign.center,
-                      decoration: InputDecoration(
-                          contentPadding: EdgeInsets.all(10.0),
-                          border: UnderlineInputBorder(
-                              borderSide: BorderSide(color: Colors.black12)),
-                          hintText: 'Enter Ion Server.'),
-                      onChanged: (value) {
-                        controller._server.value = value;
-                      },
-                      controller:
-                      TextEditingController.fromValue(TextEditingValue(
-                        text: controller._server.value,
-                        selection: TextSelection.fromPosition(TextPosition(
-                            affinity: TextAffinity.downstream,
-                            offset: '${controller._server.value}'.length)),
-                      ))))),
-              SizedBox(
-                  width: 260.0,
-                  child: Obx(() => TextField(
-                      keyboardType: TextInputType.text,
-                      textAlign: TextAlign.center,
-                      decoration: InputDecoration(
-                        contentPadding: EdgeInsets.all(10.0),
-                        border: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Colors.black12)),
-                        hintText: 'Enter RoomID.',
-                      ),
-                      onChanged: (value) {
-                        controller._sid.value = value;
-                      },
-                      controller:
-                      TextEditingController.fromValue(TextEditingValue(
-                        text: controller._sid.value,
-                        selection: TextSelection.fromPosition(TextPosition(
-                            affinity: TextAffinity.downstream,
-                            offset: '${controller._sid}'.length)),
-                      ))))),
-              SizedBox(width: 260.0, height: 48.0),
-              InkWell(
-                child: Container(
-                  width: 220.0,
-                  height: 48.0,
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      color: Colors.red,
-                      width: 1,
-                    ),
-                  ),
-                  child: Center(
-                    child: Text(
-                      'Join',
-                      style: TextStyle(
-                        fontSize: 16.0,
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ),
-                onTap: () {
-                  Get.toNamed('/meeting');
-                  print('tap on join btn level 1');
-                  print(controller.handleJoin().toString());
-                  if (!controller.handleJoin()) {
-                    print('tap on join btn 2222');
-                    Get.dialog(AlertDialog(
-                      title: Text('Room/Server is empty'),
-                      content: Text('Please input room/server!'),
-                      actions: <Widget>[
-                        TextButton(
-                          child: Text('Ok'),
-                          onPressed: () => Get.back(),
-                        ),
-                      ],
-                    ));
-                  }
-                },
-              ),
-            ]));
-  }
+//   Widget buildJoinView(context) {
+//     return Align(
+//         alignment: Alignment(0, 0),
+//         child: Column(
+//             crossAxisAlignment: CrossAxisAlignment.center,
+//             mainAxisAlignment: MainAxisAlignment.center,
+//             children: <Widget>[
+//               SizedBox(
+//                   width: 260.0,
+//                   child: Obx(() => TextField(
+//                       keyboardType: TextInputType.text,
+//                       textAlign: TextAlign.center,
+//                       decoration: InputDecoration(
+//                           contentPadding: EdgeInsets.all(10.0),
+//                           border: UnderlineInputBorder(
+//                               borderSide: BorderSide(color: Colors.black12)),
+//                           hintText: 'Enter Ion Server.'),
+//                       onChanged: (value) {
+//                         controller._server.value = value;
+//                       },
+//                       controller:
+//                       TextEditingController.fromValue(TextEditingValue(
+//                         text: controller._server.value,
+//                         selection: TextSelection.fromPosition(TextPosition(
+//                             affinity: TextAffinity.downstream,
+//                             offset: '${controller._server.value}'.length)),
+//                       ))))),
+//               SizedBox(
+//                   width: 260.0,
+//                   child: Obx(() => TextField(
+//                       keyboardType: TextInputType.text,
+//                       textAlign: TextAlign.center,
+//                       decoration: InputDecoration(
+//                         contentPadding: EdgeInsets.all(10.0),
+//                         border: UnderlineInputBorder(
+//                             borderSide: BorderSide(color: Colors.black12)),
+//                         hintText: 'Enter RoomID.',
+//                       ),
+//                       onChanged: (value) {
+//                         controller._sid.value = value;
+//                       },
+//                       controller:
+//                       TextEditingController.fromValue(TextEditingValue(
+//                         text: controller._sid.value,
+//                         selection: TextSelection.fromPosition(TextPosition(
+//                             affinity: TextAffinity.downstream,
+//                             offset: '${controller._sid}'.length)),
+//                       ))))),
+//               SizedBox(width: 260.0, height: 48.0),
+//               InkWell(
+//                 child: Container(
+//                   width: 220.0,
+//                   height: 48.0,
+//                   decoration: BoxDecoration(
+//                     border: Border.all(
+//                       color: Colors.red,
+//                       width: 1,
+//                     ),
+//                   ),
+//                   child: Center(
+//                     child: Text(
+//                       'Join',
+//                       style: TextStyle(
+//                         fontSize: 16.0,
+//                         color: Colors.black,
+//                         fontWeight: FontWeight.bold,
+//                       ),
+//                     ),
+//                   ),
+//                 ),
+//                 onTap: () {
+//                   Get.toNamed('/meeting');
+//                   print('tap on join btn level 1');
+//                   print(controller.handleJoin().toString());
+//                   if (!controller.handleJoin()) {
+//                     print('tap on join btn 2222');
+//                     Get.dialog(AlertDialog(
+//                       title: Text('Room/Server is empty'),
+//                       content: Text('Please input room/server!'),
+//                       actions: <Widget>[
+//                         TextButton(
+//                           child: Text('Ok'),
+//                           onPressed: () => Get.back(),
+//                         ),
+//                       ],
+//                     ));
+//                   }
+//                 },
+//               ),
+//             ]));
+//   }
 
-  @override
-  Widget build(BuildContext context) {
-    Get.lazyPut<LoginController>(() => LoginController());
-    Get.lazyPut<MeetingController>(() => MeetingController());
-    Get.lazyPut(() => IonController());
-    return OrientationBuilder(builder: (context, orientation) {
-      return Scaffold(
-          appBar: orientation == Orientation.portrait
-              ? AppBar(
-            title: Text('PION'),
-          )
-              : null,
-          body: Stack(children: <Widget>[
-            Center(child: buildJoinView(context)),
-            Positioned(
-              bottom: 6.0,
-              right: 6.0,
-              child: TextButton(
-                onPressed: () {
-                  Get.toNamed('/settings');
-                },
-                child: Text(
-                  "Settings",
-                  style: TextStyle(fontSize: 16.0, color: Colors.black54),
-                ),
-              ),
-            ),
-          ]));
-    });
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     Get.lazyPut<LoginController>(() => LoginController());
+//     Get.lazyPut<MeetingController>(() => MeetingController());
+//     Get.lazyPut(() => IonController());
+//     return OrientationBuilder(builder: (context, orientation) {
+//       return Scaffold(
+//           appBar: orientation == Orientation.portrait
+//               ? AppBar(
+//             title: Text('PION'),
+//           )
+//               : null,
+//           body: Stack(children: <Widget>[
+//             Center(child: buildJoinView(context)),
+//             Positioned(
+//               bottom: 6.0,
+//               right: 6.0,
+//               child: TextButton(
+//                 onPressed: () {
+//                   Get.toNamed('/settings');
+//                 },
+//                 child: Text(
+//                   "Settings",
+//                   style: TextStyle(fontSize: 16.0, color: Colors.black54),
+//                 ),
+//               ),
+//             ),
+//           ]));
+//     });
+//   }
+// }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:orh_user_app_version1/Controllers/login_controller.dart';
-import 'package:orh_user_app_version1/Controllers/query_controller.dart';
+import 'package:orh_user_app_version1/Controllers/survey_controller.dart';
 import 'package:orh_user_app_version1/Controllers/setting_controller.dart';
 import 'package:orh_user_app_version1/MyWidgets/my_button.dart';
 import 'package:orh_user_app_version1/MyWidgets/my_dropdown.dart';
@@ -9,10 +9,7 @@ import 'package:orh_user_app_version1/MyWidgets/my_textfield.dart';
 import 'package:orh_user_app_version1/global_constant.dart';
 import 'package:orh_user_app_version1/global_helpers.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:orh_user_app_version1/Helpers/CreatedGlobalWidgets/on_press_extention.dart';
 import 'package:orh_user_app_version1/models/childHeartQueryRelated/childheartquey.dart';
-import '../../Controllers/query_controller.dart';
-import '../../MyWidgets/my_radiobtn.dart';
 import '../../MyWidgets/my_text.dart';
 import '../../MyWidgets/my_textfield.dart';
 import '../../global_constant.dart';
@@ -33,7 +30,7 @@ class _SurveyUnit extends State<SurveyUnit> {
   @override
   void initState() {
     super.initState();
-    GlobalHelpers.queryPageCount = queryController.queryQuestions.result!.questions!.length~/AllSizes.pageQuestionCount+1;
+    GlobalHelpers.surveyPageCount = queryController.queryQuestions.result!.questions!.length~/AllSizes.pageQuestionCount+1;
   }
   @override
   Widget build(BuildContext context) {
@@ -50,7 +47,7 @@ class _SurveyUnit extends State<SurveyUnit> {
                   break;
                 }
               },
-              itemCount: GlobalHelpers.queryPageCount,
+              itemCount: GlobalHelpers.surveyPageCount,
               itemBuilder: (context, index){
                 return PageUnit(pageIndex: index,);
               }
@@ -177,243 +174,258 @@ class _PageUnitState extends State<PageUnit> {
   // }
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        SingleChildScrollView(
-      child: Column(
-              children: [
-                 widget.pageIndex == 0? Container(
-                        margin: const EdgeInsets.all(10),
-                        padding: const EdgeInsets.all(20),
-                        decoration: BoxDecoration(
-                          borderRadius: const BorderRadius.all(Radius.circular(15)),
-                          color: Colors.grey.withOpacity(.2)
-                        ),
-                        child: Stack(
-                          children: [
-                            Visibility(//small one
-                              visible: infoContainerSwitch? false : true,
-                              child: Row(
-                                children: [
-                                  SizedBox(
-                                    width: GeneralMeasurements.deviceWidth*.7,
-                                    child: RichText(
-                                      maxLines: 4,
-                                      text: TextSpan(
-                                      style: GoogleFonts.openSans(height: 1, fontWeight: FontWeight.w600, fontSize: 15, color: Colors.black.withOpacity(.5)),
-                                      children: [
-                                        TextSpan(text: surveyControllerOut.researcherDefaultData.result!.currentDate?? ""),
-                                        const TextSpan(text: ' '),
-                                        TextSpan(text: surveyControllerOut.researcherDefaultData.result!.aimagName?? " "),
-                                        const TextSpan(text: ' '),
-                                        TextSpan(text: surveyControllerOut.researcherDefaultData.result!.sumName?? " "),
-                                      ]
-                                    )),
-                                  ),
-                                ],
-                              ).pressExtention((){
-                                setState(() {
-                                  infoContainerSwitch = true;
-                                });
-                              }),
-                            ),
-                            Visibility(//big one
-                              visible: infoContainerSwitch? true : false,
-                              child: Column(
-                                              mainAxisAlignment: MainAxisAlignment.center,
-                                              crossAxisAlignment: CrossAxisAlignment.start,
-                                              children: [
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                     myText('Судалгаа хийсэн огноо:', 16, 1.5),
-                                     GetX<SurveyController>(builder: (surveyController){
-                                       return  Icon(
-                                       Icons.check_circle,
-                                       color: surveyController.greenCheckIcon.value? Colors.green : Colors.grey,
-                                       ).pressExtention((){
-                                       setState(() {
-                                         if(surveyController.greenCheckIcon.value){
-                                            infoContainerSwitch = false;
-                                            surveyController.greenCheckIcon.value = false;
-                                            surveyController.researcherDefaultData.result!.userId = Get.find<LoginController>().geregeUser.result!.id;
-                                            surveyController.researcherDefaultDataUpdateAndPush();
-                                         }
-                                       });
-                                     });
-
-                                     })
-                                  ],
-                                ),                
-                               
-                                myText(surveyControllerOut.currentDate.toString().substring(0,10), 16, 1.5),
-                                Container(
-                                  padding: const EdgeInsets.only(left: 0, right: 0, top: 10, bottom: 0),
-                                  child: DropdownButton<String>(
-                                    hint: myText(surveyControllerOut.researcherDefaultData.result!.aimagName?? 'Аймаг, хотын нэр?', 16, 2),
-                                    value: aimagSelectVal,
-                                    onChanged: (String? newValue){
-                                      setState(() {
-                                        aimagSelectVal = newValue.toString();
-                                        sumSelectVal = null;
-                                      });
-                                    },
-                                    underline: const SizedBox(),
-                                    isExpanded: true,
-                                    borderRadius: BorderRadius.circular(5),
-                                    items: aimagItems(GlobalHelpers.aimagList.aimags!)
-                                  ),
-                                ),
-                               GetX<SurveyController>(builder: (surveyController){
-                                 return  Container(
-                                  padding: const EdgeInsets.only(left: 0, right: 0, top: 10, bottom: 0),
-                                  child: DropdownButton<String>(
-                                    hint: myText(surveyControllerOut.researcherDefaultData.result!.sumName?? 'Сум, дүүргийн нэр?', 16, 2),
-                                    value: sumSelectVal,
-                                    onChanged: (String? newValue){
-                                      surveyControllerOut.checkData();
-                                      setState(() {
-                                        sumSelectVal = newValue.toString();
-                                      });
-                                    },
-                                    underline: const SizedBox(),
-                                    isExpanded: true,
-                                    borderRadius: BorderRadius.circular(5),
-                                    items: sumItems(GlobalHelpers.aimagList.aimags![surveyController.chosenAimag.value].sums!)
-                                  ),
-                                );
-                               })
-                                              ],
-                                            ),
-                            )
-                          ],
-                        ),
-                      ): const SizedBox(),
-                widget.pageIndex == 0? myTextField('Регистрийн дугаар', surveyControllerOut.rdTxtController, 0, 0, 20, 20, 0, 0, 'rd') : const SizedBox(),
-                widget.pageIndex == 0? GetX<SettingController>(builder: (settingsController){
-                  return SizedBox(
-                    child: 
-                    settingsController.xyrServiceSwitcher.value? const SizedBox(): Column(
-                      children: [
-                        Container(
-                          margin: const EdgeInsets.only(left: 20, right: 20, top: 5, bottom: 5),
-                          child: TextField(
-                             decoration: const InputDecoration(
-                               hintText: 'Овог',
-                               labelText: 'Овог'
-                             ),
-                             controller: surveyControllerOut.lastName,)
-                        ),
-                         Container(
-                          margin: const EdgeInsets.only(left: 20, right: 20, top: 5, bottom: 5),
-                          child: TextField(
-                             decoration: const InputDecoration(
-                               hintText: 'Нэр',
-                               labelText: 'Нэр'
-                             ),
-                             controller: surveyControllerOut.firstName,)
-                        ),
-                        Container(
-                          margin: const EdgeInsets.only(left: 20, right: 20, top: 5, bottom: 5),
-                          child: TextField(
-                             decoration: const InputDecoration(
-                               hintText: 'Нас',
-                               labelText: 'Нас'
-                             ),
-                             controller: surveyControllerOut.age,)
-                        ),
-                        Container(
-                          margin: const EdgeInsets.only(left: 20, right: 20, top: 5, bottom: 5),
-                          child: TextField(
-                             decoration: const InputDecoration(
-                               hintText: 'Хүйс',
-                               labelText: 'Хүйс'
-                             ),
-                             controller: surveyControllerOut.gender,)
-                        )
-                        
-                      ],
-                    ),
-                  );
-                }) : const SizedBox(),
-                
-                widget.pageIndex == 0? GetX<SurveyController>(builder: (surveyController){
-                  return myText(surveyControllerOut.xyrName.value, 15, 1, FontWeight.bold);
-                }) : const SizedBox(),
-                SizedBox(
-              height: widget.pageIndex == 0? GeneralMeasurements.deviceHeight*.7: GeneralMeasurements.deviceHeight*.8,
-              child: ListView.builder(
-                  physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
-                  //svvliin huudas bish bol togtmol item bgaad mon bol asuultiig 
-                  //togtmol toondoo huvaagaad vldegdeltei bol tuhain vldegdeleer item
-                  //count aa ogoh
-                  itemCount: widget.pageIndex == GlobalHelpers.queryPageCount-1? 
-                  surveyControllerOut.queryQuestions.result!.questions!.length%AllSizes.pageQuestionCount != 0?
-                  surveyControllerOut.queryQuestions.result!.questions!.length%AllSizes.pageQuestionCount : AllSizes.pageQuestionCount : AllSizes.pageQuestionCount,
-                  itemBuilder: (BuildContext context, int index){
-                    final int queryUnitIndex = widget.pageIndex * AllSizes.pageQuestionCount + index;
-                    final item =  surveyControllerOut.queryQuestions.result!.questions![queryUnitIndex];
-                    surveyControllerOut.textEditingControllers.add(TextEditingController());
-                    surveyControllerOut.dropvalueList.add(DropSelectVal());
-                  return RecieverUnit(questionID: item.id!, type: item.type, questionText: item.questionText, 
-                                      questionIndex: queryUnitIndex, options: item.options);
-                }),
-              ),
-              widget.pageIndex == GlobalHelpers.queryPageCount-1? 
-              Row(mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Container(
-                    margin: const EdgeInsets.only(right: 25),
-                    child: myBtn(CommonColors.geregeBlue, GeneralMeasurements.deviceWidth*.2, GeneralMeasurements.deviceHeight*.05, 
-                    CommonColors.geregeBlue, Colors.white, 'Done').pressExtention((){
-                      if(surveyControllerOut.pushDataBtn.value){
-                        pushData();
-                        Future.delayed(const Duration(seconds: 3),(){surveyControllerOut.pushDataBtn.value = true;});
-                      }
-                    }),
-                  )
-                ],) :  const SizedBox()
-              ],
-            ),
-    ),
-    Center(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return WillPopScope(
+      onWillPop: () async{
+        GlobalHelpers.bottomnavbarSwitcher.add(true);
+        return true;
+      },
+      child: Stack(
         children: [
-          widget.pageIndex != 0? Container(
-            width: GeneralMeasurements.deviceWidth*.01,
-            height: GeneralMeasurements.deviceHeight*.8,
-            decoration: BoxDecoration(
-              color: CommonColors.geregeBlue,
-              borderRadius: const BorderRadius.only(topLeft: Radius.circular(0), topRight: Radius.circular(10),
-                                               bottomLeft: Radius.circular(0), bottomRight: Radius.circular(10)) 
-            ),
-          ): const SizedBox(),
-          widget.pageIndex != GlobalHelpers.queryPageCount-1? Container(
-            width: GeneralMeasurements.deviceWidth*.01,
-            height: GeneralMeasurements.deviceHeight*.8,
-            decoration: BoxDecoration(
-              color: CommonColors.geregeBlue,
-              borderRadius: const BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(0),
-                                               bottomLeft: Radius.circular(10), bottomRight: Radius.circular(0)) 
-            ),
-          ) : const SizedBox()
+          SingleChildScrollView(
+        child: Column(
+                children: [
+                   widget.pageIndex == 0? Container(
+                          margin: const EdgeInsets.all(10),
+                          padding: const EdgeInsets.all(20),
+                          decoration: BoxDecoration(
+                            borderRadius: const BorderRadius.all(Radius.circular(15)),
+                            color: Colors.grey.withOpacity(.2)
+                          ),
+                          child: Stack(
+                            children: [
+                              Visibility(//small one
+                                visible: infoContainerSwitch? false : true,
+                                child: InkWell(
+                                  onTap: (){
+                                     setState(() {
+                                    infoContainerSwitch = true;
+                                  });
+                                  },
+                                  child: Row(
+                                  children: [
+                                    SizedBox(
+                                      width: GeneralMeasurements.deviceWidth*.7,
+                                      child: RichText(
+                                        maxLines: 4,
+                                        text: TextSpan(
+                                        style: GoogleFonts.openSans(height: 1, fontWeight: FontWeight.w600, fontSize: 15, color: Colors.black.withOpacity(.5)),
+                                        children: [
+                                          TextSpan(text: surveyControllerOut.researcherDefaultData.result!.currentDate?? ""),
+                                          const TextSpan(text: ' '),
+                                          TextSpan(text: surveyControllerOut.researcherDefaultData.result!.aimagName?? " "),
+                                          const TextSpan(text: ' '),
+                                          TextSpan(text: surveyControllerOut.researcherDefaultData.result!.sumName?? " "),
+                                        ]
+                                      )),
+                                    ),
+                                  ],
+                                ),
+                                ),
+                              ),
+                              Visibility(//big one
+                                visible: infoContainerSwitch? true : false,
+                                child: Column(
+                                                mainAxisAlignment: MainAxisAlignment.center,
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                children: [
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                       myText('Судалгаа хийсэн огноо:', 16, 1.5),
+                                       GetX<SurveyController>(builder: (surveyController){
+                                         return  InkWell(
+                                           onTap: (){
+                                             setState(() {
+                                           if(surveyController.greenCheckIcon.value){
+                                              infoContainerSwitch = false;
+                                              surveyController.greenCheckIcon.value = false;
+                                              surveyController.researcherDefaultData.result!.userId = Get.find<LoginController>().geregeUser.result!.id;
+                                              surveyController.researcherDefaultDataUpdateAndPush();
+                                           }
+                                         });
+                                           },
+                                           child: Icon(
+                                         Icons.check_circle,
+                                         color: surveyController.greenCheckIcon.value? Colors.green : Colors.grey,
+                                         ),
+                                         );
+    
+                                       })
+                                    ],
+                                  ),                
+                                 
+                                  myText(surveyControllerOut.currentDate.toString().substring(0,10), 16, 1.5),
+                                  Container(
+                                    padding: const EdgeInsets.only(left: 0, right: 0, top: 10, bottom: 0),
+                                    child: DropdownButton<String>(
+                                      hint: myText(surveyControllerOut.researcherDefaultData.result!.aimagName?? 'Аймаг, хотын нэр?', 16, 2),
+                                      value: aimagSelectVal,
+                                      onChanged: (String? newValue){
+                                        setState(() {
+                                          aimagSelectVal = newValue.toString();
+                                          sumSelectVal = null;
+                                        });
+                                      },
+                                      underline: const SizedBox(),
+                                      isExpanded: true,
+                                      borderRadius: BorderRadius.circular(5),
+                                      items: aimagItems(GlobalHelpers.aimagList.aimags!)
+                                    ),
+                                  ),
+                                 GetX<SurveyController>(builder: (surveyController){
+                                   return  Container(
+                                    padding: const EdgeInsets.only(left: 0, right: 0, top: 10, bottom: 0),
+                                    child: DropdownButton<String>(
+                                      hint: myText(surveyControllerOut.researcherDefaultData.result!.sumName?? 'Сум, дүүргийн нэр?', 16, 2),
+                                      value: sumSelectVal,
+                                      onChanged: (String? newValue){
+                                        surveyControllerOut.checkData();
+                                        setState(() {
+                                          sumSelectVal = newValue.toString();
+                                        });
+                                      },
+                                      underline: const SizedBox(),
+                                      isExpanded: true,
+                                      borderRadius: BorderRadius.circular(5),
+                                      items: sumItems(GlobalHelpers.aimagList.aimags![surveyController.chosenAimag.value].sums!)
+                                    ),
+                                  );
+                                 })
+                                                ],
+                                              ),
+                              )
+                            ],
+                          ),
+                        ): const SizedBox(),
+                  widget.pageIndex == 0? myTextField('Регистрийн дугаар', surveyControllerOut.rdTxtController, 0, 0, 20, 20, 0, 0, 'rd') : const SizedBox(),
+                  widget.pageIndex == 0? GetX<SettingController>(builder: (settingsController){
+                    return SizedBox(
+                      child: 
+                      settingsController.xyrServiceSwitcher.value? const SizedBox(): Column(
+                        children: [
+                          Container(
+                            margin: const EdgeInsets.only(left: 20, right: 20, top: 5, bottom: 5),
+                            child: TextField(
+                               decoration: const InputDecoration(
+                                 hintText: 'Овог',
+                                 labelText: 'Овог'
+                               ),
+                               controller: surveyControllerOut.lastName,)
+                          ),
+                           Container(
+                            margin: const EdgeInsets.only(left: 20, right: 20, top: 5, bottom: 5),
+                            child: TextField(
+                               decoration: const InputDecoration(
+                                 hintText: 'Нэр',
+                                 labelText: 'Нэр'
+                               ),
+                               controller: surveyControllerOut.firstName,)
+                          ),
+                          Container(
+                            margin: const EdgeInsets.only(left: 20, right: 20, top: 5, bottom: 5),
+                            child: TextField(
+                               decoration: const InputDecoration(
+                                 hintText: 'Нас',
+                                 labelText: 'Нас'
+                               ),
+                               controller: surveyControllerOut.age,)
+                          ),
+                          Container(
+                            margin: const EdgeInsets.only(left: 20, right: 20, top: 5, bottom: 5),
+                            child: TextField(
+                               decoration: const InputDecoration(
+                                 hintText: 'Хүйс',
+                                 labelText: 'Хүйс'
+                               ),
+                               controller: surveyControllerOut.gender,)
+                          )
+                          
+                        ],
+                      ),
+                    );
+                  }) : const SizedBox(),
+                  
+                  widget.pageIndex == 0? GetX<SurveyController>(builder: (surveyController){
+                    return myText(surveyControllerOut.xyrName.value, 15, 1, FontWeight.bold);
+                  }) : const SizedBox(),
+                SizedBox(
+                height: widget.pageIndex == 0? GeneralMeasurements.deviceHeight*.7: GeneralMeasurements.deviceHeight*.8,
+                child: ListView.builder(
+                    physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+                    //svvliin huudas bish bol togtmol item bgaad mon bol asuultiig 
+                    //togtmol toondoo huvaagaad vldegdeltei bol tuhain vldegdeleer item
+                    //count aa ogoh
+                    itemCount: widget.pageIndex == GlobalHelpers.surveyPageCount-1? 
+                    surveyControllerOut.queryQuestions.result!.questions!.length%AllSizes.pageQuestionCount != 0?
+                    surveyControllerOut.queryQuestions.result!.questions!.length%AllSizes.pageQuestionCount : AllSizes.pageQuestionCount : AllSizes.pageQuestionCount,
+                    itemBuilder: (BuildContext context, int index){
+                      final int queryUnitIndex = widget.pageIndex * AllSizes.pageQuestionCount + index;
+                      final item =  surveyControllerOut.queryQuestions.result!.questions![queryUnitIndex];
+                      surveyControllerOut.textEditingControllers.add(TextEditingController());
+                      surveyControllerOut.dropvalueList.add(DropSelectVal());
+                    return RecieverUnit(questionID: item.id!, type: item.type, questionText: item.questionText, 
+                                        questionIndex: queryUnitIndex, options: item.options);
+                  }),
+                ),
+                widget.pageIndex == GlobalHelpers.surveyPageCount-1? 
+                Row(mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Container(
+                      margin: const EdgeInsets.only(right: 25),
+                      child: InkWell(
+                        onTap: (){
+                           if(surveyControllerOut.pushDataBtn.value){
+                            pushData();
+                            Future.delayed(const Duration(seconds: 3),(){surveyControllerOut.pushDataBtn.value = true;});
+                           }
+                        },
+                        child: myBtn(CommonColors.geregeBlue, GeneralMeasurements.deviceWidth*.2, GeneralMeasurements.deviceHeight*.05, 
+                      CommonColors.geregeBlue, Colors.white, 'Done'),
+                      ),
+                    )
+                  ],) :  const SizedBox()
+                ],
+              ),
+      ),
+      Center(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            widget.pageIndex != 0? Container(
+              width: GeneralMeasurements.deviceWidth*.01,
+              height: GeneralMeasurements.deviceHeight*.8,
+              decoration: BoxDecoration(
+                color: CommonColors.geregeBlue,
+                borderRadius: const BorderRadius.only(topLeft: Radius.circular(0), topRight: Radius.circular(10),
+                                                 bottomLeft: Radius.circular(0), bottomRight: Radius.circular(10)) 
+              ),
+            ): const SizedBox(),
+            widget.pageIndex != GlobalHelpers.surveyPageCount-1? Container(
+              width: GeneralMeasurements.deviceWidth*.01,
+              height: GeneralMeasurements.deviceHeight*.8,
+              decoration: BoxDecoration(
+                color: CommonColors.geregeBlue,
+                borderRadius: const BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(0),
+                                                 bottomLeft: Radius.circular(10), bottomRight: Radius.circular(0)) 
+              ),
+            ) : const SizedBox()
+          ],
+        ),
+      ),
+      Align(
+        alignment: Alignment.bottomLeft,
+        child: Container(
+          margin: EdgeInsets.all(20),
+          padding: EdgeInsets.all(10),
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            border: Border.all(color: Colors.grey)
+          ),
+          child: Text((widget.pageIndex + 1).toString() + '/' + GlobalHelpers.surveyPageCount.toString())
+          ),
+      )
         ],
       ),
-    ),
-    Align(
-      alignment: Alignment.bottomLeft,
-      child: Container(
-        margin: EdgeInsets.all(20),
-        padding: EdgeInsets.all(10),
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          border: Border.all(color: Colors.grey)
-        ),
-        child: Text((widget.pageIndex + 1).toString() + '/' + GlobalHelpers.queryPageCount.toString())
-        ),
-    )
-      ],
     );
   }
 }
@@ -455,6 +467,3 @@ class _RecieverUnit extends State<RecieverUnit> {
     );
   }
 }
-
-
-

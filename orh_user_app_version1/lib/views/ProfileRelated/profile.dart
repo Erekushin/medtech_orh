@@ -1,12 +1,11 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:orh_user_app_version1/Controllers/login_controller.dart';
 import 'package:orh_user_app_version1/global_constant.dart';
 import 'package:orh_user_app_version1/global_helpers.dart';
-
-import 'package:orh_user_app_version1/Helpers/CreatedGlobalWidgets/on_press_extention.dart';
 
 import '../../Controllers/image_controller.dart';
 
@@ -62,12 +61,13 @@ class Profile extends StatefulWidget {
 
 class _ProfileState extends State<Profile> {
   PageController pageController = PageController(viewportFraction: 0.85);
-  var argu = Get.arguments;
+  final argu = Get.arguments as String;
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async{
-        if(argu == RouteUnits.home){
+       log(argu);
+        if(argu == RouteUnits.profile){
           GlobalHelpers.bottomnavbarSwitcher.add(false);
         }
         else{
@@ -78,7 +78,7 @@ class _ProfileState extends State<Profile> {
       },
       child: Scaffold(
         body: Stack(
-          children: [
+          children: [ 
             Container(
                    height: GeneralMeasurements.deviceHeight/100*25,
                    decoration: BoxDecoration(
@@ -133,7 +133,12 @@ class _ProfileState extends State<Profile> {
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                             GetX<ImageController>(builder: (imageController){
-                            return   CircleAvatar(
+                            return   InkWell(
+                              onTap: (){
+                                GlobalHelpers.imageFileSwitcher = true;
+                                imageController.cameraAndGallery();
+                              },
+                              child: CircleAvatar(
                             backgroundColor: Colors.grey,
                             radius: 60,
                             backgroundImage: const AssetImage('assets/images/user_default.png'),  
@@ -141,10 +146,8 @@ class _ProfileState extends State<Profile> {
                             child: AspectRatio(aspectRatio: 1 / 1, child: Image.file(imageController.imageFile.value, fit: BoxFit.fill,)),
                             borderRadius: BorderRadius.circular(90.0),
                             ) : Container(width: 5, height: 5, color: Colors.blue, child: Text(imageController.imageFile.value.toString()),),
-                         ).pressExtention((){
-                           GlobalHelpers.imageFileSwitcher = true;
-                           imageController.cameraAndGallery();
-                         });
+                         ),
+                            );
                             }),
                             const SizedBox(width: 1, height: 1,),
                             Text(loginController.geregeUser.result!.firstName?? '', style: const TextStyle(fontWeight: FontWeight.bold),),

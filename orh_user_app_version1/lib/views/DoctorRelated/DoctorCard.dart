@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:orh_user_app_version1/Helpers/CreatedGlobalWidgets/on_press_extention.dart';
 import '../../global_constant.dart';
 class DoctorCard extends StatefulWidget {
   const DoctorCard({Key? key,required this.name,required this.phone,required this.mail,required
@@ -17,7 +16,19 @@ class DoctorCard extends StatefulWidget {
 class _DoctorCardState extends State<DoctorCard> {
   @override
   Widget build(BuildContext context) {
-    return  Container(
+    return  InkWell(
+      onTap: (){
+         final description = Get.arguments as String;
+      switch(description){
+        case RouteUnits.fromDoctors:
+          Get.toNamed(RouteUnits.doctors + RouteUnits.doctorProfile, arguments: RouteUnits.fromDoctors);
+          break;
+        case RouteUnits.fromTimeOrder:
+          Get.toNamed(RouteUnits.timeOrder + RouteUnits.hospitals + RouteUnits.doctors + RouteUnits.timeSequence, arguments: RouteUnits.fromTimeOrder);
+      }
+
+      },
+      child: Container(
         width: 150,
         height: 250,
         margin: const EdgeInsets.all(5.0),
@@ -75,17 +86,8 @@ class _DoctorCardState extends State<DoctorCard> {
             ],
           ),
         )
-    ).pressExtention((){
-      final description = Get.arguments as String;
-      switch(description){
-        case "fromDoctors":
-          Get.toNamed(RouteUnits.doctors + RouteUnits.doctorProfile);
-          break;
-        case "fromTimeOrder":
-          Get.toNamed(RouteUnits.timeOrder + RouteUnits.hospitals + RouteUnits.doctors + RouteUnits.timeSequence);
-      }
-
-    });
+    ),
+    );
   }
 }
 class DoctorCartBottomShape extends CustomClipper<Path>{

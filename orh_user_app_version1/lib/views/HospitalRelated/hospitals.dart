@@ -2,7 +2,6 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:orh_user_app_version1/Helpers/CreatedGlobalWidgets/on_press_extention.dart';
 import 'package:orh_user_app_version1/global_helpers.dart';
 import 'package:orh_user_app_version1/views/HospitalRelated/side_search_address.dart';
 import 'package:orh_user_app_version1/views/HospitalRelated/side_search_name.dart';
@@ -24,7 +23,7 @@ class _HospitalsState extends State<Hospitals> {
   final double _height = 120;
   bool isTapped = true;
   bool isExpanded = false;
-  final description = Get.arguments as String;
+  final argu = Get.arguments as String;
   @override
   void initState(){
     super.initState();
@@ -43,13 +42,10 @@ class _HospitalsState extends State<Hospitals> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async{
-        log(description);
-        switch(description){
+        log(argu);
+        switch(argu){
           case RouteUnits.fromHospitals:
             GlobalHelpers.bottomnavbarSwitcher.add(false);
-            break;
-          case RouteUnits.fromTimeOrder:
-           GlobalHelpers.bottomnavbarSwitcher.add(false);
             break;
         }
         return true;
@@ -108,18 +104,24 @@ class _HospitalsState extends State<Hospitals> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          searchBtn('Хаягаар\nхайх', const Color(0xFFFEC07B)).pressExtention((){
-                            setState(() {
+                          InkWell(
+                            onTap: (){
+                               setState(() {
                               sideBarToggler = true;
                             });
                             sidePageKey.currentState?.openEndDrawer();
-                          }),
-                          searchBtn('Нэрээр \n хайх', const Color(0xFFFF4484)).pressExtention((){
-                            setState(() {
+                            },
+                            child: searchBtn('Хаягаар\nхайх', const Color(0xFFFEC07B)),
+                          ),
+                          InkWell(
+                            onTap: (){
+                               setState(() {
                               sideBarToggler = false;
                             });
                             sidePageKey.currentState?.openEndDrawer();
-                          }),
+                            },
+                            child: searchBtn('Нэрээр \n хайх', const Color(0xFFFF4484)),
+                          ),
                         ],
                       ),
                     ],
@@ -166,22 +168,26 @@ class _HospitalsState extends State<Hospitals> {
 
     return Transform(
       transform: matrix,
-      child: Container(
+      child: InkWell(
+        onTap: (){
+          switch(argu){
+          case RouteUnits.fromHospitals:
+            Get.toNamed(RouteUnits.hospitals + RouteUnits.hospitalProfile, arguments: '');
+            break;
+          case RouteUnits.fromTimeOrder:
+            Get.toNamed(RouteUnits.timeOrder + RouteUnits.hospitals + RouteUnits.doctors, arguments: RouteUnits.fromTimeOrder); 
+            break;
+        }
+        },
+        child: Container(
         margin: const EdgeInsets.only(left: 15, right: 15),
         decoration: BoxDecoration(
             image: DecorationImage(image: AssetImage(imagePath!), fit: BoxFit.fill),
             borderRadius: BorderRadius.circular(30),
             color: index.isEven? const Color(0xFFC9DAED): const Color(0xFFE6CF9B)
         ),
-      ).pressExtention((){
-        switch(description){
-          case RouteUnits.fromHospitals:
-            Get.toNamed(RouteUnits.hospitals + RouteUnits.hospitalProfile, arguments: '');
-            break;
-          case RouteUnits.fromTimeOrder:
-            Get.toNamed(RouteUnits.timeOrder + RouteUnits.hospitals + RouteUnits.doctors, arguments: 'fromTimeOrder');
-        }
-      }),
+      ),
+      ),
     );
   }
 }

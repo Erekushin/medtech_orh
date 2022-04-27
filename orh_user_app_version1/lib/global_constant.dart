@@ -30,18 +30,23 @@ class RouteUnits{
   static String hospitals = "/hospitals";
   static String hospitalProfile = "/hospitalProfile";
   static String timeSequence = "/doctorTimeSequence";
-  static String queries = "/queries";
-  static String individualQuery ="/eachQuery";
-  static String basicProfileInput = "/basicProfileInput";
+  static String surveyList = "/surveyList";
+  static String individualSurvey ="/individualSurvey";
+  static String answerform = "/answerform";
   static String calculators = "/calculators";
   static String questions = "/questions";
   static String setting = "/setting";
+
+  static String treatmentRecipe = "/treatmentRecipe";
 
 
   //const
   static const String fromHospitals = 'fromHospitals';
   static const String fromTimeOrder = 'fromTimeOrder';
   static const String fromPreDiagnosis = 'fromPreDiagnosis';
+  static const String fromDoctors = 'fromDoctors';
+  static const String fromBottomnavbar = 'fromBottomnavbar';
+  static const String fromHome = 'fromHome';
 }
 
 class CommonColors{
@@ -60,4 +65,9 @@ class AllSizes {
  static const double bigHeader = 25;
  static const double queryTxtSize = 16;
  static const int pageQuestionCount = 10;
+ static const int answerFormCount = 4;
+}
+
+class SqlRelated{
+  static const String recipeTable = "recipeTable";
 }

@@ -350,8 +350,8 @@ class CounterStorage {
 class FlutterDemo extends StatefulWidget {
   const FlutterDemo({Key? key,}) : super(key: key);
   Future<String> get _localPath async {
-    final directory = await getTemporaryDirectory();
-    return directory.path;
+    final directory = await getDownloadsDirectory();
+    return directory!.path;
   }
   //avsan path deeree file iinhaa neriig nemeed file helbertei bolgoj bgaa
   Future<File> get _localFile async {
