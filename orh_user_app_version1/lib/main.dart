@@ -35,8 +35,8 @@ import 'global_helpers.dart';
 
 // this is fucking Development branch ..
 Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  cameras = await availableCameras();
+  // WidgetsFlutterBinding.ensureInitialized();
+  // cameras = await availableCameras();
   runApp(const MyApp());
 }
 class MyApp extends StatefulWidget {
