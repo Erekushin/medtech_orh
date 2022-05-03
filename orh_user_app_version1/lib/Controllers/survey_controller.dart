@@ -7,11 +7,12 @@ import 'package:orh_user_app_version1/Controllers/login_controller.dart';
 import 'package:orh_user_app_version1/Models/xyr.dart';
 import 'package:orh_user_app_version1/global_helpers.dart';
 import '../Models/SurveyRelated/survey_answerBody.dart';
+import '../Models/SurveyRelated/survey_creationBody.dart';
 import '../Models/result.dart';
 import '../global_constant.dart';
 import '../models/SurveyRelated/aimags.dart';
-import '../models/SurveyRelated/surveyQuestionBody.dart';
-import '../models/SurveyRelated/researcherDefault.dart';
+import '../models/SurveyRelated/survey_questionBody.dart';
+import '../models/SurveyRelated/researcher_default.dart';
 
 
 class DropSelectVal{
@@ -269,6 +270,18 @@ class SurveyController extends GetxController{
           Get.snackbar('Аюултай!!', 'Программаа дахин оруулна уу!. Хэрвээ уг алдаа дахин гарвал харилцагчийн төвд хандана уу.', snackPosition: SnackPosition.BOTTOM,
           colorText: Colors.white, backgroundColor: Colors.grey[900], margin: EdgeInsets.only(bottom: GeneralMeasurements.snackbarBottomMargin, left: 5, right: 5,));
           }
+          break;
+    }
+
+  }
+  Future surveyPush() async{
+    var jsondata = await GlobalHelpers.postRequestGeneral.getdata(surveyCreationbody.toJson(), "2035233", UriAdresses.covidBackEnd);
+    log(jsonEncode(surveyCreationbody.toJson()));
+    print('sudalgaa vvsgeh hvseltiin body');
+    generalResponse = GeneralResponse.fromJson(jsonDecode(jsondata));
+    switch(generalResponse.code){
+      case '200':
+          
           break;
     }
 

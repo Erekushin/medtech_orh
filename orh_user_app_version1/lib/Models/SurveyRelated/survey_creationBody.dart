@@ -1,6 +1,6 @@
 class SurveyCreationbody {
   String? surveyName;
-  List<Questions>? questions;
+  List<Question>? questions;
 
   SurveyCreationbody({this.surveyName, this.questions});
   Map<String, dynamic> toJson() {
@@ -13,12 +13,12 @@ class SurveyCreationbody {
   }
 }
 
-class Questions {
+class Question {
   String? questionText;
-  int? type;
+  String? type;
   List<Options>? options;
 
-  Questions({this.questionText, this.type, this.options});
+  Question({this.questionText, this.type, this.options});
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['question_text'] = questionText;

@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:orh_user_app_version1/Controllers/survey_controller.dart';
+import 'package:orh_user_app_version1/Models/SurveyRelated/survey_answerBody.dart';
 import 'package:orh_user_app_version1/MyWidgets/my_button.dart';
 import 'package:orh_user_app_version1/MyWidgets/my_dropdown.dart';
 import 'package:orh_user_app_version1/global_constant.dart';
 
-import '../../models/SurveyRelated/surveyQuestionBody.dart';
+import '../../Models/SurveyRelated/survey_creationBody.dart';
 class SurveyCreation extends StatefulWidget {
   const SurveyCreation({ Key? key }) : super(key: key);
 
@@ -50,7 +51,16 @@ class _SurveyCreationState extends State<SurveyCreation> {
             child: Container(
               margin: const EdgeInsets.only(bottom: 80),
               child: InkWell(
-                onTap: (){},
+                onTap: (){
+                  surveyController.surveyCreationbody.surveyName = 'dfd';
+                  for(int i = 0; i< surveyController.textEditingControllers.length; i++){
+                    var question = Question();
+                    question.questionText = surveyController.textEditingControllers[i].text;
+                    question.type = surveyController.dropvalueList[i].value;
+                    surveyController.surveyCreationbody.questions?.add(question);
+                    surveyController.surveyPush();
+                  } 
+                },
                 child: myBtn(CommonColors.yellow, 200, 50, CommonColors.yellow, Colors.white, 'Судалгааг хадаглах'),
               ),
             ),
