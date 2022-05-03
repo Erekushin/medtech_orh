@@ -11,16 +11,16 @@ class SurveyQuestions {
     status = json['status'];
     message = json['message'];
     result =
-        json['result'] != null ? new Result.fromJson(json['result']) : null;
+        json['result'] != null ? Result.fromJson(json['result']) : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['code'] = this.code;
-    data['status'] = this.status;
-    data['message'] = this.message;
-    if (this.result != null) {
-      data['result'] = this.result!.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['code'] = code;
+    data['status'] = status;
+    data['message'] = message;
+    if (result != null) {
+      data['result'] = result!.toJson();
     }
     return data;
   }
@@ -37,16 +37,16 @@ class Result {
     if (json['questions'] != null) {
       questions = <Questions>[];
       json['questions'].forEach((v) {
-        questions!.add(new Questions.fromJson(v));
+        questions!.add(Questions.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['title'] = this.title;
-    if (this.questions != null) {
-      data['questions'] = this.questions!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['title'] = title;
+    if (questions != null) {
+      data['questions'] = questions!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -67,18 +67,18 @@ class Questions {
     if (json['options'] != null) {
       options = <Options>[];
       json['options'].forEach((v) {
-        options!.add(new Options.fromJson(v));
+        options!.add(Options.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['type'] = this.type;
-    data['question_text'] = this.questionText;
-    if (this.options != null) {
-      data['options'] = this.options!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['type'] = type;
+    data['question_text'] = questionText;
+    if (options != null) {
+      data['options'] = options!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -96,9 +96,9 @@ class Options {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['option_text'] = this.optionText;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['option_text'] = optionText;
     return data;
   }
 }

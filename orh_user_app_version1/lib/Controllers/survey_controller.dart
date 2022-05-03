@@ -6,7 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:orh_user_app_version1/Controllers/login_controller.dart';
 import 'package:orh_user_app_version1/Models/xyr.dart';
 import 'package:orh_user_app_version1/global_helpers.dart';
-import '../Models/query_answer.dart';
+import '../Models/SurveyRelated/survey_answerBody.dart';
 import '../Models/result.dart';
 import '../global_constant.dart';
 import '../models/SurveyRelated/aimags.dart';
@@ -18,7 +18,8 @@ class DropSelectVal{
   String? value;
 }
 class SurveyController extends GetxController{
-
+ ///survey vvsgeh hvseltiin biy
+ SurveyCreationbody surveyCreationbody = SurveyCreationbody();
  ///vvsgej bui Question vvdee hadaglah list
  var newQuestionList = ['sdsd'].obs;
 
@@ -41,7 +42,7 @@ class SurveyController extends GetxController{
   ///xyr iin instance
   XyrInfo xyrInfo = XyrInfo();
   ///base aas irj bui Question ii instance
-  QueryQuestions queryQuestions = QueryQuestions(); 
+  SurveyQuestions queryQuestions = SurveyQuestions(); 
   ///base ruu yavuulah hariunuudiig tsugluulj hiih sav
   QueryAnswer queryAnswer = QueryAnswer();
   ///olon gazar ashiglagdaj boloh gerege response iin hamgiin 
@@ -138,7 +139,7 @@ class SurveyController extends GetxController{
   
   Future surveyQuestionsGet() async{
     var jsondata = await GlobalHelpers.postRequestGeneral.getdata(queryPayload(), "2035225", UriAdresses.covidBackEnd);
-    queryQuestions = QueryQuestions.fromJson(jsonDecode(jsondata.toString()));
+    queryQuestions = SurveyQuestions.fromJson(jsonDecode(jsondata.toString()));
     Get.toNamed(RouteUnits.surveyList + RouteUnits.individualSurvey, arguments: "");
     // Get.toNamed(RouteUnits.answerform);
     GlobalHelpers.bottomnavbarSwitcher.add(false);

@@ -1,6 +1,4 @@
 
-
-
 class ResearcherDefaultData {
   int? code;
   String? status;
