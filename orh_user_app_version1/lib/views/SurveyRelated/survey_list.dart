@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:orh_user_app_version1/MyWidgets/my_button.dart';
 import '../../Controllers/survey_controller.dart';
 import '../../MyWidgets/my_text.dart';
 import '../../global_constant.dart';
@@ -23,7 +24,9 @@ class _SurveyListState extends State<SurveyList> {
       },
       child: Scaffold(
         backgroundColor: Colors.white,
-        body: ListView(
+        body: Stack(
+          children: [
+            ListView(
           physics:
               const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
           children: [
@@ -77,6 +80,20 @@ class _SurveyListState extends State<SurveyList> {
             ),
                   );
                   }),
+          ],
+        ),
+        Align(
+          alignment: Alignment.bottomRight,
+          child: Container(
+            margin: const EdgeInsets.only(bottom: 80, right: 20),
+            child: InkWell(
+              onTap: (){
+                Get.toNamed(RouteUnits.surveyCreation);
+              },
+              child: myBtn(CommonColors.geregeBlue, 150, 50, CommonColors.geregeBlue, Colors.white, 'Судалгаа нэмэх'),
+            ),
+          ),
+        )
           ],
         ),
       ),

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 Widget myBtn(Color borderColor, double givenWidth, double givenHeight, Color btncolor, 
              Color textColor, String btntext,[double givenRadius = 10, double givenfontSize = 15, double givenShadowHeight = 7, double givenShadowBlurRadius = 10]){
   return Container(
-            margin: const EdgeInsets.all(10),
+            margin: const EdgeInsets.all(5),
             height: givenHeight,
             width: givenWidth,
             decoration: BoxDecoration(

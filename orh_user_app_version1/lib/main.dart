@@ -5,6 +5,7 @@ import 'package:orh_user_app_version1/Controllers/setting_controller.dart';
 import 'package:orh_user_app_version1/views/AnswerFormRelated/answer_form.dart';
 import 'package:orh_user_app_version1/views/PreDiagnosis/pre_diagnosis.dart';
 import 'package:orh_user_app_version1/views/SurveyRelated/survey.dart';
+import 'package:orh_user_app_version1/views/SurveyRelated/survey_creation.dart';
 import 'package:orh_user_app_version1/views/SurveyRelated/survey_list.dart';
 import 'package:orh_user_app_version1/views/TreatmentRecipe/treatment_recipe.dart';
 import 'package:orh_user_app_version1/views/splash_screen.dart';
@@ -35,8 +36,8 @@ import 'global_helpers.dart';
 
 // this is fucking Development branch ..
 Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  cameras = await availableCameras();
+  // WidgetsFlutterBinding.ensureInitialized();
+  // cameras = await availableCameras();
   runApp(const MyApp());
 }
 class MyApp extends StatefulWidget {
@@ -46,7 +47,6 @@ class MyApp extends StatefulWidget {
 }
 class _MyAppState extends State<MyApp> {
   late Stream<bool> bottomNavbarSwitcher;
-  CounterStorage sstorage = CounterStorage();
   @override
   void initState(){
     super.initState();
@@ -98,6 +98,7 @@ class _MyAppState extends State<MyApp> {
         GetPage(name: RouteUnits.doctors, page: ()=> const Doctors()),
         GetPage(name: RouteUnits.doctors + RouteUnits.doctorProfile, page: ()=> const DoctorProfile()),
         //Судалгаанууд
+        GetPage(name: RouteUnits.surveyCreation, page: ()=> const SurveyCreation()),
         GetPage(name: RouteUnits.surveyList, page: ()=> const SurveyList()),
         GetPage(name: RouteUnits.surveyList + RouteUnits.individualSurvey, page: ()=> const SurveyUnit()),
         //Calculators

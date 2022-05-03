@@ -17,29 +17,44 @@ import '../models/childHeartQueryRelated/researcherDefault.dart';
 class DropSelectVal{
   String? value;
 }
-
-
 class SurveyController extends GetxController{
+
+ ///vvsgej bui Question vvdee hadaglah list
+ var newQuestionList = ['sdsd'].obs;
+
  //xyr ajillahgvi vyd ajillah textfieldvvdiin controller
   var lastName = TextEditingController();
   var firstName = TextEditingController();
   var age = TextEditingController();
   var gender = TextEditingController();
-
-
+ //.....................................................
+  ///dropdown aas songogdson utguudiig hadaglah sav
+  ///form iig zurah vyd questionii urttai ijilhen urtaar 
+  ///vvsne utguudiig drop down aas question ii index eer yavuuldag
   List<DropSelectVal> dropvalueList = [];
+  ///text utguudiig hadaglah sav form iig zurah vyd questionii 
+  ///urttai ijilhen urtaar vvsne question ii index eer ni avch 
+  ///parametereer ni yavuulaad controller oor ni holboson
   List<TextEditingController> textEditingControllers = [];
-
+  ///bairshiliin medeelliig hadgalsan default medeelliin instance
   ResearcherDefaultData researcherDefaultData = ResearcherDefaultData();
+  ///xyr iin instance
   XyrInfo xyrInfo = XyrInfo();
+  ///base aas irj bui Question ii instance
   QueryQuestions queryQuestions = QueryQuestions(); 
+  ///base ruu yavuulah hariunuudiig tsugluulj hiih sav
   QueryAnswer queryAnswer = QueryAnswer();
+  ///olon gazar ashiglagdaj boloh gerege response iin hamgiin 
+  ///vndsen bvtetsiig zadlah instance
   GeneralResponse generalResponse = GeneralResponse();
+  ///register iig hadaglah textEditingController
   var rdTxtController = TextEditingController();
   ///songogdson aimagiin id g sonsoh stream
   var chosenAimag = 0.obs; 
   ///researcher iin default data bvten bgaa esehiig sonsoh stream
   var haveDefaultData = false.obs;
+  ///bairshilaa oruulah vydee aimag sum hoyroo hoyulang 
+  ///ni songoj bgaa eseh
   var greenCheckIcon = false.obs;
   var xyrName = ''.obs;
   var childHeartQuerybtnloading = false.obs;
@@ -59,13 +74,18 @@ class SurveyController extends GetxController{
       greenCheckIcon.value = true;
     }
   }
+  checkQuestionCreationUnit(int unitIndex){
+    //svvliin elementiig haraad 
+    // text, dropuud utgaa avsan bnuu haraad 
+    // utga butsaah
+  }
    Map<String, dynamic> geregeId(){
     final geregeID = Get.find<LoginController>().geregeUser.result!.id;
     final Map<String, dynamic> data = <String, dynamic>{};
     data['user_id'] = geregeID;
     return data;
   }
-  Map<String, dynamic> queryPayload(){
+   Map<String, dynamic> queryPayload(){
     final Map<String, dynamic> data = <String, dynamic>{};
     data['survey_id'] = '4';
     return data;
@@ -115,6 +135,39 @@ class SurveyController extends GetxController{
         default : break;  
     }
   }
+  
+  Future surveyQuestionsGet() async{
+    var jsondata = await GlobalHelpers.postRequestGeneral.getdata(queryPayload(), "2035225", UriAdresses.covidBackEnd);
+    queryQuestions = QueryQuestions.fromJson(jsonDecode(jsondata.toString()));
+    Get.toNamed(RouteUnits.surveyList + RouteUnits.individualSurvey, arguments: "");
+    // Get.toNamed(RouteUnits.answerform);
+    GlobalHelpers.bottomnavbarSwitcher.add(false);
+    queryAnswer.answers = List<Answers>.generate(queryQuestions.result!.questions!.length, ((index) => Answers()));
+  }
+
+  Future researcherDefaultDataGet() async{
+    var jsondata = await GlobalHelpers.postRequestGeneral.getdata(geregeId(), "2035226", UriAdresses.covidBackEnd);
+    researcherDefaultData = ResearcherDefaultData.fromJson(jsonDecode(jsondata.toString()));
+    researcherDefaultData.result!.currentDate = currentDate.toString().substring(0, 10);
+    var a = researcherDefaultData.code;
+    print(' default data nii code $a');
+    switch(researcherDefaultData.code){
+      case 200:
+          haveDefaultData.value = true;
+          Get.snackbar('Байршилын мэдээллийг авлаа', '', snackPosition: SnackPosition.BOTTOM, 
+          colorText: Colors.white, backgroundColor: Colors.grey[900], margin:  const EdgeInsets.only(left: 5, top: 5, bottom: 75));
+          break;
+      case 100:
+          Get.snackbar('Интернет Алдаа', 'Та интернетээ шалгана уу!', snackPosition: SnackPosition.BOTTOM,
+          colorText: Colors.white, backgroundColor: Colors.grey[900], margin:  const EdgeInsets.only(left: 5, top: 5, bottom: 75));
+          break;
+      case 101: 
+          Get.snackbar('Интернет Алдаа', 'Та интернетээ шалгана уу!', snackPosition: SnackPosition.BOTTOM,
+          colorText: Colors.white, backgroundColor: Colors.grey[900], margin: EdgeInsets.only(bottom: GeneralMeasurements.snackbarBottomMargin, left: 5, right: 5,));
+          break;
+        default : break;  
+    }
+  }
 
   Future researcherDefaultDataUpdateAndPush() async{
     var jsondata = await GlobalHelpers.postRequestGeneral.getdata(researcherDefaultData.result!.toJson(), "2035231", UriAdresses.covidBackEnd);
@@ -140,7 +193,7 @@ class SurveyController extends GetxController{
     }
  
   }
-  
+   
   Future xyrInfoGet() async{
     var xyrInfoString = await GlobalHelpers.postRequestGeneral.getdata(rd(), "501002", UriAdresses.covidBackEnd);
     xyrInfo = XyrInfo.fromJson(jsonDecode(xyrInfoString.toString()));
@@ -177,7 +230,6 @@ class SurveyController extends GetxController{
     log(jsonEncode(queryAnswer.toJson()));
     print(jsondata.toString()+' '+'hariugaa yavuulsanii hariu');
     print(jsondata);
-    //fgfgfgfg
     generalResponse = GeneralResponse.fromJson(jsonDecode(jsondata));
     switch(generalResponse.code){
       case '200':
@@ -220,35 +272,5 @@ class SurveyController extends GetxController{
     }
 
   }
-  Future researcherDefaultDataGet() async{
-    var jsondata = await GlobalHelpers.postRequestGeneral.getdata(geregeId(), "2035226", UriAdresses.covidBackEnd);
-    researcherDefaultData = ResearcherDefaultData.fromJson(jsonDecode(jsondata.toString()));
-    researcherDefaultData.result!.currentDate = currentDate.toString().substring(0, 10);
-    var a = researcherDefaultData.code;
-    print(' default data nii code $a');
-    switch(researcherDefaultData.code){
-      case 200:
-          haveDefaultData.value = true;
-          Get.snackbar('Байршилын мэдээллийг авлаа', '', snackPosition: SnackPosition.BOTTOM,
-          colorText: Colors.white, backgroundColor: Colors.grey[900], margin:  const EdgeInsets.only(left: 5, top: 5, bottom: 75));
-          break;
-      case 100:
-          Get.snackbar('Интернет Алдаа', 'Та интернетээ шалгана уу!', snackPosition: SnackPosition.BOTTOM,
-          colorText: Colors.white, backgroundColor: Colors.grey[900], margin:  const EdgeInsets.only(left: 5, top: 5, bottom: 75));
-          break;
-      case 101: 
-          Get.snackbar('Интернет Алдаа', 'Та интернетээ шалгана уу!', snackPosition: SnackPosition.BOTTOM,
-          colorText: Colors.white, backgroundColor: Colors.grey[900], margin: EdgeInsets.only(bottom: GeneralMeasurements.snackbarBottomMargin, left: 5, right: 5,));
-          break;
-        default : break;  
-    }
-  }
-  Future surveyQuestionsGet() async{
-    var jsondata = await GlobalHelpers.postRequestGeneral.getdata(queryPayload(), "2035225", UriAdresses.covidBackEnd);
-    queryQuestions = QueryQuestions.fromJson(jsonDecode(jsondata.toString()));
-    Get.toNamed(RouteUnits.surveyList + RouteUnits.individualSurvey, arguments: "");
-    // Get.toNamed(RouteUnits.answerform);
-    GlobalHelpers.bottomnavbarSwitcher.add(false);
-    queryAnswer.answers = List<Answers>.generate(queryQuestions.result!.questions!.length, ((index) => Answers()));
-  }
+
 }

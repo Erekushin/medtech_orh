@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 
 
 class ImageController extends GetxController{
+ var randomImageList = [].obs;
  var imageFile = File('').obs;
  final _picker = ImagePicker();
  Future<void> pickImageFromGallery() async {

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 class UriAdresses{
 // static const String tokenTestXyrinfo = "https://iam.gerege.mn/api/request/make";
 // static const String tokenTestlogin = "https://iam.gerege.mn/api/public/user/login";
-
+static const String backtestrui = "http://10.0.0.116:8080/ords/medical_backend/request/make";
 static const String geregeUserLoginUri = "https://cvd.gov.mn/api/public/user/login/username";
 static const String covidBackEnd = "https://cvd.gov.mn/api/request/make";
 }
@@ -30,8 +30,12 @@ class RouteUnits{
   static String hospitals = "/hospitals";
   static String hospitalProfile = "/hospitalProfile";
   static String timeSequence = "/doctorTimeSequence";
+  //survey
+  static String surveyCreation = "/surveyCreation";
   static String surveyList = "/surveyList";
   static String individualSurvey ="/individualSurvey";
+
+
   static String answerform = "/answerform";
   static String calculators = "/calculators";
   static String questions = "/questions";

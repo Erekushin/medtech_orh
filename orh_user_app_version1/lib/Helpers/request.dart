@@ -12,6 +12,7 @@ class PostRequestGeneral{
         'Authorization' : GlobalHelpers.auth,
       };
       Response response = await post(Uri.parse(uriAdress), body: json.encode(jsonBody), headers: myheaders );
+      print(response);
       data = utf8.decode(response.bodyBytes);
    
       return data;

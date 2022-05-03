@@ -4,6 +4,6 @@ class RecipeFields {
     id, text
   ];
 
-  static final String id = '_id';
-  static final String text = 'text';
+  static const String id = 'id';
+  static const String text = 'text';
 }

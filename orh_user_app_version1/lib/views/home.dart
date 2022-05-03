@@ -7,6 +7,7 @@ import 'dart:ui';
 import '../Controllers/login_controller.dart';
 import '../Controllers/survey_controller.dart';
 import '../MyWidgets/my_text.dart';
+import '../file_check_ui.dart';
 import '../global_constant.dart';
 import '../global_helpers.dart';
 
@@ -41,7 +42,7 @@ import '../global_helpers.dart';
           splashColor: Colors.transparent,
           onTap: () {
             func();
-            GlobalHelpers.bottomnavbarSwitcher.add(true);
+            // GlobalHelpers.bottomnavbarSwitcher.add(true);
           },
           child: Container(
             padding: const EdgeInsets.all(15),
@@ -164,25 +165,34 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin{
                 const Color(0xff63ace5),
                 Icons.ad_units_outlined,
                 'Судалгаа',
-                (){Get.toNamed(RouteUnits.surveyList, arguments: "");},
+                (){
+                  Get.toNamed(RouteUnits.surveyList, arguments: "");
+                  GlobalHelpers.bottomnavbarSwitcher.add(true);
+                },
               ),
               homePageCardsGroup(
                   const Color(0xffffa700),
                   Icons.article,
                   'Эмнэлэгүүд',
-                  (){Get.toNamed(RouteUnits.hospitals, arguments: RouteUnits.fromHospitals);},
+                  (){
+                    Get.toNamed(RouteUnits.hospitals, arguments: RouteUnits.fromHospitals);
+                    GlobalHelpers.bottomnavbarSwitcher.add(true);},
                    context,
                   const Color(0xfff37736),
                   Icons.article_sharp,
                   'Эмч нар',
-                  (){Get.toNamed(RouteUnits.doctors, arguments: RouteUnits.fromDoctors);},
+                  (){
+                    Get.toNamed(RouteUnits.doctors, arguments: RouteUnits.fromDoctors);
+                    GlobalHelpers.bottomnavbarSwitcher.add(true);},
                   ),
               homePageCardsGroup(
                   const Color(0xffffa700),
                   Icons.text_fields,
                   'Урьдчилан сэргийлэх үзлэг',
                  
-                  (){Get.toNamed(RouteUnits.preDiagnosis, arguments: RouteUnits.home);},
+                  (){
+                    Get.toNamed(RouteUnits.preDiagnosis, arguments: RouteUnits.home);
+                    GlobalHelpers.bottomnavbarSwitcher.add(true);},
                    context,
                      const Color(0xffFF6D6D),
                    Icons.analytics_outlined,
@@ -200,9 +210,11 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin{
                    context,
                    const Color(0xff63ace5),
                   Icons.gamepad_outlined,
-                    'local check',
+                    'recipe base test',
                     (){
-                      print('object');
+                      // sqlController.doctorTestget();
+                      GlobalHelpers.bottomnavbarSwitcher.add(false);
+                      Get.to(() => const MlearningTest());
                     },
                   ),
             

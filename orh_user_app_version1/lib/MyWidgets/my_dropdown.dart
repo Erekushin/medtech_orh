@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:orh_user_app_version1/Controllers/survey_controller.dart';
 import '../models/childHeartQueryRelated/childheartquey.dart';
+import '../views/SurveyRelated/survey_creation.dart';
 import 'my_text.dart';
 import 'package:get/get.dart';
 
@@ -12,7 +13,7 @@ class MyDropdown extends StatefulWidget {
   required this.margint, required this.marginb, required this.marginr,
   required  this.marginl, this.questionID, required this.answerIndex}) : super(key: key);
   final String? dropDownHint;
-  final List<Options>? listitems;
+  final List<dynamic>? listitems;
   final int? questionID;
   final int? currentValue;
   final String? mark;
@@ -36,52 +37,30 @@ class _MyDropDownState extends State<MyDropdown> {
     // });
     // queryController.dropvalueList[widget.answerIndex].value  =  null;
   }
-  void transferDataToModul(){
-
-    // switch(widget.mark){
-    //   case "боловсрол байдал":
-    //     print("case taarsan");
-    //     form1Controller.model.education_situation = SelectedID!;
-    //     break;
-    //   case "хөдөлмөр эрхлэлтийн байдал":
-    //     print("case taarsan");
-    //     form1Controller.model.employment = SelectedID!;
-    //     break;
-    //   case "хөдөлмөр эрхлэхгүй шалтгаан":
-    //     print("case taarsan");
-    //     form1Controller.model.reason_not_employment = SelectedID!;
-    //     break;
-    //   case "гэр бүлийн байдал":
-    //     print("case taarsan");
-    //     form1Controller.model.marital_status = SelectedID!;
-    //     break;
-    //   case "ажлын нөхцөл":
-    //     print("case taarsan");
-    //     form1Controller.model.working_condition = SelectedID!;
-    //     break;
-    // }
-
-  }
-
   // String? selectval;
   int? SelectedID;
   @override
   Widget build(BuildContext context) {
-    // switch(widget.givenModelType){
-    //   case Options:
-    //     otionList = List<Options>.from(widget.listitems!);
-    //     break;  
-    // }
-    List<DropdownMenuItem<String>> dropitems(List<Options> otionList){
+    List<DropdownMenuItem<String>> dropitems(List<dynamic> optionList){
       switch(widget.givenModelType){
         case Options:
-         return otionList.map((item){
+         return optionList.map((item){
            return DropdownMenuItem(
              value: item.id.toString(),
              child: Text(item.optionText!),
              onTap: (){
                queryController.queryAnswer.answers![widget.answerIndex].questionId = widget.questionID;
                queryController.queryAnswer.answers![widget.answerIndex].optionId = item.id; 
+             },
+             );
+           }).toList();
+        case AnswerTypeOptions:
+           return optionList.map((item){
+            return DropdownMenuItem(
+             value: item.id.toString(),
+             child: Text(item.optionText!),
+             onTap: (){
+              
              },
              );
            }).toList();
@@ -107,7 +86,6 @@ class _MyDropDownState extends State<MyDropdown> {
           value: queryController.dropvalueList[widget.answerIndex].value,
           onChanged: (String? newValue) {
             setState(() {
-              transferDataToModul();
               queryController.dropvalueList[widget.answerIndex].value = newValue.toString();
             });
           },

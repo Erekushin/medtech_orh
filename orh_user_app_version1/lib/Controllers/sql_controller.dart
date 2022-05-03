@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'package:get/get.dart';
+import 'package:orh_user_app_version1/Models/result.dart';
+import 'package:orh_user_app_version1/global_helpers.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
@@ -8,9 +10,12 @@ import '../Helpers/logging.dart';
 import '../Models/TreatmentRecipe/fields.dart';
 import '../Models/TreatmentRecipe/treatment_recipe.dart';
 import '../global_constant.dart';
+import 'package:flutter/material.dart';
+import '../Models/result.dart';
 
 class SqlController extends GetxController{
   TreatmentRecipies treatmentRecipies = TreatmentRecipies();
+  GeneralResponse generalResponse = GeneralResponse();
   var recipeList = Result().recipies.obs;
   final ereklog = logger(SqlController);
   static Database? _database;
@@ -95,14 +100,15 @@ class SqlController extends GetxController{
     }
   }
 
-  Future<int> updateData(Recipies recipe) async {
+  Future<int> updateData(Recipies recipe, int id) async {
+    ereklog.wtf(recipe.toJson());
+    var data = {'text' : recipe.text, 'color' : recipe.color, 'title':recipe.title, 'dateStart':recipe.dateStart, 
+    'dateEnd':recipe.dateEnd, 'picture':recipe.picture, 'personId':recipe.personId};
     await database;
-
     return _database!.update(
       SqlRelated.recipeTable,
-      recipe.toJson(),
-      where: '${RecipeFields.id} = ?',
-      whereArgs: [recipe.recipeid],
+      data,
+      where: '${RecipeFields.id} = $id',
     );
   }
 
@@ -111,13 +117,33 @@ class SqlController extends GetxController{
 
     return await _database!.delete(
       SqlRelated.recipeTable,
-      where: '${RecipeFields.id} = ?',
-      whereArgs: [id],
+      where: '${RecipeFields.id} = $id',
     );
   }
 
   Future close() async {
     await database;
     _database!.close();
+  }
+
+
+
+
+  final Map<String, dynamic> testBody = <String, dynamic>{'h':'fgfg'};
+  Future doctorTestget() async{
+    var data = await GlobalHelpers.postRequestGeneral.getdata(testBody, "202859", UriAdresses.backtestrui);
+    generalResponse = GeneralResponse.fromJson(jsonDecode(data.toString()));
+    ereklog.wtf(generalResponse.code);
+    switch(generalResponse.code){
+      case '100':
+          Get.snackbar('Интернет Алдаа', 'Та интернетээ шалгана уу!', snackPosition: SnackPosition.BOTTOM,
+          colorText: Colors.white, backgroundColor: Colors.grey[900], margin:  const EdgeInsets.only(left: 5, top: 5, bottom: 75));
+          break;
+      case '101': 
+          Get.snackbar('Интернет Алдаа', 'Та интернетээ шалгана уу!', snackPosition: SnackPosition.BOTTOM,
+          colorText: Colors.white, backgroundColor: Colors.grey[900], margin: EdgeInsets.only(bottom: GeneralMeasurements.snackbarBottomMargin, left: 5, right: 5,));
+          break;
+        default : break;  
+    }
   }
 }

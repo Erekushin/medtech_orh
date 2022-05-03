@@ -1,431 +1,189 @@
-// // Copyright 2013 The Flutter Authors. All rights reserved.
-// // Use of this source code is governed by a BSD-style license that can be
-// // found in the LICENSE file.
+import 'dart:math';
 
-// // ignore_for_file: public_member_api_docs
-
-// import 'dart:io';
-// import 'package:flutter/material.dart';
-// import 'package:path_provider/path_provider.dart';
-// import 'package:permission_handler/permission_handler.dart';
-
-// import 'global_helpers.dart';
-
-
-
-// class MyAppForCheckFilePath extends StatefulWidget {
-//   const MyAppForCheckFilePath({Key? key}) : super(key: key);
-//   @override
-//   _MyHomePageState createState() => _MyHomePageState();
-// }
-
-// class _MyHomePageState extends State<MyAppForCheckFilePath> {
-//   Future<Directory?>? _tempDirectory;
-//   Future<Directory?>? _appSupportDirectory;
-//   Future<Directory?>? _appLibraryDirectory;
-//   Future<Directory?>? _appDocumentsDirectory;
-//   Future<Directory?>? _externalDocumentsDirectory;
-//   Future<List<Directory>?>? _externalStorageDirectories;
-//   Future<List<Directory>?>? _externalCacheDirectories;
-//   Future<Directory?>? _downloadsDirectory;
-
-  
-
-//   Widget _buildDirectory(
-//       BuildContext context, AsyncSnapshot<Directory?> snapshot) {
-//     Text text = const Text('');
-//     if (snapshot.connectionState == ConnectionState.done) {
-//       if (snapshot.hasError) {
-//         text = Text('Error: ${snapshot.error}');
-//       } else if (snapshot.hasData) {
-//         text = Text('path: ${snapshot.data!.path}');
-//       } else {
-//         text = const Text('path unavailable');
-//       }
-//     }
-//     return Padding(padding: const EdgeInsets.all(16.0), child: text);
-//   }
-
-//   Widget _buildDirectories(
-//       BuildContext context, AsyncSnapshot<List<Directory>?> snapshot) {
-//     Text text = const Text('');
-//     if (snapshot.connectionState == ConnectionState.done) {
-//       if (snapshot.hasError) {
-//         text = Text('Error: ${snapshot.error}');
-//       } else if (snapshot.hasData) {
-//         final String combined =
-//             snapshot.data!.map((Directory d) => d.path).join(', ');
-//         text = Text('paths: $combined');
-//       } else {
-//         text = const Text('path unavailable');
-//       }
-//     }
-//     return Padding(padding: const EdgeInsets.all(16.0), child: text);
-//   }
-
-//   void _requestTempDirectory() {
-//     setState(() {
-//       _tempDirectory = getTemporaryDirectory();
-//     });
-//   }
-
-//   void _requestAppDocumentsDirectory() {
-//     setState(() {
-//       _appDocumentsDirectory = getApplicationDocumentsDirectory();
-//     });
-//   }
-
-//   void _requestAppSupportDirectory() {
-//     setState(() {
-//       _appSupportDirectory = getApplicationSupportDirectory();
-//     });
-//   }
-
-//   void _requestAppLibraryDirectory() {
-//     setState(() {
-//       _appLibraryDirectory = getLibraryDirectory();
-//     });
-//   }
-
-//   void _requestExternalStorageDirectory() {
-//     setState(() {
-//       _externalDocumentsDirectory = getExternalStorageDirectory();
-//     });
-//   }
-
-//   void _requestExternalStorageDirectories(StorageDirectory type) {
-//     setState(() {
-//       _externalStorageDirectories = getExternalStorageDirectories(type: type);
-//     });
-//   }
-
-//   void _requestExternalCacheDirectories() {
-//     setState(() {
-//       _externalCacheDirectories = getExternalCacheDirectories();
-//     });
-//   }
-
-//   void _requestDownloadsDirectory() {
-//     setState(() {
-//       _downloadsDirectory = getDownloadsDirectory();
-//     });
-//   }
-//   Future<File> get _localFile async {
-//   final path = await GlobalHelpers.directoryPath.tempdirectoryGet!.path;
-//   return File('$path');
-//   }
-//   Future<File> writeCounter(String counter) async {
-//   final file =  await _localFile;
-//   file.writeAsStringSync('erekushin is awesome');
-//   // Write the file
-//   return file;
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-      
-//       body: Center(
-//         child: ListView(
-//           children: <Widget>[
-//             Column(
-//               children: <Widget>[
-//                 Padding(
-//                   padding: const EdgeInsets.all(16.0),
-//                   child: ElevatedButton(
-//                     child: const Text(
-//                       'Get Temporary Directory',
-//                     ),
-//                     onPressed: _requestTempDirectory,
-//                   ),
-//                 ),
-//                 FutureBuilder<Directory?>(
-//                   future: _tempDirectory,
-//                   builder: _buildDirectory,
-//                 ),
-//               ],
-//             ),
-//             Column(
-//               children: <Widget>[
-//                 Padding(
-//                   padding: const EdgeInsets.all(16.0),
-//                   child: ElevatedButton(
-//                     child: const Text(
-//                       'Get Application Documents Directory',
-//                     ),
-//                     onPressed: _requestAppDocumentsDirectory,
-//                   ),
-//                 ),
-//                 FutureBuilder<Directory?>(
-//                   future: _appDocumentsDirectory,
-//                   builder: _buildDirectory,
-//                 ),
-//               ],
-//             ),
-//             Column(
-//               children: <Widget>[
-//                 Padding(
-//                   padding: const EdgeInsets.all(16.0),
-//                   child: ElevatedButton(
-//                     child: const Text(
-//                       'Get Application Support Directory',
-//                     ),
-//                     onPressed: _requestAppSupportDirectory,
-//                   ),
-//                 ),
-//                 FutureBuilder<Directory?>(
-//                   future: _appSupportDirectory,
-//                   builder: _buildDirectory,
-//                 ),
-//               ],
-//             ),
-//             Column(
-//               children: <Widget>[
-//                 Padding(
-//                   padding: const EdgeInsets.all(16.0),
-//                   child: ElevatedButton(
-//                     child: Text(
-//                       Platform.isAndroid
-//                           ? 'Application Library Directory unavailable'
-//                           : 'Get Application Library Directory',
-//                     ),
-//                     onPressed:
-//                         Platform.isAndroid ? null : _requestAppLibraryDirectory,
-//                   ),
-//                 ),
-//                 FutureBuilder<Directory?>(
-//                   future: _appLibraryDirectory,
-//                   builder: _buildDirectory,
-//                 ),
-//               ],
-//             ),
-//             Column(
-//               children: <Widget>[
-//                 Padding(
-//                   padding: const EdgeInsets.all(16.0),
-//                   child: ElevatedButton(
-//                     child: Text(
-//                       !Platform.isAndroid
-//                           ? 'External storage is unavailable'
-//                           : 'Get External Storage Directory',
-//                     ),
-//                     onPressed: !Platform.isAndroid
-//                         ? null
-//                         : _requestExternalStorageDirectory,
-//                   ),
-//                 ),
-//                 FutureBuilder<Directory?>(
-//                   future: _externalDocumentsDirectory,
-//                   builder: _buildDirectory,
-//                 ),
-//               ],
-//             ),
-//             Column(
-//               children: <Widget>[
-//                 Padding(
-//                   padding: const EdgeInsets.all(16.0),
-//                   child: ElevatedButton(
-//                     child: Text(
-//                       !Platform.isAndroid
-//                           ? 'External directories are unavailable'
-//                           : 'Get External Storage Directories',
-//                     ),
-//                     onPressed: !Platform.isAndroid
-//                         ? null
-//                         : () {
-//                             _requestExternalStorageDirectories(
-//                               StorageDirectory.music,
-//                             );
-//                           },
-//                   ),
-//                 ),
-//                 FutureBuilder<List<Directory>?>(
-//                   future: _externalStorageDirectories,
-//                   builder: _buildDirectories,
-//                 ),
-//               ],
-//             ),
-//             Column(
-//               children: <Widget>[
-//                 Padding(
-//                   padding: const EdgeInsets.all(16.0),
-//                   child: ElevatedButton(
-//                     child: Text(
-//                       !Platform.isAndroid
-//                           ? 'External directories are unavailable'
-//                           : 'Get External Cache Directories',
-//                     ),
-//                     onPressed: !Platform.isAndroid
-//                         ? null
-//                         : _requestExternalCacheDirectories,
-//                   ),
-//                 ),
-//                 FutureBuilder<List<Directory>?>(
-//                   future: _externalCacheDirectories,
-//                   builder: _buildDirectories,
-//                 ),
-//               ],
-//             ),
-//             Column(
-//               children: <Widget>[
-//                 Padding(
-//                   padding: const EdgeInsets.all(16.0),
-//                   child: ElevatedButton(
-//                     child: Text(
-//                       Platform.isAndroid || Platform.isIOS
-//                           ? 'Downloads directory is unavailable'
-//                           : 'Get Downloads Directory',
-//                     ),
-//                     onPressed: Platform.isAndroid || Platform.isIOS
-//                         ? null
-//                         : _requestDownloadsDirectory,
-//                   ),
-//                 ),
-//                 FutureBuilder<Directory?>(
-//                   future: _downloadsDirectory,
-//                   builder: _buildDirectory,
-//                 ),
-//               ],
-//             ),
-//              Column(
-//               children: <Widget>[
-//                 Padding(
-//                   padding: const EdgeInsets.all(16.0),
-//                   child: ElevatedButton(
-//                     child: Text(
-//                       'shine file',
-//                     ),
-//                     onPressed: () async{
-//                       Permission.storage.request();
-//                       // Permission.manageExternalStorage.request();
-//                       print('ddfdfddf');
-//                       GlobalHelpers.directoryPath.requestTempDirectory();
-//                       if(await GlobalHelpers.directoryPath.tempdirectoryGet!.exists()){
-//                            print('file baih shig bna button oos shalgav');
-//                            writeCounter('d');
-//                            print('yum bichsenii daraa');
-//                       }
-//                       else{
-//                            GlobalHelpers.directoryPath.tempdirectoryGet!.create(recursive: true);
-//                            print('file iig vvsgechihshig bolloo gehdee button oos' + GlobalHelpers.directoryPath.tempdirectoryGet.toString());
-//                           }
-//                       },
-//                   ),
-//                 ),
-//                 FutureBuilder<Directory?>(
-//                   future: _downloadsDirectory,
-//                   builder: _buildDirectory,
-//                 ),
-//               ],
-//             ),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
-
-
-
-import 'dart:async';
-import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:orh_user_app_version1/global_helpers.dart';
-import 'package:path_provider/path_provider.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:get/get.dart';
 
-// void main() {
-//   runApp(
-//     MaterialApp(
-//       title: 'Reading and Writing Files',
-//       home: FlutterDemo(storage: CounterStorage()),
-//     ),
-//   );
-// }
+import 'Controllers/image_controller.dart';
 
-class CounterStorage {
-  //os iin ogch bgaa path iig avch bgaa
-  
-}
-
-class FlutterDemo extends StatefulWidget {
-  const FlutterDemo({Key? key,}) : super(key: key);
-  Future<String> get _localPath async {
-    final directory = await getDownloadsDirectory();
-    return directory!.path;
-  }
-  //avsan path deeree file iinhaa neriig nemeed file helbertei bolgoj bgaa
-  Future<File> get _localFile async {
-    final path = await _localPath;
-    print(path);
-    return File('$path/counter.txt');
-  }
-  //write
-  Future<File> writeCounter(String counter) async {
-    final file = await _localFile;
-    print(file.path + "file path is here");
-    // Write the file
-    return file.writeAsString('erek was here' + counter);
-  }
-  // read
-  Future<String> readCounter() async {
-    try {
-      final file = await _localFile;
-
-      // Read the file
-      final contents = await file.readAsString();
-
-      return contents;
-    } catch (e) {
-      // If encountering an error, return 0
-      return 'something is wrong';
-    }
-  }
-
-  
+class RecipeBaseTest extends StatefulWidget {
+  const RecipeBaseTest({ Key? key }) : super(key: key);
 
   @override
-  _FlutterDemoState createState() => _FlutterDemoState();
+  State<RecipeBaseTest> createState() => _RecipeBaseTestState();
 }
 
-class _FlutterDemoState extends State<FlutterDemo> {
-  String readData = 'empty';
-  @override
-  void initState(){
-    super.initState();
-  } 
+class _RecipeBaseTestState extends State<RecipeBaseTest> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Reading and Writing Files'),
-      ),
-      body: Center(
-        child: Column(
-          children: [
-            Text(
-          readData,
+      body: Container(
+        child: Center(
+          child: Text('recipe base test'),
         ),
-        ElevatedButton(onPressed: (){
-          GlobalHelpers.workWithLocal.writeToLog('something wonderfull gonna happen');
-          print('value is put');
-          }, child: Text('put data')),
-        ElevatedButton(onPressed: ()async{
-          if(await File(await GlobalHelpers.workWithLocal.logPath + "/Log.txt").exists()){
-            GlobalHelpers.workWithLocal.readFromLog().then((String value) {
-            setState(() {
-            print(value + " " + "this is data which i am looking for");
-            readData = value;
-            });
-           }); 
-          }
-          else{
-            print('file maani bhgu bna');
-          }
-          }, child: Text('get data'))
-          ],
-        )
       ),
-      
     );
+  }
+}
+
+
+class MlearningTest extends StatefulWidget {
+  const MlearningTest({ Key? key }) : super(key: key);
+
+  @override
+  State<MlearningTest> createState() => _MlearningTestState();
+}
+
+class _MlearningTestState extends State<MlearningTest> {
+  var imageCont = Get.find<ImageController>();
+  Random randomN = Random();
+  var searchController = TextEditingController();
+  choseGirls(){
+    int hotkeyCount = 0;
+    int hotterkeyCount = 0;
+    int hotCount = 0;
+    int hotterCount = 0;
+    for(int a = 0; a<keyword.length; a++){
+      switch(keyword[a]){
+        case 'my-X':
+        hotkeyCount++;
+        break;
+        case 'apple':
+        hotterkeyCount++;
+        break;
+      }
+    }
+    hotCount = ((10/100)*(hotkeyCount * (100/keyword.length))).truncate();
+    hotterCount = ((10/100)*(hotterkeyCount * (100/keyword.length))).truncate();
+    keyword.add(searchController.text);
+    switch(searchController.text){
+      case '':
+         for(int i = 0; i<hotCount; i++){
+      int randomIndex = randomN.nextInt(12);
+      imageCont.randomImageList.add(imageListMyx[randomIndex]);
+    }
+     for(int i = 0; i<hotterCount; i++){
+      int randomIndex = randomN.nextInt(12);
+      imageCont.randomImageList.add(imageListApple[randomIndex]);
+    }
+      break;
+      case 'my-X':
+      for(int i = 0; i<10; i++){
+      int randomIndex = randomN.nextInt(12);
+      imageCont.randomImageList.add(imageListMyx[randomIndex]);
+    }
+      break;
+      case 'apple':
+      for(int i = 0; i<10; i++){
+      int randomIndex = randomN.nextInt(12);
+      imageCont.randomImageList.add(imageListApple[randomIndex]);
+    }
+      break;
+
+    }
+  }
+    List<String> imageListMyx = [
+  'https://pbs.twimg.com/media/EUj1VojXQAEL9Og.jpg',
+  'https://i.pinimg.com/736x/07/d9/aa/07d9aa0fe08cad477e8d3bb4adfe1de2.jpg',
+  'https://64.media.tumblr.com/a1e399009b27bfcd0036c6a5b3b976c7/c97734e9ca66ce39-74/s1280x1920/cb952c12415dbb8901548d89624796e94e368356.jpg',
+  'https://images.squarespace-cdn.com/content/v1/58404f45579fb31c9d8d3236/1495487733438-5P75SCPEM6LAQXWAW1UV/You%E2%80%99re+Pretty%2C+for+a+Black+Girl_headerimage.jpg?format=1000w',
+  'https://resize.img.allw.mn/thumbs/l2/ak/zbnr34un59942cf80a67c190618276_1002x1002.jpg?width=1200&height=900',
+  'https://i.pinimg.com/736x/16/0c/b9/160cb9705769521aa3cd36fbd7ebca3c.jpg',
+  'https://orlandosolution.com/wp-content/uploads/2020/03/origienal.jpg',
+  'https://ak.picdn.net/shutterstock/videos/31227436/thumb/1.jpg',
+  'https://orlandosolution.com/wp-content/uploads/2020/03/3a0fb041481839effb5c57b493a74af32.jpg',
+   'https://i.pinimg.com/474x/b8/8b/63/b88b6339bf31451a11bd732210265386.jpg',
+  'https://i.pinimg.com/736x/f7/e2/2b/f7e22bd2663a25698fffbbb0c3de7574.jpg',
+  'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT6J4c-6fAjGIfBLs40bXk812rIlU2VDW1qHuhqQ1HZKobJI4FKJhiJl-vcnVYF4ivKcOA&usqp=CAU',
+];
+
+  List<String> imageListApple = [
+  'https://wallpaperaccess.com/full/1259314.jpg',
+  'https://www.teahub.io/photos/full/5-54275_wallpaper-apples-fruit-ripe-red-apple-fruit-wallpaper.jpg',
+  'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTsVSL9JIqXE0fZ8Crg9K3pQ44qRxIF6eeOG65bbggozEOAJBswGO4g0gsKVQ-32tK-lhM&usqp=CAU',
+  'https://image.winudf.com/v2/image/Y29tLkxpdmVXYWxscGFwZXJzVUEuYXBwMDU5Ml9zY3JlZW5fMF9ybGF2Z25pdQ/screen-0.jpg?fakeurl=1&type=.jpg',
+  'https://img5.goodfon.com/wallpaper/nbig/e/c7/cut-fruit-apple.jpg',
+  'https://i.pinimg.com/originals/0d/37/89/0d378911c3837ff3eb579d8f894860ca.jpg',
+  'https://www.wallpaperflare.com/static/944/986/519/apple-surface-drops-red-wallpaper.jpg',
+  'https://images6.alphacoders.com/434/434575.jpg',
+  'https://wallpaperboat.com/wp-content/uploads/2021/04/05/73372/apple-fruit-06.jpg',
+  'http://images2.fanpop.com/images/photos/7000000/Apple-Wallpaper-fruit-7004640-1024-768.jpg',
+  'https://r1.ilikewallpaper.net/ipad-wallpapers/download/11171/Apple-Fruit-ipad-wallpaper-ilikewallpaper_com.jpg',
+  'https://www.itl.cat/pngfile/big/83-839601_red-apples-and-berries-fresh-fruit-wallpaper-apple.jpg'
+
+  ];
+
+  
+  List<String> keyword = ['my-X', 'apple'];
+  @override
+  void initState() {
+    super.initState();
+    imageCont.randomImageList.clear();
+    choseGirls();
+  }
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: SafeArea(
+        child: Stack(children: [
+           Align(
+             alignment: Alignment.topCenter,
+             child: Container(
+               padding: const EdgeInsets.only(left: 30),
+               margin: const EdgeInsets.only(top: 20, bottom: 10, left: 30, right: 30),
+               decoration: const BoxDecoration(
+                 borderRadius: BorderRadius.all(Radius.circular(15)),
+                 color: Colors.white
+               ),
+               child: TextField(
+                 controller: searchController,
+                 decoration: InputDecoration(
+                   suffixIcon: IconButton(
+                     onPressed: (){
+                       setState(() {
+                         imageCont.randomImageList.clear();
+                         choseGirls();
+                       });
+                     },
+                     icon: const Icon(Icons.arrow_circle_right)),
+                   hintText: 'Search...',
+                   disabledBorder: InputBorder.none,
+                   enabledBorder: InputBorder.none,
+                   focusedBorder: InputBorder.none
+                 ),
+               ),
+             ),
+           ),
+           Container(
+             margin: const EdgeInsets.only(top: 80, bottom: 10),
+             child: GetX<ImageController>(builder: (imageController){
+               return MasonryGridView.count(
+               crossAxisCount: 2,
+               crossAxisSpacing: 10,
+               mainAxisSpacing: 12,
+               itemCount: imageController.randomImageList.length,
+               itemBuilder: (context, index){
+                 return Container(
+                  decoration: const BoxDecoration(
+                      color: Colors.transparent,
+                      borderRadius: BorderRadius.all(
+                          Radius.circular(15))
+                  ),
+                  child: ClipRRect(
+                    borderRadius: const BorderRadius.all(
+                        Radius.circular(15)),
+                    child: FadeInImage.assetNetwork(
+                      placeholder: 'assets/images/loading.jpg',
+                      image: imageController.randomImageList[index],fit: BoxFit.cover,),
+                  ),
+                );
+               }
+               );
+             })
+           )
+
+        ],),
+      ),
+      );
   }
 }
