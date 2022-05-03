@@ -9,11 +9,11 @@ import 'package:orh_user_app_version1/MyWidgets/my_textfield.dart';
 import 'package:orh_user_app_version1/global_constant.dart';
 import 'package:orh_user_app_version1/global_helpers.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:orh_user_app_version1/models/childHeartQueryRelated/childheartquey.dart';
+import 'package:orh_user_app_version1/models/SurveyRelated/surveyQuestionBody.dart';
 import '../../MyWidgets/my_text.dart';
 import '../../MyWidgets/my_textfield.dart';
 import '../../global_constant.dart';
-import '../../models/childHeartQueryRelated/aimags.dart';
+import '../../models/SurveyRelated/aimags.dart';
 
 
 ///Асуулгаас бүтсэн нэг бие сэдэв бүхий бүртгэлийн 

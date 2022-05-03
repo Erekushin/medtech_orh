@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:orh_user_app_version1/Helpers/request.dart';
-import 'package:orh_user_app_version1/models/childHeartQueryRelated/aimags.dart';
+import 'package:orh_user_app_version1/models/SurveyRelated/aimags.dart';
 import 'Helpers/working_with_folders.dart';
 
 class GlobalHelpers{

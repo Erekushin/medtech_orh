@@ -9,9 +9,9 @@ import 'package:orh_user_app_version1/global_helpers.dart';
 import '../Models/query_answer.dart';
 import '../Models/result.dart';
 import '../global_constant.dart';
-import '../models/childHeartQueryRelated/aimags.dart';
-import '../models/childHeartQueryRelated/childheartquey.dart';
-import '../models/childHeartQueryRelated/researcherDefault.dart';
+import '../models/SurveyRelated/aimags.dart';
+import '../models/SurveyRelated/surveyQuestionBody.dart';
+import '../models/SurveyRelated/researcherDefault.dart';
 
 
 class DropSelectVal{

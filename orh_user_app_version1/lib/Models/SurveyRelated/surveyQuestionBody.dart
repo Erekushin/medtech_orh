@@ -1,12 +1,12 @@
-class QueryQuestions {
+class SurveyQuestions {
   int? code;
   String? status;
   String? message;
   Result? result;
 
-  QueryQuestions({this.code, this.status, this.message, this.result});
+  SurveyQuestions({this.code, this.status, this.message, this.result});
 
-  QueryQuestions.fromJson(Map<String, dynamic> json) {
+  SurveyQuestions.fromJson(Map<String, dynamic> json) {
     code = json['code'];
     status = json['status'];
     message = json['message'];
