@@ -82,18 +82,18 @@ class _SurveyListState extends State<SurveyList> {
                   }),
           ],
         ),
-        Align(
-          alignment: Alignment.bottomRight,
-          child: Container(
-            margin: const EdgeInsets.only(bottom: 80, right: 20),
-            child: InkWell(
-              onTap: (){
-                Get.toNamed(RouteUnits.surveyCreation);
-              },
-              child: myBtn(CommonColors.geregeBlue, 150, 50, CommonColors.geregeBlue, Colors.white, 'Судалгаа нэмэх'),
-            ),
-          ),
-        )
+        // Align(
+        //   alignment: Alignment.bottomRight,
+        //   child: Container(
+        //     margin: const EdgeInsets.only(bottom: 80, right: 20),
+        //     child: InkWell(
+        //       onTap: (){
+        //         Get.toNamed(RouteUnits.surveyCreation);
+        //       },
+        //       child: myBtn(CommonColors.geregeBlue, 150, 50, CommonColors.geregeBlue, Colors.white, 'Судалгаа нэмэх'),
+        //     ),
+        //   ),
+        // )
           ],
         ),
       ),

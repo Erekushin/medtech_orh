@@ -55,7 +55,7 @@ class Result {
 class Recipies {
   int? recipeid;
   String? text;
-  int? color;
+  String? color;
   String? title;
   String? dateStart;
   String? dateEnd;
@@ -73,7 +73,7 @@ class Recipies {
     dateStart = json['dateStart'];
     dateEnd = json['dateEnd'];
     picture = json['picture'];
-    personId = json['personId'];
+    personId = json[' '];
   }
 
   Map<String, dynamic> toJson() {

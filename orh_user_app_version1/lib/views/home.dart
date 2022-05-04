@@ -170,53 +170,53 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin{
                   GlobalHelpers.bottomnavbarSwitcher.add(true);
                 },
               ),
-              homePageCardsGroup(
-                  const Color(0xffffa700),
-                  Icons.article,
-                  'Эмнэлэгүүд',
-                  (){
-                    Get.toNamed(RouteUnits.hospitals, arguments: RouteUnits.fromHospitals);
-                    GlobalHelpers.bottomnavbarSwitcher.add(true);},
-                   context,
-                  const Color(0xfff37736),
-                  Icons.article_sharp,
-                  'Эмч нар',
-                  (){
-                    Get.toNamed(RouteUnits.doctors, arguments: RouteUnits.fromDoctors);
-                    GlobalHelpers.bottomnavbarSwitcher.add(true);},
-                  ),
-              homePageCardsGroup(
-                  const Color(0xffffa700),
-                  Icons.text_fields,
-                  'Урьдчилан сэргийлэх үзлэг',
+              // homePageCardsGroup(
+              //     const Color(0xffffa700),
+              //     Icons.article,
+              //     'Эмнэлэгүүд',
+              //     (){
+              //       Get.toNamed(RouteUnits.hospitals, arguments: RouteUnits.fromHospitals);
+              //       GlobalHelpers.bottomnavbarSwitcher.add(true);},
+              //      context,
+              //     const Color(0xfff37736),
+              //     Icons.article_sharp,
+              //     'Эмч нар',
+              //     (){
+              //       Get.toNamed(RouteUnits.doctors, arguments: RouteUnits.fromDoctors);
+              //       GlobalHelpers.bottomnavbarSwitcher.add(true);},
+              //     ),
+              // homePageCardsGroup(
+              //     const Color(0xffffa700),
+              //     Icons.text_fields,
+              //     'Урьдчилан сэргийлэх үзлэг',
                  
-                  (){
-                    Get.toNamed(RouteUnits.preDiagnosis, arguments: RouteUnits.home);
-                    GlobalHelpers.bottomnavbarSwitcher.add(true);},
-                   context,
-                     const Color(0xffFF6D6D),
-                   Icons.analytics_outlined,
-                   'Жорын бичиг',
-                   () async{
-                     await sqlController.readAllNotes();
-                      Get.toNamed(RouteUnits.treatmentRecipe, arguments: "firstPage");
-                     },
-                  ),
-              homePageCardsGroup(
-                  const Color(0xffFF6D6D),
-                  Icons.android,
-                  'camera',
-                  (){Get.toNamed('/camera', arguments: "fromHospitals");},
-                   context,
-                   const Color(0xff63ace5),
-                  Icons.gamepad_outlined,
-                    'recipe base test',
-                    (){
-                      // sqlController.doctorTestget();
-                      GlobalHelpers.bottomnavbarSwitcher.add(false);
-                      Get.to(() => const MlearningTest());
-                    },
-                  ),
+              //     (){
+              //       Get.toNamed(RouteUnits.preDiagnosis, arguments: RouteUnits.home);
+              //       GlobalHelpers.bottomnavbarSwitcher.add(true);},
+              //      context,
+              //        const Color(0xffFF6D6D),
+              //      Icons.analytics_outlined,
+              //      'Жорын бичиг',
+              //      () async{
+              //        await sqlController.readAllNotes();
+              //         Get.toNamed(RouteUnits.treatmentRecipe, arguments: "firstPage");
+              //        },
+              //     ),
+              // homePageCardsGroup(
+              //     const Color(0xffFF6D6D),
+              //     Icons.android,
+              //     'camera',
+              //     (){Get.toNamed('/camera', arguments: "fromHospitals");},
+              //      context,
+              //      const Color(0xff63ace5),
+              //     Icons.gamepad_outlined,
+              //       'recipe base test',
+              //       (){
+              //         // sqlController.doctorTestget();
+              //         GlobalHelpers.bottomnavbarSwitcher.add(false);
+              //         Get.to(() => const MlearningTest());
+              //       },
+              //     ),
             
               SizedBox(height:  GeneralMeasurements.deviceWidth/ 20),
             ],
