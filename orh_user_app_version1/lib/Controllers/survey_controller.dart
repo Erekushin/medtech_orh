@@ -20,9 +20,11 @@ class DropSelectVal{
 }
 class SurveyController extends GetxController{
  ///survey vvsgeh hvseltiin biy
- SurveyCreationbody surveyCreationbody = SurveyCreationbody();
+ SurveyCreationbody   surveyCreationbody = SurveyCreationbody();
  ///vvsgej bui Question vvdee hadaglah list
- var newQuestionList = ['sdsd'].obs;
+ List<Question> newQuestionList = <Question>[].obs;
+ ///vvsgej bui option uudaa hadaglah list
+ List<CreationOptions> newOptionList = <CreationOptions>[].obs;
 
  //xyr ajillahgvi vyd ajillah textfieldvvdiin controller
   var lastName = TextEditingController();
@@ -274,14 +276,15 @@ class SurveyController extends GetxController{
     }
 
   }
-  Future surveyPush() async{
-    var jsondata = await GlobalHelpers.postRequestGeneral.getdata(surveyCreationbody.toJson(), "2035233", UriAdresses.covidBackEnd);
+  Future surveyCreationPush() async{
+    var jsondata = await GlobalHelpers.postRequestGeneral.getdata(surveyCreationbody.toJson(), "2035228", UriAdresses.covidBackEnd);
     log(jsonEncode(surveyCreationbody.toJson()));
-    print('sudalgaa vvsgeh hvseltiin body');
     generalResponse = GeneralResponse.fromJson(jsonDecode(jsondata));
+    print(generalResponse.code);
+    log(generalResponse.result.toString());
     switch(generalResponse.code){
       case '200':
-          
+          print('200 ruu orson');
           break;
     }
 

@@ -16,7 +16,7 @@ class SurveyCreationbody {
 class Question {
   String? questionText;
   String? type;
-  List<Options>? options;
+  List<CreationOptions>? options;
 
   Question({this.questionText, this.type, this.options});
   Map<String, dynamic> toJson() {
@@ -30,11 +30,11 @@ class Question {
   }
 }
 
-class Options {
+class CreationOptions {
   int? id;
   String? optionText;
-  Options({this.id, this.optionText});
-  Options.fromJson(Map<String, dynamic> json) {
+  CreationOptions({this.id, this.optionText});
+  CreationOptions.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     optionText = json['option_text'];
   }

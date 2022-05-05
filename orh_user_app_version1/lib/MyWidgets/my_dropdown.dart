@@ -11,7 +11,7 @@ class MyDropdown extends StatefulWidget {
   required this.listitems,required this.currentValue, 
   required this.mark, required this.givenModelType, 
   required this.margint, required this.marginb, required this.marginr,
-  required  this.marginl, this.questionID, required this.answerIndex}) : super(key: key);
+  required  this.marginl, this.questionID, required this.answerIndex, this.callBackFunction}) : super(key: key);
   final String? dropDownHint;
   final List<dynamic>? listitems;
   final int? questionID;
@@ -23,6 +23,7 @@ class MyDropdown extends StatefulWidget {
   final double marginr;
   final double marginl;
   final int answerIndex;
+  final Function? callBackFunction;
   @override
   _MyDropDownState createState() => _MyDropDownState();
 }
@@ -30,6 +31,14 @@ class _MyDropDownState extends State<MyDropdown> {
   final queryController = Get.find<SurveyController>();
   @override
   void initState() {
+     switch(widget.givenModelType){
+        case Options:
+        queryController.queryAnswer.answers![widget.answerIndex].questionId = widget.questionID;
+        break;
+        case AnswerTypeOptions:
+           
+      }
+    
     // widget.listitems?.forEach((element) {
     //   if(element.id == widget.currentValue){
     //     selectval = element.name;
@@ -88,6 +97,7 @@ class _MyDropDownState extends State<MyDropdown> {
             setState(() {
               queryController.dropvalueList[widget.answerIndex].value = newValue.toString();
             });
+            widget.callBackFunction!(newValue);
           },
           underline: const SizedBox(),
           isExpanded: true,

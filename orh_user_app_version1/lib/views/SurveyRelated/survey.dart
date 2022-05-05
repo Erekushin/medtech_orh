@@ -297,7 +297,8 @@ class _PageUnitState extends State<PageUnit> {
                             ],
                           ),
                         ): const SizedBox(),
-                  widget.pageIndex == 0? myTextField('Регистрийн дугаар', surveyControllerOut.rdTxtController, 0, 0, 20, 20, 0, 0, 'rd') : const SizedBox(),
+                  widget.pageIndex == 0? MyTextField(hinttxt:'Регистрийн дугаар', txtController: surveyControllerOut.rdTxtController, 
+                                                     margint:0, marginb: 0, marginr: 20, marginl: 20, questionID:0, answerIndex:0, mark:'rd') : const SizedBox(),
                   widget.pageIndex == 0? GetX<SettingController>(builder: (settingsController){
                     return SizedBox(
                       child: 
@@ -450,8 +451,9 @@ class _RecieverUnit extends State<RecieverUnit> {
   Widget categorization(int type){
     switch (type) {
         case 0:
-          return myTextField(widget.questionText, queryController.textEditingControllers[widget.questionIndex], 5, 5, 20, 20, 
-                             widget.questionID, widget.questionIndex, 'query');                        
+          return MyTextField(hinttxt:widget.questionText, txtController:queryController.textEditingControllers[widget.questionIndex], margint: 5, marginb: 5, 
+          marginr: 20, marginl:  20, 
+                            questionID: widget.questionID, answerIndex: widget.questionIndex, mark: 'query');                        
         default: return MyDropdown(dropDownHint: widget.questionText, listitems: widget.options, 
                               currentValue: 0, mark: 'mark', givenModelType: Options, 
                               margint: 5, marginb: 5, marginr: 20, marginl: 20, questionID: widget.questionID,

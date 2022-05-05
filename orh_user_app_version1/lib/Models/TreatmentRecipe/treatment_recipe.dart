@@ -55,7 +55,7 @@ class Result {
 class Recipies {
   int? recipeid;
   String? text;
-  String? color;
+  int? color;
   String? title;
   String? dateStart;
   String? dateEnd;

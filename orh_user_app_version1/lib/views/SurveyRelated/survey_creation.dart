@@ -1,11 +1,16 @@
+import 'dart:convert';
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:logger/logger.dart';
 import 'package:orh_user_app_version1/Controllers/survey_controller.dart';
 import 'package:orh_user_app_version1/Models/SurveyRelated/survey_answerBody.dart';
 import 'package:orh_user_app_version1/MyWidgets/my_button.dart';
 import 'package:orh_user_app_version1/MyWidgets/my_dropdown.dart';
 import 'package:orh_user_app_version1/global_constant.dart';
 
+import '../../Helpers/logging.dart';
 import '../../Models/SurveyRelated/survey_creationBody.dart';
 class SurveyCreation extends StatefulWidget {
   const SurveyCreation({ Key? key }) : super(key: key);
@@ -15,6 +20,16 @@ class SurveyCreation extends StatefulWidget {
 }
 
 class _SurveyCreationState extends State<SurveyCreation> {
+  var ereklog = logger(SurveyCreation);
+  var surveyNametxtController = TextEditingController();
+  @override
+  void initState() {
+    super.initState();
+    surveyController.surveyCreationbody.questions = List<Question>.generate(1, ((index) => Question(questionText: 'fdfdfd'))).obs;
+    surveyController.textEditingControllers.add(TextEditingController());
+    surveyController.dropvalueList.add(DropSelectVal());
+    surveyController.newQuestionList.add(Question());
+  }
   var surveyController = Get.find<SurveyController>();
   @override
   Widget build(BuildContext context) {
@@ -24,8 +39,9 @@ class _SurveyCreationState extends State<SurveyCreation> {
           Container(
             margin: const EdgeInsets.all(30),
             padding: const EdgeInsets.all(5),
-            child: const TextField(
-              decoration: InputDecoration(
+            child: TextField(
+              controller: surveyNametxtController,
+              decoration: const InputDecoration(
                 hintText: 'Судалгааны нэрийг оруулах'
               ),
             ),
@@ -38,10 +54,7 @@ class _SurveyCreationState extends State<SurveyCreation> {
           itemCount: controller.newQuestionList.length,
           physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
           itemBuilder: (BuildContext context, int index){
-            controller.dropvalueList.add(DropSelectVal());
-            controller.textEditingControllers.add(TextEditingController());
-            var item = controller.newQuestionList[index];
-            return surveyInputCreation(index, controller.textEditingControllers[index]);
+            return surveyInputCreation(surveyQuestionIndex: index, textController: controller.textEditingControllers[index]);
           },
         );
             },)
@@ -52,14 +65,20 @@ class _SurveyCreationState extends State<SurveyCreation> {
               margin: const EdgeInsets.only(bottom: 80),
               child: InkWell(
                 onTap: (){
-                  surveyController.surveyCreationbody.surveyName = 'dfd';
-                  for(int i = 0; i< surveyController.textEditingControllers.length; i++){
-                    var question = Question();
-                    question.questionText = surveyController.textEditingControllers[i].text;
-                    question.type = surveyController.dropvalueList[i].value;
-                    surveyController.surveyCreationbody.questions?.add(question);
-                    surveyController.surveyPush();
-                  } 
+                  int lastElement =  surveyController.newQuestionList.length - 1;
+                  surveyController.newQuestionList.insert(lastElement, Question(questionText: surveyController.textEditingControllers[lastElement].text, type: surveyController.dropvalueList[lastElement].value));
+                  surveyController.newQuestionList.removeLast();
+                  surveyController.surveyCreationbody.surveyName = surveyNametxtController.text;
+                  surveyController.surveyCreationbody.questions = surveyController.newQuestionList; 
+                  ereklog.wtf(jsonEncode(surveyController.surveyCreationbody.toJson()));
+                  // for(int i = 0; i< surveyController.textEditingControllers.length; i++){
+                  //   ereklog.wtf(surveyController.textEditingControllers[i].text);
+                  // }
+                  // print('.........');
+                  // for(int i = 0; i< surveyController.newQuestionList.length; i++){
+                  //   ereklog.wtf(surveyController.newQuestionList[i].questionText);
+                  // }
+                  surveyController.surveyCreationPush();
                 },
                 child: myBtn(CommonColors.yellow, 200, 50, CommonColors.yellow, Colors.white, 'Судалгааг хадаглах'),
               ),
@@ -81,9 +100,28 @@ List<AnswerTypeOptions>? list = [
     AnswerTypeOptions(id: 1, optionText: "Текст хэлбэрээр"),
     AnswerTypeOptions(id: 2, optionText: "Сонголт хэрбэрээр")
   ];
-Widget surveyInputCreation(int surveyQuestionIndex, TextEditingController textController){
+class surveyInputCreation extends StatefulWidget {
+  const surveyInputCreation({ Key? key, required this.surveyQuestionIndex, required this.textController }) : super(key: key);
+  final int surveyQuestionIndex;
+  final TextEditingController textController;
+  @override
+  State<surveyInputCreation> createState() => _surveyInputCreationState();
+}
+
+class _surveyInputCreationState extends State<surveyInputCreation> {
   var surveyController = Get.find<SurveyController>();
-  return SizedBox(
+  double containerHeight = 130;
+  callBackFunc(chosenVal){
+    if(chosenVal == '2'){
+      setState(() {
+        containerHeight = containerHeight + 50;
+        surveyController.newOptionList.insert(0, CreationOptions(optionText: 'dsd'));
+      });
+    }
+  }
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
     child: Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -91,43 +129,88 @@ Widget surveyInputCreation(int surveyQuestionIndex, TextEditingController textCo
         Container(
           margin: const EdgeInsets.all(5),
           width: GeneralMeasurements.deviceWidth*.75,
-          height: 130,
+          height: containerHeight,
           decoration: const BoxDecoration(
             borderRadius: BorderRadius.all(Radius.circular(15)),
             color: Colors.white
           ),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                margin: const EdgeInsets.only(left: 10),
-                child: TextField(
-                controller: textController,
-                decoration: const InputDecoration(
-                  disabledBorder: InputBorder.none,
-                  hintText: 'Асуултыг бичих',
-                   enabledBorder: InputBorder.none,
-                   focusedBorder: InputBorder.none
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  margin: const EdgeInsets.only(left: 10),
+                  child: TextField(
+                  controller: widget.textController,
+                  decoration: const InputDecoration(
+                    disabledBorder: InputBorder.none,
+                    hintText: 'Асуултыг бичих',
+                     enabledBorder: InputBorder.none,
+                     focusedBorder: InputBorder.none
+                  ),
                 ),
-              ),
-              ),
-              MyDropdown(dropDownHint: 'Асуултын төрлийг сонгох', listitems: list, currentValue: 0, mark: '', givenModelType: AnswerTypeOptions, margint: 5, marginb: 5, marginr: 5, marginl: 5, answerIndex: surveyQuestionIndex)
-              ],
-          ),
+                ),
+                MyDropdown(dropDownHint: 'Асуултын төрлийг сонгох', listitems: list, currentValue: 0, mark: '', 
+                           givenModelType: AnswerTypeOptions, margint: 5, marginb: 5, marginr: 5, marginl: 5, 
+                           answerIndex: widget.surveyQuestionIndex, callBackFunction: callBackFunc,),
+                Container(//option container
+                  margin: const EdgeInsets.only(left: 50),
+                  child: Expanded(
+                    child: GetX<SurveyController>(
+                      builder: (surveyControllermini){
+                        return ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: surveyControllermini.newOptionList.length,
+                    itemBuilder: (context, index){
+                      return Row(
+                        children: [
+                          const SizedBox(
+                            width: 150,
+                            child: TextField(
+                              decoration: InputDecoration(
+                                   disabledBorder: InputBorder.none,
+                                   hintText: 'сонголт нэмэх',
+                                   enabledBorder: InputBorder.none,
+                                   focusedBorder: InputBorder.none
+                  ),
+                            ),
+                          ),
+                          IconButton(
+                            onPressed: (){
+                              setState(() {
+                                surveyControllermini.newOptionList.insert(0, CreationOptions(optionText: 'dsd'));
+                                containerHeight = containerHeight + 50;
+                              });
+                            }, 
+                            icon: const Icon(Icons.add)
+                            )
+                        ],
+                      );
+                    }
+                    );
+                      }
+                      ),
+                  ),
+                )
+                ],
+            )
         ),
         Column(
           children: [
              InkWell(
                onTap: (){
-                 surveyController.newQuestionList.insert(surveyQuestionIndex, '544544545');
+                 surveyController.dropvalueList.insert(widget.surveyQuestionIndex,DropSelectVal());
+                 surveyController.textEditingControllers.insert(widget.surveyQuestionIndex,TextEditingController());
+                 surveyController.newQuestionList.insert(widget.surveyQuestionIndex, Question(questionText: surveyController.textEditingControllers[widget.surveyQuestionIndex].text, type: surveyController.dropvalueList[widget.surveyQuestionIndex].value));
                },
                child: myBtn(CommonColors.yellow, 30, 30, CommonColors.yellow, Colors.grey, '\u{02C4}', 10, 25),
              ),
              myBtn(CommonColors.yellow, 30, 30, CommonColors.yellow, Colors.grey, 'DEL', 10, 12),
              InkWell(
                onTap: (){
-                 int i = surveyQuestionIndex+1;
-                 surveyController.newQuestionList.insert(i, '');
+                 int i = widget.surveyQuestionIndex+1;
+                 surveyController.dropvalueList.insert(i,DropSelectVal());
+                 surveyController.textEditingControllers.insert(i,TextEditingController());
+                 surveyController.newQuestionList.insert(widget.surveyQuestionIndex, Question(questionText: surveyController.textEditingControllers[widget.surveyQuestionIndex].text, type: surveyController.dropvalueList[widget.surveyQuestionIndex].value));
                },
                child: myBtn(CommonColors.yellow, 30, 30, CommonColors.yellow, Colors.grey, '\u{02C5}', 10, 25),
              )
@@ -136,4 +219,5 @@ Widget surveyInputCreation(int surveyQuestionIndex, TextEditingController textCo
       ],
     ),
   );
+  }
 }
