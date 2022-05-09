@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
 class SurveyCreationbody {
@@ -19,6 +20,7 @@ class Question{
   String? questionText;
   String? type;
   List<CreationOptions> options = <CreationOptions>[].obs;
+  List<TextEditingController> optionTextController = <TextEditingController>[];
   double? containerHeight;
 
   Question({this.questionText, this.type,required this.options});
@@ -27,7 +29,7 @@ class Question{
     data['question_text'] = questionText;
     data['type'] = type;
     if (options != null) {
-      data['options'] = options!.map((v) => v.toJson()).toList();
+      data['options'] = options.map((v) => v.toJson()).toList();
     }
     return data;
   }

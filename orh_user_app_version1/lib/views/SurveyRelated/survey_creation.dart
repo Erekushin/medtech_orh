@@ -6,7 +6,7 @@ import 'package:orh_user_app_version1/MyWidgets/my_button.dart';
 import 'package:orh_user_app_version1/MyWidgets/my_dropdown.dart';
 import 'package:orh_user_app_version1/global_constant.dart';
 import '../../Helpers/logging.dart';
-import '../../Models/SurveyRelated/survey_creationBody.dart';
+import '../../Models/SurveyRelated/survey_creation_body.dart';
 
 
 
@@ -51,31 +51,21 @@ class _SurveyCreationState extends State<SurveyCreation> {
           itemCount: controller.newQuestionList.length,
           physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
           itemBuilder: (BuildContext context, int index){
-            return surveyInputCreation(surveyQuestionIndex: index, textController: controller.textEditingControllers[index]);
+            return SurveyInputCreation(surveyQuestionIndex: index, textController: controller.textEditingControllers[index]);
           },
         );
             },)
           ),
-            Align(
+            Align(//hadaglah btn
             alignment: Alignment.bottomCenter,
             child: Container(
               margin: const EdgeInsets.only(bottom: 80),
               child: InkWell(
                 onTap: (){
-                  int lastElement =  surveyController.newQuestionList.length - 1;
-                  surveyController.newQuestionList.insert(lastElement, Question(questionText: surveyController.textEditingControllers[lastElement].text, type: surveyController.dropvalueList[lastElement].value, options: []));
-                  surveyController.newQuestionList.removeLast();
                   surveyController.surveyCreationbody.surveyName = surveyNametxtController.text;
                   surveyController.surveyCreationbody.questions = surveyController.newQuestionList; 
                   ereklog.wtf(jsonEncode(surveyController.surveyCreationbody.toJson()));
-                  // for(int i = 0; i< surveyController.textEditingControllers.length; i++){
-                  //   ereklog.wtf(surveyController.textEditingControllers[i].text);
-                  // }
-                  // print('.........');
-                  // for(int i = 0; i< surveyController.newQuestionList.length; i++){
-                  //   ereklog.wtf(surveyController.newQuestionList[i].questionText);
-                  // }
-                  surveyController.surveyCreationPush();
+                  surveyController.surveyQuestionPush();
                 },
                 child: myBtn(CommonColors.yellow, 200, 50, CommonColors.yellow, Colors.white, 'Судалгааг хадаглах'),
               ),
@@ -94,32 +84,38 @@ class AnswerTypeOptions {
   AnswerTypeOptions({this.id, this.optionText});
 }
 List<AnswerTypeOptions>? list = [
-    AnswerTypeOptions(id: 1, optionText: "Текст хэлбэрээр"),
-    AnswerTypeOptions(id: 2, optionText: "Сонголт хэрбэрээр")
+    AnswerTypeOptions(id: 0, optionText: "Текст хэлбэрээр"),
+    AnswerTypeOptions(id: 1, optionText: "Сонголт хэрбэрээр")
   ];
 
-class surveyInputCreation extends StatefulWidget {
-  const surveyInputCreation({ Key? key, required this.surveyQuestionIndex, required this.textController }) : super(key: key);
+class SurveyInputCreation extends StatefulWidget {
+  const SurveyInputCreation({ Key? key, required this.surveyQuestionIndex, required this.textController }) : super(key: key);
   final int surveyQuestionIndex;
   final TextEditingController textController;
   @override
-  State<surveyInputCreation> createState() => _surveyInputCreationState();
+  State<SurveyInputCreation> createState() => _SurveyInputCreationState();
 }
-class _surveyInputCreationState extends State<surveyInputCreation> {
+class _SurveyInputCreationState extends State<SurveyInputCreation> {
   var surveyController = Get.find<SurveyController>();
   
-  callBackFunc(chosenVal){
-    if(chosenVal == '2'){
+  callBackFunc(chosenVal){//drop down nii value nuudaas ali ni songogdson iig yalgah
+    surveyController.newQuestionList[widget.surveyQuestionIndex].type = chosenVal;
+    if(surveyController.newQuestionList[widget.surveyQuestionIndex].options.isEmpty){
+      if(chosenVal == '2'){
       setState(() {
         surveyController.newQuestionList[widget.surveyQuestionIndex].containerHeight = surveyController.newQuestionList[widget.surveyQuestionIndex].containerHeight! + 50;
-        surveyController.newQuestionList[widget.surveyQuestionIndex].options.insert(0, CreationOptions(optionText: 'dsd'));
+        surveyController.newQuestionList[widget.surveyQuestionIndex].options.add(CreationOptions());
+        surveyController.newQuestionList[widget.surveyQuestionIndex].optionTextController.add(TextEditingController());
       });
+    }
     }
   }
   @override
   void initState() {
     super.initState();
-    surveyController.newQuestionList[widget.surveyQuestionIndex].containerHeight = 130;
+    if(surveyController.newQuestionList[widget.surveyQuestionIndex].containerHeight == null){
+      surveyController.newQuestionList[widget.surveyQuestionIndex].containerHeight = 130;
+    } 
   }
 
   @override
@@ -143,7 +139,10 @@ class _surveyInputCreationState extends State<surveyInputCreation> {
                 Container(
                   margin: const EdgeInsets.only(left: 10),
                   child: TextField(
-                  controller: widget.textController,
+                   onChanged: (string){
+                    surveyController.newQuestionList[widget.surveyQuestionIndex].questionText = string;
+                   },
+                  controller: widget.textController,  
                   decoration: const InputDecoration(
                     disabledBorder: InputBorder.none,
                     hintText: 'Асуултыг бичих',
@@ -166,10 +165,14 @@ class _surveyInputCreationState extends State<surveyInputCreation> {
                     itemBuilder: (context, index){
                       return Row(
                         children: [
-                          const SizedBox(
+                          SizedBox(
                             width: 150,
                             child: TextField(
-                              decoration: InputDecoration(
+                              controller: surveyController.newQuestionList[widget.surveyQuestionIndex].optionTextController[index],
+                              onChanged: (string){
+                                surveyController.newQuestionList[widget.surveyQuestionIndex].options[index].optionText = string;
+                              },
+                              decoration: const InputDecoration(
                                    disabledBorder: InputBorder.none,
                                    hintText: 'сонголт нэмэх',
                                    enabledBorder: InputBorder.none,
@@ -180,7 +183,8 @@ class _surveyInputCreationState extends State<surveyInputCreation> {
                           IconButton(
                             onPressed: (){
                               setState(() {
-                                surveyControllermini.newQuestionList[widget.surveyQuestionIndex].options.insert(0, CreationOptions(optionText: 'dsd'));
+                                surveyControllermini.newQuestionList[widget.surveyQuestionIndex].options.add(CreationOptions());
+                                surveyControllermini.newQuestionList[widget.surveyQuestionIndex].optionTextController.add(TextEditingController());
                                 surveyController.newQuestionList[widget.surveyQuestionIndex].containerHeight = surveyController.newQuestionList[widget.surveyQuestionIndex].containerHeight! + 50;
                               });
                             }, 
@@ -199,30 +203,40 @@ class _surveyInputCreationState extends State<surveyInputCreation> {
         ),
         Column(
           children: [
-             InkWell(
+             InkWell(// deeshee nemeh
                onTap: (){
-                 surveyController.dropvalueList.insert(widget.surveyQuestionIndex,DropSelectVal());
-                 surveyController.textEditingControllers.insert(widget.surveyQuestionIndex,TextEditingController());
-                 surveyController.newQuestionList.insert(widget.surveyQuestionIndex, Question(questionText: surveyController.textEditingControllers[widget.surveyQuestionIndex].text, type: surveyController.dropvalueList[widget.surveyQuestionIndex].value, options: []));
+                 if(surveyController.newQuestionList[widget.surveyQuestionIndex].type != null){
+                   surveyController.dropvalueList.insert(widget.surveyQuestionIndex,DropSelectVal());
+                   surveyController.textEditingControllers.insert(widget.surveyQuestionIndex,TextEditingController());
+                   surveyController.newQuestionList.insert(widget.surveyQuestionIndex, Question(options: []));
+                 }
+                 else{
+                    Get.snackbar('Талбаруудын утга хоосон байна', "Асуултын төрлийг сонгоно уу", snackPosition: SnackPosition.BOTTOM,
+                       colorText: Colors.white, backgroundColor: Colors.grey[900], margin: const EdgeInsets.only(left: 5, right: 5, bottom: 80));
+                 }
                },
                child: myBtn(CommonColors.yellow, 30, 30, CommonColors.yellow, Colors.grey, '\u{02C4}', 10, 25),
              ),
-             myBtn(CommonColors.yellow, 30, 30, CommonColors.yellow, Colors.grey, 'DEL', 10, 12),
              InkWell(
                onTap: (){
-                 int i = widget.surveyQuestionIndex+1;
-                 surveyController.dropvalueList.insert(i,DropSelectVal());
-                 surveyController.textEditingControllers.insert(i,TextEditingController());
-                 var a = surveyController.dropvalueList[widget.surveyQuestionIndex].value;
-                surveyController.newQuestionList[widget.surveyQuestionIndex] = 
-                Question(
-                questionText: widget.textController.text,  
-                type: a, 
-                options: surveyController.newQuestionList[widget.surveyQuestionIndex].options
-                );
-                surveyController.newQuestionList.insert(i, Question(options: []));
-
-                
+                 surveyController.newQuestionList.removeAt(widget.surveyQuestionIndex);
+                 surveyController.textEditingControllers.removeAt(widget.surveyQuestionIndex);
+                 surveyController.dropvalueList.removeAt(widget.surveyQuestionIndex);
+               },
+               child: myBtn(CommonColors.yellow, 30, 30, CommonColors.yellow, Colors.grey, 'DEL', 10, 12),
+             ),
+             InkWell(// dooshoo nemeh
+               onTap: (){
+                 if(surveyController.newQuestionList[widget.surveyQuestionIndex].type != null){
+                   int i = widget.surveyQuestionIndex+1;
+                   surveyController.dropvalueList.insert(i,DropSelectVal());
+                   surveyController.textEditingControllers.insert(i,TextEditingController());
+                   surveyController.newQuestionList.insert(i, Question(options: []));
+                 }
+                 else{
+                   Get.snackbar('Талбаруудын утга хоосон байна', "Асуултын төрлийг сонгоно уу", snackPosition: SnackPosition.BOTTOM,
+                       colorText: Colors.white, backgroundColor: Colors.grey[900], margin: const EdgeInsets.only(left: 5, right: 5, bottom: 80));
+                 }
                },
                child: myBtn(CommonColors.yellow, 30, 30, CommonColors.yellow, Colors.grey, '\u{02C5}', 10, 25),
              )

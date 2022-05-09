@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_rx/src/rx_typedefs/rx_typedefs.dart';
 import 'package:orh_user_app_version1/Controllers/survey_controller.dart';
 import '../models/SurveyRelated/survey_questionBody.dart';
 import '../views/SurveyRelated/survey_creation.dart';
@@ -102,7 +103,7 @@ class _MyDropDownState extends State<MyDropdown> {
           underline: const SizedBox(),
           isExpanded: true,
           borderRadius: BorderRadius.circular(5),
-          items: dropitems(widget.listitems!)
+          items: dropitems(widget.listitems?? [])
         )
           ],
         ),

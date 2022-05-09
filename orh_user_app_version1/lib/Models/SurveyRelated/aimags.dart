@@ -7,17 +7,9 @@ class AimagList {
     if (json['aimags'] != null) {
       aimags = <Aimags>[];
       json['aimags'].forEach((v) {
-        aimags!.add(new Aimags.fromJson(v));
+        aimags!.add(Aimags.fromJson(v));
       });
     }
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.aimags != null) {
-      data['aimags'] = this.aimags!.map((v) => v.toJson()).toList();
-    }
-    return data;
   }
 }
 
@@ -36,20 +28,9 @@ class Aimags {
     if (json['sums'] != null) {
       sums = <Sums>[];
       json['sums'].forEach((v) {
-        sums!.add(new Sums.fromJson(v));
+        sums!.add(Sums.fromJson(v));
       });
     }
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['aimag_code'] = this.aimagCode;
-    data['aimag_name'] = this.aimagName;
-    data['count'] = this.count;
-    if (this.sums != null) {
-      data['sums'] = this.sums!.map((v) => v.toJson()).toList();
-    }
-    return data;
   }
 }
 
@@ -70,21 +51,9 @@ class Sums {
     if (json['bags'] != null) {
       bags = <Bags>[];
       json['bags'].forEach((v) {
-        bags!.add(new Bags.fromJson(v));
+        bags!.add(Bags.fromJson(v));
       });
     }
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['code'] = this.code;
-    data['sum_code'] = this.sumCode;
-    data['sum_name'] = this.sumName;
-    data['count'] = this.count;
-    if (this.bags != null) {
-      data['bags'] = this.bags!.map((v) => v.toJson()).toList();
-    }
-    return data;
   }
 }
 
@@ -101,14 +70,5 @@ class Bags {
     bagCode = json['bag_code'];
     bagName = json['bag_name'];
     count = json['count'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['code'] = this.code;
-    data['bag_code'] = this.bagCode;
-    data['bag_name'] = this.bagName;
-    data['count'] = this.count;
-    return data;
   }
 }

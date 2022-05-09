@@ -14,7 +14,7 @@ class SurveyList extends StatefulWidget {
 }
 
 class _SurveyListState extends State<SurveyList> {
-  final queryController = Get.find<SurveyController>();
+  final surveyController = Get.find<SurveyController>();
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -26,15 +26,49 @@ class _SurveyListState extends State<SurveyList> {
         backgroundColor: Colors.white,
         body: Stack(
           children: [
-            ListView(
-          physics:
-              const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
-          children: [
-             GetX<SurveyController>(builder: (queryController){
+        ListView.builder(
+          itemCount: surveyController.surveyListbody.result!.items!.length,
+          itemBuilder: (context, index){
+            var item = surveyController.surveyListbody.result!.items![index];
+            return SurveyListItem(surveyName: item.name?? "", surveyId: item.id!,);
+          } 
+          ),
+        Align(
+          alignment: Alignment.bottomRight,
+          child: Container(
+            margin: const EdgeInsets.only(bottom: 80, right: 20),
+            child: InkWell(
+              onTap: (){
+                Get.toNamed(RouteUnits.surveyCreation);
+              },
+              child: myBtn(CommonColors.geregeBlue, 150, 50, CommonColors.geregeBlue, Colors.white, 'Судалгаа нэмэх'),
+            ),
+          ),
+        )
+          ],  
+        ),
+      ),
+    );
+  }
+}
+
+class SurveyListItem extends StatefulWidget {
+  const SurveyListItem({ Key? key,required this.surveyName, required this.surveyId }) : super(key: key);
+  final String surveyName;
+  final int surveyId;
+  @override
+  State<SurveyListItem> createState() => _SurveyListItemState();
+}
+
+class _SurveyListItemState extends State<SurveyListItem> {
+  @override
+  Widget build(BuildContext context) {
+    return GetX<SurveyController>(builder: (surveyController){
                   return InkWell(
                     onTap: (){
                        try{
-                        queryController.isResearcherAuth();
+                         surveyController.chosenSurvey = widget.surveyId;
+                        surveyController.isResearcherAuth();
                        }
                        catch(e){
                         Get.snackbar('Алдаа', '$e', snackPosition: SnackPosition.BOTTOM,
@@ -65,7 +99,7 @@ class _SurveyListState extends State<SurveyList> {
                       color: Colors.blue.shade50,
                       shape: BoxShape.circle,
                     ),
-                    child: queryController.childHeartQuerybtnloading.value? const CircularProgressIndicator() 
+                    child: surveyController.childHeartQuerybtnloading.value? const CircularProgressIndicator() 
                     : const Icon(
                       Icons.assessment,
                       color: Colors.blue,
@@ -74,29 +108,11 @@ class _SurveyListState extends State<SurveyList> {
                   const SizedBox(width: 10,),
                   SizedBox(
                     width: GeneralMeasurements.deviceWidth*.7,
-                    child: myText('Хүүхдийн зүрхний эмгэг илрүүлэх судалгаа', 17, 1, FontWeight.w700), //queryController.childHeartQuery.result!.title??
+                    child: myText(widget.surveyName, 17, 1, FontWeight.w700), //queryController.childHeartQuery.result!.title??
                   )
               ],)
             ),
                   );
-                  }),
-          ],
-        ),
-        Align(
-          alignment: Alignment.bottomRight,
-          child: Container(
-            margin: const EdgeInsets.only(bottom: 80, right: 20),
-            child: InkWell(
-              onTap: (){
-                Get.toNamed(RouteUnits.surveyCreation);
-              },
-              child: myBtn(CommonColors.geregeBlue, 150, 50, CommonColors.geregeBlue, Colors.white, 'Судалгаа нэмэх'),
-            ),
-          ),
-        )
-          ],  
-        ),
-      ),
-    );
+                  });
   }
 }

@@ -101,6 +101,7 @@ class Home extends StatefulWidget {
 }
 class _HomeState extends State<Home> with SingleTickerProviderStateMixin{
   var sqlController = Get.find<SqlController>();
+  var surveyController = Get.find<SurveyController>();
   Future<bool>cloaseTheApp(BuildContext context) async {
     return await Get.defaultDialog(title: 'Эрүүл Gerege ийг хаах уу?', content: Image.asset('assets/images/thinkingBoy.png'),
     actions: <Widget>[TextButton(onPressed: (){SystemNavigator.pop();}, child: const Text("exit", style: TextStyle(fontSize: 20),)), 
@@ -165,9 +166,8 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin{
                 const Color(0xff63ace5),
                 Icons.ad_units_outlined,
                 'Судалгаа',
-                (){
-                  Get.toNamed(RouteUnits.surveyList, arguments: "");
-                  GlobalHelpers.bottomnavbarSwitcher.add(true);
+                () async{
+                  await surveyController.surveyListGet();
                 },
               ),
               homePageCardsGroup(

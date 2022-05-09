@@ -41,13 +41,13 @@ class QueryAnswer {
     if (json['answers'] != null) {
       answers = <Answers>[];
       json['answers'].forEach((v) {
-        answers!.add(new Answers.fromJson(v));
+        answers!.add(Answers.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['reg_no'] = regNo;
     data['researcher_GeregeID'] = researcherGeregeID;
     data['aimag_code'] = aimagCode;
@@ -80,7 +80,7 @@ class Answers {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['question_id'] = questionId;
     data['option_id'] = optionId;
     data['answer_text'] = answerText;

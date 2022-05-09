@@ -12,16 +12,16 @@ class ResearcherDefaultData {
     status = json['status'];
     message = json['message'];
     result =
-        json['result'] != null ? new Result.fromJson(json['result']) : null;
+        json['result'] != null ? Result.fromJson(json['result']) : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['code'] = this.code;
-    data['status'] = this.status;
-    data['message'] = this.message;
-    if (this.result != null) {
-      data['result'] = this.result!.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['code'] = code;
+    data['status'] = status;
+    data['message'] = message;
+    if (result != null) {
+      data['result'] = result!.toJson();
     }
     return data;
   }
@@ -54,13 +54,13 @@ class Result {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['user_id'] = this.userId;
-    data['aimag_code'] = this.aimagCode;
-    data['sum_code'] = this.sumCode;
-    data['bag_code'] = this.bagCode;
-    data['aimag_name'] = this.aimagName;
-    data['sum_name'] = this.sumName;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['user_id'] = userId;
+    data['aimag_code'] = aimagCode;
+    data['sum_code'] = sumCode;
+    data['bag_code'] = bagCode;
+    data['aimag_name'] = aimagName;
+    data['sum_name'] = sumName;
     return data;
   }
 }

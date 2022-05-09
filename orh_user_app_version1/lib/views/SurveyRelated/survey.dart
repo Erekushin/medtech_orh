@@ -210,11 +210,11 @@ class _PageUnitState extends State<PageUnit> {
                                         text: TextSpan(
                                         style: GoogleFonts.openSans(height: 1, fontWeight: FontWeight.w600, fontSize: 15, color: Colors.black.withOpacity(.5)),
                                         children: [
-                                          TextSpan(text: surveyControllerOut.researcherDefaultData.result!.currentDate?? ""),
-                                          const TextSpan(text: ' '),
-                                          TextSpan(text: surveyControllerOut.researcherDefaultData.result!.aimagName?? " "),
-                                          const TextSpan(text: ' '),
-                                          TextSpan(text: surveyControllerOut.researcherDefaultData.result!.sumName?? " "),
+                                          // TextSpan(text: surveyControllerOut.researcherDefaultData.result!.currentDate?? ""),
+                                          // const TextSpan(text: ' '),
+                                          // TextSpan(text: surveyControllerOut.researcherDefaultData.result!.aimagName?? " "),
+                                          // const TextSpan(text: ' '),
+                                          // TextSpan(text: surveyControllerOut.researcherDefaultData.result!.sumName?? " "),
                                         ]
                                       )),
                                     ),
@@ -465,7 +465,7 @@ class _RecieverUnit extends State<RecieverUnit> {
   @override
   Widget build(BuildContext context){
     return Container(
-      child: categorization(widget.type) 
+      child: categorization(widget.type?? 0) 
     );
   }
 }
