@@ -1,3 +1,5 @@
+import 'package:get/get.dart';
+
 class SurveyCreationbody {
   String? surveyName;
   List<Question>? questions;
@@ -13,12 +15,13 @@ class SurveyCreationbody {
   }
 }
 
-class Question {
+class Question{
   String? questionText;
   String? type;
-  List<CreationOptions>? options;
+  List<CreationOptions> options = <CreationOptions>[].obs;
+  double? containerHeight;
 
-  Question({this.questionText, this.type, this.options});
+  Question({this.questionText, this.type,required this.options});
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['question_text'] = questionText;

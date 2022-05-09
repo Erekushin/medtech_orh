@@ -18,13 +18,20 @@ import '../models/SurveyRelated/researcher_default.dart';
 class DropSelectVal{
   String? value;
 }
+class ques{
+   List<CreationOptions> newOptionList = <CreationOptions>[].obs;
+}
 class SurveyController extends GetxController{
  ///survey vvsgeh hvseltiin biy
  SurveyCreationbody   surveyCreationbody = SurveyCreationbody();
  ///vvsgej bui Question vvdee hadaglah list
  List<Question> newQuestionList = <Question>[].obs;
+
+ ///option list eer bvtsen list
+//  List<ques> optionListList = <ques>[].obs;
+
  ///vvsgej bui option uudaa hadaglah list
- List<CreationOptions> newOptionList = <CreationOptions>[].obs;
+//  List<CreationOptions> newOptionList = <CreationOptions>[].obs;
 
  //xyr ajillahgvi vyd ajillah textfieldvvdiin controller
   var lastName = TextEditingController();

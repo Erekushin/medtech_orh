@@ -1,34 +1,31 @@
 import 'dart:convert';
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:logger/logger.dart';
 import 'package:orh_user_app_version1/Controllers/survey_controller.dart';
-import 'package:orh_user_app_version1/Models/SurveyRelated/survey_answerBody.dart';
 import 'package:orh_user_app_version1/MyWidgets/my_button.dart';
 import 'package:orh_user_app_version1/MyWidgets/my_dropdown.dart';
 import 'package:orh_user_app_version1/global_constant.dart';
-
 import '../../Helpers/logging.dart';
 import '../../Models/SurveyRelated/survey_creationBody.dart';
+
+
+
 class SurveyCreation extends StatefulWidget {
   const SurveyCreation({ Key? key }) : super(key: key);
 
   @override
   State<SurveyCreation> createState() => _SurveyCreationState();
 }
-
 class _SurveyCreationState extends State<SurveyCreation> {
   var ereklog = logger(SurveyCreation);
   var surveyNametxtController = TextEditingController();
   @override
   void initState() {
     super.initState();
-    surveyController.surveyCreationbody.questions = List<Question>.generate(1, ((index) => Question(questionText: 'fdfdfd'))).obs;
+    surveyController.surveyCreationbody.questions = List<Question>.generate(1, ((index) => Question(questionText: 'fdfdfd', options: []))).obs;
     surveyController.textEditingControllers.add(TextEditingController());
     surveyController.dropvalueList.add(DropSelectVal());
-    surveyController.newQuestionList.add(Question());
+    surveyController.newQuestionList.add(Question(options: []));
   }
   var surveyController = Get.find<SurveyController>();
   @override
@@ -66,7 +63,7 @@ class _SurveyCreationState extends State<SurveyCreation> {
               child: InkWell(
                 onTap: (){
                   int lastElement =  surveyController.newQuestionList.length - 1;
-                  surveyController.newQuestionList.insert(lastElement, Question(questionText: surveyController.textEditingControllers[lastElement].text, type: surveyController.dropvalueList[lastElement].value));
+                  surveyController.newQuestionList.insert(lastElement, Question(questionText: surveyController.textEditingControllers[lastElement].text, type: surveyController.dropvalueList[lastElement].value, options: []));
                   surveyController.newQuestionList.removeLast();
                   surveyController.surveyCreationbody.surveyName = surveyNametxtController.text;
                   surveyController.surveyCreationbody.questions = surveyController.newQuestionList; 
@@ -100,6 +97,7 @@ List<AnswerTypeOptions>? list = [
     AnswerTypeOptions(id: 1, optionText: "Текст хэлбэрээр"),
     AnswerTypeOptions(id: 2, optionText: "Сонголт хэрбэрээр")
   ];
+
 class surveyInputCreation extends StatefulWidget {
   const surveyInputCreation({ Key? key, required this.surveyQuestionIndex, required this.textController }) : super(key: key);
   final int surveyQuestionIndex;
@@ -107,18 +105,23 @@ class surveyInputCreation extends StatefulWidget {
   @override
   State<surveyInputCreation> createState() => _surveyInputCreationState();
 }
-
 class _surveyInputCreationState extends State<surveyInputCreation> {
   var surveyController = Get.find<SurveyController>();
-  double containerHeight = 130;
+  
   callBackFunc(chosenVal){
     if(chosenVal == '2'){
       setState(() {
-        containerHeight = containerHeight + 50;
-        surveyController.newOptionList.insert(0, CreationOptions(optionText: 'dsd'));
+        surveyController.newQuestionList[widget.surveyQuestionIndex].containerHeight = surveyController.newQuestionList[widget.surveyQuestionIndex].containerHeight! + 50;
+        surveyController.newQuestionList[widget.surveyQuestionIndex].options.insert(0, CreationOptions(optionText: 'dsd'));
       });
     }
   }
+  @override
+  void initState() {
+    super.initState();
+    surveyController.newQuestionList[widget.surveyQuestionIndex].containerHeight = 130;
+  }
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -129,7 +132,7 @@ class _surveyInputCreationState extends State<surveyInputCreation> {
         Container(
           margin: const EdgeInsets.all(5),
           width: GeneralMeasurements.deviceWidth*.75,
-          height: containerHeight,
+          height: surveyController.newQuestionList[widget.surveyQuestionIndex].containerHeight,
           decoration: const BoxDecoration(
             borderRadius: BorderRadius.all(Radius.circular(15)),
             color: Colors.white
@@ -159,7 +162,7 @@ class _surveyInputCreationState extends State<surveyInputCreation> {
                       builder: (surveyControllermini){
                         return ListView.builder(
                     shrinkWrap: true,
-                    itemCount: surveyControllermini.newOptionList.length,
+                    itemCount: surveyControllermini.newQuestionList[widget.surveyQuestionIndex].options.length,
                     itemBuilder: (context, index){
                       return Row(
                         children: [
@@ -177,8 +180,8 @@ class _surveyInputCreationState extends State<surveyInputCreation> {
                           IconButton(
                             onPressed: (){
                               setState(() {
-                                surveyControllermini.newOptionList.insert(0, CreationOptions(optionText: 'dsd'));
-                                containerHeight = containerHeight + 50;
+                                surveyControllermini.newQuestionList[widget.surveyQuestionIndex].options.insert(0, CreationOptions(optionText: 'dsd'));
+                                surveyController.newQuestionList[widget.surveyQuestionIndex].containerHeight = surveyController.newQuestionList[widget.surveyQuestionIndex].containerHeight! + 50;
                               });
                             }, 
                             icon: const Icon(Icons.add)
@@ -200,7 +203,7 @@ class _surveyInputCreationState extends State<surveyInputCreation> {
                onTap: (){
                  surveyController.dropvalueList.insert(widget.surveyQuestionIndex,DropSelectVal());
                  surveyController.textEditingControllers.insert(widget.surveyQuestionIndex,TextEditingController());
-                 surveyController.newQuestionList.insert(widget.surveyQuestionIndex, Question(questionText: surveyController.textEditingControllers[widget.surveyQuestionIndex].text, type: surveyController.dropvalueList[widget.surveyQuestionIndex].value));
+                 surveyController.newQuestionList.insert(widget.surveyQuestionIndex, Question(questionText: surveyController.textEditingControllers[widget.surveyQuestionIndex].text, type: surveyController.dropvalueList[widget.surveyQuestionIndex].value, options: []));
                },
                child: myBtn(CommonColors.yellow, 30, 30, CommonColors.yellow, Colors.grey, '\u{02C4}', 10, 25),
              ),
@@ -210,7 +213,16 @@ class _surveyInputCreationState extends State<surveyInputCreation> {
                  int i = widget.surveyQuestionIndex+1;
                  surveyController.dropvalueList.insert(i,DropSelectVal());
                  surveyController.textEditingControllers.insert(i,TextEditingController());
-                 surveyController.newQuestionList.insert(widget.surveyQuestionIndex, Question(questionText: surveyController.textEditingControllers[widget.surveyQuestionIndex].text, type: surveyController.dropvalueList[widget.surveyQuestionIndex].value));
+                 var a = surveyController.dropvalueList[widget.surveyQuestionIndex].value;
+                surveyController.newQuestionList[widget.surveyQuestionIndex] = 
+                Question(
+                questionText: widget.textController.text,  
+                type: a, 
+                options: surveyController.newQuestionList[widget.surveyQuestionIndex].options
+                );
+                surveyController.newQuestionList.insert(i, Question(options: []));
+
+                
                },
                child: myBtn(CommonColors.yellow, 30, 30, CommonColors.yellow, Colors.grey, '\u{02C5}', 10, 25),
              )
