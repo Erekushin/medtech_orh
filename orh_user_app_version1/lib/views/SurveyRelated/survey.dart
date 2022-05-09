@@ -9,7 +9,7 @@ import 'package:orh_user_app_version1/MyWidgets/my_textfield.dart';
 import 'package:orh_user_app_version1/global_constant.dart';
 import 'package:orh_user_app_version1/global_helpers.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:orh_user_app_version1/models/SurveyRelated/survey_questionBody.dart';
+import 'package:orh_user_app_version1/models/SurveyRelated/survey_question_body.dart';
 import '../../MyWidgets/my_text.dart';
 import '../../MyWidgets/my_textfield.dart';
 import '../../global_constant.dart';

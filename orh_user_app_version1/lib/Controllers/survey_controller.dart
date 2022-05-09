@@ -13,7 +13,7 @@ import '../Models/SurveyRelated/survey_list.dart';
 import '../Models/result.dart';
 import '../global_constant.dart';
 import '../models/SurveyRelated/aimags.dart';
-import '../models/SurveyRelated/survey_questionBody.dart';
+import '../models/SurveyRelated/survey_question_body.dart';
 import '../models/SurveyRelated/researcher_default.dart';
 
 /// mydrop down ii utgiig hadaglah string bvhii class vvgeer form toi 

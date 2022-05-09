@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_rx/src/rx_typedefs/rx_typedefs.dart';
 import 'package:orh_user_app_version1/Controllers/survey_controller.dart';
-import '../models/SurveyRelated/survey_questionBody.dart';
+import '../models/SurveyRelated/survey_question_body.dart';
 import '../views/SurveyRelated/survey_creation.dart';
 import 'my_text.dart';
 import 'package:get/get.dart';
