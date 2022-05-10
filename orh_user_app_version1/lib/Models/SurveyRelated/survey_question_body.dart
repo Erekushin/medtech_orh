@@ -53,7 +53,7 @@ class Result {
 }
 
 class Questions {
-  int? id;
+  String? id;
   int? type;
   String? questionText;
   List<Options>? options;

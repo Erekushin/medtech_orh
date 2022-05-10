@@ -10,6 +10,7 @@ import 'package:orh_user_app_version1/global_constant.dart';
 import 'package:orh_user_app_version1/global_helpers.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:orh_user_app_version1/models/SurveyRelated/survey_question_body.dart';
+import '../../MyWidgets/my_reciever_unit.dart';
 import '../../MyWidgets/my_text.dart';
 import '../../MyWidgets/my_textfield.dart';
 import '../../global_constant.dart';
@@ -74,20 +75,20 @@ class _PageUnitState extends State<PageUnit> {
   void pushData(){
     surveyControllerOut.pushDataBtn.value = false;
     if(surveyControllerOut.haveDefaultData.value){//default aa shalgaad 
-                            surveyControllerOut.queryAnswer.researcherGeregeID = Get.find<LoginController>().geregeUser.result!.id;
-                            surveyControllerOut.queryAnswer.aimagCode = surveyControllerOut.researcherDefaultData.result!.aimagCode; 
-                            surveyControllerOut.queryAnswer.aimagName = surveyControllerOut.researcherDefaultData.result!.aimagName;
-                            surveyControllerOut.queryAnswer.sumCode = surveyControllerOut.researcherDefaultData.result!.sumCode;
-                            surveyControllerOut.queryAnswer.sumName = surveyControllerOut.researcherDefaultData.result!.sumName;
-                            surveyControllerOut.queryAnswer.regNo = surveyControllerOut.rdTxtController.text;
-                            surveyControllerOut.queryAnswer .surveyId = '4'; // saijruulna
+                            surveyControllerOut.surveyAnswer.researcherGeregeID = Get.find<LoginController>().geregeUser.result!.id;
+                            surveyControllerOut.surveyAnswer.aimagCode = surveyControllerOut.researcherDefaultData.result!.aimagCode; 
+                            surveyControllerOut.surveyAnswer.aimagName = surveyControllerOut.researcherDefaultData.result!.aimagName;
+                            surveyControllerOut.surveyAnswer.sumCode = surveyControllerOut.researcherDefaultData.result!.sumCode;
+                            surveyControllerOut.surveyAnswer.sumName = surveyControllerOut.researcherDefaultData.result!.sumName;
+                            surveyControllerOut.surveyAnswer.regNo = surveyControllerOut.rdTxtController.text;
+                            surveyControllerOut.surveyAnswer .surveyId = '4'; // saijruulna
                         if(settingsControllerOut.xyrServiceSwitcher.value){//xyr aa asaasan vgvvgee shalgaad 
                           if(GlobalHelpers.isXyrNull){
                              try{
-                              surveyControllerOut.queryAnswer.gender = surveyControllerOut.xyrInfo.result!.gender.toString();
-                              surveyControllerOut.queryAnswer.age = surveyControllerOut.xyrInfo.result!.age;
-                              surveyControllerOut.queryAnswer.fistName = surveyControllerOut.xyrInfo.result!.firstName;
-                              surveyControllerOut.queryAnswer.lastName = surveyControllerOut.xyrInfo.result!.lastName;
+                              surveyControllerOut.surveyAnswer.gender = surveyControllerOut.xyrInfo.result!.gender.toString();
+                              surveyControllerOut.surveyAnswer.age = surveyControllerOut.xyrInfo.result!.age;
+                              surveyControllerOut.surveyAnswer.fistName = surveyControllerOut.xyrInfo.result!.firstName;
+                              surveyControllerOut.surveyAnswer.lastName = surveyControllerOut.xyrInfo.result!.lastName;
                               surveyControllerOut.surveyAnswersPush();
                               print('huraa avsan');
                             }
@@ -106,10 +107,10 @@ class _PageUnitState extends State<PageUnit> {
                              surveyControllerOut.firstName.text != '' && surveyControllerOut.lastName.text != '' && 
                              surveyControllerOut.rdTxtController.text != ''){
                              try{
-                                surveyControllerOut.queryAnswer.gender = surveyControllerOut.gender.text;
-                                surveyControllerOut.queryAnswer.age = surveyControllerOut.age.text;
-                                surveyControllerOut.queryAnswer.fistName = surveyControllerOut.firstName.text;
-                                surveyControllerOut.queryAnswer.lastName = surveyControllerOut.lastName.text;
+                                surveyControllerOut.surveyAnswer.gender = surveyControllerOut.gender.text;
+                                surveyControllerOut.surveyAnswer.age = surveyControllerOut.age.text;
+                                surveyControllerOut.surveyAnswer.fistName = surveyControllerOut.firstName.text;
+                                surveyControllerOut.surveyAnswer.lastName = surveyControllerOut.lastName.text;
                                 surveyControllerOut.surveyAnswersPush();
                                 print('garaas medeelel oruulchaad yavuulah gej bna');
                             }
@@ -120,13 +121,13 @@ class _PageUnitState extends State<PageUnit> {
                         
                         }
                         else{
-                           surveyControllerOut.queryAnswer.researcherGeregeID = '';
-                           surveyControllerOut.queryAnswer.regNo = '';
-                            surveyControllerOut.queryAnswer.aimagCode = ''; 
-                            surveyControllerOut.queryAnswer.aimagName = '';
-                            surveyControllerOut.queryAnswer.sumCode = '';
-                            surveyControllerOut.queryAnswer.sumName = '';
-                            surveyControllerOut.queryAnswer .surveyId = '4'; // saijruulna
+                           surveyControllerOut.surveyAnswer.researcherGeregeID = '';
+                           surveyControllerOut.surveyAnswer.regNo = '';
+                            surveyControllerOut.surveyAnswer.aimagCode = ''; 
+                            surveyControllerOut.surveyAnswer.aimagName = '';
+                            surveyControllerOut.surveyAnswer.sumCode = '';
+                            surveyControllerOut.surveyAnswer.sumName = '';
+                            surveyControllerOut.surveyAnswer .surveyId = '4'; // saijruulna
                           Get.snackbar('Талбарын мэдээлэл дутуу байна', 'Судалгаанд оролцогчийн мэдээллийг оруулна уу!', snackPosition: SnackPosition.BOTTOM,
                                 colorText: Colors.white, backgroundColor: Colors.grey[900], margin:  const EdgeInsets.all(5));
                         }
@@ -210,11 +211,11 @@ class _PageUnitState extends State<PageUnit> {
                                         text: TextSpan(
                                         style: GoogleFonts.openSans(height: 1, fontWeight: FontWeight.w600, fontSize: 15, color: Colors.black.withOpacity(.5)),
                                         children: [
-                                          // TextSpan(text: surveyControllerOut.researcherDefaultData.result!.currentDate?? ""),
-                                          // const TextSpan(text: ' '),
-                                          // TextSpan(text: surveyControllerOut.researcherDefaultData.result!.aimagName?? " "),
-                                          // const TextSpan(text: ' '),
-                                          // TextSpan(text: surveyControllerOut.researcherDefaultData.result!.sumName?? " "),
+                                          TextSpan(text: surveyControllerOut.researcherDefaultData.result!.currentDate?? ""),
+                                          const TextSpan(text: ' '),
+                                          TextSpan(text: surveyControllerOut.researcherDefaultData.result!.aimagName?? " "),
+                                          const TextSpan(text: ' '),
+                                          TextSpan(text: surveyControllerOut.researcherDefaultData.result!.sumName?? " "),
                                         ]
                                       )),
                                     ),
@@ -298,7 +299,7 @@ class _PageUnitState extends State<PageUnit> {
                           ),
                         ): const SizedBox(),
                   widget.pageIndex == 0? MyTextField(hinttxt:'Регистрийн дугаар', txtController: surveyControllerOut.rdTxtController, 
-                                                     margint:0, marginb: 0, marginr: 20, marginl: 20, questionID:0, answerIndex:0, mark:'rd') : const SizedBox(),
+                                                     margint:0, marginb: 0, marginr: 20, marginl: 20, questionID:'', answerIndex:0, mark:'rd') : const SizedBox(),
                   widget.pageIndex == 0? GetX<SettingController>(builder: (settingsController){
                     return SizedBox(
                       child: 
@@ -431,41 +432,3 @@ class _PageUnitState extends State<PageUnit> {
   }
 }
 
-
-///хариултыг оруулах item 
-class RecieverUnit extends StatefulWidget {
-  const RecieverUnit({ Key? key,required this.questionID, this.type,
-                       this.questionText, required this.questionIndex,
-                       this.options}) 
-  : super(key: key);
-  final int questionID;
-  final type;
-  final questionText;
-  final int questionIndex;
-  final List<Options>? options;
-  @override
-  State<RecieverUnit> createState() => _RecieverUnit();
-}
-class _RecieverUnit extends State<RecieverUnit> {
-  var queryController = Get.find<SurveyController>();
-  Widget categorization(int type){
-    switch (type) {
-        case 0:
-          return MyTextField(hinttxt:widget.questionText, txtController:queryController.textEditingControllers[widget.questionIndex], margint: 5, marginb: 5, 
-          marginr: 20, marginl:  20, 
-                            questionID: widget.questionID, answerIndex: widget.questionIndex, mark: 'query');                        
-        default: return MyDropdown(dropDownHint: widget.questionText, listitems: widget.options, 
-                              currentValue: 0, mark: 'mark', givenModelType: Options, 
-                              margint: 5, marginb: 5, marginr: 20, marginl: 20, questionID: widget.questionID,
-                              answerIndex: widget.questionIndex);
-                        // MyRadioBtn(w: 1, title: widget.questionText, optionItems: widget.options,
-                        //             questionID:  widget.questionID, questionIndex: widget.questionIndex,);        
-      } 
-  }
-  @override
-  Widget build(BuildContext context){
-    return Container(
-      child: categorization(widget.type?? 0) 
-    );
-  }
-}

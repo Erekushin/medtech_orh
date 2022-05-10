@@ -161,7 +161,8 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin{
                 const Color(0xFF12C0A1),
                 Icons.person,
                 'Профайл',
-                (){Get.toNamed('/profile', arguments: RouteUnits.profile);},
+                (){Get.toNamed('/profile', arguments: RouteUnits.profile);
+                   GlobalHelpers.bottomnavbarSwitcher.add(true);},
                 context,
                 const Color(0xff63ace5),
                 Icons.ad_units_outlined,

@@ -1,0 +1,22 @@
+{
+    "code": 200,
+    "status": "success",
+    "message": "Амжилттай",
+    "result": {
+        "title": "BMI",
+        "questions": [
+            {
+                "id": "mass",
+                "type": 0,
+                "question_text": "Биеийн жин",
+                "options": null
+            },
+            {
+                "id": "height",
+                "type": 0,
+                "question_text": "Биеийн өндөр",
+                "options": null
+            }
+        ]
+    }
+}

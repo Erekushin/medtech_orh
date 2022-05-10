@@ -65,7 +65,7 @@ class _RadioUnitState extends State<RadioUnit> {
                     onChanged: (value){
                       setState(() {
                          MyRadioBtn.a = value;
-                         queryController.queryAnswer.answers![widget.questionIndex].optionId = value;
+                         queryController.surveyAnswer.answers![widget.questionIndex].optionId = value;
                       });
                     },
                     groupValue: MyRadioBtn.a,

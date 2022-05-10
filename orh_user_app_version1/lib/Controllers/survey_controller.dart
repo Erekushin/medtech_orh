@@ -7,6 +7,7 @@ import 'package:orh_user_app_version1/Controllers/login_controller.dart';
 import 'package:orh_user_app_version1/Helpers/logging.dart';
 import 'package:orh_user_app_version1/Models/xyr.dart';
 import 'package:orh_user_app_version1/global_helpers.dart';
+import '../Helpers/load_json_from_assest.dart';
 import '../Models/SurveyRelated/survey_answer_body.dart';
 import '../Models/SurveyRelated/survey_creation_body.dart';
 import '../Models/SurveyRelated/survey_list.dart';
@@ -53,7 +54,7 @@ class SurveyController extends GetxController{
   ///base aas irj bui Question ii instance
   SurveyQuestions queryQuestions = SurveyQuestions(); 
   ///base ruu yavuulah hariunuudiig tsugluulj hiih sav
-  QueryAnswer queryAnswer = QueryAnswer();
+  SurveyAnswer surveyAnswer = SurveyAnswer();
   ///olon gazar ashiglagdaj boloh gerege response iin hamgiin 
   ///vndsen bvtetsiig zadlah instance
   GeneralResponse generalResponse = GeneralResponse();
@@ -71,11 +72,8 @@ class SurveyController extends GetxController{
   var pushDataBtn = true.obs;
   var chosenSurvey;
   DateTime currentDate = DateTime.now();
-  Future<String>_loadFromAsset() async {
-      return await rootBundle.loadString("assets/file/addresses.json");
-  }
   Future getAimagList() async {
-    String jsonString = await _loadFromAsset();
+    String jsonString = await loadFromAsset("assets/file/addresses.json");
     var aimagListStr = jsonDecode(jsonString);
     GlobalHelpers.aimagList = AimagList.fromJson(aimagListStr);
   }
@@ -141,7 +139,6 @@ class SurveyController extends GetxController{
           ereklog.wtf('surveyQuestionPush deer 200 toi response irsen');
           break;
     }
-
   }
 
   Future surveyQuestionsGet() async{
@@ -150,12 +147,12 @@ class SurveyController extends GetxController{
     Get.toNamed(RouteUnits.surveyList + RouteUnits.individualSurvey, arguments: "");
     // Get.toNamed(RouteUnits.answerform);
     GlobalHelpers.bottomnavbarSwitcher.add(false);
-    queryAnswer.answers = List<Answers>.generate(queryQuestions.result!.questions!.length, ((index) => Answers()));
+    surveyAnswer.answers = List<Answers>.generate(queryQuestions.result!.questions!.length, ((index) => Answers()));
   }
 
-  Future surveyAnswersPush() async{
-    var jsondata = await GlobalHelpers.postRequestGeneral.getdata(queryAnswer.toJson(), "2035233", UriAdresses.covidBackEnd);
-    log(jsonEncode(queryAnswer.toJson()));
+  Future surveyAnswersPush() async{//message code deeree toglood olon torliin asuultuud yavuulj bolno
+    var jsondata = await GlobalHelpers.postRequestGeneral.getdata(surveyAnswer.toJson(), "2035233", UriAdresses.covidBackEnd);
+    log(jsonEncode(surveyAnswer.toJson()));
     print(jsondata.toString()+' '+'hariugaa yavuulsanii hariu');
     print(jsondata);
     generalResponse = GeneralResponse.fromJson(jsonDecode(jsondata));

@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:orh_user_app_version1/Controllers/survey_controller.dart';
 import 'package:orh_user_app_version1/Controllers/setting_controller.dart';
 import 'package:orh_user_app_version1/views/AnswerFormRelated/answer_form.dart';
+import 'package:orh_user_app_version1/views/IndicatorCalculatorRelated/indicator_calculators.dart';
 import 'package:orh_user_app_version1/views/PreDiagnosis/pre_diagnosis.dart';
 import 'package:orh_user_app_version1/views/SurveyRelated/survey.dart';
 import 'package:orh_user_app_version1/views/SurveyRelated/survey_creation.dart';
@@ -13,6 +14,7 @@ import 'package:orh_user_app_version1/views/ProfileRelated/profile.dart';
 import 'package:orh_user_app_version1/views/home.dart';
 import 'package:orh_user_app_version1/views/LoginRelatedViews/login.dart';
 import 'package:orh_user_app_version1/views/SettingsRelatedViews/setting.dart';
+import 'Controllers/calculator_controller.dart';
 import 'Controllers/image_controller.dart';
 import 'Controllers/login_controller.dart';
 import 'Controllers/sql_controller.dart';
@@ -60,6 +62,7 @@ class _MyAppState extends State<MyApp> {
     Get.put(SettingController(), permanent: true);
     Get.put(SqlController(), permanent: true);
     Get.put(SurveyController());
+    Get.put(CalculatorController());
   }
   @override
   Widget build(BuildContext context) {
@@ -111,7 +114,7 @@ class _MyAppState extends State<MyApp> {
         //card test
         // GetPage(name: "/loginforvchat", page: ()=> LoginView()),
         // GetPage(name: "/", page: ()=> LoginView()),
-        GetPage(name: "/meeting", page: ()=> MeetingView()),
+        GetPage(name: RouteUnits.calculators, page: ()=> const CalculatorsHome()),
         // GetPage(name: "/login", page: ()=> LoginView()),
         GetPage(name: "/camera", page: ()=> (CameraApp())),
       ], 

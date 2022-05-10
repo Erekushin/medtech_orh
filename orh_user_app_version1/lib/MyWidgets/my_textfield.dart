@@ -14,7 +14,7 @@ class MyTextField extends StatefulWidget {
   final double marginb;
   final double marginr;
   final double marginl;
-  final int questionID;
+  final String questionID;
   final int answerIndex;
   final String mark;
   @override
@@ -22,12 +22,12 @@ class MyTextField extends StatefulWidget {
 }
 
 class _MyTextFieldState extends State<MyTextField> {
-   final queryController = Get.find<SurveyController>(); 
+   final surveyController = Get.find<SurveyController>(); 
   final settingsController = Get.find<SettingController>();
   @override
   void initState() {
     super.initState();
-    queryController.queryAnswer.answers![widget.answerIndex].questionId = widget.questionID;
+    surveyController.surveyAnswer.answers![widget.answerIndex].questionId = widget.questionID.toString();
   }
   @override
   Widget build(BuildContext context) {
@@ -37,8 +37,8 @@ class _MyTextFieldState extends State<MyTextField> {
     padding: EdgeInsets.only(top: widget.margint, bottom: widget.marginb, left: widget.marginr, right: widget.marginl),
     child: TextField(
       onChanged: (value){
-          queryController.queryAnswer.answers![widget.answerIndex].questionId = widget.questionID;
-          queryController.queryAnswer.answers![widget.answerIndex].answerText = value;
+          surveyController.surveyAnswer.answers![widget.answerIndex].questionId = widget.questionID.toString();
+          surveyController.surveyAnswer.answers![widget.answerIndex].answerText = value;
         },
       controller: widget.txtController,
       decoration: InputDecoration(
@@ -56,7 +56,7 @@ class _MyTextFieldState extends State<MyTextField> {
       onChanged: (value){
           if(settingsController.xyrServiceSwitcher.value){
             if(widget.txtController.text.length == 10){
-            queryController.xyrInfoGet();
+            surveyController.xyrInfoGet();
           }
           }
         },

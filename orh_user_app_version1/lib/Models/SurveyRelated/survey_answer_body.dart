@@ -1,4 +1,4 @@
-class QueryAnswer {
+class SurveyAnswer {
   String? regNo = '';
   String? researcherGeregeID = '';
   String? aimagCode = '';
@@ -12,7 +12,7 @@ class QueryAnswer {
   String? surveyId = '';
   List<Answers>? answers = [];
 
-  QueryAnswer(
+  SurveyAnswer(
       {this.regNo,
       this.researcherGeregeID,
       this.aimagCode,
@@ -26,7 +26,7 @@ class QueryAnswer {
       this.surveyId,
       this.answers});
 
-  QueryAnswer.fromJson(Map<String, dynamic> json) {
+  SurveyAnswer.fromJson(Map<String, dynamic> json) {
     regNo = json['reg_no'];
     researcherGeregeID = json['researcher_GeregeID'];
     aimagCode = json['aimag_code'];
@@ -67,7 +67,7 @@ class QueryAnswer {
 }
 
 class Answers {
-  int? questionId;
+  String? questionId;
   int? optionId;
   String? answerText;
 

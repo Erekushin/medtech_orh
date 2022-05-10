@@ -72,6 +72,7 @@ class LoginController extends GetxController{
     }
     else{
       loginloading.value = false;
+      Get.offNamed(RouteUnits.home);
       Get.snackbar('Талбаруудын утга хоосон байна', "Хэрэглэгчийн нэр ихэвчлэн Регистрийн дугаараар баталгаажсан байгаа!", snackPosition: SnackPosition.BOTTOM,
           colorText: Colors.white, backgroundColor: Colors.grey[900], margin: const EdgeInsets.all(5));
     }

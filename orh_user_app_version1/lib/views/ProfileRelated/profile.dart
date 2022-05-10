@@ -1,6 +1,3 @@
-import 'dart:async';
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:orh_user_app_version1/Controllers/login_controller.dart';
@@ -66,20 +63,18 @@ class _ProfileState extends State<Profile> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async{
-       log(argu);
         if(argu == RouteUnits.profile){
           GlobalHelpers.bottomnavbarSwitcher.add(false);
         }
         else{
-          print('buruu yavlaa');
+          
         }
-        
         return true;
       },
       child: Scaffold(
         body: Stack(
           children: [ 
-            Container(
+            Container(//navbar aas dooshoo zalgasan tsenher backround
                    height: GeneralMeasurements.deviceHeight/100*25,
                    decoration: BoxDecoration(
                      color: CommonColors.geregeBlue,
@@ -93,7 +88,7 @@ class _ProfileState extends State<Profile> {
               children: [
                 SizedBox(
                   height: GeneralMeasurements.deviceHeight/100*12,
-                  child: Row(
+                  child: Row(//navbar deer bgaa row
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       IconButton(
@@ -150,8 +145,8 @@ class _ProfileState extends State<Profile> {
                             );
                             }),
                             const SizedBox(width: 1, height: 1,),
-                            Text(loginController.geregeUser.result!.firstName?? '', style: const TextStyle(fontWeight: FontWeight.bold),),
-                            Text(loginController.geregeUser.result!.phoneNo?? '', style: const TextStyle(fontWeight: FontWeight.bold),),
+                            // Text(loginController.geregeUser.result!.firstName?? '', style: const TextStyle(fontWeight: FontWeight.bold),),
+                            // Text(loginController.geregeUser.result!.phoneNo?? '', style: const TextStyle(fontWeight: FontWeight.bold),),
                          ],
                                         ),
                  );

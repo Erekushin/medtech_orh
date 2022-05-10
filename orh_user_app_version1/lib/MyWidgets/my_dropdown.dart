@@ -15,7 +15,7 @@ class MyDropdown extends StatefulWidget {
   required  this.marginl, this.questionID, required this.answerIndex, this.callBackFunction}) : super(key: key);
   final String? dropDownHint;
   final List<dynamic>? listitems;
-  final int? questionID;
+  final String? questionID;
   final int? currentValue;
   final String? mark;
   final Type givenModelType;
@@ -34,7 +34,7 @@ class _MyDropDownState extends State<MyDropdown> {
   void initState() {
      switch(widget.givenModelType){
         case Options:
-        queryController.queryAnswer.answers![widget.answerIndex].questionId = widget.questionID;
+        queryController.surveyAnswer.answers![widget.answerIndex].questionId = widget.questionID.toString();
         break;
         case AnswerTypeOptions:
            
@@ -59,8 +59,8 @@ class _MyDropDownState extends State<MyDropdown> {
              value: item.id.toString(),
              child: Text(item.optionText!),
              onTap: (){
-               queryController.queryAnswer.answers![widget.answerIndex].questionId = widget.questionID;
-               queryController.queryAnswer.answers![widget.answerIndex].optionId = item.id; 
+               queryController.surveyAnswer.answers![widget.answerIndex].questionId = widget.questionID.toString();
+               queryController.surveyAnswer.answers![widget.answerIndex].optionId = item.id; 
              },
              );
            }).toList();
