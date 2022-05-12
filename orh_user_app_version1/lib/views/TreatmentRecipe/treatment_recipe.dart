@@ -65,7 +65,7 @@ class _TreatmentRecipeState extends State<TreatmentRecipe> {
                    setState(() {
                               appbaredit = false;
                             }); 
-                  showDialog(//zasah
+                  showDialog(//zasah btn
                   context: context,
                   builder: (context)=> SingleChildScrollView(
                       child: StatefulBuilder(

@@ -7,11 +7,17 @@ import '../Helpers/load_json_from_assest.dart';
 import '../Models/SurveyRelated/survey_answer_body.dart';
 import '../Models/SurveyRelated/survey_question_body.dart';
 
-class CalculatorController{
+class CalculatorController extends GetxController{
   SurveyQuestions indicatorQuestions = SurveyQuestions();
   var surveyController = Get.find<SurveyController>();
+  
+  //tvr obs uud............................
+  var bodymassindex = '0'.obs;
+  //.......................................
 
-  Future getIndicatorQuestionList() async {
+
+
+  Future getIndicatorQuestionList() async { 
     String jsonString = await loadFromAsset("assets/file/BMI_question.json");
     var bmiQuestion = jsonDecode(jsonString);
     indicatorQuestions = SurveyQuestions.fromJson(bmiQuestion);
@@ -20,11 +26,13 @@ class CalculatorController{
   //survey controller oos survey answer dotor hadaglagdsan utguudaa avaad helpers dotor bichsen tvvhii bodoltuudaasaa ashiglaad 
   //hariug bodoj gargah
   bodyMassCalculate(){
-    Answers mass = surveyController.surveyAnswer.answers!.map((item) => item.questionId == 'mass') as Answers;
-    Answers height = surveyController.surveyAnswer.answers!.map((item) => item.questionId == 'height') as Answers;
-    int massInt = int.parse(mass.answerText!);
-    int heightInt = int.parse(mass.answerText!);
-    double bmi = massInt/((heightInt*heightInt)*10000);
-    return bmi;
+    var mass = surveyController.surveyAnswer.answers!.where((item) => item.questionId == 'mass');
+    var height = surveyController.surveyAnswer.answers!.where((item) => item.questionId == 'height');
+    Answers massItem = mass.first;
+    Answers heightItem = height.first;
+    int massInt = int.parse(massItem.answerText!);
+    int heightInt = int.parse(heightItem.answerText!);
+    double bmi = (massInt/(heightInt*heightInt))*10000;
+    bodymassindex.value = bmi.toString().substring(0, 5);
   }
 }
