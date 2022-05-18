@@ -35,102 +35,147 @@ import 'package:camera/camera.dart';
 import 'global_helpers.dart';
 
 // this is fucking main branch ..
+// survey deer hoyr gazar
+// drop down deer neg gazar
+//global helpers deer
+//query controller deer 3 gazar
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   cameras = await availableCameras();
   runApp(const MyApp());
 }
+
 class MyApp extends StatefulWidget {
-  const MyApp({ Key? key }) : super(key: key);
+  const MyApp({Key? key}) : super(key: key);
   @override
   State<MyApp> createState() => _MyAppState();
 }
+
 class _MyAppState extends State<MyApp> {
   late Stream<bool> bottomNavbarSwitcher;
   CounterStorage sstorage = CounterStorage();
   @override
-  void initState(){
+  void initState() {
     super.initState();
     GlobalHelpers.bottomnavbarSwitcher = StreamController();
     bottomNavbarSwitcher = GlobalHelpers.bottomnavbarSwitcher.stream;
     GlobalHelpers.bottomnavbarSwitcher.add(false);
   }
-  bindInitialControllers(){
+
+  bindInitialControllers() {
     Get.put(ImageController(), permanent: true);
     Get.put(LoginController(), permanent: true);
     Get.put(SettingController(), permanent: true);
     Get.put(SurveyController());
   }
+
   @override
   Widget build(BuildContext context) {
-    return  MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         resizeToAvoidBottomInset: false,
         body: Stack(
-        children: [
-          GetMaterialApp(
-      debugShowCheckedModeBanner: false,
-      initialRoute: RouteUnits.splashScreen,
-      initialBinding: BindingsBuilder(() => bindInitialControllers()),
-      getPages: [
-        GetPage(name: RouteUnits.splashScreen, page: ()=> const MyCustomSplashScreen()),
-        //basic profile input
-        GetPage(name: RouteUnits.basicProfileInput, page: ()=> const BasicPrifileDataCard(), ),
-        //login
-        GetPage(name: RouteUnits.login, page: ()=> const Login()),
-        //home
-        GetPage(name: RouteUnits.home, page: ()=> const Home()),
-        //Profile
-        GetPage(name: RouteUnits.profile, page: ()=> const Profile()),
-        GetPage(name: RouteUnits.profileInfo, page: ()=> const ProfileInfo()),
-        GetPage(name: RouteUnits.profileDiagnosisHistory, page: ()=> const ProfileDiagnosisHistory()),
-        GetPage(name: RouteUnits.profileLifeToken, page: ()=> const ProfileLifeToken()),
-        GetPage(name: RouteUnits.profileDeviceLog, page: ()=> const ProfileDevicelog()),
-        //Үйлчлүүлэгч үзлэгийн цаг захиалах
-        GetPage(name: RouteUnits.timeOrder + RouteUnits.hospitals, page: ()=> const Hospitals()),
-        GetPage(name: RouteUnits.timeOrder + RouteUnits.hospitals + RouteUnits.doctors, page: ()=> const Doctors()),
-        GetPage(name: RouteUnits.timeOrder + RouteUnits.hospitals + RouteUnits.doctors + RouteUnits.timeSequence, page: ()=> const DoctorTimeSequence()),
-        //Эмнэлэгүүдийн мэдээлэл
-        GetPage(name: RouteUnits.hospitals, page: ()=> const Hospitals()),
-        GetPage(name: RouteUnits.hospitals + RouteUnits.hospitalProfile, page: ()=> const HospitalProfile()),
-        //Эмч нарын мsэдээлэл
-        GetPage(name: RouteUnits.doctors, page: ()=> const Doctors()),
-        GetPage(name: RouteUnits.doctors + RouteUnits.doctorProfile, page: ()=> const DoctorProfile()),
-        //Судалгаанууд
-        GetPage(name: RouteUnits.queries, page: ()=> const SurveyList()),
-        GetPage(name: RouteUnits.queries + RouteUnits.individualQuery, page: ()=> const SurveyUnit()),
-        //Calculators
-        GetPage(name: RouteUnits.calculators, page: ()=> const CalculatorHome()),
-        //Setting
-        GetPage(name: RouteUnits.setting, page: ()=> const Setting()),
-        //Урьдчилан сэргийлэх үзлэг
-        GetPage(name: RouteUnits.preDiagnosis, page: ()=> const PreDiagnosis()),
+          children: [
+            GetMaterialApp(
+              debugShowCheckedModeBanner: false,
+              initialRoute: RouteUnits.splashScreen,
+              initialBinding: BindingsBuilder(() => bindInitialControllers()),
+              getPages: [
+                GetPage(
+                    name: RouteUnits.splashScreen,
+                    page: () => const MyCustomSplashScreen()),
+                //basic profile input
+                GetPage(
+                  name: RouteUnits.basicProfileInput,
+                  page: () => const BasicPrifileDataCard(),
+                ),
+                //login
+                GetPage(name: RouteUnits.login, page: () => const Login()),
+                //home
+                GetPage(name: RouteUnits.home, page: () => const Home()),
+                //Profile
+                GetPage(name: RouteUnits.profile, page: () => const Profile()),
+                GetPage(
+                    name: RouteUnits.profileInfo,
+                    page: () => const ProfileInfo()),
+                GetPage(
+                    name: RouteUnits.profileDiagnosisHistory,
+                    page: () => const ProfileDiagnosisHistory()),
+                GetPage(
+                    name: RouteUnits.profileLifeToken,
+                    page: () => const ProfileLifeToken()),
+                GetPage(
+                    name: RouteUnits.profileDeviceLog,
+                    page: () => const ProfileDevicelog()),
+                //Үйлчлүүлэгч үзлэгийн цаг захиалах
+                GetPage(
+                    name: RouteUnits.timeOrder + RouteUnits.hospitals,
+                    page: () => const Hospitals()),
+                GetPage(
+                    name: RouteUnits.timeOrder +
+                        RouteUnits.hospitals +
+                        RouteUnits.doctors,
+                    page: () => const Doctors()),
+                GetPage(
+                    name: RouteUnits.timeOrder +
+                        RouteUnits.hospitals +
+                        RouteUnits.doctors +
+                        RouteUnits.timeSequence,
+                    page: () => const DoctorTimeSequence()),
+                //Эмнэлэгүүдийн мэдээлэл
+                GetPage(
+                    name: RouteUnits.hospitals, page: () => const Hospitals()),
+                GetPage(
+                    name: RouteUnits.hospitals + RouteUnits.hospitalProfile,
+                    page: () => const HospitalProfile()),
+                //Эмч нарын мsэдээлэл
+                GetPage(name: RouteUnits.doctors, page: () => const Doctors()),
+                GetPage(
+                    name: RouteUnits.doctors + RouteUnits.doctorProfile,
+                    page: () => const DoctorProfile()),
+                //Судалгаанууд
+                GetPage(
+                    name: RouteUnits.queries, page: () => const SurveyList()),
+                GetPage(
+                    name: RouteUnits.queries + RouteUnits.individualQuery,
+                    page: () => const SurveyUnit()),
+                //Calculators
+                GetPage(
+                    name: RouteUnits.calculators,
+                    page: () => const CalculatorHome()),
+                //Setting
+                GetPage(name: RouteUnits.setting, page: () => const Setting()),
+                //Урьдчилан сэргийлэх үзлэг
+                GetPage(
+                    name: RouteUnits.preDiagnosis,
+                    page: () => const PreDiagnosis()),
 
-        //card test
-        // GetPage(name: "/loginforvchat", page: ()=> LoginView()),
-        // GetPage(name: "/", page: ()=> LoginView()),
-        GetPage(name: "/meeting", page: ()=> MeetingView()),
-        
-        // GetPage(name: "/tsagavah", page: ()=> const PCRView()),
-        // GetPage(name: "/login", page: ()=> LoginView()),
-        GetPage(name: "/camera", page: ()=> (CameraApp())),
-        GetPage(name: "/pcrView", page: ()=> const PCRView()),
-      ], 
-    ),
-        StreamBuilder<bool>(
-          stream: bottomNavbarSwitcher,
-          builder: (context, snapshot){
-            if (snapshot.data == true) 
-            {
-              return const Align(alignment: Alignment.bottomCenter, child: MyBottomNavbar(),);
-            }
-            else {
-              return const SizedBox(height: 1);
-            }
-          })
-        ],
-      ),
+                //card test
+                // GetPage(name: "/loginforvchat", page: ()=> LoginView()),
+                // GetPage(name: "/", page: ()=> LoginView()),
+                GetPage(name: "/meeting", page: () => MeetingView()),
+
+                // GetPage(name: "/tsagavah", page: ()=> const PCRView()),
+                // GetPage(name: "/login", page: ()=> LoginView()),
+                GetPage(name: "/camera", page: () => (CameraApp())),
+                GetPage(name: "/pcrView", page: () => const PCRView()),
+              ],
+            ),
+            StreamBuilder<bool>(
+                stream: bottomNavbarSwitcher,
+                builder: (context, snapshot) {
+                  if (snapshot.data == true) {
+                    return const Align(
+                      alignment: Alignment.bottomCenter,
+                      child: MyBottomNavbar(),
+                    );
+                  } else {
+                    return const SizedBox(height: 1);
+                  }
+                })
+          ],
+        ),
       ),
     );
   }

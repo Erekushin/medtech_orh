@@ -1,16 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:orh_user_app_version1/Controllers/query_controller.dart';
-import '../models/childHeartQueryRelated/childheartquey.dart';
+import '../Models/childHeartQueryRelated/childheartquey.dart';
 import 'my_text.dart';
 import 'package:get/get.dart';
 
-
 class MyDropdown extends StatefulWidget {
-  MyDropdown({Key? key, required this.dropDownHint,
-  required this.listitems,required this.currentValue, 
-  required this.mark, required this.givenModelType, 
-  required this.margint, required this.marginb, required this.marginr,
-  required  this.marginl, this.questionID, required this.answerIndex}) : super(key: key);
+  MyDropdown(
+      {Key? key,
+      required this.dropDownHint,
+      required this.listitems,
+      required this.currentValue,
+      required this.mark,
+      required this.givenModelType,
+      required this.margint,
+      required this.marginb,
+      required this.marginr,
+      required this.marginl,
+      this.questionID,
+      required this.answerIndex})
+      : super(key: key);
   final String? dropDownHint;
   final List<Options>? listitems;
   final int? questionID;
@@ -25,6 +33,7 @@ class MyDropdown extends StatefulWidget {
   @override
   _MyDropDownState createState() => _MyDropDownState();
 }
+
 class _MyDropDownState extends State<MyDropdown> {
   final queryController = Get.find<SurveyController>();
   @override
@@ -36,8 +45,8 @@ class _MyDropDownState extends State<MyDropdown> {
     // });
     selectval = null;
   }
-  void transferDataToModul(){
 
+  void transferDataToModul() {
     // switch(widget.mark){
     //   case "боловсрол байдал":
     //     print("case taarsan");
@@ -60,7 +69,6 @@ class _MyDropDownState extends State<MyDropdown> {
     //     form1Controller.model.working_condition = SelectedID!;
     //     break;
     // }
-
   }
 
   String? selectval;
@@ -70,56 +78,59 @@ class _MyDropDownState extends State<MyDropdown> {
     // switch(widget.givenModelType){
     //   case Options:
     //     otionList = List<Options>.from(widget.listitems!);
-    //     break;  
+    //     break;
     // }
-    List<DropdownMenuItem<String>> dropitems(List<Options> otionList){
-      switch(widget.givenModelType){
+    List<DropdownMenuItem<String>> dropitems(List<Options> otionList) {
+      switch (widget.givenModelType) {
         case Options:
-         return otionList.map((item){
-           return DropdownMenuItem(
-             value: item.id.toString(),
-             child: Text(item.optionText!),
-             onTap: (){
-               queryController.queryAnswer.answers![widget.answerIndex].questionId = widget.questionID;
-               queryController.queryAnswer.answers![widget.answerIndex].optionId = item.id; 
-             },
-             );
-           }).toList();
-        default: return const [DropdownMenuItem(child: Text('Хоосон утга'))] ;   
+          return otionList.map((item) {
+            return DropdownMenuItem(
+              value: item.id.toString(),
+              child: Text(item.optionText!),
+              onTap: () {
+                queryController.queryAnswer.answers![widget.answerIndex]
+                    .questionId = widget.questionID;
+                queryController.queryAnswer.answers![widget.answerIndex]
+                    .optionId = item.id;
+              },
+            );
+          }).toList();
+        default:
+          return const [DropdownMenuItem(child: Text('Хоосон утга'))];
       }
     }
+
     return Container(
-        decoration: BoxDecoration(
+      decoration: BoxDecoration(
           border: Border.all(color: Colors.grey),
           color: Colors.white,
-          borderRadius: const BorderRadius.all(Radius.circular(15))
-        ),
-        margin: EdgeInsets.only(left: widget.marginl, right: widget.marginr, 
-                              top: widget.margint, bottom: widget.marginb),
-        padding: EdgeInsets.only(left: 10, right: 0, top:5, bottom: 0),                      
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            myText(widget.dropDownHint!, 11, 1, FontWeight.bold),
-            DropdownButton<String>(
-          hint: myText(widget.dropDownHint?? '', 16, 1),
-          value: selectval,
-          onChanged: (String? newValue) {
-            setState(() {
-              transferDataToModul();
-              selectval = newValue.toString();
-            });
-          },
-          underline: const SizedBox(),
-          isExpanded: true,
-          borderRadius: BorderRadius.circular(5),
-          items: dropitems(widget.listitems!)
-        )
-          ],
-        ),
+          borderRadius: const BorderRadius.all(Radius.circular(15))),
+      margin: EdgeInsets.only(
+          left: widget.marginl,
+          right: widget.marginr,
+          top: widget.margint,
+          bottom: widget.marginb),
+      padding: EdgeInsets.only(left: 10, right: 0, top: 5, bottom: 0),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          myText(widget.dropDownHint!, 11, 1, FontWeight.bold),
+          DropdownButton<String>(
+              hint: myText(widget.dropDownHint ?? '', 16, 1),
+              value: selectval,
+              onChanged: (String? newValue) {
+                setState(() {
+                  transferDataToModul();
+                  selectval = newValue.toString();
+                });
+              },
+              underline: const SizedBox(),
+              isExpanded: true,
+              borderRadius: BorderRadius.circular(5),
+              items: dropitems(widget.listitems!))
+        ],
+      ),
     );
   }
 }
-
-
