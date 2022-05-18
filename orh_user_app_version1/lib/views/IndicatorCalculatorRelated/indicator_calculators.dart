@@ -15,7 +15,7 @@ class ButtonStructure {
   final String imgUrl;
 }  
   
-List<ButtonStructure> bigButtons = const <ButtonStructure>[  //60/(174*174)*10000 jin/(ondor*ondor)*10000
+List<ButtonStructure> bigButtons = const <ButtonStructure>[
   ButtonStructure(title: 'BMI', route: "/bmi", imgUrl: 'https://res.cloudinary.com/grohealth/image/upload/f_auto,fl_lossy,q_auto/v1583505191/DCUK/Content/iStock-528072248-1000x600.jpg'  ),  
   ButtonStructure(title: 'BMR', route: "", imgUrl: 'https://nabtahealth.com/wp-content/uploads/2020/01/what-is-basal-metabolic-rate-bmr-8-2-2-3.png'),  
 ];

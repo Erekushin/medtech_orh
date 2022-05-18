@@ -137,6 +137,7 @@ class SurveyController extends GetxController{
     switch(generalResponse.code){
       case '200':
           ereklog.wtf('surveyQuestionPush deer 200 toi response irsen');
+          GlobalHelpers.workingWithCode.clearSurveyData();
           break;
     }
   }
@@ -144,6 +145,14 @@ class SurveyController extends GetxController{
   Future surveyQuestionsGet() async{
     var jsondata = await GlobalHelpers.postRequestGeneral.getdata(queryPayload(), "2035225", UriAdresses.covidBackEnd);
     queryQuestions = SurveyQuestions.fromJson(jsonDecode(jsondata.toString()));
+    for(int i = 0; i< queryQuestions.result!.questions!.length; i++){
+      ereklog.i(queryQuestions.result!.questions![i].questionText);
+      if(queryQuestions.result!.questions![i].options != null){
+         for(int a = 0; a<queryQuestions.result!.questions![i].options!.length; a++){
+        ereklog.wtf(queryQuestions.result!.questions![i].options![a].optionText);
+      }
+      }
+    }
     Get.toNamed(RouteUnits.surveyList + RouteUnits.individualSurvey, arguments: "");
     // Get.toNamed(RouteUnits.answerform);
     GlobalHelpers.bottomnavbarSwitcher.add(false);
@@ -168,6 +177,7 @@ class SurveyController extends GetxController{
           firstName.clear(); 
           age.clear(); 
           gender.clear(); 
+          GlobalHelpers.workingWithCode.clearSurveyData();
           xyrName.value = '';
           GlobalHelpers.loopCheck = 0;
           Get.offAllNamed(RouteUnits.home);
@@ -319,4 +329,10 @@ class SurveyController extends GetxController{
     }
   }
 
+
+  Future backendtest() async{
+    var jsonData = await GlobalHelpers.postRequestGeneral.getdata(surveyCreationbody.toJson(), "202859", UriAdresses.geregeMedtech);
+    print('json data');
+    ereklog.wtf(jsonData);
+  }
 }

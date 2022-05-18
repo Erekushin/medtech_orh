@@ -1,12 +1,14 @@
 import 'dart:async';
 import 'package:orh_user_app_version1/Helpers/request.dart';
 import 'package:orh_user_app_version1/models/SurveyRelated/aimags.dart';
+import 'Helpers/working_with_code.dart';
 import 'Helpers/working_with_folders.dart';
 
 class GlobalHelpers{
 static PostRequestGeneral postRequestGeneral = PostRequestGeneral();
 ///bottom navbar iig haragdah vgvig shiidej bgaa switcher
 static late StreamController<bool> bottomnavbarSwitcher;
+static WorkingWithCode workingWithCode = WorkingWithCode();
 static bool imageFileSwitcher = false;
 static WorkingWithLocal workWithLocal = WorkingWithLocal();
 static AimagList aimagList = AimagList();

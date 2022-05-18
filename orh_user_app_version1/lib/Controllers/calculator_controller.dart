@@ -2,6 +2,7 @@
 import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:orh_user_app_version1/Controllers/survey_controller.dart';
+import 'package:orh_user_app_version1/global_helpers.dart';
 
 import '../Helpers/load_json_from_assest.dart';
 import '../Models/SurveyRelated/survey_answer_body.dart';
@@ -34,5 +35,6 @@ class CalculatorController extends GetxController{
     int heightInt = int.parse(heightItem.answerText!);
     double bmi = (massInt/(heightInt*heightInt))*10000;
     bodymassindex.value = bmi.toString().substring(0, 5);
+    GlobalHelpers.workingWithCode.clearSurveyData();
   }
 }

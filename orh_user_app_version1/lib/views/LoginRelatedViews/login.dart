@@ -142,9 +142,6 @@ class _LoginState extends State<Login>with SingleTickerProviderStateMixin {
                                       style: const TextStyle(color: Colors.blueAccent),
                                       recognizer: TapGestureRecognizer()
                                         ..onTap = () async{
-                                          var a = await logincontroller.doctorTestget();
-                                          print(a.toString());
-                                          Get.defaultDialog(title: "fdfd", content: SizedBox(child: Text(a.toString()),));
                                         },
                                     ),
                                   ),

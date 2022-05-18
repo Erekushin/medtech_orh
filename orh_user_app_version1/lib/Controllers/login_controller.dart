@@ -78,27 +78,5 @@ class LoginController extends GetxController{
           colorText: Colors.white, backgroundColor: Colors.grey[900], margin: const EdgeInsets.all(5));
     }
   }
-
-
-  final Map<String, dynamic> testBody = <String, dynamic>{'h':'fgfg'};
-  Future doctorTestget() async{
-    var data = await GlobalHelpers.postRequestGeneral.getdata(testBody, "202859", UriAdresses.geregeMedtech);
-    var a = jsonDecode(data.toString());
-    print('test');
-    log(a);
-    return a;
-    // generalResponse = GeneralResponse.fromJson(jsonDecode(data.toString()));
-    // ereklog.wtf(generalResponse.code);
-    // switch(generalResponse.code){
-    //   case '100':
-    //       Get.snackbar('Интернет Алдаа', 'Та интернетээ шалгана уу!', snackPosition: SnackPosition.BOTTOM,
-    //       colorText: Colors.white, backgroundColor: Colors.grey[900], margin:  const EdgeInsets.only(left: 5, top: 5, bottom: 75));
-    //       break;
-    //   case '101': 
-    //       Get.snackbar('Интернет Алдаа', 'Та интернетээ шалгана уу!', snackPosition: SnackPosition.BOTTOM,
-    //       colorText: Colors.white, backgroundColor: Colors.grey[900], margin: EdgeInsets.only(bottom: GeneralMeasurements.snackbarBottomMargin, left: 5, right: 5,));
-    //       break;
-    //     default : break;  
-    // }
-  }
+  
 }

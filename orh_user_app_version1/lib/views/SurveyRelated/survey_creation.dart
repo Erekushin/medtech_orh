@@ -65,7 +65,8 @@ class _SurveyCreationState extends State<SurveyCreation> {
                   surveyController.surveyCreationbody.surveyName = surveyNametxtController.text;
                   surveyController.surveyCreationbody.questions = surveyController.newQuestionList; 
                   ereklog.wtf(jsonEncode(surveyController.surveyCreationbody.toJson()));
-                  surveyController.surveyQuestionPush();
+                  // surveyController.surveyQuestionPush();
+                  surveyController.backendtest();
                 },
                 child: myBtn(CommonColors.yellow, 200, 50, CommonColors.yellow, Colors.white, 'Судалгааг хадаглах'),
               ),
@@ -97,11 +98,15 @@ class SurveyInputCreation extends StatefulWidget {
 }
 class _SurveyInputCreationState extends State<SurveyInputCreation> {
   var surveyController = Get.find<SurveyController>();
-  
+  var ereklog = logger(SurveyInputCreation);
   callBackFunc(chosenVal){//drop down nii value nuudaas ali ni songogdson iig yalgah
     surveyController.newQuestionList[widget.surveyQuestionIndex].type = chosenVal;
+    ereklog.wtf(chosenVal);
     if(surveyController.newQuestionList[widget.surveyQuestionIndex].options.isEmpty){
-      if(chosenVal == '2'){
+      if(surveyController.newQuestionList[widget.surveyQuestionIndex].containerHeight == null){
+        surveyController.newQuestionList[widget.surveyQuestionIndex].containerHeight = 130;
+      }
+      if(chosenVal == '1'){
       setState(() {
         surveyController.newQuestionList[widget.surveyQuestionIndex].containerHeight = surveyController.newQuestionList[widget.surveyQuestionIndex].containerHeight! + 50;
         surveyController.newQuestionList[widget.surveyQuestionIndex].options.add(CreationOptions());
