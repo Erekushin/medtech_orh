@@ -36,7 +36,7 @@ import 'dart:async';
 import 'package:camera/camera.dart';
 import 'global_helpers.dart';
 
-// this is fucking Development branch ..
+// this is fucking survey branch ..
 Future<void> main() async {
   // WidgetsFlutterBinding.ensureInitialized();
   // cameras = await availableCameras();
