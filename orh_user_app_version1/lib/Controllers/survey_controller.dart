@@ -115,18 +115,32 @@ class SurveyController extends GetxController{
 
 
   //survey tei holbootoi vndsen function uud
+  // Future surveyListGet() async{
+  //   var data = await GlobalHelpers.postRequestGeneral.getdata(surveyList(), "2035227", UriAdresses.covidBackEnd);
+  //   surveyListbody = SurveyListBody.fromJson(jsonDecode(data.toString()));
+  //    switch(surveyListbody.code){
+  //      case 200:
+  //         Get.toNamed(RouteUnits.surveyList, arguments: "");
+  //                 GlobalHelpers.bottomnavbarSwitcher.add(true);
+  //         Get.snackbar('Амжилттай', 'Судалгаануудыг амжилттай авлаа!', snackPosition: SnackPosition.BOTTOM,
+  //         colorText: Colors.white, backgroundColor: Colors.grey[900], margin: EdgeInsets.only(bottom: GeneralMeasurements.snackbarBottomMargin, left: 5, right: 5,));
+  //         break;
+  //       default : break;  
+  //   }
+  // }
   Future surveyListGet() async{
-    var data = await GlobalHelpers.postRequestGeneral.getdata(surveyList(), "2035227", UriAdresses.covidBackEnd);
-    surveyListbody = SurveyListBody.fromJson(jsonDecode(data.toString()));
-     switch(surveyListbody.code){
-       case 200:
-          Get.toNamed(RouteUnits.surveyList, arguments: "");
-                  GlobalHelpers.bottomnavbarSwitcher.add(true);
-          Get.snackbar('Амжилттай', 'Судалгаануудыг амжилттай авлаа!', snackPosition: SnackPosition.BOTTOM,
-          colorText: Colors.white, backgroundColor: Colors.grey[900], margin: EdgeInsets.only(bottom: GeneralMeasurements.snackbarBottomMargin, left: 5, right: 5,));
-          break;
-        default : break;  
-    }
+    var data = await GlobalHelpers.postRequestGeneral.getdata(surveyList(), "120002", UriAdresses.geregeMedtech);
+    ereklog.wtf(data);
+    // surveyListbody = SurveyListBody.fromJson(jsonDecode(data.toString()));
+    //  switch(surveyListbody.code){
+    //    case 200:
+    //       Get.toNamed(RouteUnits.surveyList, arguments: "");
+    //               GlobalHelpers.bottomnavbarSwitcher.add(true);
+    //       Get.snackbar('Амжилттай', 'Судалгаануудыг амжилттай авлаа!', snackPosition: SnackPosition.BOTTOM,
+    //       colorText: Colors.white, backgroundColor: Colors.grey[900], margin: EdgeInsets.only(bottom: GeneralMeasurements.snackbarBottomMargin, left: 5, right: 5,));
+    //       break;
+    //     default : break;  
+    // }
   }
   
   Future surveyQuestionPush() async{
