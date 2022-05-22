@@ -59,6 +59,7 @@ class _MyDropDownState extends State<MyDropdown> {
              value: item.id.toString(),
              child: Text(item.optionText!),
              onTap: (){
+               print(item.optionText);
                queryController.surveyAnswer.answers![widget.answerIndex].questionId = widget.questionID.toString();
                queryController.surveyAnswer.answers![widget.answerIndex].optionId = item.id; 
              },
@@ -96,6 +97,7 @@ class _MyDropDownState extends State<MyDropdown> {
           value: queryController.dropvalueList[widget.answerIndex].value,
           onChanged: (String? newValue) {
             setState(() {
+              print(newValue);
               queryController.dropvalueList[widget.answerIndex].value = newValue.toString();
             });
             widget.callBackFunction!(newValue);
