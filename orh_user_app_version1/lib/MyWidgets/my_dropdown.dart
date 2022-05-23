@@ -34,7 +34,7 @@ class _MyDropDownState extends State<MyDropdown> {
   void initState() {
      switch(widget.givenModelType){
         case Options:
-        queryController.surveyAnswer.answers![widget.answerIndex].questionId = widget.questionID.toString();
+        queryController.surveyAnswer.answers![widget.answerIndex].questionId = int.parse(widget.questionID!) ;
         break;
         case AnswerTypeOptions:
            
@@ -56,12 +56,13 @@ class _MyDropDownState extends State<MyDropdown> {
         case Options:
          return optionList.map((item){
            return DropdownMenuItem(
-             value: item.id.toString(),
+             value: item.optionId.toString(),
              child: Text(item.optionText!),
              onTap: (){
                print(item.optionText);
-               queryController.surveyAnswer.answers![widget.answerIndex].questionId = widget.questionID.toString();
-               queryController.surveyAnswer.answers![widget.answerIndex].optionId = item.id; 
+               print(item.optionId);
+               queryController.surveyAnswer.answers![widget.answerIndex].questionId = int.parse(widget.questionID!);
+               queryController.surveyAnswer.answers![widget.answerIndex].optionId = item.optionId; 
              },
              );
            }).toList();

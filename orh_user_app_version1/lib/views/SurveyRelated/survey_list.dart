@@ -77,7 +77,7 @@ class _SurveyListItemState extends State<SurveyListItem> {
                     },
                     child: Container( //child heart query btn
                   margin: EdgeInsets.all(GeneralMeasurements.deviceWidth*.05),
-                  height: GeneralMeasurements.deviceHeight*.1,
+                  height: GeneralMeasurements.deviceHeight*.15,
                   decoration: BoxDecoration(
                   color: Colors.white,
                   boxShadow: [
@@ -90,27 +90,47 @@ class _SurveyListItemState extends State<SurveyListItem> {
                   Radius.circular(10),
                 ),
               ),
-                  child:Row(children: [
-                  const SizedBox(width: 10,),
-                  Container(
-                    height: GeneralMeasurements.deviceWidth / 8,
-                    width: GeneralMeasurements.deviceWidth / 8,
-                    decoration: BoxDecoration(
-                      color: Colors.blue.shade50,
-                      shape: BoxShape.circle,
-                    ),
-                    child: surveyController.childHeartQuerybtnloading.value? const CircularProgressIndicator() 
-                    : const Icon(
-                      Icons.assessment,
-                      color: Colors.blue,
-                    ),
-                  ),
-                  const SizedBox(width: 10,),
+                  child:Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
                   SizedBox(
                     width: GeneralMeasurements.deviceWidth*.7,
                     child: myText(widget.surveyName, 17, 1, FontWeight.w700), //queryController.childHeartQuery.result!.title??
+                  ),
+                  surveyController.childHeartQuerybtnloading.value? const CircularProgressIndicator() 
+                    : const Icon(
+                      Icons.article,
+                      color: Colors.blue,
+                    ),
+              ],),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                  Row(children: const [
+                    CircleAvatar(
+                            backgroundColor: Colors.grey,
+                            radius: 20,
+                            backgroundImage: AssetImage('assets/images/Avatar.jpg'),
+                          ),
+                          SizedBox(width: 10,),
+                    Text('Буян-хишиг', style: TextStyle(fontWeight: FontWeight.bold),)      
+                  ],),
+                  Row(
+                    children: [
+                      IconButton(
+                  icon: Image.asset('assets/icon/coin.png'),
+                  onPressed: (){},
+                  ),
+                  Text('50 tug')
+                    ],
                   )
-              ],)
+                ],
+              )
+                    ],
+                  )
             ),
                   );
                   });

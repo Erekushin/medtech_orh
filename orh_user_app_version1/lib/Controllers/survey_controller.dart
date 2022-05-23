@@ -20,6 +20,7 @@ import '../models/SurveyRelated/researcher_default.dart';
 /// mydrop down ii utgiig hadaglah string bvhii class vvgeer form toi 
 /// ijil hemjeenii list vvsgej bgaa
 class DropSelectVal{
+  DropSelectVal({this.value});
   String? value;
 }
 class SurveyController extends GetxController{
@@ -111,23 +112,6 @@ class SurveyController extends GetxController{
     data['search_text'] = rdTxtController.text;
     return data;
   }
-
-
-
-  //survey tei holbootoi vndsen function uud
-  // Future surveyListGet() async{
-  //   var data = await GlobalHelpers.postRequestGeneral.getdata(surveyList(), "2035227", UriAdresses.covidBackEnd);
-  //   surveyListbody = SurveyListBody.fromJson(jsonDecode(data.toString()));
-  //    switch(surveyListbody.code){
-  //      case 200:
-  //         Get.toNamed(RouteUnits.surveyList, arguments: "");
-  //                 GlobalHelpers.bottomnavbarSwitcher.add(true);
-  //         Get.snackbar('Амжилттай', 'Судалгаануудыг амжилттай авлаа!', snackPosition: SnackPosition.BOTTOM,
-  //         colorText: Colors.white, backgroundColor: Colors.grey[900], margin: EdgeInsets.only(bottom: GeneralMeasurements.snackbarBottomMargin, left: 5, right: 5,));
-  //         break;
-  //       default : break;  
-  //   }
-  // }
   Future surveyListGet() async{
     var data = await GlobalHelpers.postRequestGeneral.getdata(surveyList(), "120002", UriAdresses.geregeMedtech);
     ereklog.wtf(data);
@@ -142,20 +126,6 @@ class SurveyController extends GetxController{
         default : break;  
     }
   }
-  
-  Future surveyQuestionPush() async{
-    var jsondata = await GlobalHelpers.postRequestGeneral.getdata(surveyCreationbody.toJson(), "2035228", UriAdresses.covidBackEnd);
-    log(jsonEncode(surveyCreationbody.toJson()));
-    generalResponse = GeneralResponse.fromJson(jsonDecode(jsondata));
-    log(generalResponse.result.toString());
-    switch(generalResponse.code){
-      case '200':
-          ereklog.wtf('surveyQuestionPush deer 200 toi response irsen');
-          GlobalHelpers.workingWithCode.clearSurveyData();
-          break;
-    }
-  }
-
   Future surveyQuestionsGet() async{
     var jsondata = await GlobalHelpers.postRequestGeneral.getdata(queryPayload(), "120003", UriAdresses.geregeMedtech);
     ereklog.wtf(jsondata);
@@ -175,55 +145,9 @@ class SurveyController extends GetxController{
   }
 
   Future surveyAnswersPush() async{//message code deeree toglood olon torliin asuultuud yavuulj bolno
-    // var jsondata = await GlobalHelpers.postRequestGeneral.getdata(surveyAnswer.toJson(), "2035233", UriAdresses.covidBackEnd);
-    // log(jsonEncode(surveyAnswer.toJson()));
-    // print(jsondata.toString()+' '+'hariugaa yavuulsanii hariu');
-    // print(jsondata);
-    // generalResponse = GeneralResponse.fromJson(jsonDecode(jsondata));
-    // switch(generalResponse.code){
-    //   case '200':
-    //       pushDataBtn.value = true;
-    //       Get.snackbar('Амжилттай бүртгэгдлээ', '', snackPosition: SnackPosition.BOTTOM,
-    //       colorText: Colors.white, backgroundColor: Colors.grey[900], margin: EdgeInsets.only(bottom: GeneralMeasurements.snackbarBottomMargin, left: 5, right: 5,));
-    //       rdTxtController.clear();
-    //       textEditingControllers.clear();
-    //       dropvalueList.clear();
-    //       lastName.clear();
-    //       firstName.clear(); 
-    //       age.clear(); 
-    //       gender.clear(); 
-    //       GlobalHelpers.workingWithCode.clearSurveyData();
-    //       xyrName.value = '';
-    //       GlobalHelpers.loopCheck = 0;
-    //       Get.offAllNamed(RouteUnits.home);
-    //       break;
-    //   case '100':
-    //       Get.snackbar('Интернет Алдаа', 'Та интернетээ шалгана уу!', snackPosition: SnackPosition.BOTTOM,
-    //       colorText: Colors.white, backgroundColor: Colors.grey[900], margin: EdgeInsets.only(bottom: GeneralMeasurements.snackbarBottomMargin, left: 5, right: 5,));
-    //       break;
-    //   case '101':
-    //       Get.snackbar('Интернет Алдаа', 'Та интернетээ шалгана уу!', snackPosition: SnackPosition.BOTTOM,
-    //       colorText: Colors.white, backgroundColor: Colors.grey[900], margin: EdgeInsets.only(bottom: GeneralMeasurements.snackbarBottomMargin, left: 5, right: 5,));
-    //       break;
-    //   case '400':
-    //       Get.snackbar('Талбарууд бөглөгдөөгүй байна', '', snackPosition: SnackPosition.BOTTOM,
-    //       colorText: Colors.white, backgroundColor: Colors.grey[900], margin: EdgeInsets.only(bottom: GeneralMeasurements.snackbarBottomMargin, left: 5, right: 5,));
-    //       break;
-    //   case 'Unauthorized':
-    //       GlobalHelpers.loopCheck++;
-    //       if(GlobalHelpers.loopCheck < 10){
-    //         Get.find<LoginController>().geregeUserLogin((){surveyAnswersPush();});
-    //       }
-    //       else{
-    //       Get.snackbar('Аюултай!!', 'Программаа дахин оруулна уу!. Хэрвээ уг алдаа дахин гарвал харилцагчийн төвд хандана уу.', snackPosition: SnackPosition.BOTTOM,
-    //       colorText: Colors.white, backgroundColor: Colors.grey[900], margin: EdgeInsets.only(bottom: GeneralMeasurements.snackbarBottomMargin, left: 5, right: 5,));
-    //       }
-    //       break;
-    // }
      var jsondata = await GlobalHelpers.postRequestGeneral.getdata(surveyAnswer.toJson(), "120004", UriAdresses.geregeMedtech);
     log(jsonEncode(surveyAnswer.toJson()));
     print(jsondata.toString()+' '+'hariugaa yavuulsanii hariu');
-    print(jsondata);
     generalResponse = GeneralResponse.fromJson(jsonDecode(jsondata));
     switch(generalResponse.code){
       case '200':
@@ -363,5 +287,13 @@ class SurveyController extends GetxController{
     var jsonData = await GlobalHelpers.postRequestGeneral.getdata(surveyCreationbody.toJson(), "120001", UriAdresses.geregeMedtech);
     print('json data');
     ereklog.wtf(jsonData);
+    generalResponse = GeneralResponse.fromJson(jsonDecode(jsonData));
+    log(generalResponse.result.toString());
+    switch(generalResponse.code){
+      case '200':
+          ereklog.wtf('surveyQuestionPush deer 200 toi response irsen');
+          GlobalHelpers.workingWithCode.clearSurveyData();
+          break;
+    }
   }
 }

@@ -27,7 +27,7 @@ class _MyTextFieldState extends State<MyTextField> {
   @override
   void initState() {
     super.initState();
-    surveyController.surveyAnswer.answers![widget.answerIndex].questionId = widget.questionID.toString();
+    surveyController.surveyAnswer.answers![widget.answerIndex].questionId = int.parse(widget.questionID);
   }
   @override
   Widget build(BuildContext context) {
@@ -37,7 +37,7 @@ class _MyTextFieldState extends State<MyTextField> {
     padding: EdgeInsets.only(top: widget.margint, bottom: widget.marginb, left: widget.marginr, right: widget.marginl),
     child: TextField(
       onChanged: (value){
-          surveyController.surveyAnswer.answers![widget.answerIndex].questionId = widget.questionID.toString();
+          surveyController.surveyAnswer.answers![widget.answerIndex].questionId = int.parse(widget.questionID);
           surveyController.surveyAnswer.answers![widget.answerIndex].answerText = value;
         },
       controller: widget.txtController,

@@ -26,7 +26,6 @@ class LoginController extends GetxController{
     data['user_id'] = geregeId; 
     return data;
   }
-
   Future geregeUserLogin(Function retryFunction) async{
     loginloading.value = true;
     GlobalHelpers.userName = username.text;

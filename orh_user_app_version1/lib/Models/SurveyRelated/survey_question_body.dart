@@ -85,19 +85,19 @@ class Questions {
 }
 
 class Options {
-  int? id;
+  int? optionId;
   String? optionText;
 
-  Options({this.id, this.optionText});
+  Options({this.optionId, this.optionText});
 
   Options.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
+    optionId = json['option_id'];
     optionText = json['option_text'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['id'] = id;
+    data['option_id'] = optionId;
     data['option_text'] = optionText;
     return data;
   }
