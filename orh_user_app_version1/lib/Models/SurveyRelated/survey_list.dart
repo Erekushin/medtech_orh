@@ -1,3 +1,8 @@
+import 'dart:ui';
+
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
 class SurveyListBody {
   int? code;
   String? status;
@@ -16,7 +21,7 @@ class SurveyListBody {
 }
 
 class Result {
-  List<Items>? items;
+  List<Items>? items = <Items>[].obs;
 
   Result({this.items});
 
@@ -33,6 +38,7 @@ class Result {
 class Items {
   int? id;
   String? name;
+  var borderColor = Colors.white.obs;
 
   Items({this.id, this.name});
 

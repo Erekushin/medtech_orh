@@ -1,6 +1,7 @@
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:orh_user_app_version1/Controllers/survey_controller.dart';
+import 'package:orh_user_app_version1/Controllers/SurveyRelated/survey_controller.dart';
 import 'package:orh_user_app_version1/Controllers/setting_controller.dart';
 import 'package:orh_user_app_version1/views/AnswerFormRelated/answer_form.dart';
 import 'package:orh_user_app_version1/views/IndicatorCalculatorRelated/indicator_calculators.dart';
@@ -9,14 +10,16 @@ import 'package:orh_user_app_version1/views/SurveyRelated/survey.dart';
 import 'package:orh_user_app_version1/views/SurveyRelated/survey_creation.dart';
 import 'package:orh_user_app_version1/views/SurveyRelated/survey_list.dart';
 import 'package:orh_user_app_version1/views/TreatmentRecipe/treatment_recipe.dart';
+import 'package:orh_user_app_version1/views/home/home_info_flow.dart';
 import 'package:orh_user_app_version1/views/splash_screen.dart';
 import 'package:orh_user_app_version1/views/ProfileRelated/profile.dart';
-import 'package:orh_user_app_version1/views/home.dart';
 import 'package:orh_user_app_version1/views/LoginRelatedViews/login.dart';
 import 'package:orh_user_app_version1/views/SettingsRelatedViews/setting.dart';
+import 'Controllers/SurveyRelated/survey_creation_controller.dart';
 import 'Controllers/calculator_controller.dart';
 import 'Controllers/image_controller.dart';
-import 'Controllers/login_controller.dart';
+import 'Controllers/auth_controller.dart';
+import 'Controllers/profile_controller.dart';
 import 'Controllers/sql_controller.dart';
 import 'views/DoctorRelated/doctor_profile.dart';
 import 'views/DoctorRelated/doctors.dart';
@@ -26,20 +29,16 @@ import 'views/HospitalRelated/hospitals.dart';
 import 'views/ProfileRelated/profile_devicelog.dart';
 import 'views/ProfileRelated/profile_diagnosis_history.dart';
 import 'views/ProfileRelated/profile_info.dart';
-import 'views/ProfileRelated/profile_lifetoken.dart';
 import 'views/TimeSequenceRelated/time_sequence.dart';
 import 'VideoCall/camera_ex.dart';
-import 'VideoCall/video_call.dart';
-import 'file_check_ui.dart';
 import 'global_constant.dart';
 import 'dart:async';
-import 'package:camera/camera.dart';
 import 'global_helpers.dart';
 
 // this is fucking survey branch ..
 Future<void> main() async {
-  // WidgetsFlutterBinding.ensureInitialized();
-  // cameras = await availableCameras();
+  WidgetsFlutterBinding.ensureInitialized();
+  cameras = await availableCameras();
   runApp(const MyApp());
 }
 class MyApp extends StatefulWidget {
@@ -58,10 +57,12 @@ class _MyAppState extends State<MyApp> {
   }
   bindInitialControllers(){
     Get.put(ImageController(), permanent: true);
-    Get.put(LoginController(), permanent: true);
+    Get.put(SurveyController());
+    Get.put(AuthController(), permanent: true); // profile controller ruu shiljvvlne
+    Get.put(ProfileController(), permanent: true);
     Get.put(SettingController(), permanent: true);
     Get.put(SqlController(), permanent: true);
-    Get.put(SurveyController());
+    Get.put(SurveyCreationController());
     Get.put(CalculatorController());
   }
   @override
@@ -83,12 +84,12 @@ class _MyAppState extends State<MyApp> {
         //login
         GetPage(name: RouteUnits.login, page: ()=> const Login()),
         //home
-        GetPage(name: RouteUnits.home, page: ()=> const Home()),
+        GetPage(name: RouteUnits.home, page: ()=> const HomeInfoFlow()),
         //Profile
         GetPage(name: RouteUnits.profile, page: ()=> const Profile()),
         GetPage(name: RouteUnits.profileInfo, page: ()=> const ProfileInfo()),
         GetPage(name: RouteUnits.profileDiagnosisHistory, page: ()=> const ProfileDiagnosisHistory()),
-        GetPage(name: RouteUnits.profileLifeToken, page: ()=> const ProfileLifeToken()),
+        GetPage(name: RouteUnits.mySurveys, page: ()=> const SurveyList()),
         GetPage(name: RouteUnits.profileDeviceLog, page: ()=> const ProfileDevicelog()),
         //Үйлчлүүлэгч үзлэгийн цаг захиалах
         GetPage(name: RouteUnits.timeOrder + RouteUnits.hospitals, page: ()=> Hospitals()),

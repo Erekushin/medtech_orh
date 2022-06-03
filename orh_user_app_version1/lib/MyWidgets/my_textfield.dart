@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:orh_user_app_version1/Controllers/setting_controller.dart';
-import '../Controllers/survey_controller.dart';
+import '../Controllers/SurveyRelated/survey_controller.dart';
 
 class MyTextField extends StatefulWidget {
   const MyTextField({ Key? key, required this.hinttxt, required this.txtController,

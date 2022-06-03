@@ -1,26 +1,30 @@
-class SurveyQuestions {
+class Survey {
   int? code;
   String? status;
   String? message;
-  Result? result;
+  List<Result>? result;
 
-  SurveyQuestions({this.code, this.status, this.message, this.result});
+  Survey({this.code, this.status, this.message, this.result});
 
-  SurveyQuestions.fromJson(Map<String, dynamic> json) {
+  Survey.fromJson(Map<String, dynamic> json) {
     code = json['code'];
     status = json['status'];
     message = json['message'];
-    result =
-        json['result'] != null ? Result.fromJson(json['result']) : null;
+    if (json['result'] != null) {
+      result = <Result>[];
+      json['result'].forEach((v) {
+        result!.add(new Result.fromJson(v));
+      });
+    }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['code'] = code;
-    data['status'] = status;
-    data['message'] = message;
-    if (result != null) {
-      data['result'] = result!.toJson();
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['code'] = this.code;
+    data['status'] = this.status;
+    data['message'] = this.message;
+    if (this.result != null) {
+      data['result'] = this.result!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -37,16 +41,16 @@ class Result {
     if (json['questions'] != null) {
       questions = <Questions>[];
       json['questions'].forEach((v) {
-        questions!.add(Questions.fromJson(v));
+        questions!.add(new Questions.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['title'] = title;
-    if (questions != null) {
-      data['questions'] = questions!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['title'] = this.title;
+    if (this.questions != null) {
+      data['questions'] = this.questions!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -54,7 +58,7 @@ class Result {
 
 class Questions {
   String? id;
-  int? type;
+  String? type;
   String? questionText;
   List<Options>? options;
 
@@ -67,18 +71,18 @@ class Questions {
     if (json['options'] != null) {
       options = <Options>[];
       json['options'].forEach((v) {
-        options!.add(Options.fromJson(v));
+        options!.add(new Options.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['id'] = id;
-    data['type'] = type;
-    data['question_text'] = questionText;
-    if (options != null) {
-      data['options'] = options!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['type'] = this.type;
+    data['question_text'] = this.questionText;
+    if (this.options != null) {
+      data['options'] = this.options!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -96,9 +100,9 @@ class Options {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['option_id'] = optionId;
-    data['option_text'] = optionText;
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['option_id'] = this.optionId;
+    data['option_text'] = this.optionText;
     return data;
   }
 }

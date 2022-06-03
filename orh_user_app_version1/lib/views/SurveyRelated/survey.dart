@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:orh_user_app_version1/Controllers/login_controller.dart';
-import 'package:orh_user_app_version1/Controllers/survey_controller.dart';
+import 'package:orh_user_app_version1/Controllers/SurveyRelated/survey_controller.dart';
 import 'package:orh_user_app_version1/Controllers/setting_controller.dart';
 import 'package:orh_user_app_version1/MyWidgets/my_button.dart';
 import 'package:orh_user_app_version1/global_constant.dart';
 import 'package:orh_user_app_version1/global_helpers.dart';
 import '../../MyWidgets/my_reciever_unit.dart';
-import '../../MyWidgets/my_text.dart';
 import '../../global_constant.dart';
 
 
@@ -25,7 +23,7 @@ class _SurveyUnit extends State<SurveyUnit> {
   @override
   void initState() {
     super.initState();
-    GlobalHelpers.surveyPageCount = queryController.queryQuestions.result!.questions!.length~/AllSizes.pageQuestionCount+1;
+    GlobalHelpers.surveyPageCount = queryController.survey.result![0].questions!.length~/AllSizes.pageQuestionCount+1;
   }
   @override
   Widget build(BuildContext context) {
@@ -83,6 +81,7 @@ class _PageUnitState extends State<PageUnit> {
     return WillPopScope(
       onWillPop: () async{
         GlobalHelpers.bottomnavbarSwitcher.add(true);
+        GlobalHelpers.workingWithCode.clearSurveyData();
         return true;
       },
       child: Stack(
@@ -98,11 +97,11 @@ class _PageUnitState extends State<PageUnit> {
                     //togtmol toondoo huvaagaad vldegdeltei bol tuhain vldegdeleer item
                     //count aa ogoh
                     itemCount: widget.pageIndex == GlobalHelpers.surveyPageCount-1? 
-                    surveyControllerOut.queryQuestions.result!.questions!.length%AllSizes.pageQuestionCount != 0?
-                    surveyControllerOut.queryQuestions.result!.questions!.length%AllSizes.pageQuestionCount : AllSizes.pageQuestionCount : AllSizes.pageQuestionCount,
+                    surveyControllerOut.survey.result![0].questions!.length%AllSizes.pageQuestionCount != 0?
+                    surveyControllerOut.survey.result![0].questions!.length%AllSizes.pageQuestionCount : AllSizes.pageQuestionCount : AllSizes.pageQuestionCount,
                     itemBuilder: (BuildContext context, int index){
                       final int queryUnitIndex = widget.pageIndex * AllSizes.pageQuestionCount + index;
-                      final item =  surveyControllerOut.queryQuestions.result!.questions![queryUnitIndex];
+                      final item =  surveyControllerOut.survey.result![0].questions![queryUnitIndex];
                       surveyControllerOut.textEditingControllers.add(TextEditingController());
                       surveyControllerOut.dropvalueList.add(DropSelectVal());
                     return RecieverUnit(questionID: item.id!, type: item.type, questionText: item.questionText, 

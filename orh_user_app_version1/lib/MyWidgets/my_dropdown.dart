@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:get/get_rx/src/rx_typedefs/rx_typedefs.dart';
-import 'package:orh_user_app_version1/Controllers/survey_controller.dart';
-import '../models/SurveyRelated/survey_question_body.dart';
-import '../views/SurveyRelated/survey_creation.dart';
+import 'package:orh_user_app_version1/Controllers/SurveyRelated/survey_controller.dart';
+import '../Models/SurveyRelated/survey_creation_types.dart';
+import '../models/SurveyRelated/survey_body.dart';
+import '../views/SurveyRelated/survey_creation_questions.dart';
 import 'my_text.dart';
 import 'package:get/get.dart';
 
@@ -36,7 +36,7 @@ class _MyDropDownState extends State<MyDropdown> {
         case Options:
         queryController.surveyAnswer.answers![widget.answerIndex].questionId = int.parse(widget.questionID!) ;
         break;
-        case AnswerTypeOptions:
+        case TypeInfo:
            
       }
     
@@ -66,11 +66,11 @@ class _MyDropDownState extends State<MyDropdown> {
              },
              );
            }).toList();
-        case AnswerTypeOptions:
+        case TypeInfo:
            return optionList.map((item){
             return DropdownMenuItem(
-             value: item.id.toString(),
-             child: Text(item.optionText!),
+             value: item.typeId.toString(),
+             child: Text(item.typeName!),
              onTap: (){
               
              },
@@ -91,7 +91,7 @@ class _MyDropDownState extends State<MyDropdown> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
+          children: [ 
             myText(widget.dropDownHint!, 11, 1, FontWeight.bold),
             DropdownButton<String>(
           hint: myText(widget.dropDownHint?? '', 16, 1),

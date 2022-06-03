@@ -49,7 +49,6 @@ class _MyCustomSplashScreenState extends State<MyCustomSplashScreen>
 
   late AnimationController _controller;
   late Animation<double> animation1;
- 
   @override
   void initState(){
     initUniqueIdentifierState();
@@ -81,10 +80,8 @@ class _MyCustomSplashScreenState extends State<MyCustomSplashScreen>
       });
     });
 
-    Timer(const Duration(seconds: 4), () {
-      setState(() {
-        Get.toNamed(RouteUnits.login);
-      });
+    Timer(const Duration(seconds: 4), () async{
+      Get.toNamed(RouteUnits.login);
     });
   }
 

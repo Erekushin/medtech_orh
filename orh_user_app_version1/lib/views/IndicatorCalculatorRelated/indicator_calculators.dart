@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:orh_user_app_version1/Controllers/calculator_controller.dart';
 import 'package:orh_user_app_version1/MyWidgets/my_button.dart';
 
-import '../../Controllers/survey_controller.dart';
+import '../../Controllers/SurveyRelated/survey_controller.dart';
 import '../../MyWidgets/my_reciever_unit.dart';
 import '../../global_constant.dart';
 
@@ -47,11 +47,11 @@ class _IndicatorButton extends State<IndicatorButton> {
               SizedBox(
                 child: ListView.builder( 
           shrinkWrap: true,  
-          itemCount: calculatorController.indicatorQuestions.result!.questions!.length,
+          itemCount: calculatorController.indicatorQuestions.result![0].questions!.length,
           itemBuilder: (contextItemBuilder, index){
             surveyControllerOut.textEditingControllers.add(TextEditingController());
             surveyControllerOut.dropvalueList.add(DropSelectVal());
-            var item = calculatorController.indicatorQuestions.result!.questions![index];
+            var item = calculatorController.indicatorQuestions.result![0].questions![index];
             return RecieverUnit(questionID: item.id!, type: item.type, questionText: item.questionText, 
                                         questionIndex: index, options: []);
           }

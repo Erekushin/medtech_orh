@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
 import 'package:get/get.dart';
+import 'package:orh_user_app_version1/Controllers/SurveyRelated/survey_controller.dart';
 import 'package:orh_user_app_version1/global_constant.dart';
-import '../../Controllers/login_controller.dart';
+import 'package:orh_user_app_version1/global_helpers.dart';
+import '../../Controllers/auth_controller.dart';
 import '../../Helpers/scroll_behavior.dart';
 import '../../Helpers/logging.dart';
 import 'package:logger/logger.dart';
@@ -19,10 +21,11 @@ class _LoginState extends State<Login>with SingleTickerProviderStateMixin {
   late Animation<double> _opacity;
   late Animation<double> _transform;
   GlobalKey<FormState> loginValidatorKey = GlobalKey<FormState>();
+  var surveyController = Get.find<SurveyController>();
   @override
   void initState() {
     super.initState();
-    Get.put(LoginController());
+    Get.put(AuthController());
     _controller = AnimationController(
       vsync: this,
       duration: const Duration(seconds: 3),
@@ -52,7 +55,7 @@ class _LoginState extends State<Login>with SingleTickerProviderStateMixin {
   }
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<LoginController>(builder: (logincontroller){
+    return GetBuilder<AuthController>(builder: (logincontroller){
       return Scaffold(
       extendBodyBehindAppBar: true,
       body: ScrollConfiguration(
@@ -158,6 +161,7 @@ class _LoginState extends State<Login>with SingleTickerProviderStateMixin {
                                 ),
                                 recognizer: TapGestureRecognizer()
                                   ..onTap = () {
+                                    print('object');
                                   Get.toNamed(RouteUnits.answerform);
                                   },
                               ),
@@ -166,7 +170,7 @@ class _LoginState extends State<Login>with SingleTickerProviderStateMixin {
                             // Obx((){
                             //   if(Get.find<LoginController>().loginloading as bool){} const CircularProgressIndicator() : const SizedBox();
                             // })
-                            GetX<LoginController>(builder: (builder){
+                            GetX<AuthController>(builder: (builder){
                               return builder.loginloading.isTrue? const CircularProgressIndicator() : const SizedBox();
                             }),
                           ],

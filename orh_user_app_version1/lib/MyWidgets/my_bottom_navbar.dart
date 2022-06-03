@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:orh_user_app_version1/global_constant.dart';
 import 'package:orh_user_app_version1/global_helpers.dart';
-import '../Controllers/login_controller.dart';
+import '../Controllers/SurveyRelated/survey_controller.dart';
+import '../Controllers/auth_controller.dart';
 class MyBottomNavbar extends StatefulWidget {
   const MyBottomNavbar({ Key? key }) : super(key: key);
 
@@ -24,8 +25,7 @@ class _MyBottomNavbarState extends State<MyBottomNavbar> {
       case 0 :
         GlobalHelpers.bottomnavbarSwitcher.add(false);
         Get.offAllNamed(RouteUnits.home);
-        Get.put(LoginController());
-       
+        Get.put(AuthController());
         break;
       case 1 :
         Get.toNamed(RouteUnits.home);

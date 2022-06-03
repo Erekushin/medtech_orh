@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:orh_user_app_version1/MyWidgets/my_text.dart';
 import 'package:orh_user_app_version1/global_constant.dart';
-import '../Controllers/survey_controller.dart';
+import '../Controllers/SurveyRelated/survey_controller.dart';
 class MyRadioBtn extends StatefulWidget {
   MyRadioBtn({ Key? key,required this.w, this.optionItems, required this.title, 
                      required this.questionID, required this.questionIndex}) : super(key: key);
@@ -28,13 +28,13 @@ class _MyRadioBtn extends State<MyRadioBtn>{
           children: [
             myText(widget.title, AllSizes.queryTxtSize, 1),
             
-            ListView.builder(
-              shrinkWrap: true,
-              itemCount: widget.optionItems!.length,
-              itemBuilder: (context, index){
-              final eachOptionInfo = queryController.queryQuestions.result!.questions![widget.questionIndex].options![index];
-              return RadioUnit(unitId: eachOptionInfo.id!, unitText: eachOptionInfo.optionText!,questionIndex: widget.questionIndex, radioIndex: index,);
-            })
+            // ListView.builder(
+            //   shrinkWrap: true,
+            //   itemCount: widget.optionItems!.length,
+            //   itemBuilder: (context, index){
+            //   // final eachOptionInfo = queryController.survey.result!.questions![widget.questionIndex].options![index];
+            //   return RadioUnit(unitId: eachOptionInfo.optionId!, unitText: eachOptionInfo.optionText!,questionIndex: widget.questionIndex, radioIndex: index,);
+            // })
       ],
     )
     );

@@ -20,8 +20,6 @@ static String pass = '';
 static bool isXyrNull = false;
 static int loopCheck = 0;
 }
-
-
     // try{
        
     // }

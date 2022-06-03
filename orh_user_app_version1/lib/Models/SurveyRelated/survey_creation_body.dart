@@ -3,18 +3,46 @@ import 'package:get/get.dart';
 
 class SurveyCreationbody {
   String? surveyName;
+  int? userId;
+  int? surveyType;
+  int? surveyPrivacyLevel;
+  String? surveyClr = '0xFFFFFFFF';
+  String surveyCreatedDate = DateTime.now().toString().substring(0, 10);
+  List<Researchers>? researchers;
   List<Question>? questions;
 
-  SurveyCreationbody({this.surveyName, this.questions});
+  SurveyCreationbody({this.surveyName, this.questions, this.researchers, this.userId, 
+                       this.surveyType, this.surveyPrivacyLevel,
+                       this.surveyClr});
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['survey_name'] = surveyName;
+    data['user_id'] = userId;
+    data['survey_type'] = surveyType;
+    data['survey_privacy_level'] = surveyPrivacyLevel;
+    data['survey_color'] = surveyClr;
+    data['survey_created_date'] = surveyCreatedDate;
     if (questions != null) {
       data['questions'] = questions!.map((v) => v.toJson()).toList();
+    }
+    if (researchers != null) {
+      data['researchers'] = researchers!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
+
+class Researchers{
+
+   String? researcherId;
+   Researchers({this.researcherId});
+   Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['researcherId'] = researcherId;
+    return data;
+  }
+}
+
 
 class Question{
   String? questionText;

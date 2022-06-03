@@ -1,59 +1,46 @@
+import 'dart:async';
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'dart:convert';
-import 'package:flutter/services.dart';
-import 'package:orh_user_app_version1/Controllers/login_controller.dart';
+import 'package:orh_user_app_version1/Controllers/auth_controller.dart';
+import 'package:orh_user_app_version1/Controllers/profile_controller.dart';
 import 'package:orh_user_app_version1/Helpers/logging.dart';
 import 'package:orh_user_app_version1/Models/xyr.dart';
 import 'package:orh_user_app_version1/global_helpers.dart';
-import '../Helpers/load_json_from_assest.dart';
-import '../Models/SurveyRelated/survey_answer_body.dart';
-import '../Models/SurveyRelated/survey_creation_body.dart';
-import '../Models/SurveyRelated/survey_list.dart';
-import '../Models/result.dart';
-import '../global_constant.dart';
-import '../models/SurveyRelated/aimags.dart';
-import '../models/SurveyRelated/survey_question_body.dart';
-import '../models/SurveyRelated/researcher_default.dart';
-
-/// mydrop down ii utgiig hadaglah string bvhii class vvgeer form toi 
-/// ijil hemjeenii list vvsgej bgaa
+import '../../Helpers/load_json_from_assest.dart';
+import '../../Models/SurveyRelated/survey_answer_body.dart';
+import '../../Models/SurveyRelated/survey_list.dart';
+import '../../Models/result.dart';
+import '../../global_constant.dart';
+import '../../models/SurveyRelated/aimags.dart';
+import '../../models/SurveyRelated/survey_body.dart';
+import '../../models/SurveyRelated/researcher_default.dart';
 class DropSelectVal{
   DropSelectVal({this.value});
   String? value;
 }
 class SurveyController extends GetxController{
+  var surveyDeleteIcon = false.obs;
+  
+  var chosenSurveyId;
+  var chosenSurveyIndx;
   var ereklog = logger(SurveyController);
- ///survey vvsgeh hvseltiin biy
- SurveyCreationbody   surveyCreationbody = SurveyCreationbody();
- ///vvsgej bui Question vvdee hadaglah list
- List<Question> newQuestionList = <Question>[].obs;
-
  //xyr ajillahgvi vyd ajillah textfieldvvdiin controller
   var lastName = TextEditingController();
   var firstName = TextEditingController();
   var age = TextEditingController();
   var gender = TextEditingController();
- //.....................................................
-  
-  ///survey iin list iig duudah vyd hvleej avah biy
-  SurveyListBody surveyListbody = SurveyListBody();
-
-  ///dropdown aas songogdson utguudiig hadaglah sav
-  ///form iig zurah vyd questionii urttai ijilhen urtaar 
-  ///vvsne utguudiig drop down aas question ii index eer yavuuldag
+  //.....................................................
+  var surveyListbody = SurveyListBody().obs;
   List<DropSelectVal> dropvalueList = [];
-  ///text utguudiig hadaglah sav form iig zurah vyd questionii 
-  ///urttai ijilhen urtaar vvsne question ii index eer ni avch 
-  ///parametereer ni yavuulaad controller oor ni holboson
   List<TextEditingController> textEditingControllers = [];
   ///bairshiliin medeelliig hadgalsan default medeelliin instance
   ResearcherDefaultData researcherDefaultData = ResearcherDefaultData();
   ///xyr iin instance
   XyrInfo xyrInfo = XyrInfo();
   ///base aas irj bui Question ii instance
-  SurveyQuestions queryQuestions = SurveyQuestions(); 
+  Survey survey = Survey(); 
   ///base ruu yavuulah hariunuudiig tsugluulj hiih sav
   SurveyAnswer surveyAnswer = SurveyAnswer();
   ///olon gazar ashiglagdaj boloh gerege response iin hamgiin 
@@ -71,7 +58,7 @@ class SurveyController extends GetxController{
   var xyrName = ''.obs;
   var childHeartQuerybtnloading = false.obs;
   var pushDataBtn = true.obs;
-  var chosenSurvey;
+  
   DateTime currentDate = DateTime.now();
   Future getAimagList() async {
     String jsonString = await loadFromAsset("assets/file/addresses.json");
@@ -92,19 +79,16 @@ class SurveyController extends GetxController{
 
 
    Map<String, dynamic> geregeId(){
-    final geregeID = Get.find<LoginController>().geregeUser.result!.id;
+    final geregeID = Get.find<AuthController>().medtech_user.result!.userId;
     final Map<String, dynamic> data = <String, dynamic>{};
     data['user_id'] = geregeID;
     return data;
   }
-   Map<String, dynamic> queryPayload(){
+
+   static Map<String, dynamic> surveyListPayload(int UserId, String search_txt){
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['survey_id'] = '$chosenSurvey';
-    return data;
-  }
-   Map<String, dynamic> surveyList(){
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['survey_id'] = '';
+    data['user_id'] = UserId;
+    data['search_txt'] = search_txt;
     return data;
   }
    Map<String, dynamic> rd(){
@@ -112,40 +96,39 @@ class SurveyController extends GetxController{
     data['search_text'] = rdTxtController.text;
     return data;
   }
-  Future surveyListGet() async{
-    var data = await GlobalHelpers.postRequestGeneral.getdata(surveyList(), "120002", UriAdresses.geregeMedtech);
+  Future surveyListGet(String routekey, String messageCode, int userId, String searchTxt) async{
+    var data = await GlobalHelpers.postRequestGeneral.getdata(surveyListPayload(userId, searchTxt), messageCode, UriAdresses.medCore);
     ereklog.wtf(data);
-    surveyListbody = SurveyListBody.fromJson(jsonDecode(data.toString()));
-     switch(surveyListbody.code){
-       case 200:
-          Get.toNamed(RouteUnits.surveyList, arguments: "");
-                  GlobalHelpers.bottomnavbarSwitcher.add(true);
-          Get.snackbar('Амжилттай', 'Судалгаануудыг амжилттай авлаа!', snackPosition: SnackPosition.BOTTOM,
-          colorText: Colors.white, backgroundColor: Colors.grey[900], margin: EdgeInsets.only(bottom: GeneralMeasurements.snackbarBottomMargin, left: 5, right: 5,));
-          break;
-        default : break;  
+    ereklog.wtf(jsonEncode(surveyListPayload(userId, searchTxt)));
+    switch(routekey){
+      case '/home':
+      surveyListbody.value = SurveyListBody.fromJson(jsonDecode(data.toString()));
+      break;
+      case '/profile':
+      Get.find<ProfileController>().ownSurveyListbody.value = SurveyListBody.fromJson(jsonDecode(data.toString()));
+      break;
     }
   }
-  Future surveyQuestionsGet() async{
-    var jsondata = await GlobalHelpers.postRequestGeneral.getdata(queryPayload(), "120003", UriAdresses.geregeMedtech);
-    ereklog.wtf(jsondata);
-    queryQuestions = SurveyQuestions.fromJson(jsonDecode(jsondata.toString()));
-    for(int i = 0; i< queryQuestions.result!.questions!.length; i++){
-      ereklog.i(queryQuestions.result!.questions![i].questionText);
-      if(queryQuestions.result!.questions![i].options != null){
-         for(int a = 0; a<queryQuestions.result!.questions![i].options!.length; a++){
-        ereklog.wtf(queryQuestions.result!.questions![i].options![a].optionText);
-      }
-      }
-    }
-    Get.toNamed(RouteUnits.surveyList + RouteUnits.individualSurvey, arguments: "");
-    // Get.toNamed(RouteUnits.answerform);
-    GlobalHelpers.bottomnavbarSwitcher.add(false);
-    surveyAnswer.answers = List<Answers>.generate(queryQuestions.result!.questions!.length, ((index) => Answers()));
-  }
+  // Future surveyQuestionsGet() async{
+  //   var jsondata = await GlobalHelpers.postRequestGeneral.getdata(chosenSurveyPayload(), "120003", UriAdresses.medCore);
+  //   ereklog.wtf(jsondata);
+  //   survey = Survey.fromJson(jsonDecode(jsondata.toString()));
+  //   for(int i = 0; i< survey.result![0].questions!.length; i++){
+  //     ereklog.i(survey.result![0].questions![i].questionText);
+  //     if(survey.result!.questions![i].options != null){
+  //        for(int a = 0; a<survey.result!.questions![i].options!.length; a++){
+  //       ereklog.wtf(survey.result!.questions![i].options![a].optionText);
+  //     }
+  //     }
+  //   }
+  //   Get.toNamed(RouteUnits.surveyList + RouteUnits.individualSurvey, arguments: "");
+  //   // Get.toNamed(RouteUnits.answerform);
+  //   GlobalHelpers.bottomnavbarSwitcher.add(false);
+  //   surveyAnswer.answers = List<Answers>.generate(survey.result!.questions!.length, ((index) => Answers()));
+  // }
 
   Future surveyAnswersPush() async{//message code deeree toglood olon torliin asuultuud yavuulj bolno
-     var jsondata = await GlobalHelpers.postRequestGeneral.getdata(surveyAnswer.toJson(), "120004", UriAdresses.geregeMedtech);
+     var jsondata = await GlobalHelpers.postRequestGeneral.getdata(surveyAnswer.toJson(), "120004", UriAdresses.medCore);
     log(jsonEncode(surveyAnswer.toJson()));
     print(jsondata.toString()+' '+'hariugaa yavuulsanii hariu');
     generalResponse = GeneralResponse.fromJson(jsonDecode(jsondata));
@@ -171,7 +154,7 @@ class SurveyController extends GetxController{
        case '200':
           childHeartQuerybtnloading.value = false;
           researcherDefaultDataGet();
-          surveyQuestionsGet();
+          // surveyQuestionsGet();
           GlobalHelpers.loopCheck = 0;
           break;
         case '100':
@@ -191,7 +174,7 @@ class SurveyController extends GetxController{
         case 'Unauthorized':
           GlobalHelpers.loopCheck++;
           if(GlobalHelpers.loopCheck < 10){
-            Get.find<LoginController>().geregeUserLogin((){isResearcherAuth();});
+            Get.find<AuthController>().geregeUserLogin((){isResearcherAuth();});
           }
           else{
           Get.snackbar('Аюултай!!', 'Программаа дахин оруулна уу!. Хэрвээ уг алдаа дахин гарвал харилцагчийн төвд хандана уу.', snackPosition: SnackPosition.BOTTOM,
@@ -240,7 +223,7 @@ class SurveyController extends GetxController{
       case 'Unauthorized':
         GlobalHelpers.loopCheck++;
           if(GlobalHelpers.loopCheck < 10){
-            Get.find<LoginController>().geregeUserLogin((){Get.find<SurveyController>().researcherDefaultDataUpdateAndPush();});
+            Get.find<AuthController>().geregeUserLogin((){Get.find<SurveyController>().researcherDefaultDataUpdateAndPush();});
           }
           else{
           Get.snackbar('Аюултай!!', 'Программаа дахин оруулна уу!. Хэрвээ уг алдаа дахин гарвал харилцагчийн төвд хандана уу.', snackPosition: SnackPosition.BOTTOM,
@@ -250,7 +233,6 @@ class SurveyController extends GetxController{
     }
  
   }
-   
   Future xyrInfoGet() async{
     var xyrInfoString = await GlobalHelpers.postRequestGeneral.getdata(rd(), "501002", UriAdresses.covidBackEnd);
     xyrInfo = XyrInfo.fromJson(jsonDecode(xyrInfoString.toString()));
@@ -272,7 +254,7 @@ class SurveyController extends GetxController{
       print('unauthorized ruu orson');
         GlobalHelpers.loopCheck++;
           if(GlobalHelpers.loopCheck < 10){
-            Get.find<LoginController>().geregeUserLogin((){xyrInfoGet();});
+            Get.find<AuthController>().geregeUserLogin((){xyrInfoGet();});
           }
           else{
           Get.snackbar('Аюултай!!', 'Программаа дахин оруулна уу!. Хэрвээ уг алдаа дахин гарвал харилцагчийн төвд хандана уу.', snackPosition: SnackPosition.BOTTOM,
@@ -282,18 +264,27 @@ class SurveyController extends GetxController{
     }
   }
 
+  
 
-  Future backendtest() async{
-    var jsonData = await GlobalHelpers.postRequestGeneral.getdata(surveyCreationbody.toJson(), "120001", UriAdresses.geregeMedtech);
-    print('json data');
-    ereklog.wtf(jsonData);
-    generalResponse = GeneralResponse.fromJson(jsonDecode(jsonData));
-    log(generalResponse.result.toString());
-    switch(generalResponse.code){
-      case '200':
-          ereklog.wtf('surveyQuestionPush deer 200 toi response irsen');
-          GlobalHelpers.workingWithCode.clearSurveyData();
+  Map<String, dynamic> chosenSurveyPayload(){
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['survey_id'] = '$chosenSurveyId';
+    return data;
+  }
+  Future deleteSurvey() async{
+    var data = await GlobalHelpers.postRequestGeneral.getdata(chosenSurveyPayload(), "120007", UriAdresses.medCore);
+    xyrInfo = XyrInfo.fromJson(jsonDecode(data.toString()));
+    print('delete iig harii');
+    print(chosenSurveyId);
+    ereklog.wtf(chosenSurveyPayload());
+    ereklog.wtf(data);
+    log(jsonEncode(chosenSurveyPayload()));
+    switch(xyrInfo.code){
+       case '200':
+         
           break;
     }
   }
+
+
 }
