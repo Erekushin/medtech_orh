@@ -9,7 +9,6 @@ import '../../Controllers/SurveyRelated/survey_controller.dart';
 import '../../Controllers/auth_controller.dart';
 import '../../MyWidgets/home_page_card.dart';
 import '../../MyWidgets/my_button.dart';
-import '../../file_check_ui.dart';
 import '../../global_constant.dart';
 import '../../global_helpers.dart';
 
@@ -379,16 +378,6 @@ class _HomeSidebarState extends State<HomeSidebar> {
                      await sqlController.readAllNotes();
                       Get.toNamed(RouteUnits.treatmentRecipe, arguments: "firstPage");
                      },
-              ),
-              homePageCard(
-                  const Color(0xff63ace5),
-                  Icons.gamepad_outlined,
-                    'recipe base test',
-                    (){
-                      // sqlController.doctorTestget();
-                      GlobalHelpers.bottomnavbarSwitcher.add(false);
-                      Get.to(() => const MlearningTest());
-                    },
               ),
               homePageCard(
                   const Color(0xffFF6D6D),

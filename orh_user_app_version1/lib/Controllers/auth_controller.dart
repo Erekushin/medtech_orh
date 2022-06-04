@@ -2,8 +2,12 @@
 
 import 'dart:convert';
 import 'dart:developer';
+import 'dart:io';
+import 'dart:typed_data';
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:orh_user_app_version1/Controllers/image_controller.dart';
 import 'package:orh_user_app_version1/Models/result.dart';
 import '../Helpers/logging.dart';
 import '../Models/LoginRelatedModels/gerege_user.dart';
@@ -11,12 +15,13 @@ import '../global_constant.dart';
 import '../global_helpers.dart';
 import 'package:crypto/crypto.dart';
 import 'SurveyRelated/survey_controller.dart';
+import 'package:crypto/crypto.dart';
 
 class AuthController extends GetxController{
   User_Info medtech_user = User_Info();
   var loginloading = false.obs;
-  var username = TextEditingController();
-  var pass = TextEditingController();
+  var loginName = TextEditingController();
+  var loginPass = TextEditingController();
   //register
   var nameCont = TextEditingController();
   var passCont = TextEditingController();
@@ -31,8 +36,11 @@ class AuthController extends GetxController{
   //   return data;
   // }
    Map<String, dynamic> loginBody(){
+    var bytes = utf8.encode(loginPass.text);
+    var hash = sha256.convert(bytes);
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['user_name'] = username.text;
+    data['user_name'] = loginName.text;
+    data['user_pass'] = hash.toString();
     return data;
   }
   Map<String, dynamic> geregeId(){
@@ -46,8 +54,8 @@ class AuthController extends GetxController{
   var ereklog = logger(SurveyController);
   Future geregeUserLogin(Function retryFunction) async{
     loginloading.value = true;
-    GlobalHelpers.userName = username.text;
-    GlobalHelpers.pass = md5.convert(utf8.encode(pass.text.toString())).toString();
+    GlobalHelpers.userName = loginName.text;
+    GlobalHelpers.pass = md5.convert(utf8.encode(loginPass.text.toString())).toString();
     if(GlobalHelpers.userName.isNotEmpty && GlobalHelpers.pass.isNotEmpty){
       var data = await GlobalHelpers.postRequestGeneral.getdata(loginBody(), "110002", UriAdresses.medCore); //UriAdresses.geregeUserLoginUri
       print('gerege login ajillah yostoi');
@@ -65,29 +73,29 @@ class AuthController extends GetxController{
           loginloading.value = false; 
           Get.snackbar('Хэрэглэгч бүртгэлгүй байна', 'Бүртгэл үүсгэхийн тулд Gerege App ыг суулгана уу!', snackPosition: SnackPosition.BOTTOM,
           colorText: Colors.white, backgroundColor: Colors.grey[900], margin:  const EdgeInsets.all(5));
-          username.clear();
-          pass.clear();
+          loginName.clear();
+          loginPass.clear();
           break;
         case 100:
           loginloading.value = false; 
           Get.snackbar('Интернет Алдаа', 'Та интернетээ шалгана уу!', snackPosition: SnackPosition.BOTTOM,
           colorText: Colors.white, backgroundColor: Colors.grey[900], margin:  const EdgeInsets.all(5));
-          username.clear();
-          pass.clear();
+          loginName.clear();
+          loginPass.clear();
           break;
         case 101:
           loginloading.value = false; 
           Get.snackbar('Интернет Алдаа', 'Та интернетээ шалгана уу!', snackPosition: SnackPosition.BOTTOM,
           colorText: Colors.white, backgroundColor: Colors.grey[900], margin:  const EdgeInsets.all(5));
-          username.clear();
-          pass.clear();
+          loginName.clear();
+          loginPass.clear();
           break;
         case 400: 
           loginloading.value = false;
           Get.snackbar(medtech_user.message!, 'Нууц үг буруу эсвэл Тэрминал байхгүй', snackPosition: SnackPosition.BOTTOM,
           colorText: Colors.white, backgroundColor: Colors.grey[900], margin:  const EdgeInsets.all(5));
-          username.clear();
-          pass.clear();
+          loginName.clear();
+          loginPass.clear();
           break;
         default : break;  
       }
@@ -101,16 +109,22 @@ class AuthController extends GetxController{
   
 
   Map<String, dynamic> registerInfo(){
+    var imageCon = Get.find<ImageController>();
+    var bytes = utf8.encode(passCont.text);
+    var hash = sha256.convert(bytes);
     final Map<String, dynamic> data = <String, dynamic>{};
     data['user_name'] = nameCont.text; 
-    data['user_pass'] = passCont.text; 
-    data['user_phone'] = phoneCont.text;
+    data['user_pass'] = hash.toString(); 
+    data['phone'] = phoneCont.text;
     data['user_rd'] = rdCont.text; 
+    data['picture'] = imageCon.imageBytes.toString();
     return data;
   }
   Future registration() async{
     var data = await GlobalHelpers.postRequestGeneral.getdata(registerInfo(), '110001', UriAdresses.medCore);
     generalResponse = GeneralResponse.fromJson(jsonDecode(data.toString()));
+    print(registerInfo());
+    print(data);
     if(generalResponse.code == '200'){
        Get.snackbar('Gerege Medtech family-д тавтай морил', "Хэрэглэгчийн бүртгэл амжилттай үүслээ", snackPosition: SnackPosition.BOTTOM,
           colorText: Colors.white, backgroundColor: Colors.grey[900], margin: const EdgeInsets.all(5));
@@ -118,6 +132,10 @@ class AuthController extends GetxController{
          passCont.clear();
          phoneCont.clear();
          rdCont.clear();
+    }
+    else if(generalResponse.code == '400'){
+       Get.snackbar('Бүртгэл үүсгэж чадсангүй', generalResponse.message.toString(), snackPosition: SnackPosition.BOTTOM,
+          colorText: Colors.white, backgroundColor: Colors.grey[900], margin: const EdgeInsets.all(5));
     }
   }
 }

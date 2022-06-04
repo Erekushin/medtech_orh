@@ -1,3 +1,4 @@
+import 'dart:typed_data';
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -118,8 +119,8 @@ class _ProfileState extends State<Profile> {
                         children: [
                           TextButton(onPressed: (){
                             GlobalHelpers.bottomnavbarSwitcher.add(false);
-                            Get.find<AuthController>().username.clear();
-                            Get.find<AuthController>().pass.clear();
+                            Get.find<AuthController>().loginName.clear();
+                            Get.find<AuthController>().loginPass.clear();
                             Get.offAllNamed(RouteUnits.login);
                             }, 
                           child: const Text('change account', style: TextStyle(color: Colors.white),)),
@@ -156,24 +157,29 @@ class _ProfileState extends State<Profile> {
                    child: Column(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
-                            GetX<ImageController>(builder: (imageController){
-                            return   InkWell(
+                            InkWell(
                               onTap: (){
                                 GlobalHelpers.imageFileSwitcher = true;
-                                imageController.cameraAndGallery();
+                                // imageController.cameraAndGallery();
                               },
                               child: CircleAvatar(
                             backgroundColor: Colors.grey,
                             radius: 60,
                             backgroundImage: const AssetImage('assets/images/user_default.png'),  
-                            child: GlobalHelpers.imageFileSwitcher? ClipRRect(
-                            child: AspectRatio(aspectRatio: 1 / 1, child: Image.file(imageController.imageFile.value, fit: BoxFit.fill,)),
-                            borderRadius: BorderRadius.circular(90.0),
-                            ) : Container(width: 5, height: 5, color: Colors.blue, child: Text(imageController.imageFile.value.toString()),),
+                            child: Image.memory(Uint8List.fromList(loginController.medtech_user.result!.picture!)) ,
                          ),
-                            );
-                            }),
+                            ),
                             const SizedBox(width: 1, height: 1,),
+
+
+
+                            // GlobalHelpers.imageFileSwitcher? ClipRRect(
+                            // child: AspectRatio(aspectRatio: 1 / 1, child: Image.file(imageController.imageFile.value, fit: BoxFit.fill,)),
+                            // borderRadius: BorderRadius.circular(90.0),
+                            // ) : Container(width: 5, height: 5, color: Colors.blue, child: Text(imageController.imageFile.value.toString()),)
+
+
+
                             // Text(loginController.geregeUser.result!.firstName?? '', style: const TextStyle(fontWeight: FontWeight.bold),),
                             // Text(loginController.geregeUser.result!.phoneNo?? '', style: const TextStyle(fontWeight: FontWeight.bold),),
                          ],

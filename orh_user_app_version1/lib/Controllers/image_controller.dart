@@ -7,17 +7,20 @@ import 'package:flutter/material.dart';
 class ImageController extends GetxController{
  var randomImageList = [].obs;
  var imageFile = File('').obs;
+ var imageBytes;
  final _picker = ImagePicker();
  Future<void> pickImageFromGallery() async {
     final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
     if (pickedFile != null) {
       imageFile.value = File(pickedFile.path);
+      imageBytes = await imageFile.value.readAsBytes();
     }
   }
   Future<void> pickImageFromCamera() async {
     final pickedFile = await _picker.pickImage(source: ImageSource.camera);
     if (pickedFile != null) {
       imageFile.value = File(pickedFile.path);
+      imageBytes = await imageFile.value.readAsBytes();
     }
   }
   Future<void> cameraAndGallery() async{

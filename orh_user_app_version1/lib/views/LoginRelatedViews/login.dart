@@ -108,9 +108,9 @@ class _LoginState extends State<Login>with SingleTickerProviderStateMixin {
                             ),
                             const SizedBox(),
                             component1(Icons.account_circle_outlined,
-                                'User name...', false, false, logincontroller.username),
+                                'User name...', false, false, logincontroller.loginName),
                             component1(
-                                Icons.lock_outline, 'Password...', true, false, logincontroller.pass),
+                                Icons.lock_outline, 'Password...', true, false, logincontroller.loginPass),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
@@ -145,6 +145,8 @@ class _LoginState extends State<Login>with SingleTickerProviderStateMixin {
                                       style: const TextStyle(color: Colors.blueAccent),
                                       recognizer: TapGestureRecognizer()
                                         ..onTap = () async{
+                                          List<int> f = [1,21,545,121];
+                                          print(f.toString());
                                         },
                                     ),
                                   ),
