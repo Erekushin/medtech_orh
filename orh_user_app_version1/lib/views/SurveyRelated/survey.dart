@@ -31,15 +31,6 @@ class _SurveyUnit extends State<SurveyUnit> {
       child: Scaffold(
         body: PageView.builder(
               controller: pageController,
-              onPageChanged: (index){
-                switch(index){
-                  case 1:
-                    if(settingsController.xyrServiceSwitcher.value){
-                     queryController.xyrInfoGet();
-                    }
-                  break;
-                }
-              },
               itemCount: GlobalHelpers.surveyPageCount,
               itemBuilder: (context, index){
                 return PageUnit(pageIndex: index,);
@@ -49,8 +40,6 @@ class _SurveyUnit extends State<SurveyUnit> {
       );
   }
 }
-
-
 ///судалгааны асуултуудыг харуулах хуудас
 class PageUnit extends StatefulWidget {
   const PageUnit({ Key? key,required this.pageIndex }) : super(key: key);

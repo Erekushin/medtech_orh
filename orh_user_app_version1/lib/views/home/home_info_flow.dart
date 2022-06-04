@@ -45,7 +45,7 @@ if (scrollController.offset >= scrollController.position.maxScrollExtent &&
     }
     if (scrollController.offset <= scrollController.position.minScrollExtent &&
         !scrollController.position.outOfRange) {//reach the top
-      surveyController.surveyListGet(RouteUnits.home, '120002', loginController.medtech_user.result!.userId!, '');
+      surveyController.surveyListGet(RouteUnits.home, '120002', loginController.user.result!.userId!, '');
     }
  }
   @override
@@ -105,7 +105,7 @@ if (scrollController.offset >= scrollController.position.maxScrollExtent &&
                   child: TextField(
                         onChanged: (value){
                           //value aa avaal shuud hvselt shidene gesen vg
-                           surveyController.surveyListGet(RouteUnits.home, '120002', loginController.medtech_user.result!.userId!, value);
+                           surveyController.surveyListGet(RouteUnits.home, '120002', loginController.user.result!.userId!, value);
                        },
                         controller: searchController,
                         decoration: const InputDecoration(
@@ -341,7 +341,7 @@ class _HomeSidebarState extends State<HomeSidebar> {
                 Icons.person,
                 'Профайл',
                 ()async {
-                  await surveyController.surveyListGet(RouteUnits.profile, '120006', loginController.medtech_user.result!.userId!, '');
+                  await surveyController.surveyListGet(RouteUnits.profile, '120006', loginController.user.result!.userId!, '');
                   Get.toNamed('/profile', arguments: RouteUnits.profile);
                    GlobalHelpers.bottomnavbarSwitcher.add(true);},
               ),

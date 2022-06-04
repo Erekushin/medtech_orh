@@ -34,7 +34,7 @@ class _SurveyListState extends State<SurveyList> {
       child: Scaffold(
         backgroundColor: Colors.white,
         body: FutureBuilder(
-          future: surveyController.surveyListGet(RouteUnits.home, '120006', loginController.medtech_user.result!.userId!, ''),
+          future: surveyController.surveyListGet(RouteUnits.home, '120006', loginController.user.result!.userId!, ''),
           builder: (context, snapshot){
             if(snapshot.hasData){
               SurveyListBody surveyList = snapshot.data as SurveyListBody;

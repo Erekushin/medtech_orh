@@ -2,9 +2,6 @@
 
 import 'dart:convert';
 import 'dart:developer';
-import 'dart:io';
-import 'dart:typed_data';
-import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:orh_user_app_version1/Controllers/image_controller.dart';
@@ -15,10 +12,9 @@ import '../global_constant.dart';
 import '../global_helpers.dart';
 import 'package:crypto/crypto.dart';
 import 'SurveyRelated/survey_controller.dart';
-import 'package:crypto/crypto.dart';
 
 class AuthController extends GetxController{
-  User_Info medtech_user = User_Info();
+  User_Info user = User_Info();
   var loginloading = false.obs;
   var loginName = TextEditingController();
   var loginPass = TextEditingController();
@@ -44,7 +40,7 @@ class AuthController extends GetxController{
     return data;
   }
   Map<String, dynamic> geregeId(){
-    final int geregeId = medtech_user.result!.userId!;
+    final int geregeId = user.result!.userId!;
     final Map<String, dynamic> data = <String, dynamic>{};
     data['user_id'] = geregeId; 
     return data;
@@ -61,12 +57,12 @@ class AuthController extends GetxController{
       print('gerege login ajillah yostoi');
       log(jsonEncode(loginBody()));
       ereklog.wtf(data);
-      medtech_user = User_Info.fromJson(jsonDecode(data.toString()));
-      switch(medtech_user.code){
+      user = User_Info.fromJson(jsonDecode(data.toString()));
+      switch(user.code){
         case 200:
           loginloading.value = false;
           // GlobalHelpers.auth =  'bearer ' + geregeUser.result!.token!.token!;
-          await surveyController.surveyListGet(RouteUnits.home, '120002', medtech_user.result!.userId!, '');
+          await surveyController.surveyListGet(RouteUnits.home, '120002', user.result!.userId!, '');
           retryFunction();
           break;
         case 403:
@@ -92,7 +88,7 @@ class AuthController extends GetxController{
           break;
         case 400: 
           loginloading.value = false;
-          Get.snackbar(medtech_user.message!, 'Нууц үг буруу эсвэл Тэрминал байхгүй', snackPosition: SnackPosition.BOTTOM,
+          Get.snackbar(user.message!, 'Нууц үг буруу эсвэл Тэрминал байхгүй', snackPosition: SnackPosition.BOTTOM,
           colorText: Colors.white, backgroundColor: Colors.grey[900], margin:  const EdgeInsets.all(5));
           loginName.clear();
           loginPass.clear();

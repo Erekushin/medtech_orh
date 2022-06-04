@@ -56,7 +56,6 @@ class _MyTextFieldState extends State<MyTextField> {
       onChanged: (value){
           if(settingsController.xyrServiceSwitcher.value){
             if(widget.txtController.text.length == 10){
-            surveyController.xyrInfoGet();
           }
           }
         },

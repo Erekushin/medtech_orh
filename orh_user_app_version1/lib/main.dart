@@ -30,7 +30,6 @@ import 'views/ProfileRelated/profile_devicelog.dart';
 import 'views/ProfileRelated/profile_diagnosis_history.dart';
 import 'views/ProfileRelated/profile_info.dart';
 import 'views/TimeSequenceRelated/time_sequence.dart';
-import 'VideoCall/camera_ex.dart';
 import 'global_constant.dart';
 import 'dart:async';
 import 'global_helpers.dart';
@@ -38,7 +37,6 @@ import 'global_helpers.dart';
 // this is fucking survey branch ..
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  cameras = await availableCameras();
   runApp(const MyApp());
 }
 class MyApp extends StatefulWidget {
@@ -58,7 +56,7 @@ class _MyAppState extends State<MyApp> {
   bindInitialControllers(){
     Get.put(ImageController(), permanent: true);
     Get.put(SurveyController());
-    Get.put(AuthController(), permanent: true); // profile controller ruu shiljvvlne
+    Get.put(AuthController(), permanent: true); 
     Get.put(ProfileController(), permanent: true);
     Get.put(SettingController(), permanent: true);
     Get.put(SqlController(), permanent: true);
@@ -111,13 +109,7 @@ class _MyAppState extends State<MyApp> {
         GetPage(name: RouteUnits.setting, page: ()=> Setting()),
         //Урьдчилан сэргийлэх үзлэг
         GetPage(name: RouteUnits.preDiagnosis, page: ()=> const PreDiagnosis()),
-
-        //card test
-        // GetPage(name: "/loginforvchat", page: ()=> LoginView()),
-        // GetPage(name: "/", page: ()=> LoginView()),
         GetPage(name: RouteUnits.calculators, page: ()=> const CalculatorsHome()),
-        // GetPage(name: "/login", page: ()=> LoginView()),
-        GetPage(name: "/camera", page: ()=> (CameraApp())),
       ], 
     ),
         StreamBuilder<bool>(

@@ -22,7 +22,7 @@ class CalculatorController extends GetxController{
     String jsonString = await loadFromAsset("assets/file/BMI_question.json");
     var bmiQuestion = jsonDecode(jsonString);
     indicatorQuestions = Survey.fromJson(bmiQuestion);
-    surveyController.surveyAnswer.answers = List<Answers>.generate(indicatorQuestions.result![0].questions!.length, ((index) => Answers()));
+    surveyController.surveyAnswer.answers = List<Answers>.generate(indicatorQuestions.result!.questions!.length, ((index) => Answers()));
   }
   //survey controller oos survey answer dotor hadaglagdsan utguudaa avaad helpers dotor bichsen tvvhii bodoltuudaasaa ashiglaad 
   //hariug bodoj gargah

@@ -2,11 +2,7 @@ import 'package:flutter/material.dart';
 
 
 class UriAdresses{
-// static const String tokenTestXyrinfo = "https://iam.gerege.mn/api/request/make";
-// static const String tokenTestlogin = "https://iam.gerege.mn/api/public/user/login";
 static const String medCore = "https://medtech.gerege.mn/make/request";
-static const String geregeUserLoginUri = "https://cvd.gov.mn/api/public/user/login/username";
-static const String covidBackEnd = "https://cvd.gov.mn/api/request/make";
 }
 
 class RouteUnits{

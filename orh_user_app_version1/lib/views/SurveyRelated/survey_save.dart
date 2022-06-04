@@ -95,7 +95,7 @@ class _SurveyInfoCheckState extends State<SurveyInfoCheck> {
                       surveyCreationController.surveyCreationbody.surveyPrivacyLevel != null &&
                       surveyCreationController.surveyCreationbody.surveyType != null){
                     //level, type, color, date 4 songogdoh vydee yavchihaj bgaa 
-                  surveyCreationController.surveyCreationbody.userId = loginController.medtech_user.result!.userId!;
+                  surveyCreationController.surveyCreationbody.userId = loginController.user.result!.userId!;
                   surveyCreationController.surveyCreationbody.questions = surveyCreationController.newQuestionList; 
                   surveyCreationController.surveyCreationbody.researchers = surveyCreationController.researchetIdList;
                   Get.offAllNamed(RouteUnits.home);

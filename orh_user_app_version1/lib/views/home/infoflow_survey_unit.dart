@@ -26,7 +26,7 @@ class _SurveyListItemState extends State<SurveyListItem> {
                     onTap: (){
                        try{
                          surveyController.chosenSurveyId = widget.surveyId;
-                        //  surveyController.surveyQuestionsGet();
+                         surveyController.surveyQuestionsGet();
                        }
                        catch(e){
                         Get.snackbar('Алдаа', '$e', snackPosition: SnackPosition.BOTTOM,

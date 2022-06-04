@@ -166,7 +166,7 @@ class _ProfileState extends State<Profile> {
                             backgroundColor: Colors.grey,
                             radius: 60,
                             backgroundImage: const AssetImage('assets/images/user_default.png'),  
-                            child: Image.memory(Uint8List.fromList(loginController.medtech_user.result!.picture!)) ,
+                            child: Image.memory(Uint8List.fromList(loginController.user.result!.picture!)) ,
                          ),
                             ),
                             const SizedBox(width: 1, height: 1,),
@@ -229,7 +229,7 @@ class _ProfileState extends State<Profile> {
                   onTap: () {
                     surveyControllermini.deleteSurvey();
                     surveyControllermini.surveyDeleteIcon.value = false;
-                    surveyController.surveyListGet(RouteUnits.profile, '120006', loginController.medtech_user.result!.userId!, '');
+                    surveyController.surveyListGet(RouteUnits.profile, '120006', loginController.user.result!.userId!, '');
                   },
                   child: const Icon(
                             Icons.delete,

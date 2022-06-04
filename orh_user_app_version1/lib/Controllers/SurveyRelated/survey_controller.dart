@@ -16,10 +16,6 @@ import '../../global_constant.dart';
 import '../../models/SurveyRelated/aimags.dart';
 import '../../models/SurveyRelated/survey_body.dart';
 import '../../models/SurveyRelated/researcher_default.dart';
-class DropSelectVal{
-  DropSelectVal({this.value});
-  String? value;
-}
 class SurveyController extends GetxController{
   var surveyDeleteIcon = false.obs;
   
@@ -79,7 +75,7 @@ class SurveyController extends GetxController{
 
 
    Map<String, dynamic> geregeId(){
-    final geregeID = Get.find<AuthController>().medtech_user.result!.userId;
+    final geregeID = Get.find<AuthController>().user.result!.userId;
     final Map<String, dynamic> data = <String, dynamic>{};
     data['user_id'] = geregeID;
     return data;
@@ -109,23 +105,23 @@ class SurveyController extends GetxController{
       break;
     }
   }
-  // Future surveyQuestionsGet() async{
-  //   var jsondata = await GlobalHelpers.postRequestGeneral.getdata(chosenSurveyPayload(), "120003", UriAdresses.medCore);
-  //   ereklog.wtf(jsondata);
-  //   survey = Survey.fromJson(jsonDecode(jsondata.toString()));
-  //   for(int i = 0; i< survey.result![0].questions!.length; i++){
-  //     ereklog.i(survey.result![0].questions![i].questionText);
-  //     if(survey.result!.questions![i].options != null){
-  //        for(int a = 0; a<survey.result!.questions![i].options!.length; a++){
-  //       ereklog.wtf(survey.result!.questions![i].options![a].optionText);
-  //     }
-  //     }
-  //   }
-  //   Get.toNamed(RouteUnits.surveyList + RouteUnits.individualSurvey, arguments: "");
-  //   // Get.toNamed(RouteUnits.answerform);
-  //   GlobalHelpers.bottomnavbarSwitcher.add(false);
-  //   surveyAnswer.answers = List<Answers>.generate(survey.result!.questions!.length, ((index) => Answers()));
-  // }
+  Future surveyQuestionsGet() async{
+    var jsondata = await GlobalHelpers.postRequestGeneral.getdata(chosenSurveyPayload(), "120003", UriAdresses.medCore);
+    ereklog.wtf(jsondata);
+    survey = Survey.fromJson(jsonDecode(jsondata.toString()));
+    for(int i = 0; i< survey.result!.questions!.length; i++){
+      ereklog.i(survey.result!.questions![i].questionText);
+      if(survey.result!.question![i].options != null){
+         for(int a = 0; a<survey.result!.questions![i].options!.length; a++){
+        ereklog.wtf(survey.result!.questions![i].options![a].optionText);
+      }
+      }
+    }
+    Get.toNamed(RouteUnits.surveyList + RouteUnits.individualSurvey, arguments: "");
+    // Get.toNamed(RouteUnits.answerform);
+    GlobalHelpers.bottomnavbarSwitcher.add(false);
+    surveyAnswer.answers = List<Answers>.generate(survey.result!.questions!.length, ((index) => Answers()));
+  }
 
   Future surveyAnswersPush() async{//message code deeree toglood olon torliin asuultuud yavuulj bolno
      var jsondata = await GlobalHelpers.postRequestGeneral.getdata(surveyAnswer.toJson(), "120004", UriAdresses.medCore);
@@ -143,129 +139,6 @@ class SurveyController extends GetxController{
     }
 
   }
-
-  //hvvhdiin zvrhnii emgeg ilrvvlehed zoriulsan additional function
-  Future isResearcherAuth() async{
-    childHeartQuerybtnloading.value = true;
-    var data = await GlobalHelpers.postRequestGeneral.getdata(geregeId(), "2035232", UriAdresses.covidBackEnd);
-    log(jsonEncode(geregeId()));
-    var response = GeneralResponse.fromJson(jsonDecode(data.toString()));
-    switch(response.code){
-       case '200':
-          childHeartQuerybtnloading.value = false;
-          researcherDefaultDataGet();
-          // surveyQuestionsGet();
-          GlobalHelpers.loopCheck = 0;
-          break;
-        case '100':
-          childHeartQuerybtnloading.value = false;
-          Get.snackbar('Интернет Алдаа', 'Та интернетээ шалгана уу!', snackPosition: SnackPosition.BOTTOM,
-          colorText: Colors.white, backgroundColor: Colors.grey[900], margin: EdgeInsets.only(bottom: GeneralMeasurements.snackbarBottomMargin, left: 5, right: 5,));
-          break;
-        case '101': 
-          childHeartQuerybtnloading.value = false;
-          Get.snackbar('Интернет Алдаа', 'Та интернетээ шалгана уу!', snackPosition: SnackPosition.BOTTOM,
-          colorText: Colors.white, backgroundColor: Colors.grey[900], margin: EdgeInsets.only(bottom: GeneralMeasurements.snackbarBottomMargin, left: 5, right: 5,));
-          break;
-        case '400': 
-          childHeartQuerybtnloading.value = false;
-          Get.defaultDialog(title: 'Таньд судалгаа авах эрх үүсээгүй байна', content: Image.asset('assets/images/thinkingBoy.png'));
-          break;
-        case 'Unauthorized':
-          GlobalHelpers.loopCheck++;
-          if(GlobalHelpers.loopCheck < 10){
-            Get.find<AuthController>().geregeUserLogin((){isResearcherAuth();});
-          }
-          else{
-          Get.snackbar('Аюултай!!', 'Программаа дахин оруулна уу!. Хэрвээ уг алдаа дахин гарвал харилцагчийн төвд хандана уу.', snackPosition: SnackPosition.BOTTOM,
-          colorText: Colors.white, backgroundColor: Colors.grey[900], margin: EdgeInsets.only(bottom: GeneralMeasurements.snackbarBottomMargin, left: 5, right: 5,));
-          }
-          break;
-        default : break;  
-    }
-  }
-
-  Future researcherDefaultDataGet() async{
-    var jsondata = await GlobalHelpers.postRequestGeneral.getdata(geregeId(), "2035226", UriAdresses.covidBackEnd);
-    researcherDefaultData = ResearcherDefaultData.fromJson(jsonDecode(jsondata.toString()));
-    researcherDefaultData.result!.currentDate = currentDate.toString().substring(0, 10);
-    var a = researcherDefaultData.code;
-    print(' default data nii code $a');
-    switch(researcherDefaultData.code){
-      case 200:
-          haveDefaultData.value = true;
-          Get.snackbar('Байршилын мэдээллийг авлаа', '', snackPosition: SnackPosition.BOTTOM, 
-          colorText: Colors.white, backgroundColor: Colors.grey[900], margin:  const EdgeInsets.only(left: 5, top: 5, bottom: 75));
-          break;
-      case 100:
-          Get.snackbar('Интернет Алдаа', 'Та интернетээ шалгана уу!', snackPosition: SnackPosition.BOTTOM,
-          colorText: Colors.white, backgroundColor: Colors.grey[900], margin:  const EdgeInsets.only(left: 5, top: 5, bottom: 75));
-          break;
-      case 101: 
-          Get.snackbar('Интернет Алдаа', 'Та интернетээ шалгана уу!', snackPosition: SnackPosition.BOTTOM,
-          colorText: Colors.white, backgroundColor: Colors.grey[900], margin: EdgeInsets.only(bottom: GeneralMeasurements.snackbarBottomMargin, left: 5, right: 5,));
-          break;
-        default : break;  
-    }
-  }
-
-  Future researcherDefaultDataUpdateAndPush() async{
-    var jsondata = await GlobalHelpers.postRequestGeneral.getdata(researcherDefaultData.result!.toJson(), "2035231", UriAdresses.covidBackEnd);
-    generalResponse = GeneralResponse.fromJson(jsonDecode(jsondata.toString()));
-    log(json.encode(researcherDefaultData.result!.toJson()));
-    print(generalResponse.code! + "dfdfdfdf");
-    switch(generalResponse.code){
-       case '200':
-          Get.snackbar('Байршилын мэдээллийг хадгаллаа', '', snackPosition: SnackPosition.BOTTOM,
-          colorText: Colors.white, backgroundColor: Colors.grey[900], margin:  const EdgeInsets.all(5));
-        GlobalHelpers.loopCheck = 0;
-        break;
-      case 'Unauthorized':
-        GlobalHelpers.loopCheck++;
-          if(GlobalHelpers.loopCheck < 10){
-            Get.find<AuthController>().geregeUserLogin((){Get.find<SurveyController>().researcherDefaultDataUpdateAndPush();});
-          }
-          else{
-          Get.snackbar('Аюултай!!', 'Программаа дахин оруулна уу!. Хэрвээ уг алдаа дахин гарвал харилцагчийн төвд хандана уу.', snackPosition: SnackPosition.BOTTOM,
-          colorText: Colors.white, backgroundColor: Colors.grey[900], margin:  const EdgeInsets.all(5));
-          }
-        break;
-    }
- 
-  }
-  Future xyrInfoGet() async{
-    var xyrInfoString = await GlobalHelpers.postRequestGeneral.getdata(rd(), "501002", UriAdresses.covidBackEnd);
-    xyrInfo = XyrInfo.fromJson(jsonDecode(xyrInfoString.toString()));
-    log(jsonEncode(rd()));
-    switch(xyrInfo.code){
-       case '200':
-          GlobalHelpers.isXyrNull = true; 
-          Get.snackbar('Иргэний мэдээллийг авлаа', '', snackPosition: SnackPosition.BOTTOM,
-          colorText: Colors.white, backgroundColor: Colors.grey[900], margin: EdgeInsets.only(bottom: GeneralMeasurements.snackbarBottomMargin, left: 5, right: 5,));
-          xyrName.value = xyrInfo.result!.firstName!;
-          GlobalHelpers.loopCheck = 0;
-          break;
-      case '404': 
-         GlobalHelpers.isXyrNull = false; 
-          Get.snackbar('Талбарын мэдээлэл дутуу байна', 'Судалгаанд оролцогчийн Регистрийн дугаарыг оруулна уу!', snackPosition: SnackPosition.BOTTOM,
-          colorText: Colors.white, backgroundColor: Colors.grey[900], margin: EdgeInsets.only(bottom: GeneralMeasurements.snackbarBottomMargin, left: 5, right: 5,));
-        break;
-      case 'Unauthorized':
-      print('unauthorized ruu orson');
-        GlobalHelpers.loopCheck++;
-          if(GlobalHelpers.loopCheck < 10){
-            Get.find<AuthController>().geregeUserLogin((){xyrInfoGet();});
-          }
-          else{
-          Get.snackbar('Аюултай!!', 'Программаа дахин оруулна уу!. Хэрвээ уг алдаа дахин гарвал харилцагчийн төвд хандана уу.', snackPosition: SnackPosition.BOTTOM,
-          colorText: Colors.white, backgroundColor: Colors.grey[900], margin: EdgeInsets.only(bottom: GeneralMeasurements.snackbarBottomMargin, left: 5, right: 5,));
-          }
-        break;
-    }
-  }
-
-  
-
   Map<String, dynamic> chosenSurveyPayload(){
     final Map<String, dynamic> data = <String, dynamic>{};
     data['survey_id'] = '$chosenSurveyId';
