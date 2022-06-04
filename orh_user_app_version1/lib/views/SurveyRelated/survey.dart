@@ -23,7 +23,7 @@ class _SurveyUnit extends State<SurveyUnit> {
   @override
   void initState() {
     super.initState();
-    GlobalHelpers.surveyPageCount = queryController.survey.result![0].questions!.length~/AllSizes.pageQuestionCount+1;
+    GlobalHelpers.surveyPageCount = queryController.survey.result!.questions!.length~/AllSizes.pageQuestionCount+1;
   }
   @override
   Widget build(BuildContext context) {
@@ -86,11 +86,11 @@ class _PageUnitState extends State<PageUnit> {
                     //togtmol toondoo huvaagaad vldegdeltei bol tuhain vldegdeleer item
                     //count aa ogoh
                     itemCount: widget.pageIndex == GlobalHelpers.surveyPageCount-1? 
-                    surveyControllerOut.survey.result![0].questions!.length%AllSizes.pageQuestionCount != 0?
-                    surveyControllerOut.survey.result![0].questions!.length%AllSizes.pageQuestionCount : AllSizes.pageQuestionCount : AllSizes.pageQuestionCount,
+                    surveyControllerOut.survey.result!.questions!.length%AllSizes.pageQuestionCount != 0?
+                    surveyControllerOut.survey.result!.questions!.length%AllSizes.pageQuestionCount : AllSizes.pageQuestionCount : AllSizes.pageQuestionCount,
                     itemBuilder: (BuildContext context, int index){
                       final int queryUnitIndex = widget.pageIndex * AllSizes.pageQuestionCount + index;
-                      final item =  surveyControllerOut.survey.result![0].questions![queryUnitIndex];
+                      final item =  surveyControllerOut.survey.result!.questions![queryUnitIndex];
                       surveyControllerOut.textEditingControllers.add(TextEditingController());
                       surveyControllerOut.dropvalueList.add(DropSelectVal());
                     return RecieverUnit(questionID: item.id!, type: item.type, questionText: item.questionText, 

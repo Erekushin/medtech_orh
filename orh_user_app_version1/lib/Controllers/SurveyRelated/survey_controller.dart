@@ -109,14 +109,6 @@ class SurveyController extends GetxController{
     var jsondata = await GlobalHelpers.postRequestGeneral.getdata(chosenSurveyPayload(), "120003", UriAdresses.medCore);
     ereklog.wtf(jsondata);
     survey = Survey.fromJson(jsonDecode(jsondata.toString()));
-    for(int i = 0; i< survey.result!.questions!.length; i++){
-      ereklog.i(survey.result!.questions![i].questionText);
-      if(survey.result!.question![i].options != null){
-         for(int a = 0; a<survey.result!.questions![i].options!.length; a++){
-        ereklog.wtf(survey.result!.questions![i].options![a].optionText);
-      }
-      }
-    }
     Get.toNamed(RouteUnits.surveyList + RouteUnits.individualSurvey, arguments: "");
     // Get.toNamed(RouteUnits.answerform);
     GlobalHelpers.bottomnavbarSwitcher.add(false);
