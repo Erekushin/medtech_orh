@@ -162,12 +162,11 @@ class _ProfileState extends State<Profile> {
                             backgroundColor: Colors.grey,
                             radius: 60,
                             backgroundImage: const AssetImage('assets/images/user_default.png'),  
-                            child: Container(
-                              decoration: const BoxDecoration(
-                                shape: BoxShape.circle
-                              ),
-                              child: Image.memory(Uint8List.fromList(loginController.user.result!.picture!)),
-                            )
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(90.0),
+                              child: AspectRatio( 
+                                aspectRatio: 1/1,
+                                child: Image.memory(Uint8List.fromList(loginController.user.result!.picture!)),),)
                          ),
                             ),
                             const SizedBox(width: 1, height: 1,),
