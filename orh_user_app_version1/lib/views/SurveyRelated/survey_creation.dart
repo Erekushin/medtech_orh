@@ -6,10 +6,6 @@ import 'package:orh_user_app_version1/views/SurveyRelated/survey_creation_questi
 import 'package:orh_user_app_version1/views/SurveyRelated/survey_save.dart';
 import '../../Controllers/SurveyRelated/survey_creation_controller.dart';
 import '../../Controllers/SurveyRelated/survey_controller.dart';
-import '../../Models/SurveyRelated/survey_creation_body.dart';
-import '../../MyWidgets/my_button.dart';
-import '../../MyWidgets/my_text.dart';
-import '../../global_helpers.dart';
 
 
 class SurveyCreation extends StatefulWidget {
@@ -18,7 +14,7 @@ class SurveyCreation extends StatefulWidget {
   State<SurveyCreation> createState() => _SurveyCreationState();
 }
 class _SurveyCreationState extends State<SurveyCreation> {
-  var surveyCreationController = Get.find<SurveyCreationController>();
+  var surveyCreationController = Get.find<CreationCont>();
   var surveyController = Get.find<SurveyController>();
   @override
   Widget build(BuildContext context) {
@@ -44,7 +40,7 @@ class SurveyCreationPageUnit extends StatefulWidget {
 }
 
 class _SurveyCreationPageUnitState extends State<SurveyCreationPageUnit> {
-  var surveyCreationController = Get.find<SurveyCreationController>();
+  var surveyCreationController = Get.find<CreationCont>();
   Widget categorizing(int i){
     switch(i){
             case 0 :

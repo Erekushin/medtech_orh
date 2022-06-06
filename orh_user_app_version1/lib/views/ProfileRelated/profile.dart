@@ -209,7 +209,7 @@ class _ProfileState extends State<Profile> {
              child: InkWell(
                onTap: (){
                  surveyControllermini.surveyDeleteIcon.value = false;
-                 surveyController.surveyListbody.value.result!.items![surveyControllermini.chosenSurveyIndx].borderColor.value = Colors.white;
+                 surveyController.surveyList.value.result!.items![surveyControllermini.chosenSurveyIndx].borderColor.value = Colors.white;
                },
                child: Container(
                  color: Colors.grey.withOpacity(0.1),
@@ -221,9 +221,9 @@ class _ProfileState extends State<Profile> {
                   highlightColor: Colors.transparent,
                   splashColor: Colors.transparent,
                   onTap: () {
-                    surveyControllermini.deleteSurvey();
+                    surveyControllermini.delete();
                     surveyControllermini.surveyDeleteIcon.value = false;
-                    surveyController.surveyListGet(RouteUnits.profile, '120006', loginController.user.result!.userId!, '');
+                    surveyController.listGet(RouteUnits.profile, '120006', loginController.user.result!.userId!, '');
                   },
                   child: const Icon(
                             Icons.delete,

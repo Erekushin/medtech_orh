@@ -6,7 +6,7 @@ class SurveyCreationbody {
   int? userId;
   int? surveyType;
   int? surveyPrivacyLevel;
-  String? surveyClr = '0xFFFFFFFF';
+  String? surveyClr;
   String surveyCreatedDate = DateTime.now().toString().substring(0, 10);
   List<Researchers>? researchers;
   List<Question>? questions;

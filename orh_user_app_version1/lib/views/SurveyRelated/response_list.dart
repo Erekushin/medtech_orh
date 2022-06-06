@@ -41,10 +41,15 @@ class _SurveyResponsesState extends State<SurveyResponses> {
                   child:Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      SizedBox(
-                    width: GeneralMeasurements.deviceWidth*.7,
-                    child: myText('$c $n', 17, 1, FontWeight.w700), //queryController.childHeartQuery.result!.title??
-                  )
+                      InkWell(
+                        onTap: (){
+                          surveyCont.responseAnswersGet();
+                        },
+                        child: SizedBox(
+                                          width: GeneralMeasurements.deviceWidth*.7,
+                                          child: myText('$c $n', 17, 1, FontWeight.w700),
+                                        ),
+                      )
                     ],
                   )
             ); 

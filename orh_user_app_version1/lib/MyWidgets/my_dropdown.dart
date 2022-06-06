@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:orh_user_app_version1/Controllers/SurveyRelated/survey_controller.dart';
 import '../Models/SurveyRelated/survey_creation_types.dart';
 import '../models/SurveyRelated/survey_body.dart';
-import '../views/SurveyRelated/survey_creation_questions.dart';
 import 'my_text.dart';
 import 'package:get/get.dart';
 
@@ -39,7 +38,6 @@ class _MyDropDownState extends State<MyDropdown> {
         case TypeInfo:
            
       }
-    
     // widget.listitems?.forEach((element) {
     //   if(element.id == widget.currentValue){
     //     selectval = element.name;
@@ -71,9 +69,7 @@ class _MyDropDownState extends State<MyDropdown> {
             return DropdownMenuItem(
              value: item.typeId.toString(),
              child: Text(item.typeName!),
-             onTap: (){
-              
-             },
+             onTap: (){},
              );
            }).toList();
         default: return const [DropdownMenuItem(child: Text('Хоосон утга'))] ;   

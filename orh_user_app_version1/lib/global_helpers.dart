@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:orh_user_app_version1/Helpers/request.dart';
-import 'package:orh_user_app_version1/models/SurveyRelated/aimags.dart';
 import 'Helpers/working_with_code.dart';
 import 'Helpers/working_with_folders.dart';
 
@@ -10,7 +9,6 @@ static late StreamController<bool> bottomnavbarSwitcher;
 static WorkingWithCode workingWithCode = WorkingWithCode();
 static bool imageFileSwitcher = false;
 static WorkingWithLocal workWithLocal = WorkingWithLocal();
-static AimagList aimagList = AimagList();
 static int surveyPageCount = 1;
 static int answerPageCount = 1;
 static String auth = '';

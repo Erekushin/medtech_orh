@@ -34,14 +34,14 @@ class _SurveyListState extends State<SurveyList> {
       child: Scaffold(
         backgroundColor: Colors.white,
         body: FutureBuilder(
-          future: surveyController.surveyListGet(RouteUnits.home, '120006', loginController.user.result!.userId!, ''),
+          future: surveyController.listGet(RouteUnits.home, '120006', loginController.user.result!.userId!, ''),
           builder: (context, snapshot){
             if(snapshot.hasData){
               SurveyListBody surveyList = snapshot.data as SurveyListBody;
               return ListView.builder(
           itemCount: surveyList.result!.items!.length,
           itemBuilder: (context, index){
-            var item = surveyController.surveyListbody.value.result!.items![index];
+            var item = surveyController.surveyList.value.result!.items![index];
             return SurveyListItem(surveyName: item.name?? "", surveyId: item.id!, itemindx: index, fromRoute: "knowWhere");
           } 
           );

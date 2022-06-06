@@ -5,7 +5,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:orh_user_app_version1/Controllers/image_controller.dart';
-import 'package:orh_user_app_version1/Models/result.dart';
+import 'package:orh_user_app_version1/Models/general_response.dart';
 import '../Helpers/logging.dart';
 import '../Models/LoginRelatedModels/gerege_user.dart';
 import '../global_constant.dart';
@@ -62,7 +62,8 @@ class AuthController extends GetxController{
         case 200:
           loginloading.value = false;
           // GlobalHelpers.auth =  'bearer ' + geregeUser.result!.token!.token!;
-          await surveyController.surveyListGet(RouteUnits.home, '120002', user.result!.userId!, '');
+          await surveyController.listGet(RouteUnits.home, '120002', user.result!.userId!, '');
+          await surveyController.segmentedlistGet('', '120009', user.result!.userId!, '');
           retryFunction();
           break;
         case 403:

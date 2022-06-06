@@ -19,7 +19,7 @@ class SurveyCreationQuestion extends StatefulWidget {
 class _SurveyCreationQuestionState extends State<SurveyCreationQuestion> {
   var ereklog = logger(SurveyCreationQuestion);
   var surveyController = Get.find<SurveyController>();
-  var surveyCreationController = Get.find<SurveyCreationController>();
+  var surveyCreationController = Get.find<CreationCont>();
   @override
   void initState() {
     super.initState();
@@ -39,7 +39,7 @@ class _SurveyCreationQuestionState extends State<SurveyCreationQuestion> {
           Container(
             color: Colors.white,
             margin: const EdgeInsets.only(bottom: 80),
-            child: GetX<SurveyCreationController>(builder: (controller){
+            child: GetX<CreationCont>(builder: (controller){
               return ListView.builder(
           itemCount: controller.newQuestionList.length,
           physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
@@ -57,7 +57,7 @@ class _SurveyCreationQuestionState extends State<SurveyCreationQuestion> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                GetX<SurveyCreationController>(
+                GetX<CreationCont>(
                   builder: (surveyCreationCont){
                     return Container(
                   padding: const EdgeInsets.all(5),
@@ -147,7 +147,7 @@ class SurveyInputCreation extends StatefulWidget {
   State<SurveyInputCreation> createState() => _SurveyInputCreationState();
 }
 class _SurveyInputCreationState extends State<SurveyInputCreation> {
-  var surveyCreationController = Get.find<SurveyCreationController>();
+  var surveyCreationController = Get.find<CreationCont>();
   var surveyController = Get.find<SurveyController>();
   var ereklog = logger(SurveyInputCreation);
   callBackFunc(chosenVal){//drop down nii value nuudaas ali ni songogdson iig yalgah
@@ -222,7 +222,7 @@ class _SurveyInputCreationState extends State<SurveyInputCreation> {
                 Container(//option container
                   margin: const EdgeInsets.only(left: 50),
                   child: Expanded(
-                    child: GetX<SurveyCreationController>(
+                    child: GetX<CreationCont>(
                       builder: (surveyControllermini){
                         return ListView.builder(
                     shrinkWrap: true,
@@ -275,7 +275,7 @@ class _SurveyInputCreationState extends State<SurveyInputCreation> {
 
 Widget configureBtns(int index){
   var surveyController = Get.find<SurveyController>();
-  var surveyCreationBody = Get.find<SurveyCreationController>();
+  var surveyCreationBody = Get.find<CreationCont>();
   return Column(
           children: [
              InkWell(// deeshee nemeh

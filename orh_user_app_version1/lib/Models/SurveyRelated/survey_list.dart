@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -38,6 +36,7 @@ class Result {
 class Items {
   int? id;
   String? name;
+  var loading = false.obs;
   var borderColor = Colors.white.obs;
 
   Items({this.id, this.name});

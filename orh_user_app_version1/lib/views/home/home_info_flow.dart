@@ -21,7 +21,7 @@ class HomeInfoFlow extends StatefulWidget {
 class _HomeInfoFlowState extends State<HomeInfoFlow> with SingleTickerProviderStateMixin{
   var searchController = TextEditingController();
   final argu = Get.arguments;
-  var scrollController = ScrollController();
+  
   var loginController = Get.find<AuthController>();
   GlobalKey<ScaffoldState> sidePageKey = GlobalKey<ScaffoldState>();
   var sqlController = Get.find<SqlController>();
@@ -31,21 +31,6 @@ class _HomeInfoFlowState extends State<HomeInfoFlow> with SingleTickerProviderSt
     actions: <Widget>[TextButton(onPressed: (){SystemNavigator.pop();}, child: const Text("exit", style: TextStyle(fontSize: 20),)), 
     ]);
   }
-  @override
-  void initState() {
-    super.initState();
-    scrollController.addListener(_scrollListener);
-  }
-  _scrollListener() {
-if (scrollController.offset >= scrollController.position.maxScrollExtent &&
-        !scrollController.position.outOfRange) {
-      print('reach the bottom');
-    }
-    if (scrollController.offset <= scrollController.position.minScrollExtent &&
-        !scrollController.position.outOfRange) {//reach the top
-      surveyController.surveyListGet(RouteUnits.home, '120002', loginController.user.result!.userId!, '');
-    }
- }
   @override
   void dispose() {
     super.dispose();
@@ -103,7 +88,7 @@ if (scrollController.offset >= scrollController.position.maxScrollExtent &&
                   child: TextField(
                         onChanged: (value){
                           //value aa avaal shuud hvselt shidene gesen vg
-                           surveyController.surveyListGet(RouteUnits.home, '120002', loginController.user.result!.userId!, value);
+                           surveyController.listGet(RouteUnits.home, '120002', loginController.user.result!.userId!, value);
                        },
                         controller: searchController,
                         decoration: const InputDecoration(
@@ -130,7 +115,7 @@ if (scrollController.offset >= scrollController.position.maxScrollExtent &&
                   children: [
                     InkWell(//survey
                       onTap: () async{
-                         var surveyCreationController = Get.find<SurveyCreationController>();
+                         var surveyCreationController = Get.find<CreationCont>();
                          await surveyCreationController.getSurveyCreationTypes();
                       },
                       child: Container(
@@ -187,7 +172,7 @@ if (scrollController.offset >= scrollController.position.maxScrollExtent &&
                     ),
                      InkWell(//
                       onTap: () async{
-                         var surveyCreationController = Get.find<SurveyCreationController>();
+                         var surveyCreationController = Get.find<CreationCont>();
                          await surveyCreationController.getSurveyCreationTypes();
                          Get.toNamed(RouteUnits.surveyCreation);
                       },
@@ -221,24 +206,23 @@ if (scrollController.offset >= scrollController.position.maxScrollExtent &&
                   ],
                 ),
               ),
-          GetX<SurveyController>(builder: (surveyControllerList){
-            return SizedBox(
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                TextButton(onPressed: (){}, child: const Text('Public')),
+                TextButton(onPressed: (){}, child: const Text('Work Space')),
+                const SizedBox(width:10)
+                ],),
+              SizedBox(
+                width: GeneralMeasurements.deviceWidth,
                 height: GeneralMeasurements.deviceHeight/100*70 ,
-                child: SingleChildScrollView(
-                  controller: scrollController,
-                  physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
-                  child: ListView.builder(
-                    physics: const NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                          itemCount: surveyControllerList.surveyListbody.value.result!.items!.length,
-                          itemBuilder: (context, index){
-                            var item = surveyController.surveyListbody.value.result!.items![index];
-                            return SurveyListItem(surveyName: item.name?? "", surveyId: item.id!, itemindx: index, fromRoute: "home",);
-                          } 
-                          ),
+                child: PageView(
+                children: const [
+                  HomePagePublic(),
+                  HomePageWorkSpace()
+                 ],
                 ),
-              );
-          })
+              )
             ],
           ),
           Padding(// upper navigation btn
@@ -338,7 +322,7 @@ class _HomeSidebarState extends State<HomeSidebar> {
                 Icons.person,
                 'Профайл',
                 ()async {
-                  await surveyController.surveyListGet(RouteUnits.profile, '120006', loginController.user.result!.userId!, '');
+                  await surveyController.listGet(RouteUnits.profile, '120006', loginController.user.result!.userId!, '');
                   Get.toNamed('/profile', arguments: RouteUnits.profile);
                    GlobalHelpers.bottomnavbarSwitcher.add(true);},
               ),
@@ -390,3 +374,104 @@ class _HomeSidebarState extends State<HomeSidebar> {
   }
 }
 
+
+class HomePagePublic extends StatefulWidget {
+  const HomePagePublic({ Key? key }) : super(key: key);
+
+  @override
+  State<HomePagePublic> createState() => _HomePagePublicState();
+}
+
+class _HomePagePublicState extends State<HomePagePublic> {
+  var scrollController = ScrollController();
+  var loginController = Get.find<AuthController>();
+  var surveyController = Get.find<SurveyController>();
+  @override
+  void initState() {
+    super.initState();
+    scrollController.addListener(_scrollListener);
+  }
+  _scrollListener() {
+    if (scrollController.offset >= scrollController.position.maxScrollExtent &&
+        !scrollController.position.outOfRange) {
+      print('reach the bottom');
+    }
+    if (scrollController.offset <= scrollController.position.minScrollExtent &&
+        !scrollController.position.outOfRange) {//reach the top
+      surveyController.listGet(RouteUnits.home, '120002', loginController.user.result!.userId!, '');
+    }
+ }
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: GetX<SurveyController>(builder: (surveyControllerList){
+            return SizedBox(
+                child: SingleChildScrollView(
+                  controller: scrollController,
+                  physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+                  child: ListView.builder(
+                    physics: const NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                          itemCount: surveyControllerList.surveyList.value.result!.items!.length,
+                          itemBuilder: (context, index){
+                            var item = surveyControllerList.surveyList.value.result!.items![index];
+                            return SurveyListItem(surveyName: item.name?? "", surveyId: item.id!, itemindx: index, fromRoute: "home",);
+                          } 
+                          ),
+                ),
+              );
+          })
+    );
+  }
+}
+
+
+class HomePageWorkSpace extends StatefulWidget {
+  const HomePageWorkSpace({ Key? key }) : super(key: key);
+
+  @override
+  State<HomePageWorkSpace> createState() => _HomePageWorkSpaceState();
+}
+
+class _HomePageWorkSpaceState extends State<HomePageWorkSpace> {
+   var scrollController = ScrollController();
+  var loginController = Get.find<AuthController>();
+  var surveyController = Get.find<SurveyController>();
+  @override
+  void initState() {
+    super.initState();
+    scrollController.addListener(_scrollListener);
+  }
+  _scrollListener() {
+    if (scrollController.offset >= scrollController.position.maxScrollExtent &&
+        !scrollController.position.outOfRange) {
+      print('reach the bottom');
+    }
+    if (scrollController.offset <= scrollController.position.minScrollExtent &&
+        !scrollController.position.outOfRange) {//reach the top
+      surveyController.segmentedlistGet('', '120009', loginController.user.result!.userId!, '');
+    }
+ }
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: GetX<SurveyController>(builder: (surveyControllerList){
+            return SizedBox(
+                child: SingleChildScrollView(
+                  controller: scrollController,
+                  physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+                  child: ListView.builder(
+                    physics: const NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                          itemCount: surveyControllerList.wrkSpaceSurveyList.value.result!.items!.length,
+                          itemBuilder: (context, index){
+                            var item = surveyControllerList.wrkSpaceSurveyList.value.result!.items![index];
+                            return SurveyListItem(surveyName: item.name?? "", surveyId: item.id!, itemindx: index, fromRoute: "home",);
+                          } 
+                          ),
+                ),
+              );
+          })
+    );
+  }
+}

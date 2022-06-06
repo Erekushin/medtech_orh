@@ -25,7 +25,7 @@ class _SurveyListItemState extends State<SurveyListItem> {
                         break;
                         case "profile":
                           surveyController.surveyDeleteIcon.value = true;
-                          surveyController.surveyListbody.value.result!.items![widget.itemindx].borderColor.value = Colors.red;
+                          surveyController.surveyList.value.result!.items![widget.itemindx].borderColor.value = Colors.red;
                           surveyController.chosenSurveyIndx = widget.itemindx;
                           surveyController.chosenSurveyId = widget.surveyId;
                         break;
@@ -36,11 +36,12 @@ class _SurveyListItemState extends State<SurveyListItem> {
                          switch(widget.fromRoute){
                            case "home" :
                            surveyController.chosenSurveyId = widget.surveyId;
-                           surveyController.surveyQuestionsGet();
+                           surveyController.surveyList.value.result!.items![widget.itemindx].loading.value = true;
+                           surveyController.surveyGet(widget.itemindx);
                            break;
                            case "profile" :
                            surveyController.chosenSurveyId = widget.surveyId;
-                           surveyController.surveyAnswerListGet();
+                           surveyController.responsesListGet();
                            break;
                          }
                          
@@ -54,7 +55,7 @@ class _SurveyListItemState extends State<SurveyListItem> {
                   margin: EdgeInsets.all(GeneralMeasurements.deviceWidth*.05),
                   height: GeneralMeasurements.deviceHeight*.15,
                   decoration: BoxDecoration(
-                    border: Border.all(color: surveyController.surveyListbody.value.result!.items![widget.itemindx].borderColor.value),
+                    border: Border.all(color: surveyController.surveyList.value.result!.items![widget.itemindx].borderColor.value),
                   color: Colors.white,
                   boxShadow: [
                     BoxShadow(
@@ -76,7 +77,10 @@ class _SurveyListItemState extends State<SurveyListItem> {
                     width: GeneralMeasurements.deviceWidth*.7,
                     child: myText(widget.surveyName, 17, 1, FontWeight.w700), //queryController.childHeartQuery.result!.title??
                   ),
-                  surveyController.childHeartQuerybtnloading.value? const CircularProgressIndicator() 
+                  surveyController.surveyList.value.result!.items![widget.itemindx].loading.value? const SizedBox(
+                    width: 20,
+                    height: 20,
+                    child: CircularProgressIndicator(strokeWidth: 3,)) 
                     : const Icon(
                       Icons.article,
                       color: Colors.blue,
@@ -100,7 +104,7 @@ class _SurveyListItemState extends State<SurveyListItem> {
                   icon: Image.asset('assets/icon/coin.png'),
                   onPressed: (){},
                   ),
-                  Text('50 tug')
+                  const Text('50 tug')
                     ],
                   )
                 ],

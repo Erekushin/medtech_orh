@@ -1,18 +1,15 @@
 import 'dart:convert';
-
-import 'package:flutter_webrtc/flutter_webrtc.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:orh_user_app_version1/Helpers/logging.dart';
 import 'package:orh_user_app_version1/Models/SurveyRelated/survey_creation_types.dart';
-import 'package:orh_user_app_version1/Models/result.dart';
+import 'package:orh_user_app_version1/Models/general_response.dart';
 import 'package:orh_user_app_version1/global_constant.dart';
 import 'package:orh_user_app_version1/global_helpers.dart';
-
 import '../../Models/SurveyRelated/survey_creation_body.dart';
 
-class SurveyCreationController extends GetxController {
-final ereklog = logger(SurveyCreationController);
+class CreationCont extends GetxController {
+final ereklog = logger(CreationCont);
 SurveyCreationTypes surveyCreationTypes = SurveyCreationTypes();
 GeneralResponse generalResponse = GeneralResponse();
 ///sudlaachid zoriulsan sudalgaanii sudlaachidiin jagsaalt
@@ -22,6 +19,8 @@ List<Researchers> researchetIdList = <Researchers>[];
  SurveyCreationbody surveyCreationbody = SurveyCreationbody();
 //survey make name
  var surveyNametxtController = TextEditingController();
+ var surveyInputLimitation = TextEditingController();
+ var limitCountVis = false.obs;
  String? torolStr;
  String? levelStr;
  String? torolNameStr;

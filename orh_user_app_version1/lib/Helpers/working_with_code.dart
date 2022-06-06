@@ -9,7 +9,7 @@ class WorkingWithCode{
   surveyController.surveyAnswer.answers?.clear();
   surveyController.textEditingControllers.clear();
   surveyController.dropvalueList.clear();
-  var surveyCreationController = Get.find<SurveyCreationController>();
+  var surveyCreationController = Get.find<CreationCont>();
   surveyCreationController.newQuestionList.clear();
   surveyCreationController.researchetIdList.clear();
   surveyCreationController.researchetTextController.clear();

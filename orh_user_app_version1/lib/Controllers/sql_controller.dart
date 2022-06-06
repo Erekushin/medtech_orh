@@ -1,8 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'package:get/get.dart';
-import 'package:orh_user_app_version1/Models/result.dart';
-import 'package:orh_user_app_version1/global_helpers.dart';
+import 'package:orh_user_app_version1/Models/general_response.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
@@ -10,8 +9,6 @@ import '../Helpers/logging.dart';
 import '../Models/TreatmentRecipe/fields.dart';
 import '../Models/TreatmentRecipe/treatment_recipe.dart';
 import '../global_constant.dart';
-import 'package:flutter/material.dart';
-import '../Models/result.dart';
 
 class SqlController extends GetxController{
   TreatmentRecipies treatmentRecipies = TreatmentRecipies();

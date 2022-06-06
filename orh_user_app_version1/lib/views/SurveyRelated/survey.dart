@@ -59,7 +59,7 @@ class _PageUnitState extends State<PageUnit> {
     surveyControllerOut.surveyAnswer.fillerName = authCon.user.result!.userName;
     surveyControllerOut.surveyAnswer.createdDate = DateTime.now().toString().substring(0,10);
     try{
-        surveyControllerOut.surveyAnswersPush();
+        surveyControllerOut.answersPush();
       }
    catch(e){
       Get.snackbar('Алдаа', '$e!', snackPosition: SnackPosition.BOTTOM,

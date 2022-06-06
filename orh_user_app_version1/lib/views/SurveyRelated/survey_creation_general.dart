@@ -16,7 +16,7 @@ class SurveyCreationGeneral extends StatefulWidget {
 }
 
 class _SurveyCreationGeneralState extends State<SurveyCreationGeneral> {
-  var surveyCreationController = Get.find<SurveyCreationController>();
+  var surveyCreationController = Get.find<CreationCont>();
   
   List<DropdownMenuItem<String>> dropitems(List<TypeInfo> itemlist, String key){
       return itemlist.map((item){
@@ -76,13 +76,11 @@ class _SurveyCreationGeneralState extends State<SurveyCreationGeneral> {
                       surveyCreationController.torolStr = newValue.toString();
                     });
                     switch(newValue){
-                      case 'нээлттэй':
-                       surveyCreationController.researchetTextController.clear();
-                       surveyCreationController.researchetIdList.clear();
+                      case 'хязгаартай':
+                       surveyCreationController.limitCountVis.value = true;
                       break;
-                      case 'судлаачид':
-                       surveyCreationController.researchetTextController.add(TextEditingController());
-                       surveyCreationController.researchetIdList.add(Researchers());
+                      case 'хязгааргүй':
+                       surveyCreationController.limitCountVis.value = false;
                       break;
 
                     }
@@ -92,10 +90,54 @@ class _SurveyCreationGeneralState extends State<SurveyCreationGeneral> {
                   borderRadius: BorderRadius.circular(5),
                   items: dropitems(surveyCreationController.surveyCreationTypes.result!.surveyType !, 'surveyType')
                 ),
-                  Container(//option container
+                    Visibility(
+                      visible: surveyCreationController.limitCountVis.value,
+                      child: TextField(
+                    controller: surveyCreationController.surveyInputLimitation,
+                    decoration: const InputDecoration(
+                      hintText: 'Судалгааг хэдэн удаа бөглөх боломтой вэ?'
+                    ),
+                  ))
+                  ],
+                ),
+                const SizedBox(height: 20,),
+                  Column(// level songoh
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    myText('Нууцлалын түвшин', 11, 1, FontWeight.bold),
+                    DropdownButton<String>(
+                  hint: myText('Нууцлалын түвшин', 16, 1),
+                  value: surveyCreationController.levelStr,
+                  onChanged: (String? newValue) {
+                    setState(() {
+                      print(newValue);
+                      surveyCreationController.levelStr = newValue.toString();
+                      switch(newValue){
+                      case 'public':
+                       surveyCreationController.researchetTextController.clear();
+                       surveyCreationController.researchetIdList.clear();
+                      break;
+                      case 'private':
+                       surveyCreationController.researchetTextController.clear();
+                       surveyCreationController.researchetIdList.clear();
+                      break;
+                      case 'segmented':
+                       surveyCreationController.researchetTextController.add(TextEditingController());
+                       surveyCreationController.researchetIdList.add(Researchers());
+                      break;
+                    }
+                    });
+                  },
+                  underline: const SizedBox(),
+                  isExpanded: true,
+                  borderRadius: BorderRadius.circular(5),
+                  items: dropitems(surveyCreationController.surveyCreationTypes.result!.privacyLevel!, 'surveyLevel')
+                ),
+                Container(//option container
                   margin: const EdgeInsets.only(left: 50),
                   child: Expanded(
-                    child: GetX<SurveyCreationController>(
+                    child: GetX<CreationCont>(
                       builder: (surveyControllermini){
                         return ListView.builder(
                     shrinkWrap: true,
@@ -134,28 +176,6 @@ class _SurveyCreationGeneralState extends State<SurveyCreationGeneral> {
                       }
                       ),
                   ),
-                )
-                  ],
-                ),
-                const SizedBox(height: 20,),
-                  Column(// level songoh
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    myText('Нууцлалын түвшин', 11, 1, FontWeight.bold),
-                    DropdownButton<String>(
-                  hint: myText('Нууцлалын түвшин', 16, 1),
-                  value: surveyCreationController.levelStr,
-                  onChanged: (String? newValue) {
-                    setState(() {
-                      print(newValue);
-                      surveyCreationController.levelStr = newValue.toString();
-                    });
-                  },
-                  underline: const SizedBox(),
-                  isExpanded: true,
-                  borderRadius: BorderRadius.circular(5),
-                  items: dropitems(surveyCreationController.surveyCreationTypes.result!.privacyLevel!, 'surveyLevel')
                 )
                   ],
                 ),

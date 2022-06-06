@@ -16,7 +16,7 @@ class SurveyInfoCheck extends StatefulWidget {
 }
 
 class _SurveyInfoCheckState extends State<SurveyInfoCheck> {
-  var surveyCreationController = Get.find<SurveyCreationController>();
+  var surveyCreationController = Get.find<CreationCont>();
   var loginController = Get.find<AuthController>();
   @override
   Widget build(BuildContext context) {
@@ -79,7 +79,7 @@ class _SurveyInfoCheckState extends State<SurveyInfoCheck> {
                        height: 30,
                        decoration: BoxDecoration(
                           border: Border.all(color: Colors.grey.shade300),
-                       color: Color(int.parse(surveyCreationController.surveyCreationbody.surveyClr!)),
+                       color: Color(int.parse(surveyCreationController.surveyCreationbody.surveyClr?? '0xFFFFFFFF')),
                        shape: BoxShape.circle
                          ),
                        ),
