@@ -9,6 +9,7 @@ import 'package:orh_user_app_version1/Helpers/logging.dart';
 import 'package:orh_user_app_version1/Models/xyr.dart';
 import 'package:orh_user_app_version1/global_helpers.dart';
 import '../../Helpers/load_json_from_assest.dart';
+import '../../Models/SurveyRelated/response.dart';
 import '../../Models/SurveyRelated/survey_answer_body.dart';
 import '../../Models/SurveyRelated/survey_list.dart';
 import '../../Models/result.dart';
@@ -18,7 +19,6 @@ import '../../models/SurveyRelated/survey_body.dart';
 import '../../models/SurveyRelated/researcher_default.dart';
 class SurveyController extends GetxController{
   var surveyDeleteIcon = false.obs;
-  
   var chosenSurveyId;
   var chosenSurveyIndx;
   var ereklog = logger(SurveyController);
@@ -56,11 +56,6 @@ class SurveyController extends GetxController{
   var pushDataBtn = true.obs;
   
   DateTime currentDate = DateTime.now();
-  Future getAimagList() async {
-    String jsonString = await loadFromAsset("assets/file/addresses.json");
-    var aimagListStr = jsonDecode(jsonString);
-    GlobalHelpers.aimagList = AimagList.fromJson(aimagListStr);
-  }
   checkData(){
     if(researcherDefaultData.result!.aimagCode != null && researcherDefaultData.result!.sumCode != null
         && researcherDefaultData.result!.currentDate != null){
@@ -81,10 +76,10 @@ class SurveyController extends GetxController{
     return data;
   }
 
-   static Map<String, dynamic> surveyListPayload(int UserId, String search_txt){
+   static Map<String, dynamic> surveyListPayload(int userId, String searchTxt){
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['user_id'] = UserId;
-    data['search_txt'] = search_txt;
+    data['user_id'] = userId;
+    data['search_txt'] = searchTxt;
     return data;
   }
    Map<String, dynamic> rd(){
@@ -150,6 +145,15 @@ class SurveyController extends GetxController{
           break;
     }
   }
-
+  SurveyResponsebody surveyResponses = SurveyResponsebody();
+  Future surveyAnswerListGet() async{
+    var data = await GlobalHelpers.postRequestGeneral.getdata(chosenSurveyPayload(), "120008", UriAdresses.medCore);
+    surveyResponses = SurveyResponsebody.fromJson(jsonDecode(data.toString()));
+    switch(surveyResponses.code){
+       case 200:
+         Get.toNamed(RouteUnits.surveyResponses);
+          break;
+    }
+  }
 
 }

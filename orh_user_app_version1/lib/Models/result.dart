@@ -9,7 +9,7 @@ class GeneralResponse{
     status = json['status'];
     message = json['message'];
     result =
-        json['result'] != null ? new GeneralResult.fromJson(json['result']) : null;
+        json['result'] != null ? GeneralResult.fromJson(json['result']) : null;
   }
 }
 class GeneralResult{

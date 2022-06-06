@@ -1,14 +1,16 @@
 class SurveyAnswer {
   int? researcherGeregeID ;
+  String? fillerName;
   int? surveyId;
+  String? createdDate;
   List<Answers>? answers = [];
 
-  SurveyAnswer(
-      {this.surveyId,
-      this.answers});
+  SurveyAnswer({this.surveyId,this.answers,
+                 this.fillerName, this.createdDate});
 
   SurveyAnswer.fromJson(Map<String, dynamic> json) {
     researcherGeregeID = json['researcher_GeregeID'];
+    createdDate = json['created_date'];
     surveyId = json['survey_id'];
     if (json['answers'] != null) {
       answers = <Answers>[];
@@ -22,6 +24,8 @@ class SurveyAnswer {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['researcher_GeregeID'] = researcherGeregeID;
     data['survey_id'] = surveyId;
+    data['user_name'] = fillerName;
+    data['created_date'] = createdDate;
     if (answers != null) {
       data['answers'] = answers!.map((v) => v.toJson()).toList();
     }

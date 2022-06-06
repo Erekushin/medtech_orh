@@ -6,7 +6,6 @@ import 'package:orh_user_app_version1/MyWidgets/my_textfield.dart';
 import 'package:orh_user_app_version1/MyWidgets/survey_tools/rd_xyr_info.dart';
 import 'package:orh_user_app_version1/models/SurveyRelated/survey_body.dart';
 import '../../MyWidgets/my_textfield.dart';
-import '../Models/SurveyRelated/survey_body.dart';
 
 ///хариултыг оруулах item 
 class RecieverUnit extends StatefulWidget {

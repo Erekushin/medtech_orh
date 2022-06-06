@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:orh_user_app_version1/Controllers/SurveyRelated/survey_controller.dart';
+import 'package:orh_user_app_version1/Controllers/auth_controller.dart';
 import 'package:orh_user_app_version1/Controllers/setting_controller.dart';
 import 'package:orh_user_app_version1/MyWidgets/my_button.dart';
 import 'package:orh_user_app_version1/global_constant.dart';
@@ -50,10 +51,13 @@ class PageUnit extends StatefulWidget {
 class _PageUnitState extends State<PageUnit> {
   var settingsControllerOut = Get.find<SettingController>();
   var surveyControllerOut = Get.find<SurveyController>(); 
+  var authCon = Get.find<AuthController>();
   void pushData(){
     surveyControllerOut.pushDataBtn.value = false;
-    surveyControllerOut.surveyAnswer.researcherGeregeID = 1;
-    surveyControllerOut.surveyAnswer .surveyId = 4; // saijruulna
+    surveyControllerOut.surveyAnswer.researcherGeregeID = authCon.user.result!.userId;
+    surveyControllerOut.surveyAnswer.surveyId = surveyControllerOut.chosenSurveyId;
+    surveyControllerOut.surveyAnswer.fillerName = authCon.user.result!.userName;
+    surveyControllerOut.surveyAnswer.createdDate = DateTime.now().toString().substring(0,10);
     try{
         surveyControllerOut.surveyAnswersPush();
       }

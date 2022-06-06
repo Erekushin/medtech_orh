@@ -90,7 +90,7 @@ class _SurveyCreationGeneralState extends State<SurveyCreationGeneral> {
                   underline: const SizedBox(),
                   isExpanded: true,
                   borderRadius: BorderRadius.circular(5),
-                  items: dropitems(surveyCreationController.surveyCreationTypes.result!.surveyType!, 'surveyType')
+                  items: dropitems(surveyCreationController.surveyCreationTypes.result!.surveyType !, 'surveyType')
                 ),
                   Container(//option container
                   margin: const EdgeInsets.only(left: 50),

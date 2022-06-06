@@ -118,8 +118,10 @@ class AuthController extends GetxController{
   }
   Future registration() async{
     var data = await GlobalHelpers.postRequestGeneral.getdata(registerInfo(), '110001', UriAdresses.medCore);
-    generalResponse = GeneralResponse.fromJson(jsonDecode(data.toString()));
+    print(data);
     print(registerInfo());
+    generalResponse = GeneralResponse.fromJson(jsonDecode(data.toString()));
+    
     print(data);
     if(generalResponse.code == '200'){
        Get.snackbar('Gerege Medtech family-д тавтай морил', "Хэрэглэгчийн бүртгэл амжилттай үүслээ", snackPosition: SnackPosition.BOTTOM,

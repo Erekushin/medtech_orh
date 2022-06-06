@@ -35,8 +35,6 @@ class _HomeInfoFlowState extends State<HomeInfoFlow> with SingleTickerProviderSt
   void initState() {
     super.initState();
     scrollController.addListener(_scrollListener);
-    final childHeartQueryController = Get.find<SurveyController>();
-    childHeartQueryController.getAimagList();
   }
   _scrollListener() {
 if (scrollController.offset >= scrollController.position.maxScrollExtent &&
@@ -127,14 +125,13 @@ if (scrollController.offset >= scrollController.position.maxScrollExtent &&
 
               SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
-                child: Row( // vvgeh button uudiin row
+                child: Row( // vvsgeh button uudiin row
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     InkWell(//survey
                       onTap: () async{
                          var surveyCreationController = Get.find<SurveyCreationController>();
                          await surveyCreationController.getSurveyCreationTypes();
-                         Get.toNamed(RouteUnits.surveyCreation);
                       },
                       child: Container(
                         padding: const EdgeInsets.all(5),
@@ -236,7 +233,7 @@ if (scrollController.offset >= scrollController.position.maxScrollExtent &&
                           itemCount: surveyControllerList.surveyListbody.value.result!.items!.length,
                           itemBuilder: (context, index){
                             var item = surveyController.surveyListbody.value.result!.items![index];
-                            return SurveyListItem(surveyName: item.name?? "", surveyId: item.id!, itemindx: index,);
+                            return SurveyListItem(surveyName: item.name?? "", surveyId: item.id!, itemindx: index, fromRoute: "home",);
                           } 
                           ),
                 ),

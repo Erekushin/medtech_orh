@@ -4,7 +4,9 @@ import '../../Controllers/SurveyRelated/survey_controller.dart';
 import '../../MyWidgets/my_text.dart';
 import '../../global_constant.dart';
 class SurveyListItem extends StatefulWidget {
-  const SurveyListItem({ Key? key,required this.surveyName, required this.surveyId, required this.itemindx }) : super(key: key);
+  const SurveyListItem({ Key? key,required this.surveyName, required this.surveyId, 
+                         required this.itemindx, required this.fromRoute }) : super(key: key);
+  final String fromRoute;
   final String surveyName;
   final int surveyId;
   final int itemindx;
@@ -17,23 +19,38 @@ class _SurveyListItemState extends State<SurveyListItem> {
     return GetX<SurveyController>(builder: (surveyController){
                   return GestureDetector(
                     onLongPress: (){
-                      print('it is a long press');
-                      surveyController.surveyDeleteIcon.value = true;
-                      surveyController.surveyListbody.value.result!.items![widget.itemindx].borderColor.value = Colors.red;
-                      surveyController.chosenSurveyIndx = widget.itemindx;
-                      surveyController.chosenSurveyId = widget.surveyId;
+                      switch(widget.fromRoute){
+                        case "home":
+
+                        break;
+                        case "profile":
+                          surveyController.surveyDeleteIcon.value = true;
+                          surveyController.surveyListbody.value.result!.items![widget.itemindx].borderColor.value = Colors.red;
+                          surveyController.chosenSurveyIndx = widget.itemindx;
+                          surveyController.chosenSurveyId = widget.surveyId;
+                        break;
+                      }
                       },
                     onTap: (){
                        try{
-                         surveyController.chosenSurveyId = widget.surveyId;
-                         surveyController.surveyQuestionsGet();
+                         switch(widget.fromRoute){
+                           case "home" :
+                           surveyController.chosenSurveyId = widget.surveyId;
+                           surveyController.surveyQuestionsGet();
+                           break;
+                           case "profile" :
+                           surveyController.chosenSurveyId = widget.surveyId;
+                           surveyController.surveyAnswerListGet();
+                           break;
+                         }
+                         
                        }
                        catch(e){
                         Get.snackbar('Алдаа', '$e', snackPosition: SnackPosition.BOTTOM,
                         colorText: Colors.white, backgroundColor: Colors.grey[900], margin: EdgeInsets.only(left: 5, right: 5, bottom: GeneralMeasurements.snackbarBottomMargin));
                        }
                     },
-                    child: Container( //child heart query btn
+                    child: Container(
                   margin: EdgeInsets.all(GeneralMeasurements.deviceWidth*.05),
                   height: GeneralMeasurements.deviceHeight*.15,
                   decoration: BoxDecoration(

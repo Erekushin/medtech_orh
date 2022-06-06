@@ -28,17 +28,20 @@ class User_Info {
 
 class Result {
   int? userId;
+  String? userName;
   List<int>? picture;
-  Result({this.userId, this.picture});
+  Result({this.userId, this.picture, this.userName});
 
   Result.fromJson(Map<String, dynamic> json) {
     userId = json['user_id'];
+    userName = json['user_name'];
     picture = json['picture'].cast<int>();
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['user_id'] = userId;
+    data['user_name'] = userName;
     data['picture'] = picture;
     return data;
   }

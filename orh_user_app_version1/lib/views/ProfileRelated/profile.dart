@@ -1,15 +1,11 @@
 import 'dart:typed_data';
-import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:orh_user_app_version1/Controllers/auth_controller.dart';
-import 'package:orh_user_app_version1/Models/SurveyRelated/survey_list.dart';
 import 'package:orh_user_app_version1/global_constant.dart';
 import 'package:orh_user_app_version1/global_helpers.dart';
 import 'package:orh_user_app_version1/views/home/infoflow_survey_unit.dart';
-
 import '../../Controllers/SurveyRelated/survey_controller.dart';
-import '../../Controllers/image_controller.dart';
 import '../../Controllers/profile_controller.dart';
 
 class ButtonStructure {  
@@ -166,20 +162,19 @@ class _ProfileState extends State<Profile> {
                             backgroundColor: Colors.grey,
                             radius: 60,
                             backgroundImage: const AssetImage('assets/images/user_default.png'),  
-                            child: Image.memory(Uint8List.fromList(loginController.user.result!.picture!)) ,
+                            child: Container(
+                              decoration: const BoxDecoration(
+                                shape: BoxShape.circle
+                              ),
+                              child: Image.memory(Uint8List.fromList(loginController.user.result!.picture!)),
+                            )
                          ),
                             ),
                             const SizedBox(width: 1, height: 1,),
-
-
-
                             // GlobalHelpers.imageFileSwitcher? ClipRRect(
                             // child: AspectRatio(aspectRatio: 1 / 1, child: Image.file(imageController.imageFile.value, fit: BoxFit.fill,)),
                             // borderRadius: BorderRadius.circular(90.0),
                             // ) : Container(width: 5, height: 5, color: Colors.blue, child: Text(imageController.imageFile.value.toString()),)
-
-
-
                             // Text(loginController.geregeUser.result!.firstName?? '', style: const TextStyle(fontWeight: FontWeight.bold),),
                             // Text(loginController.geregeUser.result!.phoneNo?? '', style: const TextStyle(fontWeight: FontWeight.bold),),
                          ],
@@ -199,7 +194,7 @@ class _ProfileState extends State<Profile> {
                           itemCount: profileController.ownSurveyListbody.value.result!.items!.length,
                           itemBuilder: (context, index){
                             var item = profileController.ownSurveyListbody.value.result!.items![index];
-                            return SurveyListItem(surveyName: item.name?? "", surveyId: item.id!, itemindx: index,);
+                            return SurveyListItem(surveyName: item.name?? "", surveyId: item.id!, itemindx: index, fromRoute: "profile",);
                           } 
                           ),
                 ),

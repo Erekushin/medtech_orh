@@ -42,7 +42,7 @@ class _SurveyListState extends State<SurveyList> {
           itemCount: surveyList.result!.items!.length,
           itemBuilder: (context, index){
             var item = surveyController.surveyListbody.value.result!.items![index];
-            return SurveyListItem(surveyName: item.name?? "", surveyId: item.id!, itemindx: index,);
+            return SurveyListItem(surveyName: item.name?? "", surveyId: item.id!, itemindx: index, fromRoute: "knowWhere");
           } 
           );
             }

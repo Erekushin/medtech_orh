@@ -61,7 +61,7 @@ class Questions {
   Questions({this.id, this.type, this.questionText, this.options});
 
   Questions.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
+    id = json['id'].toString();
     type = json['type'];
     questionText = json['question_text'];
     if (json['options'] != null) {

@@ -30,6 +30,7 @@ class RouteUnits{
   static String surveyCreation = "/surveyCreation";
   static String surveyList = "/surveyList";
   static String individualSurvey ="/individualSurvey";
+  static String surveyResponses = "/surveyResponses";
 
 
   static String answerform = "/answerform";

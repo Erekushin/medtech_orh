@@ -56,9 +56,9 @@ class TypeInfo {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['type_name'] = this.typeName;
-    data['type_id'] = this.typeId;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['type_name'] = typeName;
+    data['type_id'] = typeId;
     return data;
   }
 }

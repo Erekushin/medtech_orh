@@ -38,6 +38,7 @@ Future getSurveyCreationTypes()async{
   switch(surveyCreationTypes.code){
     case 200 : 
     ereklog.wtf('200 irsen shvv');
+    Get.toNamed(RouteUnits.surveyCreation);
   }
 }
 Future surveyCreate() async{

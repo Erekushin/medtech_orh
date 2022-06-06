@@ -10,14 +10,14 @@ class ImageController extends GetxController{
  var imageBytes;
  final _picker = ImagePicker();
  Future<void> pickImageFromGallery() async {
-    final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
+    final pickedFile = await _picker.pickImage(source: ImageSource.gallery, imageQuality: 5);
     if (pickedFile != null) {
       imageFile.value = File(pickedFile.path);
       imageBytes = await imageFile.value.readAsBytes();
     }
   }
   Future<void> pickImageFromCamera() async {
-    final pickedFile = await _picker.pickImage(source: ImageSource.camera);
+    final pickedFile = await _picker.pickImage(source: ImageSource.camera, imageQuality: 5);
     if (pickedFile != null) {
       imageFile.value = File(pickedFile.path);
       imageBytes = await imageFile.value.readAsBytes();
