@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../Controllers/SurveyRelated/survey_controller.dart';
@@ -25,7 +27,7 @@ class _SurveyListItemState extends State<SurveyListItem> {
                         break;
                         case "profile":
                           surveyController.surveyDeleteIcon.value = true;
-                          surveyController.surveyList.value.result!.items![widget.itemindx].borderColor.value = Colors.red;
+                          surveyController.surveyList.value.result![widget.itemindx].borderColor.value = Colors.red;
                           surveyController.chosenSurveyIndx = widget.itemindx;
                           surveyController.chosenSurveyId = widget.surveyId;
                         break;
@@ -36,7 +38,7 @@ class _SurveyListItemState extends State<SurveyListItem> {
                          switch(widget.fromRoute){
                            case "home" :
                            surveyController.chosenSurveyId = widget.surveyId;
-                           surveyController.surveyList.value.result!.items![widget.itemindx].loading.value = true;
+                           surveyController.surveyList.value.result![widget.itemindx].loading.value = true;
                            surveyController.surveyGet(widget.itemindx);
                            break;
                            case "profile" :
@@ -55,7 +57,7 @@ class _SurveyListItemState extends State<SurveyListItem> {
                   margin: EdgeInsets.all(GeneralMeasurements.deviceWidth*.05),
                   height: GeneralMeasurements.deviceHeight*.15,
                   decoration: BoxDecoration(
-                    border: Border.all(color: surveyController.surveyList.value.result!.items![widget.itemindx].borderColor.value),
+                    border: Border.all(color: surveyController.surveyList.value.result![widget.itemindx].borderColor.value),
                   color: Colors.white,
                   boxShadow: [
                     BoxShadow(
@@ -77,7 +79,7 @@ class _SurveyListItemState extends State<SurveyListItem> {
                     width: GeneralMeasurements.deviceWidth*.7,
                     child: myText(widget.surveyName, 17, 1, FontWeight.w700), //queryController.childHeartQuery.result!.title??
                   ),
-                  surveyController.surveyList.value.result!.items![widget.itemindx].loading.value? const SizedBox(
+                  surveyController.surveyList.value.result![widget.itemindx].loading.value? const SizedBox(
                     width: 20,
                     height: 20,
                     child: CircularProgressIndicator(strokeWidth: 3,)) 
@@ -89,14 +91,25 @@ class _SurveyListItemState extends State<SurveyListItem> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
-                  Row(children: const [
+                  Row(children:[
                     CircleAvatar(
                             backgroundColor: Colors.grey,
-                            radius: 20,
-                            backgroundImage: AssetImage('assets/images/Avatar.jpg'),
-                          ),
-                          SizedBox(width: 10,),
-                    Text('Буян-хишиг', style: TextStyle(fontWeight: FontWeight.bold),)      
+                            radius: 60,
+                            backgroundImage: const AssetImage('assets/images/user_default.png'),  
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(90.0),
+                              child: Text('hghgh'),)
+
+
+// AspectRatio( 
+//                                 aspectRatio: 1/1,
+//                                 child: Image.memory(Uint8List.fromList(surveyController.surveyList.value.result!.items![widget.itemindx].creatorPicture!)),)
+
+// surveyController.surveyList.value.result!.items![widget.itemindx].creatorName!
+
+                         ),
+                          const SizedBox(width: 10,),
+                    Text('ghghgh', style: TextStyle(fontWeight: FontWeight.bold),)      
                   ],),
                   Row(
                     children: [

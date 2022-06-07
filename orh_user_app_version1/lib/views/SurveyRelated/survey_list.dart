@@ -39,9 +39,9 @@ class _SurveyListState extends State<SurveyList> {
             if(snapshot.hasData){
               SurveyListBody surveyList = snapshot.data as SurveyListBody;
               return ListView.builder(
-          itemCount: surveyList.result!.items!.length,
+          itemCount: surveyList.result!.length,
           itemBuilder: (context, index){
-            var item = surveyController.surveyList.value.result!.items![index];
+            var item = surveyController.surveyList.value.result![index];
             return SurveyListItem(surveyName: item.name?? "", surveyId: item.id!, itemindx: index, fromRoute: "knowWhere");
           } 
           );

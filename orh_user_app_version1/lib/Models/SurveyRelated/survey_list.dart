@@ -5,7 +5,7 @@ class SurveyListBody {
   int? code;
   String? status;
   String? message;
-  Result? result;
+  List<Result>? result;
 
   SurveyListBody({this.code, this.status, this.message, this.result});
 
@@ -13,36 +13,46 @@ class SurveyListBody {
     code = json['code'];
     status = json['status'];
     message = json['message'];
-    result =
-        json['result'] != null ? Result.fromJson(json['result']) : null;
+    if (json['result'] != null) {
+      result = <Result>[];
+      json['result'].forEach((v) {
+        result!.add(new Result.fromJson(v));
+      });
+    }
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['code'] = this.code;
+    data['status'] = this.status;
+    data['message'] = this.message;
+    if (this.result != null) {
+      data['result'] = this.result!.map((v) => v.toJson()).toList();
+    }
+    return data;
   }
 }
 
 class Result {
-  List<Items>? items = <Items>[].obs;
-
-  Result({this.items});
-
-  Result.fromJson(Map<String, dynamic> json) {
-    if (json['items'] != null) {
-      items = <Items>[];
-      json['items'].forEach((v) {
-        items!.add(Items.fromJson(v));
-      });
-    }
-  }
-}
-
-class Items {
-  int? id;
   String? name;
+  int? id;
+  int? userId;
   var loading = false.obs;
   var borderColor = Colors.white.obs;
 
-  Items({this.id, this.name});
+  Result({this.name, this.id, this.userId});
 
-  Items.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
+  Result.fromJson(Map<String, dynamic> json) {
     name = json['name'];
+    id = json['id'];
+    userId = json['user_id'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['name'] = this.name;
+    data['id'] = this.id;
+    data['user_id'] = this.userId;
+    return data;
   }
 }

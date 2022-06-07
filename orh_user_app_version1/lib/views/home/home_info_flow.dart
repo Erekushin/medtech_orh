@@ -412,9 +412,9 @@ class _HomePagePublicState extends State<HomePagePublic> {
                   child: ListView.builder(
                     physics: const NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
-                          itemCount: surveyControllerList.surveyList.value.result!.items!.length,
+                          itemCount: surveyControllerList.surveyList.value.result!.length,
                           itemBuilder: (context, index){
-                            var item = surveyControllerList.surveyList.value.result!.items![index];
+                            var item = surveyControllerList.surveyList.value.result![index];
                             return SurveyListItem(surveyName: item.name?? "", surveyId: item.id!, itemindx: index, fromRoute: "home",);
                           } 
                           ),
@@ -463,9 +463,9 @@ class _HomePageWorkSpaceState extends State<HomePageWorkSpace> {
                   child: ListView.builder(
                     physics: const NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
-                          itemCount: surveyControllerList.wrkSpaceSurveyList.value.result!.items!.length,
+                          itemCount: surveyControllerList.wrkSpaceSurveyList.value.result!.length,
                           itemBuilder: (context, index){
-                            var item = surveyControllerList.wrkSpaceSurveyList.value.result!.items![index];
+                            var item = surveyControllerList.wrkSpaceSurveyList.value.result![index];
                             return SurveyListItem(surveyName: item.name?? "", surveyId: item.id!, itemindx: index, fromRoute: "home",);
                           } 
                           ),

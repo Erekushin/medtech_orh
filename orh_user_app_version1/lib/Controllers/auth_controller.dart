@@ -63,7 +63,7 @@ class AuthController extends GetxController{
           loginloading.value = false;
           // GlobalHelpers.auth =  'bearer ' + geregeUser.result!.token!.token!;
           await surveyController.listGet(RouteUnits.home, '120002', user.result!.userId!, '');
-          await surveyController.segmentedlistGet('', '120009', user.result!.userId!, '');
+          // await surveyController.segmentedlistGet('', '120009', user.result!.userId!, '');
           retryFunction();
           break;
         case 403:

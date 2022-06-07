@@ -30,6 +30,7 @@ class SurveyController extends GetxController{
   var surveyList = SurveyListBody().obs;
   Future listGet(String routekey, String messageCode, int userId, String searchTxt) async{
     var data = await GlobalHelpers.postRequestGeneral.getdata(listJBody(userId, searchTxt), messageCode, UriAdresses.medCore);
+    ereklog.wtf(data);
     switch(routekey){
       case '/home':
       surveyList.value = SurveyListBody.fromJson(jsonDecode(data.toString()));
@@ -83,7 +84,7 @@ class SurveyController extends GetxController{
       Get.toNamed(RouteUnits.surveyList + RouteUnits.individualSurvey, arguments: "");
       GlobalHelpers.bottomnavbarSwitcher.add(false);
       surveyAnswer.answers = List<Answers>.generate(survey.result!.questions!.length, ((index) => Answers()));
-      surveyList.value.result!.items![chosenIndx].loading.value = false;
+      surveyList.value.result![chosenIndx].loading.value = false;
       break;
     }
   }

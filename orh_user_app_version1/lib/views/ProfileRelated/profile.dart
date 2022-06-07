@@ -190,9 +190,9 @@ class _ProfileState extends State<Profile> {
                   child: ListView.builder(
                     physics: const NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
-                          itemCount: profileController.ownSurveyListbody.value.result!.items!.length,
+                          itemCount: profileController.ownSurveyListbody.value.result!.length,
                           itemBuilder: (context, index){
-                            var item = profileController.ownSurveyListbody.value.result!.items![index];
+                            var item = profileController.ownSurveyListbody.value.result![index];
                             return SurveyListItem(surveyName: item.name?? "", surveyId: item.id!, itemindx: index, fromRoute: "profile",);
                           } 
                           ),
@@ -209,7 +209,7 @@ class _ProfileState extends State<Profile> {
              child: InkWell(
                onTap: (){
                  surveyControllermini.surveyDeleteIcon.value = false;
-                 surveyController.surveyList.value.result!.items![surveyControllermini.chosenSurveyIndx].borderColor.value = Colors.white;
+                 surveyController.surveyList.value.result![surveyControllermini.chosenSurveyIndx].borderColor.value = Colors.white;
                },
                child: Container(
                  color: Colors.grey.withOpacity(0.1),
