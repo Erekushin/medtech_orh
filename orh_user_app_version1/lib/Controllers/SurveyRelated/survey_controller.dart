@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:orh_user_app_version1/Controllers/auth_controller.dart';
 import 'dart:convert';
-import 'package:orh_user_app_version1/Controllers/profile_controller.dart';
 import 'package:orh_user_app_version1/Helpers/logging.dart';
 import 'package:orh_user_app_version1/global_helpers.dart';
 import '../../Models/SurveyRelated/response.dart';
@@ -27,27 +26,24 @@ class SurveyController extends GetxController{
     data['search_txt'] = searchTxt;
     return data;
   }
-  var surveyList = SurveyListBody().obs;
+  var publicSurveyList = SurveyListBody().obs;
+  var ownSurveyListbody = SurveyListBody().obs;
+  var wrkSpaceSurveyList = SurveyListBody().obs;
   Future listGet(String routekey, String messageCode, int userId, String searchTxt) async{
     var data = await GlobalHelpers.postRequestGeneral.getdata(listJBody(userId, searchTxt), messageCode, UriAdresses.medCore);
     ereklog.wtf(data);
     switch(routekey){
       case '/home':
-      surveyList.value = SurveyListBody.fromJson(jsonDecode(data.toString()));
+      publicSurveyList.value = SurveyListBody.fromJson(jsonDecode(data.toString()));
       break;
+      case '/segmented':
+      wrkSpaceSurveyList.value = SurveyListBody.fromJson(jsonDecode(data.toString()));
+      break; 
       case '/profile':
-      Get.find<ProfileController>().ownSurveyListbody.value = SurveyListBody.fromJson(jsonDecode(data.toString()));
+      ownSurveyListbody.value = SurveyListBody.fromJson(jsonDecode(data.toString()));
       break;
     }
   }
-
-  var wrkSpaceSurveyList = SurveyListBody().obs;
-   Future segmentedlistGet(String routekey, String messageCode, int userId, String searchTxt) async{
-    var data = await GlobalHelpers.postRequestGeneral.getdata(listJBody(userId, searchTxt), messageCode, UriAdresses.medCore);
-    ereklog.wtf(listJBody(userId, searchTxt));
-    wrkSpaceSurveyList.value = SurveyListBody.fromJson(jsonDecode(data.toString()));
-  }
-
   var pushDataBtn = true.obs;
   SurveyAnswer surveyAnswer = SurveyAnswer();
   GeneralResponse generalResponse = GeneralResponse();
@@ -74,17 +70,25 @@ class SurveyController extends GetxController{
     data['user_id'] = Get.find<AuthController>().user.result!.userId;
     return data;
   }
-    Survey survey = Survey();
-  Future surveyGet(int chosenIndx) async{
+  Survey survey = Survey();
+  Future surveyGet(int chosenIndx,String surveyColor, String route) async{
     var jsondata = await GlobalHelpers.postRequestGeneral.getdata(chosenSurveyPayload(), "120003", UriAdresses.medCore);
     ereklog.wtf(jsondata);
     survey = Survey.fromJson(jsonDecode(jsondata.toString()));
     switch(survey.code){
       case 200 :
-      Get.toNamed(RouteUnits.surveyList + RouteUnits.individualSurvey, arguments: "");
+      Get.toNamed(RouteUnits.surveyList + RouteUnits.individualSurvey, arguments: surveyColor);
       GlobalHelpers.bottomnavbarSwitcher.add(false);
       surveyAnswer.answers = List<Answers>.generate(survey.result!.questions!.length, ((index) => Answers()));
-      surveyList.value.result![chosenIndx].loading.value = false;
+      switch(route){
+        case '/home':
+        publicSurveyList.value.result![chosenIndx].loading.value = false;
+        break;
+        case '/segmented':
+        wrkSpaceSurveyList.value.result![chosenIndx].loading.value = false;
+        break;
+      }
+      
       break;
     }
   }
@@ -92,18 +96,24 @@ class SurveyController extends GetxController{
   Future delete() async{
     var data = await GlobalHelpers.postRequestGeneral.getdata(chosenSurveyPayload(), "120007", UriAdresses.medCore);
     generalResponse = GeneralResponse.fromJson(jsonDecode(data.toString()));
+    ereklog.wtf(data);
     switch(generalResponse.code){
        case '200':
+       Get.snackbar('Амжилттай устлаа', '', snackPosition: SnackPosition.BOTTOM,
+          colorText: Colors.white, backgroundColor: Colors.grey[900], margin: EdgeInsets.only(bottom: GeneralMeasurements.snackbarBottomMargin, left: 5, right: 5,));
+       ownSurveyListbody.value.result!.removeAt(chosenSurveyIndx);
           break;
     }
   }
   SurveyResponsebody surveyResponses = SurveyResponsebody();
-  Future responsesListGet() async{
+  Future responsesListGet(int chosenIndx) async{
     var data = await GlobalHelpers.postRequestGeneral.getdata(chosenSurveyPayload(), "120008", UriAdresses.medCore);
     surveyResponses = SurveyResponsebody.fromJson(jsonDecode(data.toString()));
+    ereklog.wtf(data);
     switch(surveyResponses.code){
        case 200:
          Get.toNamed(RouteUnits.surveyResponses);
+         ownSurveyListbody.value.result![chosenIndx].loading.value = false;
           break;
     }
   }
@@ -112,6 +122,7 @@ class SurveyController extends GetxController{
   Future responseAnswersGet() async{
     var data = await GlobalHelpers.postRequestGeneral.getdata(chosenSurveyPayload(), '120010', UriAdresses.medCore);
     responseAnswers = ResponseAnswersbody.fromJson(jsonDecode(data.toString()));
+    ereklog.wtf(data);
     switch(responseAnswers.code){
       case 200:
       Get.toNamed(RouteUnits.surveyResponses + RouteUnits.responseAnswers);

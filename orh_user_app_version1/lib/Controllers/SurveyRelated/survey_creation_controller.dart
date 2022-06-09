@@ -48,8 +48,13 @@ Future surveyCreate() async{
     generalResponse = GeneralResponse.fromJson(jsonDecode(jsonData));
     switch(generalResponse.code){
       case '200':
-          ereklog.wtf('surveyQuestionPush deer 200 toi response irsen');
+          Get.snackbar('Амжилттай', '', snackPosition: SnackPosition.BOTTOM,
+          colorText: Colors.white, backgroundColor: Colors.grey[900], margin:  const EdgeInsets.all(5));
           break;
+      case '400':
+         Get.snackbar('Судалгааг хадаглаж чадсангүй', generalResponse.message.toString( ), snackPosition: SnackPosition.BOTTOM,
+          colorText: Colors.white, backgroundColor: Colors.grey[900], margin:  const EdgeInsets.all(5));
+      break;    
     }
     GlobalHelpers.workingWithCode.clearSurveyData();
   }

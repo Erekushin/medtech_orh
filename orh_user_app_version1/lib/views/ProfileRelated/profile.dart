@@ -4,9 +4,8 @@ import 'package:get/get.dart';
 import 'package:orh_user_app_version1/Controllers/auth_controller.dart';
 import 'package:orh_user_app_version1/global_constant.dart';
 import 'package:orh_user_app_version1/global_helpers.dart';
-import 'package:orh_user_app_version1/views/home/infoflow_survey_unit.dart';
 import '../../Controllers/SurveyRelated/survey_controller.dart';
-import '../../Controllers/profile_controller.dart';
+import '../../MyWidgets/survey_related/profile_survey_unit.dart';
 
 class ButtonStructure {  
   const ButtonStructure({required this.title, required this.icon, required this.route, this.argument});  
@@ -67,6 +66,7 @@ class _ProfileState extends State<Profile> {
   var surveyController = Get.find<SurveyController>();
   var loginController = Get.find<AuthController>();
   var scrollController = ScrollController();
+  var proPic = Get.find<AuthController>().user.result!.picture?.cast<int>();
   GlobalKey<ScaffoldState> sidePageKey = GlobalKey<ScaffoldState>();
   PageController pageController = PageController(viewportFraction: 0.85);
   final argu = Get.arguments as String;
@@ -166,7 +166,7 @@ class _ProfileState extends State<Profile> {
                               borderRadius: BorderRadius.circular(90.0),
                               child: AspectRatio( 
                                 aspectRatio: 1/1,
-                                child: Image.memory(Uint8List.fromList(loginController.user.result!.picture!)),),)
+                                child: Image.memory(Uint8List.fromList(proPic?? Pics.profilePic)),),)
                          ),
                             ),
                             const SizedBox(width: 1, height: 1,),
@@ -181,8 +181,10 @@ class _ProfileState extends State<Profile> {
                  );
                     }),
                 const SizedBox(width: 1, height: 10,),
-          GetX<ProfileController>(builder: (profileController){
-            return SizedBox(
+          GetX<SurveyController>(builder: (profileController){
+            return Stack(
+              children: [
+                SizedBox(
                 height: GeneralMeasurements.deviceHeight/100*55 ,
                 child: SingleChildScrollView(
                   controller: scrollController,
@@ -190,14 +192,21 @@ class _ProfileState extends State<Profile> {
                   child: ListView.builder(
                     physics: const NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
-                          itemCount: profileController.ownSurveyListbody.value.result!.length,
+                          itemCount: profileController.ownSurveyListbody.value.result?.length?? 0,
                           itemBuilder: (context, index){
                             var item = profileController.ownSurveyListbody.value.result![index];
-                            return SurveyListItem(surveyName: item.name?? "", surveyId: item.id!, itemindx: index, fromRoute: "profile",);
+                            return ProfileSurveyUnit(surveyName: item.name?? "", surveyId: item.id!, 
+                                        itemindx: index, fromRoute: "profile", surveyColor: item.color?? '0xFFFFFFFF',);
                           } 
                           ),
                 ),
-              );
+              ),
+               Visibility(
+                visible: profileController.ownSurveyListbody.value.result == null? true : false,
+                child: Image.asset('assets/images/empty_box.jpg')
+                )
+              ],
+            );
           })
               ],
             ),
@@ -209,7 +218,7 @@ class _ProfileState extends State<Profile> {
              child: InkWell(
                onTap: (){
                  surveyControllermini.surveyDeleteIcon.value = false;
-                 surveyController.surveyList.value.result![surveyControllermini.chosenSurveyIndx].borderColor.value = Colors.white;
+                 surveyController.ownSurveyListbody.value.result![surveyControllermini.chosenSurveyIndx].borderColor.value = Colors.white;
                },
                child: Container(
                  color: Colors.grey.withOpacity(0.1),
@@ -223,7 +232,6 @@ class _ProfileState extends State<Profile> {
                   onTap: () {
                     surveyControllermini.delete();
                     surveyControllermini.surveyDeleteIcon.value = false;
-                    surveyController.listGet(RouteUnits.profile, '120006', loginController.user.result!.userId!, '');
                   },
                   child: const Icon(
                             Icons.delete,

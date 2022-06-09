@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:orh_user_app_version1/Controllers/SurveyRelated/survey_controller.dart';
-
 import '../../MyWidgets/my_text.dart';
 import '../../global_constant.dart';
 
@@ -17,8 +16,11 @@ class _SurveyResponsesState extends State<SurveyResponses> {
   var surveyCont = Get.find<SurveyController>();
   @override
   Widget build(BuildContext context) {
-    return SafeArea(child: ListView.builder(
-      itemCount: surveyCont.surveyResponses.result!.length,
+    return SafeArea(child: 
+      Stack(
+        children: [
+          ListView.builder(
+      itemCount: surveyCont.surveyResponses.result?.length?? 0,
       itemBuilder: (c, i){
         var item = surveyCont.surveyResponses.result![i];
         String? c = item.creartedDate;
@@ -54,6 +56,12 @@ class _SurveyResponsesState extends State<SurveyResponses> {
                   )
             ); 
       },
-    ));
+    ),
+     Visibility(
+                visible: surveyCont.surveyResponses.result == null? true : false,
+                child: Image.asset('assets/images/empty_box.jpg')
+                )
+        ],
+      ));
   }
 }

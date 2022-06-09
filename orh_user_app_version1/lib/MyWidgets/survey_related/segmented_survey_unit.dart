@@ -1,52 +1,29 @@
-import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../Controllers/SurveyRelated/survey_controller.dart';
 import '../../MyWidgets/my_text.dart';
 import '../../global_constant.dart';
-class SurveyListItem extends StatefulWidget {
-  const SurveyListItem({ Key? key,required this.surveyName, required this.surveyId, 
-                         required this.itemindx, required this.fromRoute }) : super(key: key);
-  final String fromRoute;
+class SegmentedSurveyUnit extends StatefulWidget {
+  const SegmentedSurveyUnit({ Key? key,required this.surveyName, required this.surveyId, 
+                         required this.itemindx, required this.surveyColor}) : super(key: key);
+
   final String surveyName;
   final int surveyId;
   final int itemindx;
+  final String surveyColor;
   @override
-  State<SurveyListItem> createState() => _SurveyListItemState();
+  State<SegmentedSurveyUnit> createState() => _SegmentedSurveyUnitState();
 }
-class _SurveyListItemState extends State<SurveyListItem> {
+class _SegmentedSurveyUnitState extends State<SegmentedSurveyUnit> {
   @override
   Widget build(BuildContext context) {
     return GetX<SurveyController>(builder: (surveyController){
                   return GestureDetector(
-                    onLongPress: (){
-                      switch(widget.fromRoute){
-                        case "home":
-
-                        break;
-                        case "profile":
-                          surveyController.surveyDeleteIcon.value = true;
-                          surveyController.surveyList.value.result![widget.itemindx].borderColor.value = Colors.red;
-                          surveyController.chosenSurveyIndx = widget.itemindx;
-                          surveyController.chosenSurveyId = widget.surveyId;
-                        break;
-                      }
-                      },
                     onTap: (){
                        try{
-                         switch(widget.fromRoute){
-                           case "home" :
                            surveyController.chosenSurveyId = widget.surveyId;
-                           surveyController.surveyList.value.result![widget.itemindx].loading.value = true;
-                           surveyController.surveyGet(widget.itemindx);
-                           break;
-                           case "profile" :
-                           surveyController.chosenSurveyId = widget.surveyId;
-                           surveyController.responsesListGet();
-                           break;
-                         }
-                         
+                           surveyController.wrkSpaceSurveyList.value.result![widget.itemindx].loading.value = true;
+                           surveyController.surveyGet(widget.itemindx, widget.surveyColor, RouteUnits.segmented);
                        }
                        catch(e){
                         Get.snackbar('Алдаа', '$e', snackPosition: SnackPosition.BOTTOM,
@@ -57,7 +34,8 @@ class _SurveyListItemState extends State<SurveyListItem> {
                   margin: EdgeInsets.all(GeneralMeasurements.deviceWidth*.05),
                   height: GeneralMeasurements.deviceHeight*.15,
                   decoration: BoxDecoration(
-                    border: Border.all(color: surveyController.surveyList.value.result![widget.itemindx].borderColor.value),
+                    border: Border.all(
+                      color: surveyController.wrkSpaceSurveyList.value.result![widget.itemindx].borderColor.value),
                   color: Colors.white,
                   boxShadow: [
                     BoxShadow(
@@ -77,9 +55,9 @@ class _SurveyListItemState extends State<SurveyListItem> {
                         children: [
                   SizedBox(
                     width: GeneralMeasurements.deviceWidth*.7,
-                    child: myText(widget.surveyName, 17, 1, FontWeight.w700), //queryController.childHeartQuery.result!.title??
+                    child: myText(widget.surveyName, 17, 1, FontWeight.w700),
                   ),
-                  surveyController.surveyList.value.result![widget.itemindx].loading.value? const SizedBox(
+                  surveyController.wrkSpaceSurveyList.value.result![widget.itemindx].loading.value? const SizedBox(
                     width: 20,
                     height: 20,
                     child: CircularProgressIndicator(strokeWidth: 3,)) 
@@ -94,22 +72,17 @@ class _SurveyListItemState extends State<SurveyListItem> {
                   Row(children:[
                     CircleAvatar(
                             backgroundColor: Colors.grey,
-                            radius: 60,
+                            radius: 20,
                             backgroundImage: const AssetImage('assets/images/user_default.png'),  
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(90.0),
-                              child: Text('hghgh'),)
-
-
-// AspectRatio( 
-//                                 aspectRatio: 1/1,
-//                                 child: Image.memory(Uint8List.fromList(surveyController.surveyList.value.result!.items![widget.itemindx].creatorPicture!)),)
-
-// surveyController.surveyList.value.result!.items![widget.itemindx].creatorName!
-
+                              child: const SizedBox())
+                              // AspectRatio( 
+                              //   aspectRatio: 1/1,
+                              //   child: Image.memory(Uint8List.fromList(surveyController.wrkSpaceSurveyList.value.result![widget.itemindx].creatorPicture!)))
                          ),
                           const SizedBox(width: 10,),
-                    Text('ghghgh', style: TextStyle(fontWeight: FontWeight.bold),)      
+                    Text(surveyController.wrkSpaceSurveyList.value.result![widget.itemindx].creatorName!, style: TextStyle(fontWeight: FontWeight.bold),)      
                   ],),
                   Row(
                     children: [

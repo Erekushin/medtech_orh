@@ -23,7 +23,7 @@ class _AnswerFormState extends State<AnswerForm> {
   void initState() {
     answercards.add(SwipeItem(
            content: BasicProfileData1(nameController: authController.nameCont, passConroller: authController.passCont,
-                       phoneController: authController.phoneCont, rdController: authController.rdCont,),
+                       phoneController: authController.phoneCont, rdController: authController.rdCont, passValCont: authController.passValidCont,),
            onSlideUpdate: (SlideRegion? region) async {
           }));
     answercards.add(SwipeItem(
@@ -70,7 +70,8 @@ class _AnswerFormState extends State<AnswerForm> {
                     print("item: ${item.content}, index: $index");
                     print('item transform it self');
                     if(index == 1){
-                      if(authController.nameCont.text.isEmpty || authController.passCont.text.isEmpty){
+                      if(authController.nameCont.text.isEmpty || authController.passCont.text.isEmpty 
+                         || authController.passValidCont.text.isEmpty){
                          Get.snackbar('талбарууд бөглөгдөөгүй байна', "", snackPosition: SnackPosition.BOTTOM,
                          colorText: Colors.white, backgroundColor: Colors.grey[900], margin: const EdgeInsets.all(5));
                          Get.toNamed(RouteUnits.login);
@@ -191,9 +192,10 @@ class _BasicProfileData2 extends State<BasicProfileData2> {
 
 class BasicProfileData1 extends StatefulWidget {
   const BasicProfileData1({ Key? key, required this.nameController, required this.passConroller,
-                                required this.phoneController, required this.rdController }) : super(key: key);
+                                required this.phoneController, required this.rdController, required this.passValCont }) : super(key: key);
   final TextEditingController nameController;
   final TextEditingController passConroller;
+  final TextEditingController passValCont;
   final TextEditingController phoneController;
   final TextEditingController rdController;
   @override
@@ -294,6 +296,7 @@ class _BasicProfileData1State extends State<BasicProfileData1> {
               Container(//pass davtah
                 padding: const EdgeInsets.only(left: 50, right: 50, top: 10, bottom: 0),
                 child: TextFormField(
+                  controller: widget.passValCont,
                   onChanged: (string){
                      final isvalid = registerFormKey.currentState!.validate();
                   },

@@ -10,7 +10,6 @@ import 'package:orh_user_app_version1/views/SurveyRelated/response_answer.dart';
 import 'package:orh_user_app_version1/views/SurveyRelated/response_list.dart';
 import 'package:orh_user_app_version1/views/SurveyRelated/survey.dart';
 import 'package:orh_user_app_version1/views/SurveyRelated/survey_creation.dart';
-import 'package:orh_user_app_version1/views/SurveyRelated/survey_list.dart';
 import 'package:orh_user_app_version1/views/TreatmentRecipe/treatment_recipe.dart';
 import 'package:orh_user_app_version1/views/home/home_info_flow.dart';
 import 'package:orh_user_app_version1/views/splash_screen.dart';
@@ -21,9 +20,7 @@ import 'Controllers/SurveyRelated/survey_creation_controller.dart';
 import 'Controllers/calculator_controller.dart';
 import 'Controllers/image_controller.dart';
 import 'Controllers/auth_controller.dart';
-import 'Controllers/profile_controller.dart';
 import 'Controllers/sql_controller.dart';
-import 'Models/SurveyRelated/response.dart';
 import 'views/DoctorRelated/doctor_profile.dart';
 import 'views/DoctorRelated/doctors.dart';
 import 'MyWidgets/my_bottom_navbar.dart';
@@ -59,8 +56,7 @@ class _MyAppState extends State<MyApp> {
   bindInitialControllers(){
     Get.put(ImageController(), permanent: true);
     Get.put(SurveyController());
-    Get.put(AuthController(), permanent: true); 
-    Get.put(ProfileController(), permanent: true);
+    Get.put(AuthController(), permanent: true);
     Get.put(SettingController(), permanent: true);
     Get.put(SqlController(), permanent: true);
     Get.put(CreationCont());
@@ -90,7 +86,6 @@ class _MyAppState extends State<MyApp> {
         GetPage(name: RouteUnits.profile, page: ()=> const Profile()),
         GetPage(name: RouteUnits.profileInfo, page: ()=> const ProfileInfo()),
         GetPage(name: RouteUnits.profileDiagnosisHistory, page: ()=> const ProfileDiagnosisHistory()),
-        GetPage(name: RouteUnits.mySurveys, page: ()=> const SurveyList()),
         GetPage(name: RouteUnits.profileDeviceLog, page: ()=> const ProfileDevicelog()),
         //Үйлчлүүлэгч үзлэгийн цаг захиалах
         GetPage(name: RouteUnits.timeOrder + RouteUnits.hospitals, page: ()=> Hospitals()),
@@ -104,7 +99,6 @@ class _MyAppState extends State<MyApp> {
         GetPage(name: RouteUnits.doctors + RouteUnits.doctorProfile, page: ()=> const DoctorProfile()),
         //Судалгаанууд
         GetPage(name: RouteUnits.surveyCreation, page: ()=> const SurveyCreation()),
-        GetPage(name: RouteUnits.surveyList, page: ()=> const SurveyList()),
         GetPage(name: RouteUnits.surveyList + RouteUnits.individualSurvey, page: ()=> const SurveyUnit()),
         GetPage(name: RouteUnits.surveyResponses, page: ()=> const SurveyResponses()),
         GetPage(name: RouteUnits.surveyResponses + RouteUnits.responseAnswers, page: ()=> const ResponseAnswers()),

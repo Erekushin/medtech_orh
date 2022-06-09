@@ -29,16 +29,19 @@ class _ResponseAnswersState extends State<ResponseAnswers> {
               itemBuilder: (c,i){
                 var item = surveyCont.responseAnswers.result!.answers![i];
                 String answer;
-                if(item.textAnswer == null){
+                if(item.textAnswer != null){
+                  answer = item.textAnswer!;
+                }
+                else if(item.optionAnswer != null){
                   answer = item.optionAnswer!;
                 }
                 else{
-                  answer = item.textAnswer!;
+                  answer = '';
                 }
                 return Column(
                   children: [
-                    myText('Асуулт ' + item.question.toString(), 15, 1),
-                    myText('хариулт ' + answer , 15, 1)
+                    myText('Асуулт: ' + item.question.toString(), 15, 1),
+                    myText('хариулт: ' + answer , 15, 1)
                     ],
                 );
               }

@@ -21,6 +21,7 @@ class AuthController extends GetxController{
   //register
   var nameCont = TextEditingController();
   var passCont = TextEditingController();
+  var passValidCont = TextEditingController();
   var phoneCont = TextEditingController();
   var rdCont = TextEditingController();
   //  Map<String, dynamic> loginBody(){
@@ -63,7 +64,7 @@ class AuthController extends GetxController{
           loginloading.value = false;
           // GlobalHelpers.auth =  'bearer ' + geregeUser.result!.token!.token!;
           await surveyController.listGet(RouteUnits.home, '120002', user.result!.userId!, '');
-          // await surveyController.segmentedlistGet('', '120009', user.result!.userId!, '');
+          await surveyController.listGet('/segmented', '120009', user.result!.userId!, '');
           retryFunction();
           break;
         case 403:

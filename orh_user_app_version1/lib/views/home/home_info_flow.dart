@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:orh_user_app_version1/Controllers/sql_controller.dart';
-import 'package:orh_user_app_version1/views/home/infoflow_survey_unit.dart';
 import 'dart:ui';
 import '../../Controllers/SurveyRelated/survey_creation_controller.dart';
 import '../../Controllers/SurveyRelated/survey_controller.dart';
 import '../../Controllers/auth_controller.dart';
 import '../../MyWidgets/home_page_card.dart';
 import '../../MyWidgets/my_button.dart';
+import '../../MyWidgets/survey_related/public_syrvey_unit.dart';
+import '../../MyWidgets/survey_related/segmented_survey_unit.dart';
 import '../../global_constant.dart';
 import '../../global_helpers.dart';
 
@@ -30,6 +31,21 @@ class _HomeInfoFlowState extends State<HomeInfoFlow> with SingleTickerProviderSt
     return await Get.defaultDialog(title: 'Эрүүл Gerege ийг хаах уу?', content: Image.asset('assets/images/thinkingBoy.png'),
     actions: <Widget>[TextButton(onPressed: (){SystemNavigator.pop();}, child: const Text("exit", style: TextStyle(fontSize: 20),)), 
     ]);
+  }
+  var homePageCont = PageController();
+   int _currentIndex = 1;
+  int get currentIndex => _currentIndex;
+  List<String> pageNames = ['public','work space'];
+  routing(int index){
+    switch(index){
+      case 0 :
+      homePageCont.jumpToPage(0);
+        break;
+      case 1 :
+      homePageCont.jumpToPage(1);
+        break;
+    }
+    _currentIndex = index; 
   }
   @override
   void dispose() {
@@ -87,8 +103,12 @@ class _HomeInfoFlowState extends State<HomeInfoFlow> with SingleTickerProviderSt
                     ),
                   child: TextField(
                         onChanged: (value){
-                          //value aa avaal shuud hvselt shidene gesen vg
-                           surveyController.listGet(RouteUnits.home, '120002', loginController.user.result!.userId!, value);
+                           if(homePageCont.page == 0){
+                             surveyController.listGet(RouteUnits.home, '120002', loginController.user.result!.userId!, value);
+                           } 
+                           else if(homePageCont.page == 1){
+                             surveyController.listGet('/segmented', '120009', loginController.user.result!.userId!, value);
+                           }
                        },
                         controller: searchController,
                         decoration: const InputDecoration(
@@ -103,7 +123,14 @@ class _HomeInfoFlowState extends State<HomeInfoFlow> with SingleTickerProviderSt
                         ),
                       ),
                   ),
-                  IconButton(onPressed: (){}, 
+                  IconButton(onPressed: (){
+                      if(homePageCont.page == 0){
+                             surveyController.listGet(RouteUnits.home, '120002', loginController.user.result!.userId!, searchController.text);
+                           } 
+                           else if(homePageCont.page == 1){
+                             surveyController.listGet('/segmented', '120009', loginController.user.result!.userId!, searchController.text);
+                           }
+                  }, 
                   icon: const Icon(Icons.search, color: Colors.grey,))
                 ],
               ),
@@ -209,14 +236,48 @@ class _HomeInfoFlowState extends State<HomeInfoFlow> with SingleTickerProviderSt
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                TextButton(onPressed: (){}, child: const Text('Public')),
-                TextButton(onPressed: (){}, child: const Text('Work Space')),
-                const SizedBox(width:10)
-                ],),
+                  SizedBox(
+                width: GeneralMeasurements.deviceWidth/100*65,
+                height: GeneralMeasurements.deviceHeight/100*3,
+                child: ListView.builder(
+                        itemCount: 2,
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (context, index) => InkWell(
+                          onTap: () {
+                            print('something');
+                            setState((){
+                              routing(index);
+                            });
+                          },
+                          splashColor: Colors.transparent,
+                          highlightColor: Colors.transparent,
+                          child:  AnimatedContainer(
+                              margin: EdgeInsets.all(1),
+                              child: Center(child: Text(
+                              pageNames[index],
+                              style: TextStyle(
+                                 color: index == _currentIndex ?Colors.white : CommonColors.geregeBlue,
+                              ),
+                            )),
+                          duration: const Duration(milliseconds: 1500),
+                          curve: Curves.fastLinearToSlowEaseIn,
+                          width: GeneralMeasurements.deviceWidth/100*30,
+                          height: 50,
+                          decoration: BoxDecoration(
+                          color: index == _currentIndex ? CommonColors.geregeBlue : Colors.white,
+                          borderRadius: const BorderRadius.all(Radius.circular(5)),
+                       ),
+                     )
+                        ),
+                      ),
+              )
+                ],
+              ),
               SizedBox(
                 width: GeneralMeasurements.deviceWidth,
                 height: GeneralMeasurements.deviceHeight/100*70 ,
                 child: PageView(
+                controller: homePageCont,  
                 children: const [
                   HomePagePublic(),
                   HomePageWorkSpace()
@@ -374,14 +435,12 @@ class _HomeSidebarState extends State<HomeSidebar> {
   }
 }
 
-
 class HomePagePublic extends StatefulWidget {
   const HomePagePublic({ Key? key }) : super(key: key);
 
   @override
   State<HomePagePublic> createState() => _HomePagePublicState();
 }
-
 class _HomePagePublicState extends State<HomePagePublic> {
   var scrollController = ScrollController();
   var loginController = Get.find<AuthController>();
@@ -405,26 +464,34 @@ class _HomePagePublicState extends State<HomePagePublic> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: GetX<SurveyController>(builder: (surveyControllerList){
-            return SizedBox(
+            return Stack(
+              children: [
+                SizedBox(
                 child: SingleChildScrollView(
                   controller: scrollController,
                   physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
                   child: ListView.builder(
                     physics: const NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
-                          itemCount: surveyControllerList.surveyList.value.result!.length,
+                          itemCount: surveyControllerList.publicSurveyList.value.result?.length?? 0,
                           itemBuilder: (context, index){
-                            var item = surveyControllerList.surveyList.value.result![index];
-                            return SurveyListItem(surveyName: item.name?? "", surveyId: item.id!, itemindx: index, fromRoute: "home",);
+                            var item = surveyControllerList.publicSurveyList.value.result![index];
+                            return PublicSurveyUnit(surveyName: item.name?? "", surveyId: item.id!, 
+                                                    itemindx: index, fromRoute: "home", surveyColor: item.color?? '0xFFFFFFFF',);
                           } 
                           ),
                 ),
-              );
+              ),
+              Visibility(
+                visible: surveyControllerList.publicSurveyList.value.result == null? true : false,
+                child: Image.asset('assets/images/empty_box.jpg')
+                )
+              ],
+            );
           })
     );
   }
 }
-
 
 class HomePageWorkSpace extends StatefulWidget {
   const HomePageWorkSpace({ Key? key }) : super(key: key);
@@ -432,7 +499,6 @@ class HomePageWorkSpace extends StatefulWidget {
   @override
   State<HomePageWorkSpace> createState() => _HomePageWorkSpaceState();
 }
-
 class _HomePageWorkSpaceState extends State<HomePageWorkSpace> {
    var scrollController = ScrollController();
   var loginController = Get.find<AuthController>();
@@ -449,28 +515,37 @@ class _HomePageWorkSpaceState extends State<HomePageWorkSpace> {
     }
     if (scrollController.offset <= scrollController.position.minScrollExtent &&
         !scrollController.position.outOfRange) {//reach the top
-      surveyController.segmentedlistGet('', '120009', loginController.user.result!.userId!, '');
+      surveyController.listGet('/segmented', '120009', loginController.user.result!.userId!, '');
     }
  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: GetX<SurveyController>(builder: (surveyControllerList){
-            return SizedBox(
+            return Stack(
+              children: [
+                SizedBox(
                 child: SingleChildScrollView(
                   controller: scrollController,
                   physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
                   child: ListView.builder(
                     physics: const NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
-                          itemCount: surveyControllerList.wrkSpaceSurveyList.value.result!.length,
+                          itemCount: surveyControllerList.wrkSpaceSurveyList.value.result?.length?? 0,
                           itemBuilder: (context, index){
                             var item = surveyControllerList.wrkSpaceSurveyList.value.result![index];
-                            return SurveyListItem(surveyName: item.name?? "", surveyId: item.id!, itemindx: index, fromRoute: "home",);
+                            return SegmentedSurveyUnit(surveyName: item.name?? "", surveyId: item.id!, 
+                                                       itemindx: index, surveyColor: item.color?? '0xFFFFFFFF',);
                           } 
                           ),
                 ),
-              );
+              ),
+                 Visibility(
+                visible: surveyControllerList.wrkSpaceSurveyList.value.result == null? true : false,
+                child: Image.asset('assets/images/empty_box.jpg')
+                )
+              ],
+            );
           })
     );
   }

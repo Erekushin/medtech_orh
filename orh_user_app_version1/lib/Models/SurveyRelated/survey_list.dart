@@ -20,39 +20,27 @@ class SurveyListBody {
       });
     }
   }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['code'] = this.code;
-    data['status'] = this.status;
-    data['message'] = this.message;
-    if (this.result != null) {
-      data['result'] = this.result!.map((v) => v.toJson()).toList();
-    }
-    return data;
-  }
 }
 
 class Result {
   String? name;
   int? id;
   int? userId;
+  String? color;
+  String? creatorName;
+  List<int>? creatorPicture;  
   var loading = false.obs;
   var borderColor = Colors.white.obs;
 
-  Result({this.name, this.id, this.userId});
+  Result({this.name, this.id, this.userId, this.creatorName, this.creatorPicture, this.color});
 
   Result.fromJson(Map<String, dynamic> json) {
+    creatorPicture = json['creator_picture'];
+    creatorName = json['creator_name'];
     name = json['name'];
+    color = json['survey_color'];
     id = json['id'];
     userId = json['user_id'];
   }
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['name'] = this.name;
-    data['id'] = this.id;
-    data['user_id'] = this.userId;
-    return data;
-  }
 }

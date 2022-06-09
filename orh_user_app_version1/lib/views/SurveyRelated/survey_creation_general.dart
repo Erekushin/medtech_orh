@@ -93,6 +93,7 @@ class _SurveyCreationGeneralState extends State<SurveyCreationGeneral> {
                     Visibility(
                       visible: surveyCreationController.limitCountVis.value,
                       child: TextField(
+                    keyboardType: TextInputType.number,
                     controller: surveyCreationController.surveyInputLimitation,
                     decoration: const InputDecoration(
                       hintText: 'Судалгааг хэдэн удаа бөглөх боломтой вэ?'
@@ -115,10 +116,6 @@ class _SurveyCreationGeneralState extends State<SurveyCreationGeneral> {
                       surveyCreationController.levelStr = newValue.toString();
                       switch(newValue){
                       case 'public':
-                       surveyCreationController.researchetTextController.clear();
-                       surveyCreationController.researchetIdList.clear();
-                      break;
-                      case 'private':
                        surveyCreationController.researchetTextController.clear();
                        surveyCreationController.researchetIdList.clear();
                       break;
@@ -190,7 +187,7 @@ class _SurveyCreationGeneralState extends State<SurveyCreationGeneral> {
                                      InkWell(
                                       onTap: (){
                                         setState((){
-                                        surveyCreationController.surveyCreationbody.surveyClr = '0xFF2979FF';  
+                                        surveyCreationController.surveyCreationbody.surveyClr = '0xFF88C9B1';  
                                         blue = true;
                                         red = false;
                                         white = false;
@@ -219,7 +216,7 @@ class _SurveyCreationGeneralState extends State<SurveyCreationGeneral> {
                                      InkWell(
                                       onTap: (){
                                         setState((){
-                                        surveyCreationController.surveyCreationbody.surveyClr = '0xFFE040FB'; 
+                                        surveyCreationController.surveyCreationbody.surveyClr = '0xFF9375B0'; 
                                         purple = true;
                                         red = false;
                                         white = false;
@@ -247,7 +244,7 @@ class _SurveyCreationGeneralState extends State<SurveyCreationGeneral> {
                                      InkWell(
                                       onTap: (){
                                         setState((){
-                                        surveyCreationController.surveyCreationbody.surveyClr = '0xFFFF5252';
+                                        surveyCreationController.surveyCreationbody.surveyClr = '0xFFC35C74';
                                         red = true;
                                         purple = false;
                                         white = false;
