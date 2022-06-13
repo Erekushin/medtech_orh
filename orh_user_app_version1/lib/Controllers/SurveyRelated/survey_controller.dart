@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:orh_user_app_version1/Controllers/auth_controller.dart';
 import 'dart:convert';
 import 'package:orh_user_app_version1/Helpers/logging.dart';
+import 'package:orh_user_app_version1/Models/SurveyRelated/statistic_answer.dart';
 import 'package:orh_user_app_version1/global_helpers.dart';
 import '../../Models/SurveyRelated/response.dart';
 import '../../Models/SurveyRelated/response_answers.dart';
@@ -117,6 +118,7 @@ class SurveyController extends GetxController{
     ereklog.wtf(chosenSurveyPayload('', username));
     switch(surveyResponses.code){
        case 200:
+         await responseStatisticGet();
          Get.toNamed(RouteUnits.surveyResponses);
           break;
     }
@@ -147,9 +149,11 @@ class SurveyController extends GetxController{
     }
   }
 
-  
+  Statistic statisticAnswer = Statistic();
   Future responseStatisticGet() async{
     var data = await GlobalHelpers.postRequestGeneral.getdata(surveyResponses.toJson(), '120100', UriAdresses.medCore);
     ereklog.wtf(surveyResponses.toJson());
+    ereklog.wtf(data);
+    statisticAnswer = Statistic.fromJson(jsonDecode(data.toString()));
   }
 }
