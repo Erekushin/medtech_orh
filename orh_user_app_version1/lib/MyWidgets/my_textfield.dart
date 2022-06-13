@@ -48,6 +48,23 @@ class _MyTextFieldState extends State<MyTextField> {
                   ),
                 ),
        );
+        case 'onlyNumber' :
+     return Container(
+    padding: EdgeInsets.only(top: widget.margint, bottom: widget.marginb, left: widget.marginr, right: widget.marginl),
+    child: TextField(
+      keyboardType: TextInputType.number,
+      onChanged: (value){
+          surveyController.surveyAnswer.answers![widget.answerIndex].questionId = int.parse(widget.questionID);
+          surveyController.surveyAnswer.answers![widget.answerIndex].answerDigit = int.parse(value);
+        },
+      controller: widget.txtController,
+      decoration: InputDecoration(
+        contentPadding: const EdgeInsets.all(4),
+      labelText: widget.hinttxt,  
+      hintText: widget.hinttxt,
+                  ),
+                ),
+       );
        case 'rd' :
      return Container(
     padding: EdgeInsets.only(top: widget.margint, bottom: widget.marginb, left: widget.marginr, right: widget.marginl),

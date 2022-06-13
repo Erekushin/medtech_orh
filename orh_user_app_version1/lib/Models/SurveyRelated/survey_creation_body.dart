@@ -47,15 +47,17 @@ class Researchers{
 class Question{
   String? questionText;
   String? type;
+  String? statistic;
   List<CreationOptions> options = <CreationOptions>[].obs;
   List<TextEditingController> optionTextController = <TextEditingController>[];
   double? containerHeight;
 
-  Question({this.questionText, this.type,required this.options});
+  Question({this.questionText, this.type,required this.options, this.statistic});
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['question_text'] = questionText;
     data['type'] = type;
+    data['statistic'] = statistic;
     if (options != null) {
       data['options'] = options.map((v) => v.toJson()).toList();
     }

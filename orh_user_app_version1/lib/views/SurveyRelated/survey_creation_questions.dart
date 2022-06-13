@@ -8,6 +8,7 @@ import '../../Controllers/SurveyRelated/survey_creation_controller.dart';
 import '../../Helpers/logging.dart';
 import '../../Models/SurveyRelated/survey_creation_body.dart';
 import '../../Models/SurveyRelated/survey_creation_types.dart';
+import '../../MyWidgets/drop2.dart';
 import '../../MyWidgets/my_dropdown.dart';
 import '../../global_helpers.dart';
 class SurveyCreationQuestion extends StatefulWidget {
@@ -27,6 +28,7 @@ class _SurveyCreationQuestionState extends State<SurveyCreationQuestion> {
        surveyCreationController.surveyCreationbody.questions = List<Question>.generate(1, ((index) => Question(questionText: 'fdfdfd', options: []))).obs;
        surveyController.textEditingControllers.add(TextEditingController());
        surveyController.dropvalueList.add(DropSelectVal());
+       surveyController.statisticTypeList.add(DropSelectVal());
        surveyCreationController.newQuestionList.add(Question(options: []));
     }
   }
@@ -100,6 +102,7 @@ class _SurveyCreationQuestionState extends State<SurveyCreationQuestion> {
                                 int i;
                                 i = surveyCreationController.newQuestionList.length;
                                 surveyController.dropvalueList.insert(i,DropSelectVal());
+                                surveyController.statisticTypeList.insert(i, DropSelectVal());
                                 surveyController.textEditingControllers.insert(i,TextEditingController());
                                 surveyCreationController.newQuestionList.insert(i, Question(type: '10', questionText: 'Регистрээ оруулах', options: []));
                                 surveyCreationController.toolQuestionCount += 1; 
@@ -154,9 +157,17 @@ class _SurveyInputCreationState extends State<SurveyInputCreation> {
     surveyCreationController.newQuestionList[widget.surveyQuestionIndex].type = chosenVal;
     ereklog.wtf(chosenVal);
     switch(chosenVal){
+       case '8':
+        setState(() {
+        surveyCreationController.newQuestionList[widget.surveyQuestionIndex].options.clear();
+        surveyCreationController.newQuestionList[widget.surveyQuestionIndex].optionTextController.clear();
+        surveyCreationController.newQuestionList[widget.surveyQuestionIndex].containerHeight = 210;
+      });
+        
+        break;
         case '7':
         if(surveyCreationController.newQuestionList[widget.surveyQuestionIndex].options.isEmpty){
-      if(surveyCreationController.newQuestionList[widget.surveyQuestionIndex].containerHeight == 130){
+      if(surveyCreationController.newQuestionList[widget.surveyQuestionIndex].containerHeight == 210){
         setState(() {
         surveyCreationController.newQuestionList[widget.surveyQuestionIndex].containerHeight = surveyCreationController.newQuestionList[widget.surveyQuestionIndex].containerHeight! + 50;
         surveyCreationController.newQuestionList[widget.surveyQuestionIndex].options.add(CreationOptions());
@@ -169,8 +180,8 @@ class _SurveyInputCreationState extends State<SurveyInputCreation> {
         setState(() {
         surveyCreationController.newQuestionList[widget.surveyQuestionIndex].options.clear();
         surveyCreationController.newQuestionList[widget.surveyQuestionIndex].optionTextController.clear();
-        surveyCreationController.newQuestionList[widget.surveyQuestionIndex].containerHeight = 130;
-      });
+        surveyCreationController.newQuestionList[widget.surveyQuestionIndex].containerHeight = 210;
+      }); 
         
         break;
       }
@@ -179,7 +190,7 @@ class _SurveyInputCreationState extends State<SurveyInputCreation> {
   void initState() {
     super.initState();
     if(surveyCreationController.newQuestionList[widget.surveyQuestionIndex].containerHeight == null){
-      surveyCreationController.newQuestionList[widget.surveyQuestionIndex].containerHeight = 130;
+      surveyCreationController.newQuestionList[widget.surveyQuestionIndex].containerHeight = 210;
     } 
   }
 
@@ -219,6 +230,10 @@ class _SurveyInputCreationState extends State<SurveyInputCreation> {
                 MyDropdown(dropDownHint: 'Асуултын төрлийг сонгох', listitems: surveyCreationController.surveyCreationTypes.result!.questionType!, currentValue: 0, mark: '', 
                            givenModelType: TypeInfo, margint: 5, marginb: 5, marginr: 5, marginl: 5, 
                            answerIndex: widget.surveyQuestionIndex, callBackFunction: callBackFunc,),
+                Drop2(dropDownHint: 'Статистик үзүүлэлт нэмэх', listitems: surveyCreationController.surveyCreationTypes.result!.statistic!, currentValue: 0, mark: '', 
+                           givenModelType: TypeInfo, margint: 5, marginb: 5, marginr: 5, marginl: 5, 
+                           answerIndex: widget.surveyQuestionIndex, callBackFunction: (){},),           
+                                       
                 Container(//option container
                   margin: const EdgeInsets.only(left: 50),
                   child: Expanded(
@@ -282,6 +297,7 @@ Widget configureBtns(int index){
                onTap: (){
                  if(surveyCreationBody.newQuestionList[index].type != null){
                    surveyController.dropvalueList.insert(index,DropSelectVal());
+                   surveyController.statisticTypeList.insert(index, DropSelectVal());
                    surveyController.textEditingControllers.insert(index,TextEditingController());
                    surveyCreationBody.newQuestionList.insert(index, Question(options: []));
                  }
@@ -297,6 +313,7 @@ Widget configureBtns(int index){
                  surveyCreationBody.newQuestionList.removeAt(index);
                  surveyController.textEditingControllers.removeAt(index);
                  surveyController.dropvalueList.removeAt(index);
+                 surveyController.dropvalueList.removeAt(index);
                },
                child: myBtn(CommonColors.yellow, 30, 30, CommonColors.yellow, Colors.grey, 'DEL', 10, 12),
              ),
@@ -305,6 +322,7 @@ Widget configureBtns(int index){
                  if(surveyCreationBody.newQuestionList[index].type != null){
                    int i = index+1;
                    surveyController.dropvalueList.insert(i,DropSelectVal());
+                   surveyController.statisticTypeList.insert(i, DropSelectVal());
                    surveyController.textEditingControllers.insert(i,TextEditingController());
                    surveyCreationBody.newQuestionList.insert(i, Question(options: []));
                  }

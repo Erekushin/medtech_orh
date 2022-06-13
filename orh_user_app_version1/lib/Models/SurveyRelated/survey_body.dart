@@ -56,29 +56,32 @@ class Questions {
   String? id;
   int? type;
   String? questionText;
+  String? statistic;
   List<Options>? options;
 
-  Questions({this.id, this.type, this.questionText, this.options});
+  Questions({this.id, this.type, this.questionText, this.options, this.statistic});
 
   Questions.fromJson(Map<String, dynamic> json) {
     id = json['id'].toString();
     type = json['type'];
     questionText = json['question_text'];
+    statistic = json['statistic'];
     if (json['options'] != null) {
       options = <Options>[];
       json['options'].forEach((v) {
-        options!.add(new Options.fromJson(v));
+        options!.add(Options.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['type'] = this.type;
-    data['question_text'] = this.questionText;
-    if (this.options != null) {
-      data['options'] = this.options!.map((v) => v.toJson()).toList();
+    data['id'] = id;
+    data['type'] = type;
+    data['question_text'] = questionText;
+    data['statistic'] = statistic;
+    if (options != null) {
+      data['options'] = options!.map((v) => v.toJson()).toList();
     }
     return data;
   }

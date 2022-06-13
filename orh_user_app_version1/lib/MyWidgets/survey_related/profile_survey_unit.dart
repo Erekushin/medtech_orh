@@ -31,7 +31,7 @@ class _ProfileSurveyUnitState extends State<ProfileSurveyUnit> {
                        try{
                            surveyController.chosenSurveyId = widget.surveyId;
                            surveyController.ownSurveyListbody.value.result![widget.itemindx].loading.value = true;
-                           surveyController.responsesListGet(widget.itemindx);
+                           surveyController.respondResearchersListGet(widget.itemindx);
                        }
                        catch(e){
                         Get.snackbar('Алдаа', '$e', snackPosition: SnackPosition.BOTTOM,

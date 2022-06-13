@@ -19,6 +19,7 @@ class Result {
   List<TypeInfo>? privacyLevel;
   List<TypeInfo>? questionType;
   List<TypeInfo>? surveyType;
+  List<TypeInfo>? statistic;
 
   Result({this.privacyLevel, this.questionType, this.surveyType});
 
@@ -27,6 +28,12 @@ class Result {
       privacyLevel = <TypeInfo>[];
       json['privacy_level'].forEach((v) {
         privacyLevel!.add(new TypeInfo.fromJson(v));
+      });
+    }
+    if(json['statistic'] != null){
+       statistic = <TypeInfo>[];
+      json['statistic'].forEach((v) {
+        statistic!.add(new TypeInfo.fromJson(v));
       });
     }
     if (json['question_type'] != null) {
@@ -47,18 +54,21 @@ class Result {
 class TypeInfo {
   String? typeName;
   int? typeId;
+  String? keyWord;
 
-  TypeInfo({this.typeName, this.typeId});
+  TypeInfo({this.typeName, this.typeId, this.keyWord});
 
   TypeInfo.fromJson(Map<String, dynamic> json) {
     typeName = json['type_name'];
     typeId = json['type_id'];
+    keyWord = json['key_word'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['type_name'] = typeName;
     data['type_id'] = typeId;
+    data['key_word'] = keyWord;
     return data;
   }
 }

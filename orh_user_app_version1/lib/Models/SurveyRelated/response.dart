@@ -33,18 +33,24 @@ class SurveyResponsebody {
 class Result {
   String? researcherName;
   String? creartedDate;
+  int? surveyID;
+  int? userID;
 
-  Result({this.researcherName, this.creartedDate});
+  Result({this.researcherName, this.creartedDate, this.surveyID, this.userID});
 
   Result.fromJson(Map<String, dynamic> json) {
     researcherName = json['researcher_name'];
-    creartedDate = json['crearted_date'];
+    creartedDate = json['created_date'];
+    surveyID = json['survey_id'];
+    userID = json['user_id'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['researcher_name'] = this.researcherName;
-    data['crearted_date'] = this.creartedDate;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['researcher_name'] = researcherName;
+    data['cearted_date'] = creartedDate;
+    data['survey_id'] = surveyID;
+    data['user_id'] = userID;
     return data;
   }
 }

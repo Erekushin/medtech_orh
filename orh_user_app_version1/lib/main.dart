@@ -6,6 +6,7 @@ import 'package:orh_user_app_version1/Controllers/setting_controller.dart';
 import 'package:orh_user_app_version1/views/AnswerFormRelated/answer_form.dart';
 import 'package:orh_user_app_version1/views/IndicatorCalculatorRelated/indicator_calculators.dart';
 import 'package:orh_user_app_version1/views/PreDiagnosis/pre_diagnosis.dart';
+import 'package:orh_user_app_version1/views/SurveyRelated/respond_researchers.dart';
 import 'package:orh_user_app_version1/views/SurveyRelated/response_answer.dart';
 import 'package:orh_user_app_version1/views/SurveyRelated/response_list.dart';
 import 'package:orh_user_app_version1/views/SurveyRelated/survey.dart';
@@ -100,6 +101,7 @@ class _MyAppState extends State<MyApp> {
         //Судалгаанууд
         GetPage(name: RouteUnits.surveyCreation, page: ()=> const SurveyCreation()),
         GetPage(name: RouteUnits.surveyList + RouteUnits.individualSurvey, page: ()=> const SurveyUnit()),
+        GetPage(name: RouteUnits.respondResearchers, page: ()=> const ResponseResearchers()),
         GetPage(name: RouteUnits.surveyResponses, page: ()=> const SurveyResponses()),
         GetPage(name: RouteUnits.surveyResponses + RouteUnits.responseAnswers, page: ()=> const ResponseAnswers()),
         //Calculators

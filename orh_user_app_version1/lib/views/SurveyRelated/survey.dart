@@ -6,6 +6,7 @@ import 'package:orh_user_app_version1/Controllers/setting_controller.dart';
 import 'package:orh_user_app_version1/MyWidgets/my_button.dart';
 import 'package:orh_user_app_version1/global_constant.dart';
 import 'package:orh_user_app_version1/global_helpers.dart';
+import '../../models/SurveyRelated/survey_body.dart';
 import '../../MyWidgets/my_reciever_unit.dart';
 import '../../global_constant.dart';
 
@@ -59,7 +60,7 @@ class _PageUnitState extends State<PageUnit> {
     surveyControllerOut.surveyAnswer.researcherGeregeID = authCon.user.result!.userId;
     surveyControllerOut.surveyAnswer.surveyId = surveyControllerOut.chosenSurveyId;
     surveyControllerOut.surveyAnswer.fillerName = authCon.user.result!.userName;
-    surveyControllerOut.surveyAnswer.createdDate = DateTime.now().toString().substring(0,10);
+    surveyControllerOut.surveyAnswer.createdDate = DateTime.now().toString().substring(0,18);
     try{
         surveyControllerOut.answersPush();
       }
@@ -101,9 +102,12 @@ class _PageUnitState extends State<PageUnit> {
                       surveyControllerOut.survey.result!.questions!.length%AllSizes.pageQuestionCount : AllSizes.pageQuestionCount : AllSizes.pageQuestionCount,
                       itemBuilder: (BuildContext context, int index){
                         final int queryUnitIndex = widget.pageIndex * AllSizes.pageQuestionCount + index;
-                        final item =  surveyControllerOut.survey.result!.questions![queryUnitIndex];
+                        Questions item =  surveyControllerOut.survey.result!.questions![queryUnitIndex];
                         surveyControllerOut.textEditingControllers.add(TextEditingController());
                         surveyControllerOut.dropvalueList.add(DropSelectVal());
+                        if(item.statistic  == 'line_chart'){
+                          surveyControllerOut.surveyAnswer.answers![queryUnitIndex].statistic = 'line_chart';
+                        }
                       return RecieverUnit(questionID: item.id!, type: item.type, questionText: item.questionText, 
                                           questionIndex: queryUnitIndex, options: item.options);
                     }),

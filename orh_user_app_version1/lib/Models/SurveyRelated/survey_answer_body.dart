@@ -36,21 +36,27 @@ class SurveyAnswer {
 class Answers {
   int? questionId;
   int? optionId;
+  int? answerDigit;
   String? answerText;
+  String? statistic;
 
-  Answers({this.questionId, this.optionId, this.answerText});
+  Answers({this.questionId, this.optionId, this.answerText, this.answerDigit, this.statistic});
 
   Answers.fromJson(Map<String, dynamic> json) {
     questionId = json['question_id'];
     optionId = json['option_id'];
+    answerDigit = json['answer_digit'];
     answerText = json['answer_text'];
+    statistic = json['statistic'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['question_id'] = questionId;
     data['option_id'] = optionId;
+    data['answer_digit'] = answerDigit;
     data['answer_text'] = answerText;
+    data['statistic'] = statistic;
     return data;
   }
 }

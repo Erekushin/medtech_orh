@@ -17,6 +17,7 @@ class SurveyController extends GetxController{
   var ereklog = logger(SurveyController);
   //.......................................................
   List<DropSelectVal> dropvalueList = [];
+  List<DropSelectVal> statisticTypeList = [];
   List<TextEditingController> textEditingControllers = [];
   //.......................................................
 
@@ -64,15 +65,17 @@ class SurveyController extends GetxController{
 
   var chosenSurveyId;
   var chosenSurveyIndx;
-  Map<String, dynamic> chosenSurveyPayload(){
+  Map<String, dynamic> chosenSurveyPayload(String createdDate, String username){
     final Map<String, dynamic> data = <String, dynamic>{};
     data['survey_id'] = '$chosenSurveyId';
     data['user_id'] = Get.find<AuthController>().user.result!.userId;
+    data['created_date'] = createdDate;
+    data['user_name'] = username;
     return data;
   }
   Survey survey = Survey();
   Future surveyGet(int chosenIndx,String surveyColor, String route) async{
-    var jsondata = await GlobalHelpers.postRequestGeneral.getdata(chosenSurveyPayload(), "120003", UriAdresses.medCore);
+    var jsondata = await GlobalHelpers.postRequestGeneral.getdata(chosenSurveyPayload('', ''), "120003", UriAdresses.medCore);
     ereklog.wtf(jsondata);
     survey = Survey.fromJson(jsonDecode(jsondata.toString()));
     switch(survey.code){
@@ -94,7 +97,7 @@ class SurveyController extends GetxController{
   }
   var surveyDeleteIcon = false.obs;
   Future delete() async{
-    var data = await GlobalHelpers.postRequestGeneral.getdata(chosenSurveyPayload(), "120007", UriAdresses.medCore);
+    var data = await GlobalHelpers.postRequestGeneral.getdata(chosenSurveyPayload('', ''), "120007", UriAdresses.medCore);
     generalResponse = GeneralResponse.fromJson(jsonDecode(data.toString()));
     ereklog.wtf(data);
     switch(generalResponse.code){
@@ -106,27 +109,47 @@ class SurveyController extends GetxController{
     }
   }
   SurveyResponsebody surveyResponses = SurveyResponsebody();
-  Future responsesListGet(int chosenIndx) async{
-    var data = await GlobalHelpers.postRequestGeneral.getdata(chosenSurveyPayload(), "120008", UriAdresses.medCore);
+  Future responsesListGet(String username) async{
+    var data = await GlobalHelpers.postRequestGeneral.getdata(chosenSurveyPayload('', username), "120008", UriAdresses.medCore);
+    ereklog.wtf(data);
     surveyResponses = SurveyResponsebody.fromJson(jsonDecode(data.toString()));
     ereklog.wtf(data);
+    ereklog.wtf(chosenSurveyPayload('', username));
     switch(surveyResponses.code){
        case 200:
          Get.toNamed(RouteUnits.surveyResponses);
+          break;
+    }
+  }
+    SurveyListBody respondResearchers =SurveyListBody();
+    Future respondResearchersListGet(int chosenIndx) async{
+    var data = await GlobalHelpers.postRequestGeneral.getdata(chosenSurveyPayload('', ''), "120011", UriAdresses.medCore);
+    respondResearchers = SurveyListBody.fromJson(jsonDecode(data.toString()));
+    ereklog.wtf(data);
+    switch(respondResearchers.code){
+       case 200:
+         Get.toNamed(RouteUnits.respondResearchers);
          ownSurveyListbody.value.result![chosenIndx].loading.value = false;
           break;
     }
   }
 
   ResponseAnswersbody responseAnswers = ResponseAnswersbody();
-  Future responseAnswersGet() async{
-    var data = await GlobalHelpers.postRequestGeneral.getdata(chosenSurveyPayload(), '120010', UriAdresses.medCore);
+  Future responseAnswersGet(String createdDate) async{
+    var data = await GlobalHelpers.postRequestGeneral.getdata(chosenSurveyPayload(createdDate, ''), '120010', UriAdresses.medCore);
     responseAnswers = ResponseAnswersbody.fromJson(jsonDecode(data.toString()));
     ereklog.wtf(data);
+    ereklog.wtf(chosenSurveyPayload(createdDate, ''));
     switch(responseAnswers.code){
       case 200:
       Get.toNamed(RouteUnits.surveyResponses + RouteUnits.responseAnswers);
       break;
     }
+  }
+
+  
+  Future responseStatisticGet() async{
+    var data = await GlobalHelpers.postRequestGeneral.getdata(surveyResponses.toJson(), '120100', UriAdresses.medCore);
+    ereklog.wtf(surveyResponses.toJson());
   }
 }

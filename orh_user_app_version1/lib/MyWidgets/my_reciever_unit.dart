@@ -27,12 +27,13 @@ class _RecieverUnit extends State<RecieverUnit> {
     switch (type) {
         case 6:
           return MyTextField(hinttxt:widget.questionText, txtController:queryController.textEditingControllers[widget.questionIndex], margint: 5, marginb: 5, 
-          marginr: 20, marginl:  20, 
-                            questionID: widget.questionID, answerIndex: widget.questionIndex, mark: 'query'); 
+          marginr: 20, marginl: 20, questionID: widget.questionID, answerIndex: widget.questionIndex, mark: 'query'); 
         case 7: return MyDropdown(dropDownHint: widget.questionText, listitems: widget.options, 
                               currentValue: 0, mark: 'mark', givenModelType: Options, 
                               margint: 5, marginb: 5, marginr: 20, marginl: 20, questionID: widget.questionID,
                               answerIndex: widget.questionIndex);
+        case 8: return MyTextField(hinttxt:widget.questionText, txtController:queryController.textEditingControllers[widget.questionIndex], margint: 5, marginb: 5, 
+          marginr: 20, marginl: 20, questionID: widget.questionID, answerIndex: widget.questionIndex, mark: 'onlyNumber');
         case 10 : return rdXyrInfo(widget.questionText, widget.questionID, widget.questionIndex);
         default: return const Text('бүртгэгдээгүй төрөл');
                         // MyRadioBtn(w: 1, title: widget.questionText, optionItems: widget.options,
