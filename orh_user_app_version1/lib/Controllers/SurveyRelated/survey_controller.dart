@@ -61,6 +61,11 @@ class SurveyController extends GetxController{
           colorText: Colors.white, backgroundColor: Colors.grey[900], margin: EdgeInsets.only(bottom: GeneralMeasurements.snackbarBottomMargin, left: 5, right: 5,));
           Get.offAllNamed(RouteUnits.home);
           break;
+      case '400':
+          pushDataBtn.value = true;
+          Get.snackbar('Хариуг хадгалж чадсангүй', '', snackPosition: SnackPosition.BOTTOM,
+          colorText: Colors.white, backgroundColor: Colors.grey[900], margin: EdgeInsets.only(bottom: GeneralMeasurements.snackbarBottomMargin, left: 5, right: 5,));
+          break;
     }
   }
 

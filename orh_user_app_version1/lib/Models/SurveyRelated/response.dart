@@ -32,15 +32,15 @@ class SurveyResponsebody {
 
 class Result {
   String? researcherName;
-  String? creartedDate;
+  String? createdDate;
   int? surveyID;
   int? userID;
 
-  Result({this.researcherName, this.creartedDate, this.surveyID, this.userID});
+  Result({this.researcherName, this.createdDate, this.surveyID, this.userID});
 
   Result.fromJson(Map<String, dynamic> json) {
     researcherName = json['researcher_name'];
-    creartedDate = json['created_date'];
+    createdDate = json['created_date'];
     surveyID = json['survey_id'];
     userID = json['user_id'];
   }
@@ -48,7 +48,7 @@ class Result {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['researcher_name'] = researcherName;
-    data['cearted_date'] = creartedDate;
+    data['cearted_date'] = createdDate;
     data['survey_id'] = surveyID;
     data['user_id'] = userID;
     return data;

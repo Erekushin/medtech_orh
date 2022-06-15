@@ -54,8 +54,10 @@ class _MyTextFieldState extends State<MyTextField> {
     child: TextField(
       keyboardType: TextInputType.number,
       onChanged: (value){
+        if(value != ""){
           surveyController.surveyAnswer.answers![widget.answerIndex].questionId = int.parse(widget.questionID);
           surveyController.surveyAnswer.answers![widget.answerIndex].answerDigit = int. parse(value);
+        }
         },
       controller: widget.txtController,
       decoration: InputDecoration(

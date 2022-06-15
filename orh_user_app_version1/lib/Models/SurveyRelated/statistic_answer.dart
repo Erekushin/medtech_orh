@@ -58,23 +58,26 @@ class StatisticAnswers {
   Null? textAnswer;
   int? numberAnswer;
   Null? optionAnswer;
+  String? createdDate;
 
   StatisticAnswers(
-      {this.question, this.textAnswer, this.numberAnswer, this.optionAnswer});
+      {this.question, this.textAnswer, this.numberAnswer, this.optionAnswer, this.createdDate});
 
   StatisticAnswers.fromJson(Map<String, dynamic> json) {
     question = json['question'];
     textAnswer = json['text_answer'];
     numberAnswer = json['number_answer'];
     optionAnswer = json['option_answer'];
+    createdDate = json['created_date'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['question'] = this.question;
-    data['text_answer'] = this.textAnswer;
-    data['number_answer'] = this.numberAnswer;
-    data['option_answer'] = this.optionAnswer;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['question'] = question;
+    data['text_answer'] = textAnswer;
+    data['number_answer'] = numberAnswer;
+    data['option_answer'] = optionAnswer;
+    data['created_date'] = createdDate;
     return data;
   }
 }

@@ -34,7 +34,7 @@ import 'views/TimeSequenceRelated/time_sequence.dart';
 import 'global_constant.dart';
 import 'dart:async';
 import 'global_helpers.dart';
-
+import 'package:flutter/services.dart';
 // this is fucking survey branch ..
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -65,6 +65,10 @@ class _MyAppState extends State<MyApp> {
   }
   @override
   Widget build(BuildContext context) {
+     SystemChrome.setPreferredOrientations([
+        DeviceOrientation.portraitUp,
+        DeviceOrientation.portraitDown,
+      ]);
     return  MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(

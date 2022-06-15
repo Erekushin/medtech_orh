@@ -38,7 +38,7 @@ class Researchers{
    Researchers({this.researcherId});
    Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['researcherId'] = researcherId;
+    data['researcherID'] = researcherId;
     return data;
   }
 }

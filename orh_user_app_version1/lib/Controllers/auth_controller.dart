@@ -8,6 +8,7 @@ import 'package:orh_user_app_version1/Controllers/image_controller.dart';
 import 'package:orh_user_app_version1/Models/general_response.dart';
 import '../Helpers/logging.dart';
 import '../Models/LoginRelatedModels/gerege_user.dart';
+import '../Models/LoginRelatedModels/register_response.dart';
 import '../global_constant.dart';
 import '../global_helpers.dart';
 import 'package:crypto/crypto.dart';
@@ -47,7 +48,6 @@ class AuthController extends GetxController{
     return data;
   }
   var surveyController = Get.find<SurveyController>();
-  GeneralResponse generalResponse = GeneralResponse();
   var ereklog = logger(SurveyController);
   Future geregeUserLogin(Function retryFunction) async{
     loginloading.value = true;
@@ -105,7 +105,7 @@ class AuthController extends GetxController{
     }
   }
   
-
+  RegisterResponse registerResponse = RegisterResponse();
   Map<String, dynamic> registerInfo(){
     var imageCon = Get.find<ImageController>();
     var bytes = utf8.encode(passCont.text);
@@ -122,20 +122,31 @@ class AuthController extends GetxController{
     var data = await GlobalHelpers.postRequestGeneral.getdata(registerInfo(), '110001', UriAdresses.medCore);
     print(data);
     print(registerInfo());
-    generalResponse = GeneralResponse.fromJson(jsonDecode(data.toString()));
-    
-    print(data);
-    if(generalResponse.code == '200'){
+    registerResponse = RegisterResponse.fromJson(jsonDecode(data.toString()));
+
+    switch(registerResponse.code){
+      case 200:
        Get.snackbar('Gerege Medtech family-д тавтай морил', "Хэрэглэгчийн бүртгэл амжилттай үүслээ", snackPosition: SnackPosition.BOTTOM,
           colorText: Colors.white, backgroundColor: Colors.grey[900], margin: const EdgeInsets.all(5));
+          switch(registerResponse.result!.code){
+            case 200:
+             Get.snackbar('', "Регистрийн дугаарыг амжилттай шалгалаа", snackPosition: SnackPosition.BOTTOM,
+          colorText: Colors.white, backgroundColor: Colors.grey[900], margin: const EdgeInsets.all(5));
+            break;
+            case 400:
+              Get.snackbar('', "регистрийн дугаар буруу байж болзошгүй байна. Profile хэсэг дээр мэдээллийг засаж оруулна уу", snackPosition: SnackPosition.BOTTOM,
+          colorText: Colors.white, backgroundColor: Colors.grey[900], margin: const EdgeInsets.all(5));
+            break;
+          }
          nameCont.clear();
          passCont.clear();
          phoneCont.clear();
          rdCont.clear();
-    }
-    else if(generalResponse.code == '400'){
-       Get.snackbar('Бүртгэл үүсгэж чадсангүй', generalResponse.message.toString(), snackPosition: SnackPosition.BOTTOM,
+      break;
+      case 400:
+       Get.snackbar('Бүртгэл үүсгэж чадсангүй', registerResponse.message.toString(), snackPosition: SnackPosition.BOTTOM,
           colorText: Colors.white, backgroundColor: Colors.grey[900], margin: const EdgeInsets.all(5));
+      break;
     }
   }
 }
