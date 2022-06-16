@@ -4,13 +4,17 @@ import 'package:orh_user_app_version1/Controllers/SurveyRelated/survey_controlle
 import '../Controllers/SurveyRelated/survey_creation_controller.dart';
 
 class WorkingWithCode{
-  clearSurveyData(){
+ clearSurveyAnswers(){
   var surveyController = Get.find<SurveyController>();
-  surveyController.surveyAnswer.answers?.clear();
-  surveyController.textEditingControllers.clear();
-  surveyController.dropvalueList.clear();
-  surveyController.statisticTypeList.clear();
+   surveyController.surveyAnswer.answers?.clear();
+   surveyController.textEditingControllers.clear();
+   surveyController.dropvalueList.clear();
+ }
+ clearSurveyCreation(){
+  var surveyController = Get.find<SurveyController>();
+  
   var surveyCreationController = Get.find<CreationCont>();
+  surveyCreationController.staTypes.clear();
   surveyCreationController.newQuestionList.clear();
   surveyCreationController.researchetIdList.clear();
   surveyCreationController.researchetTextController.clear();

@@ -35,6 +35,6 @@ class CalculatorController extends GetxController{
     int heightInt = int.parse(heightItem.answerText!);
     double bmi = (massInt/(heightInt*heightInt))*10000;
     bodymassindex.value = bmi.toString().substring(0, 5);
-    GlobalHelpers.workingWithCode.clearSurveyData();
+    GlobalHelpers.workingWithCode.clearSurveyAnswers();
   }
 }

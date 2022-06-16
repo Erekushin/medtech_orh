@@ -20,16 +20,16 @@ class SurveyCreationQuestion extends StatefulWidget {
 class _SurveyCreationQuestionState extends State<SurveyCreationQuestion> {
   var ereklog = logger(SurveyCreationQuestion);
   var surveyController = Get.find<SurveyController>();
-  var surveyCreationController = Get.find<CreationCont>();
+  var sCreCont = Get.find<CreationCont>();
   @override
   void initState() {
     super.initState();
-    if(surveyCreationController.newQuestionList.isEmpty){
-       surveyCreationController.surveyCreationbody.questions = List<Question>.generate(1, ((index) => Question(questionText: 'fdfdfd', options: []))).obs;
-       surveyController.textEditingControllers.add(TextEditingController());
-       surveyController.dropvalueList.add(DropSelectVal());
-       surveyController.statisticTypeList.add(DropSelectVal());
-       surveyCreationController.newQuestionList.add(Question(options: []));
+    if(sCreCont.newQuestionList.isEmpty){
+       sCreCont.surveyCreationbody.questions = List<Question>.generate(1, ((index) => Question(questionText: 'fdfdfd', options: []))).obs;
+       sCreCont.qTxts.add(TextEditingController());
+       sCreCont.qTypes.add(DropSelectVal());
+       sCreCont.staTypes.add(DropSelectVal());
+       sCreCont.newQuestionList.add(Question(options: []));
     }
   }
   
@@ -48,7 +48,7 @@ class _SurveyCreationQuestionState extends State<SurveyCreationQuestion> {
           itemBuilder: (BuildContext context, int index){
             switch(controller.newQuestionList[index].type){
               case '10': return toolUI(index); 
-              default : return SurveyInputCreation(surveyQuestionIndex: index, textController: surveyController.textEditingControllers[index]);
+              default : return SurveyInputCreation(surveyQuestionIndex: index, textController: sCreCont.qTxts[index]);
             }
           },
         );
@@ -100,12 +100,12 @@ class _SurveyCreationQuestionState extends State<SurveyCreationQuestion> {
                             InkWell(
                               onTap: (){
                                 int i;
-                                i = surveyCreationController.newQuestionList.length;
-                                surveyController.dropvalueList.insert(i,DropSelectVal());
-                                surveyController.statisticTypeList.insert(i, DropSelectVal());
-                                surveyController.textEditingControllers.insert(i,TextEditingController());
-                                surveyCreationController.newQuestionList.insert(i, Question(type: '10', questionText: 'Регистрээ оруулах', options: []));
-                                surveyCreationController.toolQuestionCount += 1; 
+                                i = sCreCont.newQuestionList.length;
+                                sCreCont.qTypes.insert(i,DropSelectVal());
+                                sCreCont.staTypes.insert(i, DropSelectVal());
+                                sCreCont.qTxts.insert(i,TextEditingController());
+                                sCreCont.newQuestionList.insert(i, Question(type: '10', questionText: 'Регистрээ оруулах', options: []));
+                                sCreCont.toolQuestionCount += 1; 
                               },
                               child: Container(
                               margin: const EdgeInsets.all(10),
@@ -290,16 +290,16 @@ class _SurveyInputCreationState extends State<SurveyInputCreation> {
 
 Widget configureBtns(int index){
   var surveyController = Get.find<SurveyController>();
-  var surveyCreationBody = Get.find<CreationCont>();
+  var sCreCont = Get.find<CreationCont>();
   return Column(
           children: [
              InkWell(// deeshee nemeh
                onTap: (){
-                 if(surveyCreationBody.newQuestionList[index].type != null){
-                   surveyController.dropvalueList.insert(index,DropSelectVal());
-                   surveyController.statisticTypeList.insert(index, DropSelectVal());
-                   surveyController.textEditingControllers.insert(index,TextEditingController());
-                   surveyCreationBody.newQuestionList.insert(index, Question(options: []));
+                 if(sCreCont.newQuestionList[index].type != null){
+                   sCreCont.qTypes.insert(index,DropSelectVal());
+                   sCreCont.staTypes.insert(index, DropSelectVal());
+                   sCreCont.qTxts.insert(index,TextEditingController());
+                   sCreCont.newQuestionList.insert(index, Question(options: []));
                  }
                  else{
                     Get.snackbar('Талбаруудын утга хоосон байна', "Асуултын төрлийг сонгоно уу", snackPosition: SnackPosition.BOTTOM,
@@ -310,21 +310,21 @@ Widget configureBtns(int index){
              ),
              InkWell(
                onTap: (){
-                 surveyCreationBody.newQuestionList.removeAt(index);
-                 surveyController.textEditingControllers.removeAt(index);
-                 surveyController.dropvalueList.removeAt(index);
-                 surveyController.dropvalueList.removeAt(index);
+                 sCreCont.newQuestionList.removeAt(index);
+                 sCreCont.qTxts.removeAt(index);
+                 sCreCont.qTypes.removeAt(index);
+                 sCreCont.staTypes.removeAt(index);
                },
                child: myBtn(CommonColors.yellow, 30, 30, CommonColors.yellow, Colors.grey, 'DEL', 10, 12),
              ),
              InkWell(// dooshoo nemeh
                onTap: (){
-                 if(surveyCreationBody.newQuestionList[index].type != null){
+                 if(sCreCont.newQuestionList[index].type != null){
                    int i = index+1;
-                   surveyController.dropvalueList.insert(i,DropSelectVal());
-                   surveyController.statisticTypeList.insert(i, DropSelectVal());
-                   surveyController.textEditingControllers.insert(i,TextEditingController());
-                   surveyCreationBody.newQuestionList.insert(i, Question(options: []));
+                   sCreCont.qTypes.insert(i,DropSelectVal());
+                   sCreCont.staTypes.insert(i, DropSelectVal());
+                   sCreCont.qTxts.insert(i,TextEditingController());
+                   sCreCont.newQuestionList.insert(i, Question(options: []));
                  }
                  else{
                    Get.snackbar('Талбаруудын утга хоосон байна', "Асуултын төрлийг сонгоно уу", snackPosition: SnackPosition.BOTTOM,

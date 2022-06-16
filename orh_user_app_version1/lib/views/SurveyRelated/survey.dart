@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:orh_user_app_version1/Controllers/SurveyRelated/survey_controller.dart';
 import 'package:orh_user_app_version1/Controllers/auth_controller.dart';
 import 'package:orh_user_app_version1/Controllers/setting_controller.dart';
+import 'package:orh_user_app_version1/Helpers/working_with_code.dart';
 import 'package:orh_user_app_version1/MyWidgets/my_button.dart';
 import 'package:orh_user_app_version1/global_constant.dart';
 import 'package:orh_user_app_version1/global_helpers.dart';
@@ -10,9 +11,6 @@ import '../../models/SurveyRelated/survey_body.dart';
 import '../../MyWidgets/my_reciever_unit.dart';
 import '../../global_constant.dart';
 
-
-///Асуулгаас бүтсэн нэг бие сэдэв бүхий бүртгэлийн 
-///болон судалгааны асуултуудыг олон хуудасанд хуваан харуулах.
 class SurveyUnit extends StatefulWidget {
   const SurveyUnit({ Key? key }) : super(key: key);
   @override
@@ -78,7 +76,7 @@ class _PageUnitState extends State<PageUnit> {
     return WillPopScope(
       onWillPop: () async{
         GlobalHelpers.bottomnavbarSwitcher.add(true);
-        GlobalHelpers.workingWithCode.clearSurveyData();
+        GlobalHelpers.workingWithCode.clearSurveyAnswers();
         return true;
       },
       child: Container(

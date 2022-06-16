@@ -10,6 +10,12 @@ import '../../Models/SurveyRelated/survey_creation_body.dart';
 
 class CreationCont extends GetxController {
 final ereklog = logger(CreationCont);
+
+
+  List<DropSelectVal> qTypes = [];
+  List<DropSelectVal> staTypes = [];
+  List<TextEditingController> qTxts = [];
+
 SurveyCreationTypes surveyCreationTypes = SurveyCreationTypes();
 GeneralResponse generalResponse = GeneralResponse();
 ///sudlaachid zoriulsan sudalgaanii sudlaachidiin jagsaalt
@@ -56,6 +62,6 @@ Future surveyCreate() async{
           colorText: Colors.white, backgroundColor: Colors.grey[900], margin:  const EdgeInsets.all(5));
       break;    
     }
-    GlobalHelpers.workingWithCode.clearSurveyData();
+    GlobalHelpers.workingWithCode.clearSurveyCreation();
   }
 }

@@ -59,6 +59,7 @@ class SurveyController extends GetxController{
           pushDataBtn.value = true;
           Get.snackbar('Амжилттай бүртгэгдлээ', '', snackPosition: SnackPosition.BOTTOM,
           colorText: Colors.white, backgroundColor: Colors.grey[900], margin: EdgeInsets.only(bottom: GeneralMeasurements.snackbarBottomMargin, left: 5, right: 5,));
+          GlobalHelpers.workingWithCode.clearSurveyAnswers();
           Get.offAllNamed(RouteUnits.home);
           break;
       case '400':
