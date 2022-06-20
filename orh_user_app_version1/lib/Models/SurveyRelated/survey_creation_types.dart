@@ -55,13 +55,15 @@ class TypeInfo {
   String? typeName;
   int? typeId;
   String? keyWord;
+  String? t_type;
 
-  TypeInfo({this.typeName, this.typeId, this.keyWord});
+  TypeInfo({this.typeName, this.typeId, this.keyWord, this.t_type});
 
   TypeInfo.fromJson(Map<String, dynamic> json) {
     typeName = json['type_name'];
     typeId = json['type_id'];
     keyWord = json['key_word'];
+    t_type = json['t_type'];
   }
 
   Map<String, dynamic> toJson() {
@@ -69,6 +71,7 @@ class TypeInfo {
     data['type_name'] = typeName;
     data['type_id'] = typeId;
     data['key_word'] = keyWord;
+    data['t_type'] = t_type;
     return data;
   }
 }

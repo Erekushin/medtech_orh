@@ -24,7 +24,11 @@ class _ResponseResearcherssesState extends State<ResponseResearchers> {
       itemBuilder: (c, i){
         var item = surveyCont.respondResearchers.result![i];
         String? name = item.creatorName;
-        return Container(
+        return  InkWell(
+                        onTap: (){
+                          surveyCont.responsesListGet(name!);
+                        },
+                        child:  Container(
                   margin: EdgeInsets.all(GeneralMeasurements.deviceWidth*.02),
                   height: GeneralMeasurements.deviceHeight*.08,
                   decoration: BoxDecoration(
@@ -42,18 +46,15 @@ class _ResponseResearcherssesState extends State<ResponseResearchers> {
                   child:Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      InkWell(
-                        onTap: (){
-                          surveyCont.responsesListGet(name!);
-                        },
-                        child: SizedBox(
+                      SizedBox(
                                           width: GeneralMeasurements.deviceWidth*.7,
                                           child: myText('$name', 17, 1, FontWeight.w700),
                                         ),
-                      )
                     ],
                   )
-            ); 
+            )
+                      )
+       ; 
       },
     ),
      Visibility(

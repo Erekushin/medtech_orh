@@ -55,9 +55,9 @@ class _MyAppState extends State<MyApp> {
     GlobalHelpers.bottomnavbarSwitcher.add(false);
   }
   bindInitialControllers(){
-    Get.put(ImageController(), permanent: true);
     Get.put(SurveyController());
     Get.put(AuthController(), permanent: true);
+    Get.put(ImageController(), permanent: true);
     Get.put(SettingController(), permanent: true);
     Get.put(SqlController(), permanent: true);
     Get.put(CreationCont());

@@ -34,11 +34,11 @@ class SurveyCreationbody {
 
 class Researchers{
 
-   String? researcherId;
-   Researchers({this.researcherId});
+   String? researcherPhone;
+   Researchers({this.researcherPhone});
    Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['researcherID'] = researcherId;
+    data['phone'] = researcherPhone;
     return data;
   }
 }

@@ -25,14 +25,6 @@ class AuthController extends GetxController{
   var passValidCont = TextEditingController();
   var phoneCont = TextEditingController();
   var rdCont = TextEditingController();
-  //  Map<String, dynamic> loginBody(){
-  //   final Map<String, dynamic> data = <String, dynamic>{};
-  //   data['search_text'] = GlobalHelpers.userName;
-  //   data['terminal_id'] = "0";
-  //   data['password'] = GlobalHelpers.pass;
-  //   data['app_id'] = 4400;
-  //   return data;
-  // }
    Map<String, dynamic> loginBody(){
     var bytes = utf8.encode(loginPass.text);
     var hash = sha256.convert(bytes);
@@ -63,6 +55,7 @@ class AuthController extends GetxController{
         case 200:
           loginloading.value = false;
           // GlobalHelpers.auth =  'bearer ' + geregeUser.result!.token!.token!;
+          Get.find<ImageController>().imageBytes.value = user.result!.picture!.cast<int>();
           await surveyController.listGet(RouteUnits.home, '120002', user.result!.userId!, '');
           await surveyController.listGet('/segmented', '120009', user.result!.userId!, '');
           retryFunction();
@@ -140,11 +133,32 @@ class AuthController extends GetxController{
           }
          nameCont.clear();
          passCont.clear();
+         passValidCont.clear();
          phoneCont.clear();
          rdCont.clear();
       break;
       case 400:
        Get.snackbar('Бүртгэл үүсгэж чадсангүй', registerResponse.message.toString(), snackPosition: SnackPosition.BOTTOM,
+          colorText: Colors.white, backgroundColor: Colors.grey[900], margin: const EdgeInsets.all(5));
+      break;
+    }
+  }
+
+
+  Map<String, dynamic> updateProbody(){
+    var imageCon = Get.find<ImageController>();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['user_id'] = user.result!.userId; 
+    data['new_picture'] = imageCon.imageBytes.toString();
+    return data;
+  }
+  GeneralResponse GForUpdateProPic = GeneralResponse();
+  Future updateProPic() async{
+     var data = await GlobalHelpers.postRequestGeneral.getdata(updateProbody(), '110003', UriAdresses.medCore);
+     GForUpdateProPic = GeneralResponse.fromJson(jsonDecode(data.toString()));
+      switch(registerResponse.code){
+      case 200:
+      Get.snackbar('', "Зураг амжилттай солигдлоо", snackPosition: SnackPosition.BOTTOM,
           colorText: Colors.white, backgroundColor: Colors.grey[900], margin: const EdgeInsets.all(5));
       break;
     }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:orh_user_app_version1/Controllers/SurveyRelated/survey_controller.dart';
 import '../../MyWidgets/my_text.dart';
+import '../../MyWidgets/waiting_screen.dart';
 import '../../global_constant.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'dart:ui' as ui;
@@ -16,6 +17,14 @@ class SurveyResponses extends StatefulWidget {
 
 class _SurveyResponsesState extends State<SurveyResponses> {
   var surveyCont = Get.find<SurveyController>();
+  staView(){
+    if(surveyCont.statisticAnswer.result![0].answers != null){
+      return const ResponsesStatistic();
+    }
+    else{
+      return const WaitingScreen();
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -29,7 +38,11 @@ class _SurveyResponsesState extends State<SurveyResponses> {
         var item = surveyCont.surveyResponses.result![i];
         String? c = item.createdDate;
         String? n =item.researcherName;
-        return Container(
+        return   InkWell(
+                        onTap: (){
+                          surveyCont.responseAnswersGet(c!);
+                        },
+                        child: Container(
                   margin: EdgeInsets.all(GeneralMeasurements.deviceWidth*.02),
                   height: GeneralMeasurements.deviceHeight*.08,
                   decoration: BoxDecoration(
@@ -47,18 +60,12 @@ class _SurveyResponsesState extends State<SurveyResponses> {
                   child:Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      InkWell(
-                        onTap: (){
-                          surveyCont.responseAnswersGet(c!);
-                        },
-                        child: SizedBox(
-                                          width: GeneralMeasurements.deviceWidth*.7,
-                                          child: myText('$c $n', 17, 1, FontWeight.w700),
-                                        ),
-                      )
+                      SizedBox(width: GeneralMeasurements.deviceWidth*.7,
+                               child: myText('$c $n', 17, 1, FontWeight.w700),),
                     ],
                   )
-            ); 
+            )
+                      ); 
       },
     ),
      Visibility(
@@ -67,7 +74,7 @@ class _SurveyResponsesState extends State<SurveyResponses> {
                 )
         ],
       ),
-           const ResponsesStatistic()
+           staView()
         ],
       ) 
 
@@ -94,6 +101,7 @@ class _ResponsesStatisticState extends State<ResponsesStatistic> {
      double l_interval = 1;
   @override
   void initState() {
+
       minYvalue = sCont.statisticAnswer.result![0].answers![0].numberAnswer!.toDouble();
       for(int a = 0; a<sCont.statisticAnswer.result!.length; a++){
       if(sCont.statisticAnswer.result![a].answers![0].numberAnswer! > maxYvalue){
@@ -107,14 +115,6 @@ class _ResponsesStatisticState extends State<ResponsesStatistic> {
     }
     l_interval = (maxYvalue-minYvalue)/20;
     _trackballBehavior = TrackballBehavior(
-    //   builder: (BuildContext context, TrackballDetails trackballDetails) {
-    //   return Container(
-    //     width: 70,
-    //     decoration:
-    //       const BoxDecoration(color: Color.fromARGB(255, 41, 92, 69)),
-    //     child: Text('${trackballDetails.point?.cumulativeValue}')
-    //   );
-    // },
       lineColor: Colors.blue,
       enable: true,
       lineType: TrackballLineType.horizontal,
@@ -122,7 +122,6 @@ class _ResponsesStatisticState extends State<ResponsesStatistic> {
       tooltipSettings: const InteractiveTooltip(canShowMarker: false),
     );
     super.initState();
- 
 }
  @override
   void dispose() {
@@ -156,7 +155,7 @@ class _ResponsesStatisticState extends State<ResponsesStatistic> {
         textStyle: const TextStyle(
           color: Colors.white
         ),
-          text: 'Сахарын хэмжилтийн үр дүн'),
+          text: sCont.statisticAnswer.result![0].answers![0].question!),
       primaryXAxis: CategoryAxis(
 
       ),
@@ -247,7 +246,7 @@ class _ResponsesStatisticState extends State<ResponsesStatistic> {
   List<_ChartData> getData() {
     final List<_ChartData> data = <_ChartData>[];
     for (int i = 0; i < sCont.statisticAnswer.result!.length; i++) {
-      data.add(_ChartData(sCont.statisticAnswer.result![i].answers![0].createdDate!.toString().substring(6,16), 
+      data.add(_ChartData(sCont.statisticAnswer.result![i].answers![0].createdDate!.toString().substring(6,18), 
                           sCont.statisticAnswer.result![i].answers![0].numberAnswer!.toDouble()));
     }
     return data;

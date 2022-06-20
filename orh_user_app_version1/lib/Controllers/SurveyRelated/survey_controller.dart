@@ -26,6 +26,7 @@ class SurveyController extends GetxController{
     final Map<String, dynamic> data = <String, dynamic>{};
     data['user_id'] = userId;
     data['search_txt'] = searchTxt;
+    data['phone'] = 95258154;
     return data;
   }
   var publicSurveyList = SurveyListBody().obs;

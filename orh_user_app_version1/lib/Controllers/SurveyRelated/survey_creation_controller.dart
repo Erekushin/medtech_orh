@@ -20,7 +20,7 @@ SurveyCreationTypes surveyCreationTypes = SurveyCreationTypes();
 GeneralResponse generalResponse = GeneralResponse();
 ///sudlaachid zoriulsan sudalgaanii sudlaachidiin jagsaalt
 var researchetTextController = <TextEditingController>[].obs;
-List<Researchers> researchetIdList = <Researchers>[];
+List<Researchers> researcherPhoneList = <Researchers>[];
 ///survey vvsgeh hvseltiin biy
  SurveyCreationbody surveyCreationbody = SurveyCreationbody();
 //survey make name
@@ -56,12 +56,13 @@ Future surveyCreate() async{
       case '200':
           Get.snackbar('Амжилттай', '', snackPosition: SnackPosition.BOTTOM,
           colorText: Colors.white, backgroundColor: Colors.grey[900], margin:  const EdgeInsets.all(5));
+          GlobalHelpers.workingWithCode.clearSurveyCreation();
           break;
       case '400':
          Get.snackbar('Судалгааг хадаглаж чадсангүй', generalResponse.message.toString( ), snackPosition: SnackPosition.BOTTOM,
           colorText: Colors.white, backgroundColor: Colors.grey[900], margin:  const EdgeInsets.all(5));
       break;    
     }
-    GlobalHelpers.workingWithCode.clearSurveyCreation();
+    
   }
 }

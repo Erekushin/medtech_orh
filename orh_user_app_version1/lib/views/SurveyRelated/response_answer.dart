@@ -35,8 +35,11 @@ class _ResponseAnswersState extends State<ResponseAnswers> {
                 else if(item.optionAnswer != null){
                   answer = item.optionAnswer!;
                 }
+                else if(item.numberAnswer != null){
+                  answer = item.numberAnswer!;
+                }
                 else{
-                  answer = '';
+                   answer = '';
                 }
                 return Column(
                   children: [

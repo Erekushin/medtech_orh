@@ -55,9 +55,9 @@ class Result {
 
 class StatisticAnswers {
   String? question;
-  Null? textAnswer;
+  String? textAnswer;
   int? numberAnswer;
-  Null? optionAnswer;
+  String? optionAnswer;
   String? createdDate;
 
   StatisticAnswers(

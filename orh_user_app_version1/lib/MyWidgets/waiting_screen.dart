@@ -1,4 +1,3 @@
-import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 
 class WaitingScreen extends StatefulWidget {
@@ -11,14 +10,14 @@ class WaitingScreen extends StatefulWidget {
 class _WaitingScreenState extends State<WaitingScreen> {
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       child: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.end,
           children: <Widget>[
-            SizedBox(height: 50,),
-            Center(child: CircularProgressIndicator()),
-            SizedBox(height: 230,),
+            const SizedBox(height: 50,),
+            const Center(child: CircularProgressIndicator()),
+            const SizedBox(height: 230,),
             Image.asset('assets/images/thinkingBoy.png'),
           ],
         ),

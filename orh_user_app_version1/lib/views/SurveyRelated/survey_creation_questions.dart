@@ -7,9 +7,8 @@ import 'package:orh_user_app_version1/global_constant.dart';
 import '../../Controllers/SurveyRelated/survey_creation_controller.dart';
 import '../../Helpers/logging.dart';
 import '../../Models/SurveyRelated/survey_creation_body.dart';
-import '../../Models/SurveyRelated/survey_creation_types.dart';
-import '../../MyWidgets/drop2.dart';
-import '../../MyWidgets/my_dropdown.dart';
+import '../../MyWidgets/survey_related/q_sta_drop.dart';
+import '../../MyWidgets/survey_related/q_type_drop.dart';
 import '../../global_helpers.dart';
 class SurveyCreationQuestion extends StatefulWidget {
   const SurveyCreationQuestion({ Key? key }) : super(key: key);
@@ -227,13 +226,10 @@ class _SurveyInputCreationState extends State<SurveyInputCreation> {
                   ),
                 ),
                 ),
-                MyDropdown(dropDownHint: 'Асуултын төрлийг сонгох', listitems: surveyCreationController.surveyCreationTypes.result!.questionType!, currentValue: 0, mark: '', 
-                           givenModelType: TypeInfo, margint: 5, marginb: 5, marginr: 5, marginl: 5, 
-                           answerIndex: widget.surveyQuestionIndex, callBackFunction: callBackFunc,),
-                Drop2(dropDownHint: 'Статистик үзүүлэлт нэмэх', listitems: surveyCreationController.surveyCreationTypes.result!.statistic!, currentValue: 0, mark: '', 
-                           givenModelType: TypeInfo, margint: 5, marginb: 5, marginr: 5, marginl: 5, 
-                           answerIndex: widget.surveyQuestionIndex, callBackFunction: (){},),           
-                                       
+                 QStaDrop(dropDownHint: 'Статистик үзүүлэлт нэмэх', listitems: surveyCreationController.surveyCreationTypes.result!.statistic!,
+                           answerIndex: widget.surveyQuestionIndex, callBackFunction: (){},),
+                QTypeDrop(dropDownHint: 'Асуултын төрлийг сонгох', listitems: surveyCreationController.surveyCreationTypes.result!.questionType!,
+                           answerIndex: widget.surveyQuestionIndex, callBackFunction: callBackFunc,),                
                 Container(//option container
                   margin: const EdgeInsets.only(left: 50),
                   child: Expanded(
@@ -260,15 +256,25 @@ class _SurveyInputCreationState extends State<SurveyInputCreation> {
                   ),
                             ),
                           ),
-                          IconButton(
-                            onPressed: (){
-                              setState(() {
+                             InkWell(
+                              onTap: (){
+                                  setState(() {
                                 surveyControllermini.newQuestionList[widget.surveyQuestionIndex].options.add(CreationOptions());
                                 surveyControllermini.newQuestionList[widget.surveyQuestionIndex].optionTextController.add(TextEditingController());
                                 surveyCreationController.newQuestionList[widget.surveyQuestionIndex].containerHeight = surveyCreationController.newQuestionList[widget.surveyQuestionIndex].containerHeight! + 50;
                               });
-                            }, 
-                            icon: const Icon(Icons.add)
+                              },
+                              child: const Icon(Icons.add),
+                            ),
+                            InkWell(
+                              onTap: (){
+                                  setState(() {
+                                surveyControllermini.newQuestionList[widget.surveyQuestionIndex].options.removeAt(index);
+                                surveyControllermini.newQuestionList[widget.surveyQuestionIndex].optionTextController.removeAt(index);
+                                surveyCreationController.newQuestionList[widget.surveyQuestionIndex].containerHeight = surveyCreationController.newQuestionList[widget.surveyQuestionIndex].containerHeight! - 50;
+                              });
+                              },
+                              child: const Icon(Icons.remove),
                             )
                         ],
                       );

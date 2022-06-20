@@ -53,13 +53,15 @@ class ResponseAnswers {
   String? question;
   String? textAnswer;
   String? optionAnswer;
+  String? numberAnswer;
 
-  ResponseAnswers({this.question, this.textAnswer, this.optionAnswer});
+  ResponseAnswers({this.question, this.textAnswer, this.optionAnswer, this.numberAnswer});
 
   ResponseAnswers.fromJson(Map<String, dynamic> json) {
     question = json['question'];
     textAnswer = json['text_answer'];
     optionAnswer = json['option_answer'];
+    numberAnswer = json['number_answer'].toString();
   }
 
   Map<String, dynamic> toJson() {
@@ -67,6 +69,7 @@ class ResponseAnswers {
     data['question'] = question;
     data['text_answer'] = textAnswer;
     data['option_answer'] = optionAnswer;
+    data['number_answer'] = numberAnswer;
     return data;
   }
 }

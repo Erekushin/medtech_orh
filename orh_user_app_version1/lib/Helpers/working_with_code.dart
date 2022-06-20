@@ -1,6 +1,5 @@
 import 'package:get/get.dart';
 import 'package:orh_user_app_version1/Controllers/SurveyRelated/survey_controller.dart';
-
 import '../Controllers/SurveyRelated/survey_creation_controller.dart';
 
 class WorkingWithCode{
@@ -11,19 +10,19 @@ class WorkingWithCode{
    surveyController.dropvalueList.clear();
  }
  clearSurveyCreation(){
-  var surveyController = Get.find<SurveyController>();
-  
-  var surveyCreationController = Get.find<CreationCont>();
-  surveyCreationController.staTypes.clear();
-  surveyCreationController.newQuestionList.clear();
-  surveyCreationController.researchetIdList.clear();
-  surveyCreationController.researchetTextController.clear();
-  surveyCreationController.surveyNametxtController.text = '';
-  surveyCreationController.torolStr = null;
-  surveyCreationController.levelStr = null;
-  surveyCreationController.torolNameStr = null;
-  surveyCreationController.levelNameStr = null;
-  surveyCreationController.toolQuestionCount.value = 0;
-  surveyCreationController.surveyCreationbody.surveyClr = '0xFFFFFFFF';
+  var sCCont = Get.find<CreationCont>();
+  sCCont.staTypes.clear();
+   sCCont.qTxts.clear();
+   sCCont.qTypes.clear();
+  sCCont.newQuestionList.clear();
+  sCCont.researcherPhoneList.clear();
+  sCCont.researchetTextController.clear();
+  sCCont.surveyNametxtController.text = '';
+  sCCont.torolStr = null;
+  sCCont.levelStr = null;
+  sCCont.torolNameStr = null;
+  sCCont.levelNameStr = null;
+  sCCont.toolQuestionCount.value = 0;
+  sCCont.surveyCreationbody.surveyClr = '0xFFFFFFFF';
  }
 }

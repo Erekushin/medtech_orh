@@ -2,9 +2,12 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:orh_user_app_version1/Controllers/auth_controller.dart';
+import 'package:orh_user_app_version1/Controllers/image_controller.dart';
 import 'package:orh_user_app_version1/global_constant.dart';
 import 'package:orh_user_app_version1/global_helpers.dart';
 import '../../Controllers/SurveyRelated/survey_controller.dart';
+import '../../MyWidgets/my_button.dart';
+import '../../MyWidgets/my_text.dart';
 import '../../MyWidgets/survey_related/profile_survey_unit.dart';
 
 class ButtonStructure {  
@@ -63,6 +66,7 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
+  ImageController imageController = ImageController();
   var surveyController = Get.find<SurveyController>();
   var loginController = Get.find<AuthController>();
   var scrollController = ScrollController();
@@ -71,7 +75,7 @@ class _ProfileState extends State<Profile> {
   PageController pageController = PageController(viewportFraction: 0.85);
   final argu = Get.arguments as String;
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext profilecontext) {
     return WillPopScope(
       onWillPop: () async{
         if(argu == RouteUnits.profile){
@@ -153,10 +157,12 @@ class _ProfileState extends State<Profile> {
                    child: Column(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
-                            InkWell(
+
+                              GetX<ImageController>(builder: (imageController){
+                                return InkWell(
                               onTap: (){
                                 GlobalHelpers.imageFileSwitcher = true;
-                                // imageController.cameraAndGallery();
+                                imageController.cameraAndGallery(RouteUnits.profile, profilecontext);
                               },
                               child: CircleAvatar(
                             backgroundColor: Colors.grey,
@@ -166,14 +172,14 @@ class _ProfileState extends State<Profile> {
                               borderRadius: BorderRadius.circular(90.0),
                               child: AspectRatio( 
                                 aspectRatio: 1/1,
-                                child: Image.memory(Uint8List.fromList(proPic?? Pics.profilePic)),),)
+                                child: Image.memory(Uint8List.fromList(imageController.imageBytes)),
+                                ),)
                          ),
-                            ),
+                            );
+                              })
+                            ,
                             const SizedBox(width: 1, height: 1,),
-                            // GlobalHelpers.imageFileSwitcher? ClipRRect(
-                            // child: AspectRatio(aspectRatio: 1 / 1, child: Image.file(imageController.imageFile.value, fit: BoxFit.fill,)),
-                            // borderRadius: BorderRadius.circular(90.0),
-                            // ) : Container(width: 5, height: 5, color: Colors.blue, child: Text(imageController.imageFile.value.toString()),)
+                           
                             // Text(loginController.geregeUser.result!.firstName?? '', style: const TextStyle(fontWeight: FontWeight.bold),),
                             // Text(loginController.geregeUser.result!.phoneNo?? '', style: const TextStyle(fontWeight: FontWeight.bold),),
                          ],
@@ -229,9 +235,48 @@ class _ProfileState extends State<Profile> {
                      child: InkWell(
                   highlightColor: Colors.transparent,
                   splashColor: Colors.transparent,
-                  onTap: () {
-                    surveyControllermini.delete();
-                    surveyControllermini.surveyDeleteIcon.value = false;
+                  onTap: (){
+                         showDialog(
+                  context: context,
+                  builder: (context)=> AlertDialog(
+                          backgroundColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+		                  borderRadius: BorderRadius.circular(30),
+	                  ),
+                    content: SizedBox(
+                    height: GeneralMeasurements.deviceHeight*.46,
+                    child: Column(
+                    children: [
+                      myText('Усгах уу?', 20, 1),
+                     Image.asset('assets/images/thinkingBoy.png'),
+                     const SizedBox(height: 50,),
+                     Row(
+                      children: [
+                        InkWell(
+                          onTap: ()async {
+                            Navigator.pop(context, true);
+                            await surveyControllermini.delete();
+                             setState((){
+                                 surveyControllermini.surveyDeleteIcon.value = false;
+                             });
+                          },
+                          child: myBtn(CommonColors.geregeBlue, 100, 30, CommonColors.geregeBlue, Colors.white, 'delete',)),
+                        InkWell(
+                          onTap: (){
+                            surveyControllermini.surveyDeleteIcon.value = false;
+                            surveyController.ownSurveyListbody.value.result![surveyController.chosenSurveyIndx].borderColor.value = Colors.transparent;
+                            Navigator.pop(context, true);
+                          },
+                          child: myBtn(CommonColors.geregeBlue, 100, 30, CommonColors.geregeBlue, Colors.white, 'quit',))
+                      ],
+                     )
+                  
+                      ],
+                  ),
+                  ),
+                  
+                  )
+                );
                   },
                   child: const Icon(
                             Icons.delete,

@@ -48,6 +48,11 @@ class _HomeInfoFlowState extends State<HomeInfoFlow> with SingleTickerProviderSt
     _currentIndex = index; 
   }
   @override
+  void initState() {
+    super.initState();
+    _currentIndex = 0;  
+  }
+  @override
   void dispose() {
     super.dispose();
   }
@@ -277,6 +282,20 @@ class _HomeInfoFlowState extends State<HomeInfoFlow> with SingleTickerProviderSt
                 width: GeneralMeasurements.deviceWidth,
                 height: GeneralMeasurements.deviceHeight/100*70 ,
                 child: PageView(
+                  onPageChanged: (index){
+                    switch(index){
+                      case 0 :
+                      setState(() {
+                         _currentIndex = 0; 
+                      });
+                      break;
+                      case 1 :
+                      setState(() {
+                         _currentIndex = 1; 
+                      });
+                      break;
+                    }
+                  },
                 controller: homePageCont,  
                 children: const [
                   HomePagePublic(),

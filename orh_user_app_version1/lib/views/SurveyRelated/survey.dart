@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:orh_user_app_version1/Controllers/SurveyRelated/survey_controller.dart';
 import 'package:orh_user_app_version1/Controllers/auth_controller.dart';
 import 'package:orh_user_app_version1/Controllers/setting_controller.dart';
-import 'package:orh_user_app_version1/Helpers/working_with_code.dart';
 import 'package:orh_user_app_version1/MyWidgets/my_button.dart';
 import 'package:orh_user_app_version1/global_constant.dart';
 import 'package:orh_user_app_version1/global_helpers.dart';
@@ -75,7 +74,7 @@ class _PageUnitState extends State<PageUnit> {
     int pageClrInt = int.parse(widget.pageColor);
     return WillPopScope(
       onWillPop: () async{
-        GlobalHelpers.bottomnavbarSwitcher.add(true);
+        GlobalHelpers.bottomnavbarSwitcher.add(false);
         GlobalHelpers.workingWithCode.clearSurveyAnswers();
         return true;
       },
@@ -89,7 +88,7 @@ class _PageUnitState extends State<PageUnit> {
           child: Column(
                   children: [
                   SizedBox(
-                  height: widget.pageIndex == 0? GeneralMeasurements.deviceHeight*.7: GeneralMeasurements.deviceHeight*.8,
+                  height: widget.pageIndex == 0? GeneralMeasurements.deviceHeight*.87: GeneralMeasurements.deviceHeight*.8,
                   child: ListView.builder(
                       physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
                       //svvliin huudas bish bol togtmol item bgaad mon bol asuultiig 
@@ -158,8 +157,8 @@ class _PageUnitState extends State<PageUnit> {
             Align(//huudsiin toog haruuldag text
           alignment: Alignment.bottomLeft,
           child: Container(
-            margin: EdgeInsets.all(20),
-            padding: EdgeInsets.all(10),
+            margin: const EdgeInsets.all(20),
+            padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               border: Border.all(color: Colors.grey)

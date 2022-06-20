@@ -116,11 +116,11 @@ class _SurveyCreationGeneralState extends State<SurveyCreationGeneral> {
                       switch(newValue){
                       case 'public':
                        surveyCreationController.researchetTextController.clear();
-                       surveyCreationController.researchetIdList.clear();
+                       surveyCreationController.researcherPhoneList.clear();
                       break;
                       case 'segmented':
                        surveyCreationController.researchetTextController.add(TextEditingController());
-                       surveyCreationController.researchetIdList.add(Researchers());
+                       surveyCreationController.researcherPhoneList.add(Researchers());
                       break;
                     }
                     });
@@ -145,7 +145,7 @@ class _SurveyCreationGeneralState extends State<SurveyCreationGeneral> {
                             width: 150,
                             child: TextField(
                               onChanged: (string){
-                                surveyControllermini.researchetIdList[index].researcherId = string;
+                                surveyControllermini.researcherPhoneList[index].researcherPhone = string;
                               },
                               controller: surveyCreationController.researchetTextController[index],
                               decoration: const InputDecoration(
@@ -160,7 +160,7 @@ class _SurveyCreationGeneralState extends State<SurveyCreationGeneral> {
                             onPressed: (){
                               setState(() {
                                 surveyControllermini.researchetTextController.add(TextEditingController());
-                                surveyControllermini.researchetIdList.add(Researchers());
+                                surveyControllermini.researcherPhoneList.add(Researchers());
                               });
                             }, 
                             icon: const Icon(Icons.add)

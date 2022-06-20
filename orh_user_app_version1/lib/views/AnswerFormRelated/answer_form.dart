@@ -220,7 +220,7 @@ class _BasicProfileData1State extends State<BasicProfileData1> {
                     return InkWell(
                       onTap: (){
                           GlobalHelpers.imageFileSwitcher = true;
-                          imageController.cameraAndGallery();
+                          imageController.cameraAndGallery(RouteUnits.answerform, context);
                       },
                       child: CircleAvatar(
                     backgroundColor: Colors.grey,
