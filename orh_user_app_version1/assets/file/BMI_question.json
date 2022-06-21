@@ -6,14 +6,14 @@
         "title": "BMI",
         "questions": [
             {
-                "id": "mass",
-                "type": 0,
+                "id": "1",
+                "type": 6,
                 "question_text": "Биеийн жин",
                 "options": null
             },
             {
-                "id": "height",
-                "type": 0,
+                "id": "2",
+                "type": 6,
                 "question_text": "Биеийн өндөр",
                 "options": null
             }

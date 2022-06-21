@@ -59,7 +59,7 @@ class _IndicatorButton extends State<IndicatorButton> {
           ),
               ),
               Align(
-                alignment: Alignment.bottomCenter,
+                alignment: Alignment.bottomRight,
                 child: InkWell(
                   onTap: (){
                     calculatorController.bodyMassCalculate();
@@ -69,7 +69,7 @@ class _IndicatorButton extends State<IndicatorButton> {
                 ),
               )
             ],
-          ),         
+          ),
         ),
       ),
     ));

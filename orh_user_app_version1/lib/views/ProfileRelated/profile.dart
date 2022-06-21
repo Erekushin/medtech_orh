@@ -30,7 +30,7 @@ Widget profileBigButtons(ButtonStructure structureInfo){
   return InkWell(
     onTap: (){Get.toNamed(structureInfo.route, arguments: structureInfo.argument);},
     child: Container(
-      margin: EdgeInsets.all(10),
+      margin: const EdgeInsets.all(10),
     width: GeneralMeasurements.deviceWidth/10*6,
     height: GeneralMeasurements.deviceHeight/100*10,
     decoration: BoxDecoration(

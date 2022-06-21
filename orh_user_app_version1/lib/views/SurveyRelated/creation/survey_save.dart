@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:orh_user_app_version1/Controllers/auth_controller.dart';
 import 'package:orh_user_app_version1/MyWidgets/my_text.dart';
-import '../../Controllers/SurveyRelated/survey_creation_controller.dart';
-import '../../MyWidgets/my_button.dart';
-import '../../global_constant.dart';
+import '../../../Controllers/SurveyRelated/survey_creation_controller.dart';
+import '../../../MyWidgets/my_button.dart';
+import '../../../global_constant.dart';
 
 
 class SurveyInfoCheck extends StatefulWidget {
@@ -30,8 +30,8 @@ class _SurveyInfoCheckState extends State<SurveyInfoCheck> {
                   myText('Судалгааны нэр:  ', 15, 1, (FontWeight.bold)),
                   SizedBox(
                     width: 160,
-                    child: myText(surveyCreationController.surveyNametxtController.text == ''? 
-                          'Нэр оруулаагүй байна':surveyCreationController.surveyNametxtController.text, 15, 1),
+                    child: myText(surveyCreationController.surveyNametxtCont.text == ''? 
+                          'Нэр оруулаагүй байна':surveyCreationController.surveyNametxtCont.text, 15, 1),
                   )
                 ],),
                 const SizedBox(height: 30,),
@@ -89,7 +89,7 @@ class _SurveyInfoCheckState extends State<SurveyInfoCheck> {
                   margin: const EdgeInsets.all(20),
                   child: InkWell(
                 onTap: (){
-                  surveyCreationController.surveyCreationbody.surveyName = surveyCreationController.surveyNametxtController.text;
+                  surveyCreationController.surveyCreationbody.surveyName = surveyCreationController.surveyNametxtCont.text;
                   if( surveyCreationController.surveyCreationbody.surveyName != null && 
                       surveyCreationController.surveyCreationbody.surveyPrivacyLevel != null &&
                       surveyCreationController.surveyCreationbody.surveyType != null){

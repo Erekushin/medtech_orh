@@ -46,10 +46,16 @@ class _QStaDropState extends State<QStaDrop> {
           hint: myText(widget.dropDownHint?? '', 16, 1),
           value: sCCont.staTypes[widget.answerIndex].value,
           onChanged: (String? newValue) {
-            setState(() {
+            if(sCCont.staTypes.length >= 5){
+               Get.snackbar('Боломжгүй үйлдэл', 'Line chart ийн limit хэтэрсэн байна.', snackPosition: SnackPosition.BOTTOM,
+               colorText: Colors.white, backgroundColor: Colors.grey[900], margin:  const EdgeInsets.all(5));
+            }
+            else{
+               setState(() {
               sCCont.staTypes[widget.answerIndex].value = newValue.toString();
-            });
-            sCCont.newQuestionList[widget.answerIndex].statistic = newValue;
+              });
+              sCCont.newQuestionList[widget.answerIndex].statistic = newValue;
+            }
           },
           underline: const SizedBox(),
           isExpanded: true,

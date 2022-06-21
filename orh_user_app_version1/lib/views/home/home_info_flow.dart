@@ -439,15 +439,7 @@ class _HomeSidebarState extends State<HomeSidebar> {
                      await sqlController.readAllNotes();
                       Get.toNamed(RouteUnits.treatmentRecipe, arguments: "firstPage");
                      },
-              ),
-              homePageCard(
-                  const Color(0xffFF6D6D),
-                  Icons.android,
-                  'camera',
-                  (){
-                    Get.toNamed('/camera', arguments: "fromHospitals");
-                    },
-                  ),
+              )
         ],
       )
     );

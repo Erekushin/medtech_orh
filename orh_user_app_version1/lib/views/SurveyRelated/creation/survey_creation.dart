@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:orh_user_app_version1/global_constant.dart';
-import 'package:orh_user_app_version1/views/SurveyRelated/survey_creation_general.dart';
+import 'package:orh_user_app_version1/views/SurveyRelated/creation/survey_creation_general.dart';
 import 'package:get/get.dart';
-import 'package:orh_user_app_version1/views/SurveyRelated/survey_creation_questions.dart';
-import 'package:orh_user_app_version1/views/SurveyRelated/survey_save.dart';
-import '../../Controllers/SurveyRelated/survey_creation_controller.dart';
-import '../../Controllers/SurveyRelated/survey_controller.dart';
+import 'package:orh_user_app_version1/views/SurveyRelated/creation/survey_creation_questions.dart';
+import 'package:orh_user_app_version1/views/SurveyRelated/creation/survey_save.dart';
+import '../../../Controllers/SurveyRelated/survey_creation_controller.dart';
+import '../../../Controllers/SurveyRelated/survey_controller.dart';
 
 
 class SurveyCreation extends StatefulWidget {

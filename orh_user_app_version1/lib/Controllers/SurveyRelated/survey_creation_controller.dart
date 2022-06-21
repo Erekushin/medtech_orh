@@ -24,7 +24,7 @@ List<Researchers> researcherPhoneList = <Researchers>[];
 ///survey vvsgeh hvseltiin biy
  SurveyCreationbody surveyCreationbody = SurveyCreationbody();
 //survey make name
- var surveyNametxtController = TextEditingController();
+ var surveyNametxtCont = TextEditingController();
  var surveyInputLimitation = TextEditingController();
  var limitCountVis = false.obs;
  String? torolStr;

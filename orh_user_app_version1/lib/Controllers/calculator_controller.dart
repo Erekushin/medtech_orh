@@ -24,15 +24,11 @@ class CalculatorController extends GetxController{
     indicatorQuestions = Survey.fromJson(bmiQuestion);
     surveyController.surveyAnswer.answers = List<Answers>.generate(indicatorQuestions.result!.questions!.length, ((index) => Answers()));
   }
-  //survey controller oos survey answer dotor hadaglagdsan utguudaa avaad helpers dotor bichsen tvvhii bodoltuudaasaa ashiglaad 
-  //hariug bodoj gargah
   bodyMassCalculate(){
-    var mass = surveyController.surveyAnswer.answers!.where((item) => item.questionId == 'mass');
-    var height = surveyController.surveyAnswer.answers!.where((item) => item.questionId == 'height');
-    Answers massItem = mass.first;
-    Answers heightItem = height.first;
-    int massInt = int.parse(massItem.answerText!);
-    int heightInt = int.parse(heightItem.answerText!);
+    Answers mass = surveyController.surveyAnswer.answers![0];
+    Answers height = surveyController.surveyAnswer.answers![1];
+    int massInt = int.parse(mass.answerText!);
+    int heightInt = int.parse(height.answerText!);
     double bmi = (massInt/(heightInt*heightInt))*10000;
     bodymassindex.value = bmi.toString().substring(0, 5);
     GlobalHelpers.workingWithCode.clearSurveyAnswers();

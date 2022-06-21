@@ -17,7 +17,7 @@ class WorkingWithCode{
   sCCont.newQuestionList.clear();
   sCCont.researcherPhoneList.clear();
   sCCont.researchetTextController.clear();
-  sCCont.surveyNametxtController.text = '';
+  sCCont.surveyNametxtCont.text = '';
   sCCont.torolStr = null;
   sCCont.levelStr = null;
   sCCont.torolNameStr = null;

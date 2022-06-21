@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:orh_user_app_version1/Controllers/SurveyRelated/survey_controller.dart';
 import 'package:orh_user_app_version1/Helpers/scroll_behavior.dart';
 import 'package:orh_user_app_version1/MyWidgets/my_text.dart';
 import 'package:orh_user_app_version1/global_constant.dart';
-import '../../Controllers/SurveyRelated/survey_creation_controller.dart';
-import '../../Models/SurveyRelated/survey_creation_body.dart';
-import '../../Models/SurveyRelated/survey_creation_types.dart';
+import '../../../Controllers/SurveyRelated/survey_creation_controller.dart';
+import '../../../Models/SurveyRelated/survey_creation_body.dart';
+import '../../../Models/SurveyRelated/survey_creation_types.dart';
 
 class SurveyCreationGeneral extends StatefulWidget {
   const SurveyCreationGeneral({ Key? key }) : super(key: key);
@@ -15,8 +14,12 @@ class SurveyCreationGeneral extends StatefulWidget {
 }
 
 class _SurveyCreationGeneralState extends State<SurveyCreationGeneral> {
-  var surveyCreationController = Get.find<CreationCont>();
-  
+  var sCCont = Get.find<CreationCont>();
+  bool red = false;
+  bool orange = false;
+  bool blue = false;
+  bool purple = false;
+  bool white = false;
   List<DropdownMenuItem<String>> dropitems(List<TypeInfo> itemlist, String key){
       return itemlist.map((item){
            return DropdownMenuItem(
@@ -25,22 +28,16 @@ class _SurveyCreationGeneralState extends State<SurveyCreationGeneral> {
              onTap: (){
                switch(key){
                  case 'surveyType':
-                 surveyCreationController.surveyCreationbody.surveyType = item.typeId;
+                 sCCont.surveyCreationbody.surveyType = item.typeId;
                  break;
                  case 'surveyLevel':
-                 surveyCreationController.surveyCreationbody.surveyPrivacyLevel = item.typeId;
+                 sCCont.surveyCreationbody.surveyPrivacyLevel = item.typeId;
                  break;
                }
              },
              );
            }).toList();
     }
-  var surveyController = Get.find<SurveyController>();
-  bool red = false;
-  bool orange = false;
-  bool blue = false;
-  bool purple = false;
-  bool white = false;
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -56,12 +53,12 @@ class _SurveyCreationGeneralState extends State<SurveyCreationGeneral> {
                   const Text('Судалгаа үүсгэх', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),),
                   const SizedBox(height: 20,),
                   TextField(// ner oruulah
-                      controller: surveyCreationController.surveyNametxtController,
+                      controller: sCCont.surveyNametxtCont,
                       decoration: const InputDecoration(
                         hintText: 'Судалгааны нэрийг оруулах'
                       ),
                     ),
-                    const SizedBox(height: 20,),
+                  const SizedBox(height: 20,),
                   Column(// torol songoh
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -69,17 +66,17 @@ class _SurveyCreationGeneralState extends State<SurveyCreationGeneral> {
                     myText('Судалгааны төрөл', 11, 1, FontWeight.bold),
                     DropdownButton<String>(
                   hint: myText('Судалгааны төрөл', 16, 1),
-                  value: surveyCreationController.torolStr,
+                  value: sCCont.torolStr,
                   onChanged: (String? newValue) {
                     setState(() {
-                      surveyCreationController.torolStr = newValue.toString();
+                      sCCont.torolStr = newValue.toString();
                     });
                     switch(newValue){
                       case 'хязгаартай':
-                       surveyCreationController.limitCountVis.value = true;
+                       sCCont.limitCountVis.value = true;
                       break;
                       case 'хязгааргүй':
-                       surveyCreationController.limitCountVis.value = false;
+                       sCCont.limitCountVis.value = false;
                       break;
 
                     }
@@ -87,13 +84,13 @@ class _SurveyCreationGeneralState extends State<SurveyCreationGeneral> {
                   underline: const SizedBox(),
                   isExpanded: true,
                   borderRadius: BorderRadius.circular(5),
-                  items: dropitems(surveyCreationController.surveyCreationTypes.result!.surveyType !, 'surveyType')
+                  items: dropitems(sCCont.surveyCreationTypes.result!.surveyType !, 'surveyType')
                 ),
                     Visibility(
-                      visible: surveyCreationController.limitCountVis.value,
+                      visible: sCCont.limitCountVis.value,
                       child: TextField(
                     keyboardType: TextInputType.number,
-                    controller: surveyCreationController.surveyInputLimitation,
+                    controller: sCCont.surveyInputLimitation,
                     decoration: const InputDecoration(
                       hintText: 'Судалгааг хэдэн удаа бөглөх боломтой вэ?'
                     ),
@@ -108,19 +105,19 @@ class _SurveyCreationGeneralState extends State<SurveyCreationGeneral> {
                     myText('Нууцлалын түвшин', 11, 1, FontWeight.bold),
                     DropdownButton<String>(
                   hint: myText('Нууцлалын түвшин', 16, 1),
-                  value: surveyCreationController.levelStr,
+                  value: sCCont.levelStr,
                   onChanged: (String? newValue) {
                     setState(() {
                       print(newValue);
-                      surveyCreationController.levelStr = newValue.toString();
+                      sCCont.levelStr = newValue.toString();
                       switch(newValue){
                       case 'public':
-                       surveyCreationController.researchetTextController.clear();
-                       surveyCreationController.researcherPhoneList.clear();
+                       sCCont.researchetTextController.clear();
+                       sCCont.researcherPhoneList.clear();
                       break;
                       case 'segmented':
-                       surveyCreationController.researchetTextController.add(TextEditingController());
-                       surveyCreationController.researcherPhoneList.add(Researchers());
+                       sCCont.researchetTextController.add(TextEditingController());
+                       sCCont.researcherPhoneList.add(Researchers());
                       break;
                     }
                     });
@@ -128,7 +125,7 @@ class _SurveyCreationGeneralState extends State<SurveyCreationGeneral> {
                   underline: const SizedBox(),
                   isExpanded: true,
                   borderRadius: BorderRadius.circular(5),
-                  items: dropitems(surveyCreationController.surveyCreationTypes.result!.privacyLevel!, 'surveyLevel')
+                  items: dropitems(sCCont.surveyCreationTypes.result!.privacyLevel!, 'surveyLevel')
                 ),
                 Container(//option container
                   margin: const EdgeInsets.only(left: 50),
@@ -147,7 +144,7 @@ class _SurveyCreationGeneralState extends State<SurveyCreationGeneral> {
                               onChanged: (string){
                                 surveyControllermini.researcherPhoneList[index].researcherPhone = string;
                               },
-                              controller: surveyCreationController.researchetTextController[index],
+                              controller: sCCont.researchetTextController[index],
                               decoration: const InputDecoration(
                                    disabledBorder: InputBorder.none,
                                    hintText: 'судлаач нэмэх',
@@ -186,7 +183,7 @@ class _SurveyCreationGeneralState extends State<SurveyCreationGeneral> {
                                      InkWell(
                                       onTap: (){
                                         setState((){
-                                        surveyCreationController.surveyCreationbody.surveyClr = '0xFF88C9B1';  
+                                        sCCont.surveyCreationbody.surveyClr = '0xFF88C9B1';  
                                         blue = true;
                                         red = false;
                                         white = false;
@@ -215,7 +212,7 @@ class _SurveyCreationGeneralState extends State<SurveyCreationGeneral> {
                                      InkWell(
                                       onTap: (){
                                         setState((){
-                                        surveyCreationController.surveyCreationbody.surveyClr = '0xFF9375B0'; 
+                                        sCCont.surveyCreationbody.surveyClr = '0xFF9375B0'; 
                                         purple = true;
                                         red = false;
                                         white = false;
@@ -243,7 +240,7 @@ class _SurveyCreationGeneralState extends State<SurveyCreationGeneral> {
                                      InkWell(
                                       onTap: (){
                                         setState((){
-                                        surveyCreationController.surveyCreationbody.surveyClr = '0xFFC35C74';
+                                        sCCont.surveyCreationbody.surveyClr = '0xFFC35C74';
                                         red = true;
                                         purple = false;
                                         white = false;
@@ -271,7 +268,7 @@ class _SurveyCreationGeneralState extends State<SurveyCreationGeneral> {
                                      InkWell(
                                       onTap: (){
                                         setState((){
-                                        surveyCreationController.surveyCreationbody.surveyClr = '0xFFFFAB40'; 
+                                        sCCont.surveyCreationbody.surveyClr = '0xFFFFAB40'; 
                                         orange = true;
                                         red = false;
                                         white = false;
@@ -299,7 +296,7 @@ class _SurveyCreationGeneralState extends State<SurveyCreationGeneral> {
                                     InkWell(
                                       onTap: (){
                                         setState((){
-                                        surveyCreationController.surveyCreationbody.surveyClr = '0xFFFFFFFF';
+                                        sCCont.surveyCreationbody.surveyClr = '0xFFFFFFFF';
                                         white = true;
                                         red = false;
                                         blue = false;
