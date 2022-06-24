@@ -30,12 +30,14 @@ class Result {
   int? userId;
   String? userName;
   List<dynamic>? picture;
-  Result({this.userId, this.picture, this.userName});
+  String? phone;
+  Result({this.userId, this.picture, this.userName, this.phone});
 
   Result.fromJson(Map<String, dynamic> json) {
     userId = json['user_id'];
     userName = json['user_name'];
     picture = json['picture'];
+    phone = json['phone'];
   }
 
   Map<String, dynamic> toJson() {
@@ -43,6 +45,7 @@ class Result {
     data['user_id'] = userId;
     data['user_name'] = userName;
     data['picture'] = picture;
+    data['phone'] = phone;
     return data;
   }
 }

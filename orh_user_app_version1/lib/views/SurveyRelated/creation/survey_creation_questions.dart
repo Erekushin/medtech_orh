@@ -76,62 +76,62 @@ class _SurveyCreationQuestionState extends State<SurveyCreationQuestion> {
                           myText(surveyCreationCont.newQuestionList.length.toString(), 12, 1, (FontWeight.bold)),
                         ],
                       ),
-                      Row(
-                        children: [
-                          myText('tool асуулт: ', 12, 1, (FontWeight.bold)),
-                          myText(surveyCreationCont.toolQuestionCount.toString(), 12, 1, (FontWeight.bold)),
-                        ],
-                      ),
+                      // Row(
+                      //   children: [
+                      //     myText('tool асуулт: ', 12, 1, (FontWeight.bold)),
+                      //     myText(surveyCreationCont.toolQuestionCount.toString(), 12, 1, (FontWeight.bold)),
+                      //   ],
+                      // ),
                       
                     ],
                   ),
                 );
                   }
                   ),
-                Container(
-              margin: const EdgeInsets.all(10),
-              child: InkWell(
-                    onTap: (){
-                      Get.defaultDialog(title: 'Tools', content: SizedBox(
-                        child: Column(
-                          children: [
-                            myText('Доорх хэрэглэгдэхүүнүүдээс сонгон өөрийн судалгааны асуултанд нэмэх боломжтой', 15, 1),
-                            InkWell(
-                              onTap: (){
-                                int i;
-                                i = sCreCont.newQuestionList.length;
-                                sCreCont.qTypes.insert(i,DropSelectVal());
-                                sCreCont.staTypes.insert(i, DropSelectVal());
-                                sCreCont.qTxts.insert(i,TextEditingController());
-                                sCreCont.newQuestionList.insert(i, Question(type: '10', questionText: 'Регистрээ оруулах', options: []));
-                                sCreCont.toolQuestionCount += 1; 
-                              },
-                              child: Container(
-                              margin: const EdgeInsets.all(10),
-                              padding: const EdgeInsets.all(10),
-                              decoration: BoxDecoration(
-                                border: Border.all(
-                                  color: Colors.black 
-                                ),
-                                borderRadius: const BorderRadius.all(Radius.circular(15)) 
-                              ),
-                              child: Column(
-                                children: [
-                                  myText('РД аар иргэний мэдээлэл авах', 15, 1, (FontWeight.bold)),
-                                  myText('судлуулагчийн овог, нэр, утас, гэрийн хаягыг улсын бүргэлийн сангаас авах боломжтой', 15, 1)
-                                ],
-                              ),
-                            ),
-                            )
-                          ],
-                        ),
-                      ),
-                      actions: <Widget>[TextButton(onPressed: (){}, child: const Text("exit", style: TextStyle(fontSize: 20),)), 
-                      ]);
-                    },
-                    child: myBtn(CommonColors.yellow, 80, 50, CommonColors.yellow, CommonColors.geregeBlue, 'tools'),
-                  ),
-            )
+            //     Container(
+            //   margin: const EdgeInsets.all(10),
+            //   child: InkWell(
+            //         onTap: (){
+            //           Get.defaultDialog(title: 'Tools', content: SizedBox(
+            //             child: Column(
+            //               children: [
+            //                 myText('Доорх хэрэглэгдэхүүнүүдээс сонгон өөрийн судалгааны асуултанд нэмэх боломжтой', 15, 1),
+            //                 InkWell(
+            //                   onTap: (){
+            //                     int i;
+            //                     i = sCreCont.newQuestionList.length;
+            //                     sCreCont.qTypes.insert(i,DropSelectVal());
+            //                     sCreCont.staTypes.insert(i, DropSelectVal());
+            //                     sCreCont.qTxts.insert(i,TextEditingController());
+            //                     sCreCont.newQuestionList.insert(i, Question(type: '10', questionText: 'Регистрээ оруулах', options: []));
+            //                     sCreCont.toolQuestionCount += 1; 
+            //                   },
+            //                   child: Container(
+            //                   margin: const EdgeInsets.all(10),
+            //                   padding: const EdgeInsets.all(10),
+            //                   decoration: BoxDecoration(
+            //                     border: Border.all(
+            //                       color: Colors.black 
+            //                     ),
+            //                     borderRadius: const BorderRadius.all(Radius.circular(15)) 
+            //                   ),
+            //                   child: Column(
+            //                     children: [
+            //                       myText('РД аар иргэний мэдээлэл авах', 15, 1, (FontWeight.bold)),
+            //                       myText('судлуулагчийн овог, нэр, утас, гэрийн хаягыг улсын бүргэлийн сангаас авах боломжтой', 15, 1)
+            //                     ],
+            //                   ),
+            //                 ),
+            //                 )
+            //               ],
+            //             ),
+            //           ),
+            //           actions: <Widget>[TextButton(onPressed: (){}, child: const Text("exit", style: TextStyle(fontSize: 20),)), 
+            //           ]);
+            //         },
+            //         child: myBtn(CommonColors.yellow, 80, 50, CommonColors.yellow, CommonColors.geregeBlue, 'tools'),
+            //       ),
+            // )
               ],
             ),
           ),

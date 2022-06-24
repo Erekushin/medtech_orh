@@ -13,9 +13,10 @@ class RouteUnits{
 
   //Profile routes
   static String profile = "/profile";
+  static String attached = "/attachedList";
   static String profileInfo = "/profileInfo";
   static String profileDiagnosisHistory = "/profileDiagnosisHistory";
-  static String mySurveys = "/mySurveys";
+  static String myResponds = "/myResponds";
   static String profileDeviceLog = "/profileDeviceLog";
 
   //Урьдчилан сэргийлэх үзлэг

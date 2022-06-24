@@ -8,8 +8,8 @@ import '../../Controllers/SurveyRelated/survey_controller.dart';
 import '../../Controllers/auth_controller.dart';
 import '../../MyWidgets/home_page_card.dart';
 import '../../MyWidgets/my_button.dart';
-import '../../MyWidgets/survey_related/public_syrvey_unit.dart';
-import '../../MyWidgets/survey_related/segmented_survey_unit.dart';
+import '../../MyWidgets/survey_related/survey_unit/public.dart';
+import '../../MyWidgets/survey_related/survey_unit/seg.dart';
 import '../../global_constant.dart';
 import '../../global_helpers.dart';
 
@@ -109,10 +109,10 @@ class _HomeInfoFlowState extends State<HomeInfoFlow> with SingleTickerProviderSt
                   child: TextField(
                         onChanged: (value){
                            if(homePageCont.page == 0){
-                             surveyController.listGet(RouteUnits.home, '120002', loginController.user.result!.userId!, value);
+                             surveyController.listGet(RouteUnits.home, '120002', loginController.user.result!.userId!, value, loginController.user.result!.phone!);
                            } 
                            else if(homePageCont.page == 1){
-                             surveyController.listGet('/segmented', '120009', loginController.user.result!.userId!, value);
+                             surveyController.listGet('/segmented', '120009', loginController.user.result!.userId!, value, loginController.user.result!.phone!);
                            }
                        },
                         controller: searchController,
@@ -130,10 +130,10 @@ class _HomeInfoFlowState extends State<HomeInfoFlow> with SingleTickerProviderSt
                   ),
                   IconButton(onPressed: (){
                       if(homePageCont.page == 0){
-                             surveyController.listGet(RouteUnits.home, '120002', loginController.user.result!.userId!, searchController.text);
+                             surveyController.listGet(RouteUnits.home, '120002', loginController.user.result!.userId!, searchController.text, loginController.user.result!.phone!);
                            } 
                            else if(homePageCont.page == 1){
-                             surveyController.listGet('/segmented', '120009', loginController.user.result!.userId!, searchController.text);
+                             surveyController.listGet('/segmented', '120009', loginController.user.result!.userId!, searchController.text, loginController.user.result!.phone!);
                            }
                   }, 
                   icon: const Icon(Icons.search, color: Colors.grey,))
@@ -174,67 +174,67 @@ class _HomeInfoFlowState extends State<HomeInfoFlow> with SingleTickerProviderSt
                                 ],)
                               ),
                     ),
-                    InkWell(//post
-                      onTap: () async{
+                    // InkWell(//post
+                    //   onTap: () async{
                         
-                      },
-                      child: Container(
-                        padding: const EdgeInsets.all(5),
-                        decoration: BoxDecoration(
-                          color: CommonColors.geregeBlue,
-                          borderRadius: const BorderRadius.all(Radius.circular(15))
-                        ),
-                                margin: const EdgeInsets.only(bottom: 5, left: 10),
-                                child: Row(children: [
-                                  Container(
-                      height: GeneralMeasurements.deviceWidth/100*10,
-                      width: GeneralMeasurements.deviceWidth/100*10,
-                      decoration: const BoxDecoration(
-                        color: Colors.white,
-                        shape: BoxShape.circle,
-                      ),
-                      child: Icon(
-                        Icons.ac_unit_sharp,
-                        color: Colors.blue.withOpacity(.6),
-                      ),
-                                    ),
-                                  myBtn(CommonColors.geregeBlue, 50, 30, CommonColors.geregeBlue, Colors.white, 'post')
-                                ],)
-                              ),
-                    ),
-                     InkWell(//
-                      onTap: () async{
-                         var surveyCreationController = Get.find<CreationCont>();
-                         await surveyCreationController.getSurveyCreationTypes();
-                         Get.toNamed(RouteUnits.surveyCreation);
-                      },
-                      child: Container(
-                        padding: const EdgeInsets.all(5),
-                        decoration: BoxDecoration(
-                          color: CommonColors.geregeBlue,
-                          borderRadius: const BorderRadius.all(Radius.circular(15))
-                        ),
-                                margin: const EdgeInsets.only(bottom: 5, left: 10),
-                                child: Row(children: [
-                                  Container(
-                      height: GeneralMeasurements.deviceWidth / 10,
-                      width: GeneralMeasurements.deviceWidth / 10,
-                      decoration: const BoxDecoration(
-                        color: Colors.white,
-                        shape: BoxShape.circle,
-                      ),
-                      child: RotationTransition(
-                        turns: const AlwaysStoppedAnimation(15/360),
-                        child: Icon(
-                          Icons.question_mark_rounded,
-                          color: Colors.pinkAccent.withOpacity(.6),
-                        ),
-                      ),
-                                    ),
-                                  myBtn(CommonColors.geregeBlue, 80, 30, CommonColors.geregeBlue, Colors.white, 'Асуулга')
-                                ],)
-                              ),
-                    )
+                    //   },
+                    //   child: Container(
+                    //     padding: const EdgeInsets.all(5),
+                    //     decoration: BoxDecoration(
+                    //       color: CommonColors.geregeBlue,
+                    //       borderRadius: const BorderRadius.all(Radius.circular(15))
+                    //     ),
+                    //             margin: const EdgeInsets.only(bottom: 5, left: 10),
+                    //             child: Row(children: [
+                    //               Container(
+                    //   height: GeneralMeasurements.deviceWidth/100*10,
+                    //   width: GeneralMeasurements.deviceWidth/100*10,
+                    //   decoration: const BoxDecoration(
+                    //     color: Colors.white,
+                    //     shape: BoxShape.circle,
+                    //   ),
+                    //   child: Icon(
+                    //     Icons.ac_unit_sharp,
+                    //     color: Colors.blue.withOpacity(.6),
+                    //   ),
+                    //                 ),
+                    //               myBtn(CommonColors.geregeBlue, 50, 30, CommonColors.geregeBlue, Colors.white, 'post')
+                    //             ],)
+                    //           ),
+                    // ),
+                    //  InkWell(//
+                    //   onTap: () async{
+                    //      var surveyCreationController = Get.find<CreationCont>();
+                    //      await surveyCreationController.getSurveyCreationTypes();
+                    //      Get.toNamed(RouteUnits.surveyCreation);
+                    //   },
+                    //   child: Container(
+                    //     padding: const EdgeInsets.all(5),
+                    //     decoration: BoxDecoration(
+                    //       color: CommonColors.geregeBlue,
+                    //       borderRadius: const BorderRadius.all(Radius.circular(15))
+                    //     ),
+                    //             margin: const EdgeInsets.only(bottom: 5, left: 10),
+                    //             child: Row(children: [
+                    //               Container(
+                    //   height: GeneralMeasurements.deviceWidth / 10,
+                    //   width: GeneralMeasurements.deviceWidth / 10,
+                    //   decoration: const BoxDecoration(
+                    //     color: Colors.white,
+                    //     shape: BoxShape.circle,
+                    //   ),
+                    //   child: RotationTransition(
+                    //     turns: const AlwaysStoppedAnimation(15/360),
+                    //     child: Icon(
+                    //       Icons.question_mark_rounded,
+                    //       color: Colors.pinkAccent.withOpacity(.6),
+                    //     ),
+                    //   ),
+                    //                 ),
+                    //               myBtn(CommonColors.geregeBlue, 80, 30, CommonColors.geregeBlue, Colors.white, 'Асуулга')
+                    //             ],)
+                    //           ),
+                    // )
                   ],
                 ),
               ),
@@ -310,36 +310,36 @@ class _HomeInfoFlowState extends State<HomeInfoFlow> with SingleTickerProviderSt
             child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                InkWell(
-                  highlightColor: Colors.transparent,
-                  splashColor: Colors.transparent,
-                  onTap: () {
-                    Get.toNamed(RouteUnits.setting, arguments: RouteUnits.fromHome);
-                    GlobalHelpers.bottomnavbarSwitcher.add(true);
+                // InkWell(
+                //   highlightColor: Colors.transparent,
+                //   splashColor: Colors.transparent,
+                //   onTap: () {
+                //     Get.toNamed(RouteUnits.setting, arguments: RouteUnits.fromHome);
+                //     GlobalHelpers.bottomnavbarSwitcher.add(true);
 
-                  },
-                  child: ClipRRect(
-                    borderRadius: const BorderRadius.all(Radius.circular(99)),
-                    child: BackdropFilter(
-                      filter: ImageFilter.blur(sigmaY: 5, sigmaX: 5),
-                      child: Container(
-                        height: GeneralMeasurements.deviceWidth / 8.5,
-                        width: GeneralMeasurements.deviceWidth / 8.5,
-                        decoration: BoxDecoration(
-                          color: Colors.black.withOpacity(.05),
-                          shape: BoxShape.circle,
-                        ),
-                        child: Center(
-                          child: Icon(
-                            Icons.settings,
-                            size: GeneralMeasurements.deviceWidth / 17,
-                            color: Colors.black.withOpacity(.6),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
+                //   },
+                //   child: ClipRRect(
+                //     borderRadius: const BorderRadius.all(Radius.circular(99)),
+                //     child: BackdropFilter(
+                //       filter: ImageFilter.blur(sigmaY: 5, sigmaX: 5),
+                //       child: Container(
+                //         height: GeneralMeasurements.deviceWidth / 8.5,
+                //         width: GeneralMeasurements.deviceWidth / 8.5,
+                //         decoration: BoxDecoration(
+                //           color: Colors.black.withOpacity(.05),
+                //           shape: BoxShape.circle,
+                //         ),
+                //         child: Center(
+                //           child: Icon(
+                //             Icons.settings,
+                //             size: GeneralMeasurements.deviceWidth / 17,
+                //             color: Colors.black.withOpacity(.6),
+                //           ),
+                //         ),
+                //       ),
+                //     ),
+                //   ),
+                // ),
                 const SizedBox(width: 10),
                 InkWell( // menu btn
                   highlightColor: Colors.transparent,
@@ -402,44 +402,44 @@ class _HomeSidebarState extends State<HomeSidebar> {
                 Icons.person,
                 'Профайл',
                 ()async {
-                  await surveyController.listGet(RouteUnits.profile, '120006', loginController.user.result!.userId!, '');
+                  await surveyController.listGet(RouteUnits.profile, '120006', loginController.user.result!.userId!, '', loginController.user.result!.phone!);
                   Get.toNamed('/profile', arguments: RouteUnits.profile);
                    GlobalHelpers.bottomnavbarSwitcher.add(true);},
               ),
-              homePageCard(
-                  const Color(0xffffa700),
-                  Icons.article,
-                  'Эмнэлэгүүд',
-                  (){
-                    Get.toNamed(RouteUnits.hospitals, arguments: RouteUnits.fromHospitals);
-                    GlobalHelpers.bottomnavbarSwitcher.add(true);},
-                  ),
-              homePageCard(
-                const Color(0xfff37736),
-                  Icons.article_sharp,
-                  'Эмч нар',
-                  (){
-                    Get.toNamed(RouteUnits.doctors, arguments: RouteUnits.fromDoctors);
-                    GlobalHelpers.bottomnavbarSwitcher.add(true);},
-              ),
-              homePageCard(
-                  const Color(0xffffa700),
-                  Icons.text_fields,
-                  'Урьдчилан сэргийлэх үзлэг',
+              // homePageCard(
+              //     const Color(0xffffa700),
+              //     Icons.article,
+              //     'Эмнэлэгүүд',
+              //     (){
+              //       Get.toNamed(RouteUnits.hospitals, arguments: RouteUnits.fromHospitals);
+              //       GlobalHelpers.bottomnavbarSwitcher.add(true);},
+              //     ),
+              // homePageCard(
+              //   const Color(0xfff37736),
+              //     Icons.article_sharp,
+              //     'Эмч нар',
+              //     (){
+              //       Get.toNamed(RouteUnits.doctors, arguments: RouteUnits.fromDoctors);
+              //       GlobalHelpers.bottomnavbarSwitcher.add(true);},
+              // ),
+              // homePageCard(
+              //     const Color(0xffffa700),
+              //     Icons.text_fields,
+              //     'Урьдчилан сэргийлэх үзлэг',
                  
-                  (){
-                    Get.toNamed(RouteUnits.preDiagnosis, arguments: RouteUnits.home);
-                    GlobalHelpers.bottomnavbarSwitcher.add(true);},
-                  ),
-              homePageCard(
-                   const Color(0xffFF6D6D),
-                   Icons.analytics_outlined,
-                   'Жорын бичиг',
-                   () async{
-                     await sqlController.readAllNotes();
-                      Get.toNamed(RouteUnits.treatmentRecipe, arguments: "firstPage");
-                     },
-              )
+              //     (){
+              //       Get.toNamed(RouteUnits.preDiagnosis, arguments: RouteUnits.home);
+              //       GlobalHelpers.bottomnavbarSwitcher.add(true);},
+              //     ),
+              // homePageCard(
+              //      const Color(0xffFF6D6D),
+              //      Icons.analytics_outlined,
+              //      'Жорын бичиг',
+              //      () async{
+              //        await sqlController.readAllNotes();
+              //         Get.toNamed(RouteUnits.treatmentRecipe, arguments: "firstPage");
+              //        },
+              // )
         ],
       )
     );
@@ -468,7 +468,7 @@ class _HomePagePublicState extends State<HomePagePublic> {
     }
     if (scrollController.offset <= scrollController.position.minScrollExtent &&
         !scrollController.position.outOfRange) {//reach the top
-      surveyController.listGet(RouteUnits.home, '120002', loginController.user.result!.userId!, '');
+      surveyController.listGet(RouteUnits.home, '120002', loginController.user.result!.userId!, '', loginController.user.result!.phone!);
     }
  }
   @override
@@ -487,7 +487,7 @@ class _HomePagePublicState extends State<HomePagePublic> {
                           itemCount: surveyControllerList.publicSurveyList.value.result?.length?? 0,
                           itemBuilder: (context, index){
                             var item = surveyControllerList.publicSurveyList.value.result![index];
-                            return PublicSurveyUnit(surveyName: item.name?? "", surveyId: item.id!, 
+                            return PublicsUnit(surveyName: item.name?? "", surveyId: item.id!, 
                                                     itemindx: index, fromRoute: "home", surveyColor: item.color?? '0xFFFFFFFF',);
                           } 
                           ),
@@ -526,7 +526,7 @@ class _HomePageWorkSpaceState extends State<HomePageWorkSpace> {
     }
     if (scrollController.offset <= scrollController.position.minScrollExtent &&
         !scrollController.position.outOfRange) {//reach the top
-      surveyController.listGet('/segmented', '120009', loginController.user.result!.userId!, '');
+      surveyController.listGet('/segmented', '120009', loginController.user.result!.userId!, '', loginController.user.result!.phone!);
     }
  }
   @override
@@ -545,7 +545,7 @@ class _HomePageWorkSpaceState extends State<HomePageWorkSpace> {
                           itemCount: surveyControllerList.wrkSpaceSurveyList.value.result?.length?? 0,
                           itemBuilder: (context, index){
                             var item = surveyControllerList.wrkSpaceSurveyList.value.result![index];
-                            return SegmentedSurveyUnit(surveyName: item.name?? "", surveyId: item.id!, 
+                            return SegsUnit(surveyName: item.name?? "", surveyId: item.id!, 
                                                        itemindx: index, surveyColor: item.color?? '0xFFFFFFFF',);
                           } 
                           ),

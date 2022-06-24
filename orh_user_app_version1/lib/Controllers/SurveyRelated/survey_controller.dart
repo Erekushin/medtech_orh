@@ -22,18 +22,19 @@ class SurveyController extends GetxController{
   List<TextEditingController> textEditingControllers = [];
   //.......................................................
 
-  static Map<String, dynamic> listJBody(int userId, String searchTxt){
+  static Map<String, dynamic> listJBody(int userId, String searchTxt, String phone){
     final Map<String, dynamic> data = <String, dynamic>{};
     data['user_id'] = userId;
     data['search_txt'] = searchTxt;
-    data['phone'] = 95258154;
+    data['phone'] = phone;
     return data;
   }
   var publicSurveyList = SurveyListBody().obs;
   var ownSurveyListbody = SurveyListBody().obs;
   var wrkSpaceSurveyList = SurveyListBody().obs;
-  Future listGet(String routekey, String messageCode, int userId, String searchTxt) async{
-    var data = await GlobalHelpers.postRequestGeneral.getdata(listJBody(userId, searchTxt), messageCode, UriAdresses.medCore);
+  var attachedList = SurveyListBody().obs;
+  Future listGet(String routekey, String messageCode, int userId, String searchTxt, String phone) async{
+    var data = await GlobalHelpers.postRequestGeneral.getdata(listJBody(userId, searchTxt, phone), messageCode, UriAdresses.medCore);
     ereklog.wtf(data);
     switch(routekey){
       case '/home':
@@ -44,6 +45,9 @@ class SurveyController extends GetxController{
       break; 
       case '/profile':
       ownSurveyListbody.value = SurveyListBody.fromJson(jsonDecode(data.toString()));
+      break;
+      case '/attachedList':
+      attachedList.value = SurveyListBody.fromJson(jsonDecode(data.toString()));
       break;
     }
   }

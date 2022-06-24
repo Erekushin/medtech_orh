@@ -6,6 +6,7 @@ import 'package:orh_user_app_version1/Controllers/setting_controller.dart';
 import 'package:orh_user_app_version1/views/AnswerFormRelated/answer_form.dart';
 import 'package:orh_user_app_version1/views/IndicatorCalculatorRelated/indicator_calculators.dart';
 import 'package:orh_user_app_version1/views/PreDiagnosis/pre_diagnosis.dart';
+import 'package:orh_user_app_version1/views/ProfileRelated/own_s_responses.dart';
 import 'package:orh_user_app_version1/views/SurveyRelated/respond_researchers.dart';
 import 'package:orh_user_app_version1/views/SurveyRelated/response/response_screen.dart';
 import 'package:orh_user_app_version1/views/SurveyRelated/response_answer.dart';
@@ -115,7 +116,7 @@ class _MyAppState extends State<MyApp> {
         //Урьдчилан сэргийлэх үзлэг
         GetPage(name: RouteUnits.preDiagnosis, page: ()=> const PreDiagnosis()),
         GetPage(name: RouteUnits.calculators, page: ()=> const CalculatorsHome()),
-        GetPage(name: RouteUnits.mySurveys, page: ()=> const CalculatorsHome()),
+        GetPage(name: RouteUnits.myResponds, page: ()=> const MyResponds()),
       ], 
     ),
         StreamBuilder<bool>(

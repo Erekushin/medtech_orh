@@ -1,20 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../Controllers/SurveyRelated/survey_controller.dart';
-import '../../MyWidgets/my_text.dart';
-import '../../global_constant.dart';
-class ProfileSurveyUnit extends StatefulWidget {
-  const ProfileSurveyUnit({ Key? key,required this.surveyName, required this.surveyId, 
-                         required this.itemindx, required this.fromRoute, required this.surveyColor}) : super(key: key);
-  final String fromRoute;
+import '../../../Controllers/SurveyRelated/survey_controller.dart';
+import '../../my_text.dart';
+import '../../../global_constant.dart';
+class OwnsUnit extends StatefulWidget {
+  const OwnsUnit({ Key? key,required this.surveyName, required this.surveyId, 
+                         required this.itemindx}) : super(key: key);
   final String surveyName;
   final int surveyId;
-  final String surveyColor;
   final int itemindx;
   @override
-  State<ProfileSurveyUnit> createState() => _ProfileSurveyUnitState();
+  State<OwnsUnit> createState() => _OwnsUnitState();
 }
-class _ProfileSurveyUnitState extends State<ProfileSurveyUnit> {
+class _OwnsUnitState extends State<OwnsUnit> {
   @override
   Widget build(BuildContext context) {
     return GetX<SurveyController>(builder: (surveyController){
@@ -90,15 +88,15 @@ class _ProfileSurveyUnitState extends State<ProfileSurveyUnit> {
                           const SizedBox(width: 10,),
                     Text(surveyController.ownSurveyListbody.value.result![widget.itemindx].creatorName!, style: TextStyle(fontWeight: FontWeight.bold),)      
                   ],),
-                  Row(
-                    children: [
-                      IconButton(
-                  icon: Image.asset('assets/icon/coin.png'),
-                  onPressed: (){},
-                  ),
-                  const Text('50 tug')
-                    ],
-                  )
+                  // Row(
+                  //   children: [
+                  //     IconButton(
+                  // icon: Image.asset('assets/icon/coin.png'),
+                  // onPressed: (){},
+                  // ),
+                  // const Text('50 tug')
+                  //   ],
+                  // )
                 ],
               )
                     ],

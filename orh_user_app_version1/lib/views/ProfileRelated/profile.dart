@@ -8,7 +8,7 @@ import 'package:orh_user_app_version1/global_helpers.dart';
 import '../../Controllers/SurveyRelated/survey_controller.dart';
 import '../../MyWidgets/my_button.dart';
 import '../../MyWidgets/my_text.dart';
-import '../../MyWidgets/survey_related/profile_survey_unit.dart';
+import '../../MyWidgets/survey_related/survey_unit/own.dart';
 
 class ButtonStructure {  
   const ButtonStructure({required this.title, required this.icon, required this.route, this.argument});  
@@ -21,14 +21,23 @@ class ButtonStructure {
 List<ButtonStructure> bigButtons = <ButtonStructure>[  
   ButtonStructure(title: 'Mэдээлэл', icon: Icons.person, route: RouteUnits.profileInfo),  
   ButtonStructure(title: 'Онош Түүх', icon: Icons.history, route: RouteUnits.profileDiagnosisHistory),  
-  ButtonStructure(title: 'Миний Судалгаа', icon: Icons.token, route: RouteUnits.mySurveys, 
+  ButtonStructure(title: 'my responds', icon: Icons.token, route: RouteUnits.myResponds, 
   argument: {'user_id':'1'}),  
   ButtonStructure(title: 'Device Log', icon: Icons.book, route: RouteUnits.profileDeviceLog)  
 ]; 
 
 Widget profileBigButtons(ButtonStructure structureInfo){
+  var surveyController = Get.find<SurveyController>();  
+  var loginController = Get.find<AuthController>(); 
   return InkWell(
-    onTap: (){Get.toNamed(structureInfo.route, arguments: structureInfo.argument);},
+    onTap: ()async{
+      switch(structureInfo.title){
+        case 'my responds':
+        await surveyController.listGet(RouteUnits.attached, '120012', loginController.user.result!.userId!, '', loginController.user.result!.phone!);
+        break;
+      }
+      Get.toNamed(structureInfo.route, arguments: structureInfo.argument);
+      },
     child: Container(
       margin: const EdgeInsets.all(10),
     width: GeneralMeasurements.deviceWidth/10*6,
@@ -201,8 +210,8 @@ class _ProfileState extends State<Profile> {
                           itemCount: profileController.ownSurveyListbody.value.result?.length?? 0,
                           itemBuilder: (context, index){
                             var item = profileController.ownSurveyListbody.value.result![index];
-                            return ProfileSurveyUnit(surveyName: item.name?? "", surveyId: item.id!, 
-                                        itemindx: index, fromRoute: "profile", surveyColor: item.color?? '0xFFFFFFFF',);
+                            return OwnsUnit(surveyName: item.name?? "", surveyId: item.id!, 
+                                        itemindx: index);
                           } 
                           ),
                 ),

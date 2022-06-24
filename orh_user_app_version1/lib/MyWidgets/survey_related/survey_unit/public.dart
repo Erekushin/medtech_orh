@@ -1,29 +1,31 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../Controllers/SurveyRelated/survey_controller.dart';
-import '../../MyWidgets/my_text.dart';
-import '../../global_constant.dart';
-class SegmentedSurveyUnit extends StatefulWidget {
-  const SegmentedSurveyUnit({ Key? key,required this.surveyName, required this.surveyId, 
-                         required this.itemindx, required this.surveyColor}) : super(key: key);
-
+import '../../../Controllers/SurveyRelated/survey_controller.dart';
+import '../../my_text.dart';
+import '../../../global_constant.dart';
+class PublicsUnit extends StatefulWidget {
+  const PublicsUnit({ Key? key,required this.surveyName, required this.surveyId, 
+                         required this.itemindx, required this.fromRoute, required this.surveyColor}) : super(key: key);
+  final String fromRoute;
   final String surveyName;
   final int surveyId;
   final int itemindx;
   final String surveyColor;
   @override
-  State<SegmentedSurveyUnit> createState() => _SegmentedSurveyUnitState();
+  State<PublicsUnit> createState() => _PublicsUnitState();
 }
-class _SegmentedSurveyUnitState extends State<SegmentedSurveyUnit> {
+class _PublicsUnitState extends State<PublicsUnit> {
   @override
   Widget build(BuildContext context) {
     return GetX<SurveyController>(builder: (surveyController){
                   return GestureDetector(
                     onTap: (){
                        try{
-                           surveyController.chosenSurveyId = widget.surveyId;
-                           surveyController.wrkSpaceSurveyList.value.result![widget.itemindx].loading.value = true;
-                           surveyController.surveyGet(widget.itemindx, widget.surveyColor, RouteUnits.segmented);
+                          surveyController.chosenSurveyId = widget.surveyId;
+                           surveyController.publicSurveyList.value.result![widget.itemindx].loading.value = true;
+                           surveyController.surveyGet(widget.itemindx, widget.surveyColor, RouteUnits.home);
                        }
                        catch(e){
                         Get.snackbar('Алдаа', '$e', snackPosition: SnackPosition.BOTTOM,
@@ -35,7 +37,7 @@ class _SegmentedSurveyUnitState extends State<SegmentedSurveyUnit> {
                   height: GeneralMeasurements.deviceHeight*.15,
                   decoration: BoxDecoration(
                     border: Border.all(
-                      color: surveyController.wrkSpaceSurveyList.value.result![widget.itemindx].borderColor.value),
+                      color: surveyController.publicSurveyList.value.result![widget.itemindx].borderColor.value),
                   color: Colors.white,
                   boxShadow: [
                     BoxShadow(
@@ -55,9 +57,9 @@ class _SegmentedSurveyUnitState extends State<SegmentedSurveyUnit> {
                         children: [
                   SizedBox(
                     width: GeneralMeasurements.deviceWidth*.7,
-                    child: myText(widget.surveyName, 17, 1, FontWeight.w700),
+                    child: myText(widget.surveyName, 17, 1, FontWeight.w700), //queryController.childHeartQuery.result!.title??
                   ),
-                  surveyController.wrkSpaceSurveyList.value.result![widget.itemindx].loading.value? const SizedBox(
+                  surveyController.publicSurveyList.value.result![widget.itemindx].loading.value? const SizedBox(
                     width: 20,
                     height: 20,
                     child: CircularProgressIndicator(strokeWidth: 3,)) 
@@ -79,20 +81,20 @@ class _SegmentedSurveyUnitState extends State<SegmentedSurveyUnit> {
                               child: const SizedBox())
                               // AspectRatio( 
                               //   aspectRatio: 1/1,
-                              //   child: Image.memory(Uint8List.fromList(surveyController.wrkSpaceSurveyList.value.result![widget.itemindx].creatorPicture!)))
+                              //   child: Image.memory(Uint8List.fromList(surveyController.surveyList.value.result![widget.itemindx].creatorPicture!)))
                          ),
                           const SizedBox(width: 10,),
-                    Text(surveyController.wrkSpaceSurveyList.value.result![widget.itemindx].creatorName!, style: TextStyle(fontWeight: FontWeight.bold),)      
+                    Text(surveyController.publicSurveyList.value.result![widget.itemindx].creatorName!, style: TextStyle(fontWeight: FontWeight.bold),)      
                   ],),
-                  Row(
-                    children: [
-                      IconButton(
-                  icon: Image.asset('assets/icon/coin.png'),
-                  onPressed: (){},
-                  ),
-                  const Text('50 tug')
-                    ],
-                  )
+                  // Row(
+                  //   children: [
+                  //     IconButton(
+                  // icon: Image.asset('assets/icon/coin.png'),
+                  // onPressed: (){},
+                  // ),
+                  // const Text('50 tug')
+                  //   ],
+                  // )
                 ],
               )
                     ],

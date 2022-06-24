@@ -1,31 +1,27 @@
-import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../Controllers/SurveyRelated/survey_controller.dart';
-import '../../MyWidgets/my_text.dart';
-import '../../global_constant.dart';
-class PublicSurveyUnit extends StatefulWidget {
-  const PublicSurveyUnit({ Key? key,required this.surveyName, required this.surveyId, 
-                         required this.itemindx, required this.fromRoute, required this.surveyColor}) : super(key: key);
-  final String fromRoute;
+import '../../../Controllers/SurveyRelated/survey_controller.dart';
+import '../../../global_constant.dart';
+import '../../my_text.dart';
+class AttachedsUnit extends StatefulWidget {
+  const AttachedsUnit({ Key? key,required this.surveyName, required this.surveyId, 
+                         required this.itemindx}) : super(key: key);
   final String surveyName;
   final int surveyId;
   final int itemindx;
-  final String surveyColor;
   @override
-  State<PublicSurveyUnit> createState() => _PublicSurveyUnitState();
+  State<AttachedsUnit> createState() => _AttachedsUnitUnitState();
 }
-class _PublicSurveyUnitState extends State<PublicSurveyUnit> {
+class _AttachedsUnitUnitState extends State<AttachedsUnit> {
   @override
   Widget build(BuildContext context) {
     return GetX<SurveyController>(builder: (surveyController){
                   return GestureDetector(
                     onTap: (){
                        try{
-                          surveyController.chosenSurveyId = widget.surveyId;
-                           surveyController.publicSurveyList.value.result![widget.itemindx].loading.value = true;
-                           surveyController.surveyGet(widget.itemindx, widget.surveyColor, RouteUnits.home);
+                           surveyController.chosenSurveyId = widget.surveyId;
+                           surveyController.attachedList.value.result![widget.itemindx].loading.value = true;
+                           surveyController.respondResearchersListGet(widget.itemindx);
                        }
                        catch(e){
                         Get.snackbar('Алдаа', '$e', snackPosition: SnackPosition.BOTTOM,
@@ -37,7 +33,7 @@ class _PublicSurveyUnitState extends State<PublicSurveyUnit> {
                   height: GeneralMeasurements.deviceHeight*.15,
                   decoration: BoxDecoration(
                     border: Border.all(
-                      color: surveyController.publicSurveyList.value.result![widget.itemindx].borderColor.value),
+                      color: surveyController.attachedList.value.result![widget.itemindx].borderColor.value),
                   color: Colors.white,
                   boxShadow: [
                     BoxShadow(
@@ -57,9 +53,9 @@ class _PublicSurveyUnitState extends State<PublicSurveyUnit> {
                         children: [
                   SizedBox(
                     width: GeneralMeasurements.deviceWidth*.7,
-                    child: myText(widget.surveyName, 17, 1, FontWeight.w700), //queryController.childHeartQuery.result!.title??
+                    child: myText(widget.surveyName, 17, 1, FontWeight.w700),
                   ),
-                  surveyController.publicSurveyList.value.result![widget.itemindx].loading.value? const SizedBox(
+                  surveyController.attachedList.value.result![widget.itemindx].loading.value? const SizedBox(
                     width: 20,
                     height: 20,
                     child: CircularProgressIndicator(strokeWidth: 3,)) 
@@ -81,20 +77,20 @@ class _PublicSurveyUnitState extends State<PublicSurveyUnit> {
                               child: const SizedBox())
                               // AspectRatio( 
                               //   aspectRatio: 1/1,
-                              //   child: Image.memory(Uint8List.fromList(surveyController.surveyList.value.result![widget.itemindx].creatorPicture!)))
+                              //   child: Image.memory(Uint8List.fromList(surveyController.attachedList.value.result![widget.itemindx].creatorPicture!)))
                          ),
                           const SizedBox(width: 10,),
-                    Text(surveyController.publicSurveyList.value.result![widget.itemindx].creatorName!, style: TextStyle(fontWeight: FontWeight.bold),)      
+                    Text(surveyController.attachedList.value.result![widget.itemindx].creatorName!, style: TextStyle(fontWeight: FontWeight.bold),)      
                   ],),
-                  Row(
-                    children: [
-                      IconButton(
-                  icon: Image.asset('assets/icon/coin.png'),
-                  onPressed: (){},
-                  ),
-                  const Text('50 tug')
-                    ],
-                  )
+                  // Row(
+                  //   children: [
+                  //     IconButton(
+                  // icon: Image.asset('assets/icon/coin.png'),
+                  // onPressed: (){},
+                  // ),
+                  // const Text('50 tug')
+                  //   ],
+                  // )
                 ],
               )
                     ],
