@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:orh_user_app_version1/Models/SurveyRelated/survey_creation_types.dart';
 
 class SurveyCreationbody {
   String? surveyName;
@@ -50,9 +51,13 @@ class Question{
   String? statistic;
   List<CreationOptions> options = <CreationOptions>[].obs;
   List<TextEditingController> optionTextController = <TextEditingController>[];
+  List<TypeInfo>? questionType;
+  List<TypeInfo>? statistics;
   double? containerHeight;
 
-  Question({this.questionText, this.type,required this.options, this.statistic});
+  Question({this.questionText, this.type,required 
+            this.options, this.statistic, 
+            this.statistics, this.questionType});
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['question_text'] = questionText;

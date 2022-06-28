@@ -7,6 +7,7 @@ import 'package:orh_user_app_version1/global_constant.dart';
 import '../../../Controllers/SurveyRelated/survey_creation_controller.dart';
 import '../../../Helpers/logging.dart';
 import '../../../Models/SurveyRelated/survey_creation_body.dart';
+import '../../../Models/SurveyRelated/survey_creation_types.dart';
 import '../../../MyWidgets/survey_related/q_sta_drop.dart';
 import '../../../MyWidgets/survey_related/q_type_drop.dart';
 import '../../../global_helpers.dart';
@@ -20,15 +21,34 @@ class _SurveyCreationQuestionState extends State<SurveyCreationQuestion> {
   var ereklog = logger(SurveyCreationQuestion);
   var surveyController = Get.find<SurveyController>();
   var sCreCont = Get.find<CreationCont>();
+
+  List<TypeInfo>? questionType;
+  List<TypeInfo>? statistics;
+
   @override
   void initState() {
     super.initState();
+    int a = 5;
+    int b = 10;
+    a = b;
+    b = 11;
+    print(a.toString());
+
+
+    var sCCont = Get.find<CreationCont>();
+
+    questionType = sCCont.surveyCreationTypes.result!.questionType!;
+    statistics = sCCont.surveyCreationTypes.result!.statistic!;
     if(sCreCont.newQuestionList.isEmpty){
-       sCreCont.surveyCreationbody.questions = List<Question>.generate(1, ((index) => Question(questionText: 'fdfdfd', options: []))).obs;
+       sCreCont.surveyCreationbody.questions = List<Question>.generate(1, ((index) => 
+       Question(questionText: 'fdfdfd', 
+                options: []))).obs;
        sCreCont.qTxts.add(TextEditingController());
        sCreCont.qTypes.add(DropSelectVal());
        sCreCont.staTypes.add(DropSelectVal());
-       sCreCont.newQuestionList.add(Question(options: []));
+       sCreCont.newQuestionList.add(Question(options: [],
+                statistics: statistics,
+                questionType: questionType));
     }
   }
   
@@ -149,37 +169,49 @@ class SurveyInputCreation extends StatefulWidget {
   State<SurveyInputCreation> createState() => _SurveyInputCreationState();
 }
 class _SurveyInputCreationState extends State<SurveyInputCreation> {
-  var surveyCreationController = Get.find<CreationCont>();
+  var sCCont = Get.find<CreationCont>();
   var surveyController = Get.find<SurveyController>();
   var ereklog = logger(SurveyInputCreation);
-  callBackFunc(chosenVal){//drop down nii value nuudaas ali ni songogdson iig yalgah
-    surveyCreationController.newQuestionList[widget.surveyQuestionIndex].type = chosenVal;
+  callBackFunc(chosenVal, int index){//drop down nii value nuudaas ali ni songogdson iig yalgah
+    sCCont.newQuestionList[widget.surveyQuestionIndex].type = chosenVal;
     ereklog.wtf(chosenVal);
     switch(chosenVal){
        case '8':
-        setState(() {
-        surveyCreationController.newQuestionList[widget.surveyQuestionIndex].options.clear();
-        surveyCreationController.newQuestionList[widget.surveyQuestionIndex].optionTextController.clear();
-        surveyCreationController.newQuestionList[widget.surveyQuestionIndex].containerHeight = 210;
+        setState((){
+        sCCont.newQuestionList[widget.surveyQuestionIndex].options.clear();
+        sCCont.newQuestionList[widget.surveyQuestionIndex].optionTextController.clear();
+        sCCont.newQuestionList[widget.surveyQuestionIndex].containerHeight = 210;
+
+
+        // sCCont.newQuestionList[widget.surveyQuestionIndex].statistics!.clear();
+        // for(int a = 0; a < sCCont.surveyCreationTypes.result!.statistic!.length; a++){
+        //   if(sCCont.surveyCreationTypes.result!.statistic![a].t_type == 'number'){
+        //     sCCont.newQuestionList[widget.surveyQuestionIndex].statistics!.add(sCCont.surveyCreationTypes.result!.statistic![a]);
+        //   }
+        // } 
       });
         
         break;
         case '7':
-        if(surveyCreationController.newQuestionList[widget.surveyQuestionIndex].options.isEmpty){
-      if(surveyCreationController.newQuestionList[widget.surveyQuestionIndex].containerHeight == 210){
+        if(sCCont.newQuestionList[widget.surveyQuestionIndex].options.isEmpty){
+      if(sCCont.newQuestionList[widget.surveyQuestionIndex].containerHeight == 210){
         setState(() {
-        surveyCreationController.newQuestionList[widget.surveyQuestionIndex].containerHeight = surveyCreationController.newQuestionList[widget.surveyQuestionIndex].containerHeight! + 50;
-        surveyCreationController.newQuestionList[widget.surveyQuestionIndex].options.add(CreationOptions());
-        surveyCreationController.newQuestionList[widget.surveyQuestionIndex].optionTextController.add(TextEditingController());
+        sCCont.newQuestionList[widget.surveyQuestionIndex].containerHeight = sCCont.newQuestionList[widget.surveyQuestionIndex].containerHeight! + 50;
+        sCCont.newQuestionList[widget.surveyQuestionIndex].options.add(CreationOptions());
+        sCCont.newQuestionList[widget.surveyQuestionIndex].optionTextController.add(TextEditingController());
+        // sCCont.newQuestionList[widget.surveyQuestionIndex].statistics!.clear();
       });
       }
     }
         break;
         case '6':
         setState(() {
-        surveyCreationController.newQuestionList[widget.surveyQuestionIndex].options.clear();
-        surveyCreationController.newQuestionList[widget.surveyQuestionIndex].optionTextController.clear();
-        surveyCreationController.newQuestionList[widget.surveyQuestionIndex].containerHeight = 210;
+        sCCont.newQuestionList[widget.surveyQuestionIndex].options.clear();
+        sCCont.newQuestionList[widget.surveyQuestionIndex].optionTextController.clear();
+        sCCont.newQuestionList[widget.surveyQuestionIndex].containerHeight = 210;
+
+        // sCCont.newQuestionList[widget.surveyQuestionIndex].statistics!.clear();
+       
       }); 
         
         break;
@@ -188,8 +220,8 @@ class _SurveyInputCreationState extends State<SurveyInputCreation> {
   @override
   void initState() {
     super.initState();
-    if(surveyCreationController.newQuestionList[widget.surveyQuestionIndex].containerHeight == null){
-      surveyCreationController.newQuestionList[widget.surveyQuestionIndex].containerHeight = 210;
+    if(sCCont.newQuestionList[widget.surveyQuestionIndex].containerHeight == null){
+      sCCont.newQuestionList[widget.surveyQuestionIndex].containerHeight = 210;
     } 
   }
 
@@ -203,7 +235,7 @@ class _SurveyInputCreationState extends State<SurveyInputCreation> {
         Container(
           margin: const EdgeInsets.all(5),
           width: GeneralMeasurements.deviceWidth*.75,
-          height: surveyCreationController.newQuestionList[widget.surveyQuestionIndex].containerHeight,
+          height: sCCont.newQuestionList[widget.surveyQuestionIndex].containerHeight,
           decoration: const BoxDecoration(
             borderRadius: BorderRadius.all(Radius.circular(15)),
             color: Colors.white
@@ -215,7 +247,7 @@ class _SurveyInputCreationState extends State<SurveyInputCreation> {
                   margin: const EdgeInsets.only(left: 10),
                   child: TextField(
                    onChanged: (string){
-                    surveyCreationController.newQuestionList[widget.surveyQuestionIndex].questionText = string;
+                    sCCont.newQuestionList[widget.surveyQuestionIndex].questionText = string;
                    },
                   controller: widget.textController,  
                   decoration: const InputDecoration(
@@ -226,9 +258,9 @@ class _SurveyInputCreationState extends State<SurveyInputCreation> {
                   ),
                 ),
                 ),
-                 QStaDrop(dropDownHint: 'Статистик үзүүлэлт нэмэх', listitems: surveyCreationController.surveyCreationTypes.result!.statistic!,
+                QStaDrop(dropDownHint: 'Статистик үзүүлэлт нэмэх', listitems: sCCont.newQuestionList[widget.surveyQuestionIndex].statistics!,
                            answerIndex: widget.surveyQuestionIndex, callBackFunction: (){},),
-                QTypeDrop(dropDownHint: 'Асуултын төрлийг сонгох', listitems: surveyCreationController.surveyCreationTypes.result!.questionType!,
+                QTypeDrop(dropDownHint: 'Асуултын төрлийг сонгох', listitems: sCCont.newQuestionList[widget.surveyQuestionIndex].questionType!,
                            answerIndex: widget.surveyQuestionIndex, callBackFunction: callBackFunc,),                
                 Container(//option container
                   margin: const EdgeInsets.only(left: 50),
@@ -244,9 +276,9 @@ class _SurveyInputCreationState extends State<SurveyInputCreation> {
                           SizedBox(
                             width: 150,
                             child: TextField(
-                              controller: surveyCreationController.newQuestionList[widget.surveyQuestionIndex].optionTextController[index],
+                              controller: sCCont.newQuestionList[widget.surveyQuestionIndex].optionTextController[index],
                               onChanged: (string){
-                                surveyCreationController.newQuestionList[widget.surveyQuestionIndex].options[index].optionText = string;
+                                sCCont.newQuestionList[widget.surveyQuestionIndex].options[index].optionText = string;
                               },
                               decoration: const InputDecoration(
                                    disabledBorder: InputBorder.none,
@@ -261,7 +293,7 @@ class _SurveyInputCreationState extends State<SurveyInputCreation> {
                                   setState(() {
                                 surveyControllermini.newQuestionList[widget.surveyQuestionIndex].options.add(CreationOptions());
                                 surveyControllermini.newQuestionList[widget.surveyQuestionIndex].optionTextController.add(TextEditingController());
-                                surveyCreationController.newQuestionList[widget.surveyQuestionIndex].containerHeight = surveyCreationController.newQuestionList[widget.surveyQuestionIndex].containerHeight! + 50;
+                                sCCont.newQuestionList[widget.surveyQuestionIndex].containerHeight = sCCont.newQuestionList[widget.surveyQuestionIndex].containerHeight! + 50;
                               });
                               },
                               child: const Icon(Icons.add),
@@ -271,7 +303,7 @@ class _SurveyInputCreationState extends State<SurveyInputCreation> {
                                   setState(() {
                                 surveyControllermini.newQuestionList[widget.surveyQuestionIndex].options.removeAt(index);
                                 surveyControllermini.newQuestionList[widget.surveyQuestionIndex].optionTextController.removeAt(index);
-                                surveyCreationController.newQuestionList[widget.surveyQuestionIndex].containerHeight = surveyCreationController.newQuestionList[widget.surveyQuestionIndex].containerHeight! - 50;
+                                sCCont.newQuestionList[widget.surveyQuestionIndex].containerHeight = sCCont.newQuestionList[widget.surveyQuestionIndex].containerHeight! - 50;
                               });
                               },
                               child: const Icon(Icons.remove),
@@ -305,7 +337,9 @@ Widget configureBtns(int index){
                    sCreCont.qTypes.insert(index,DropSelectVal());
                    sCreCont.staTypes.insert(index, DropSelectVal());
                    sCreCont.qTxts.insert(index,TextEditingController());
-                   sCreCont.newQuestionList.insert(index, Question(options: []));
+                   sCreCont.newQuestionList.insert(index, Question(options: [],
+                statistics: sCreCont.surveyCreationTypes.result!.statistic!,
+                questionType: sCreCont.surveyCreationTypes.result!.questionType!));
                  }
                  else{
                     Get.snackbar('Талбаруудын утга хоосон байна', "Асуултын төрлийг сонгоно уу", snackPosition: SnackPosition.BOTTOM,
@@ -330,7 +364,9 @@ Widget configureBtns(int index){
                    sCreCont.qTypes.insert(i,DropSelectVal());
                    sCreCont.staTypes.insert(i, DropSelectVal());
                    sCreCont.qTxts.insert(i,TextEditingController());
-                   sCreCont.newQuestionList.insert(i, Question(options: []));
+                   sCreCont.newQuestionList.insert(i, Question(options: [],
+                statistics: sCreCont.surveyCreationTypes.result!.statistic!,
+                questionType: sCreCont.surveyCreationTypes.result!.questionType!));
                  }
                  else{
                    Get.snackbar('Талбаруудын утга хоосон байна', "Асуултын төрлийг сонгоно уу", snackPosition: SnackPosition.BOTTOM,

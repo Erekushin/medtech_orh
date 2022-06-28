@@ -32,7 +32,7 @@ List<Researchers> researcherPhoneList = <Researchers>[];
  String? torolNameStr;
  String? levelNameStr;
   ///vvsgej bui Question vvdee hadaglah list
- List<Question> newQuestionList = <Question>[].obs;
+ var newQuestionList = <Question>[].obs;
  var toolQuestionCount = 0.obs;
 var surveyCreationPageController = PageController();
 
