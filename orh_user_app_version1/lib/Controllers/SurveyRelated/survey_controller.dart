@@ -11,8 +11,8 @@ import '../../Models/SurveyRelated/survey_list.dart';
 import '../../Models/general_response.dart';
 import '../../global_constant.dart';
 import '../../models/SurveyRelated/survey_body.dart';
-class SurveyController extends GetxController{
-  var ereklog = logger(SurveyController);
+class SCont extends GetxController{
+  var ereklog = logger(SCont);
   //.......................................................
   List<DropSelectVal> dropvalueList = [];
   List<DropSelectVal> statisticTypeList = [];

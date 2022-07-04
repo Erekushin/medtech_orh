@@ -10,7 +10,7 @@ import '../Models/SurveyRelated/survey_body.dart';
 
 class CalculatorController extends GetxController{
   Survey indicatorQuestions = Survey();
-  var surveyController = Get.find<SurveyController>();
+  var surveyController = Get.find<SCont>();
   
   //tvr obs uud............................
   var bodymassindex = '0'.obs;

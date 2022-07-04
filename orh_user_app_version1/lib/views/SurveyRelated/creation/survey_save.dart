@@ -15,7 +15,7 @@ class SurveyInfoCheck extends StatefulWidget {
 }
 
 class _SurveyInfoCheckState extends State<SurveyInfoCheck> {
-  var surveyCreationController = Get.find<CreationCont>();
+  var sCCont = Get.find<CreationCont>();
   var loginController = Get.find<AuthController>();
   @override
   Widget build(BuildContext context) {
@@ -30,23 +30,31 @@ class _SurveyInfoCheckState extends State<SurveyInfoCheck> {
                   myText('Судалгааны нэр:  ', 15, 1, (FontWeight.bold)),
                   SizedBox(
                     width: 160,
-                    child: myText(surveyCreationController.surveyNametxtCont.text == ''? 
-                          'Нэр оруулаагүй байна':surveyCreationController.surveyNametxtCont.text, 15, 1),
+                    child: myText(sCCont.surveyNametxtCont.text == ''? 
+                          'Нэр оруулаагүй байна':sCCont.surveyNametxtCont.text, 15, 1),
                   )
                 ],),
                 const SizedBox(height: 30,),
                 Row(children: [
                   const SizedBox(width: 20,),
                   myText('огноо:  ', 15, 1, (FontWeight.bold)),
-                  myText(surveyCreationController.surveyCreationbody.surveyCreatedDate, 15, 1),
+                  myText(sCCont.surveyCreationbody.surveyCreatedDate, 15, 1),
                 ],),
                 const SizedBox(height: 30,),
                 Row(children: [
                   const SizedBox(width: 20,),
+                  myText('Судалгааны тоо:  ', 15, 1, (FontWeight.bold)),
+                  SizedBox(
+                    width: 150,
+                    child: myText(sCCont.counttypeStr?? 'Нэрийг оруулаагүй байна.', 15, 1))
+                ],),
+                 const SizedBox(height: 30,),
+                 Row(children: [
+                  const SizedBox(width: 20,),
                   myText('Судалгааны төрөл:  ', 15, 1, (FontWeight.bold)),
                   SizedBox(
                     width: 150,
-                    child: myText(surveyCreationController.torolStr?? 'Нэрийг оруулаагүй байна.', 15, 1))
+                    child: myText(sCCont.torolStr?? 'Нэрийг оруулаагүй байна.', 15, 1))
                 ],),
                 const SizedBox(height: 30,),
                 Row(children: [
@@ -54,19 +62,19 @@ class _SurveyInfoCheckState extends State<SurveyInfoCheck> {
                   myText('Privacy level:  ', 15, 1, (FontWeight.bold)),
                   SizedBox(
                     width: 200,
-                    child: myText(surveyCreationController.levelStr?? 'Нууцлалын түвшинг сонгоогүй байна', 15, 1))
+                    child: myText(sCCont.levelStr?? 'Нууцлалын түвшинг сонгоогүй байна', 15, 1))
                 ],),
                 const SizedBox(height: 30,),
                 Row(children: [
                   const SizedBox(width: 20,),
                   myText('Асуултын тоо:  ', 15, 1, (FontWeight.bold)),
-                  myText(surveyCreationController.newQuestionList.length.toString(), 15, 1),
+                  myText(sCCont.newQuestionList.length.toString(), 15, 1),
                 ],),
                 const SizedBox(height: 30,),
                  Row(children: [
                    const SizedBox(width: 20,),
                   myText('Тусгай асуултын тоо:  ', 15, 1, (FontWeight.bold)),
-                  myText(surveyCreationController.toolQuestionCount.value.toString(), 15, 1),
+                  myText(sCCont.toolQuestionCount.value.toString(), 15, 1),
                 ],),
                  const SizedBox(height: 30,),
                  Row(children: [
@@ -78,7 +86,7 @@ class _SurveyInfoCheckState extends State<SurveyInfoCheck> {
                        height: 30,
                        decoration: BoxDecoration(
                           border: Border.all(color: Colors.grey.shade300),
-                       color: Color(int.parse(surveyCreationController.surveyCreationbody.surveyClr?? '0xFFFFFFFF')),
+                       color: Color(int.parse(sCCont.surveyCreationbody.surveyClr?? '0xFFFFFFFF')),
                        shape: BoxShape.circle
                          ),
                        ),
@@ -89,16 +97,16 @@ class _SurveyInfoCheckState extends State<SurveyInfoCheck> {
                   margin: const EdgeInsets.all(20),
                   child: InkWell(
                 onTap: (){
-                  surveyCreationController.surveyCreationbody.surveyName = surveyCreationController.surveyNametxtCont.text;
-                  if( surveyCreationController.surveyCreationbody.surveyName != null && 
-                      surveyCreationController.surveyCreationbody.surveyPrivacyLevel != null &&
-                      surveyCreationController.surveyCreationbody.surveyType != null){
+                  sCCont.surveyCreationbody.surveyName = sCCont.surveyNametxtCont.text;
+                  if( sCCont.surveyCreationbody.surveyName != null && 
+                      sCCont.surveyCreationbody.surveyPrivacyLevel != null &&
+                      sCCont.surveyCreationbody.surveyType != null){
                     //level, type, color, date 4 songogdoh vydee yavchihaj bgaa 
-                  surveyCreationController.surveyCreationbody.userId = loginController.user.result!.userId!;
-                  surveyCreationController.surveyCreationbody.questions = surveyCreationController.newQuestionList; 
-                  surveyCreationController.surveyCreationbody.researchers = surveyCreationController.researcherPhoneList;
+                  sCCont.surveyCreationbody.userId = loginController.user.result!.userId!;
+                  sCCont.surveyCreationbody.questions = sCCont.newQuestionList; 
+                  sCCont.surveyCreationbody.researchers = sCCont.researcherPhoneList;
                   Get.offAllNamed(RouteUnits.home);
-                  surveyCreationController.surveyCreate();
+                  sCCont.surveyCreate();
                   }   
                   else{
                      Get.snackbar('Талбарууд дутуу байна', '', snackPosition: SnackPosition.BOTTOM,

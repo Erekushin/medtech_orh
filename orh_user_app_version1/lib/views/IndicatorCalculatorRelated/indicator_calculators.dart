@@ -30,7 +30,7 @@ class IndicatorButton extends StatefulWidget {
 
 class _IndicatorButton extends State<IndicatorButton> {
   var calculatorController = Get.find<CalculatorController>();
-  var surveyControllerOut = Get.find<SurveyController>();
+  var surveyControllerOut = Get.find<SCont>();
   @override
   Widget build(BuildContext context) {
     return InkWell(

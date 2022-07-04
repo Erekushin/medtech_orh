@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:get/get.dart';
+import 'package:orh_user_app_version1/Controllers/SurveyRelated/survey_controller.dart';
 import 'package:orh_user_app_version1/Controllers/auth_controller.dart';
 import 'dart:convert';
 import 'package:orh_user_app_version1/Helpers/logging.dart';
@@ -11,7 +12,6 @@ import '../../Models/SurveyRelated/survey_list.dart';
 import '../../global_constant.dart';
 class ResCont extends GetxController{
   var ereklog = logger(ResCont);
-  var ownSurveyListbody = SurveyListBody().obs;
   var chosenSurveyId;
   Map<String, dynamic> chosen(String createdDate, String username){
     final Map<String, dynamic> data = <String, dynamic>{};
@@ -43,7 +43,7 @@ class ResCont extends GetxController{
     switch(respondResearchers.code){
        case 200:
          Get.toNamed(RouteUnits.respondResearchers);
-         ownSurveyListbody.value.result![chosenIndx].loading.value = false;
+         Get.find<SCont>().ownSurveyListbody.value.result![chosenIndx].loading.value = false;
           break;
     }
   }

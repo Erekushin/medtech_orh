@@ -95,7 +95,7 @@ class BasicProfileData2 extends StatefulWidget {
 }
 class _BasicProfileData2 extends State<BasicProfileData2> {
   final registerFormKey = GlobalKey<FormState>();
-  var surveyController = Get.find<SurveyController>();
+  var surveyController = Get.find<SCont>();
   @override
   Widget build(BuildContext context) {
     return SizedBox(

@@ -27,7 +27,7 @@ List<ButtonStructure> bigButtons = <ButtonStructure>[
 ]; 
 
 Widget profileBigButtons(ButtonStructure structureInfo){
-  var surveyController = Get.find<SurveyController>();  
+  var surveyController = Get.find<SCont>();  
   var loginController = Get.find<AuthController>(); 
   return InkWell(
     onTap: ()async{
@@ -76,7 +76,7 @@ class Profile extends StatefulWidget {
 
 class _ProfileState extends State<Profile> {
   ImageController imageController = ImageController();
-  var surveyController = Get.find<SurveyController>();
+  var surveyController = Get.find<SCont>();
   var loginController = Get.find<AuthController>();
   var scrollController = ScrollController();
   var proPic = Get.find<AuthController>().user.result!.picture?.cast<int>();
@@ -196,7 +196,7 @@ class _ProfileState extends State<Profile> {
                  );
                     }),
                 const SizedBox(width: 1, height: 10,),
-          GetX<SurveyController>(builder: (profileController){
+          GetX<SCont>(builder: (profileController){
             return Stack(
               children: [
                 SizedBox(
@@ -226,7 +226,7 @@ class _ProfileState extends State<Profile> {
               ],
             ),
            ),
-           GetX<SurveyController>(
+           GetX<SCont>(
              builder: (surveyControllermini){
                return Visibility(
              visible: surveyControllermini.surveyDeleteIcon.value,

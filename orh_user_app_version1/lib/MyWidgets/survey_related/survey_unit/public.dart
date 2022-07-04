@@ -19,7 +19,7 @@ class PublicsUnit extends StatefulWidget {
 class _PublicsUnitState extends State<PublicsUnit> {
   @override
   Widget build(BuildContext context) {
-    return GetX<SurveyController>(builder: (sCont){
+    return GetX<SCont>(builder: (sCont){
                   return GestureDetector(
                     onTap: (){
                        try{

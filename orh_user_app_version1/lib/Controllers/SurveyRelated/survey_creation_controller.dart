@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
+import 'package:orh_user_app_version1/Controllers/SurveyRelated/survey_controller.dart';
 import 'package:orh_user_app_version1/Helpers/logging.dart';
 import 'package:orh_user_app_version1/Models/SurveyRelated/survey_creation_types.dart';
 import 'package:orh_user_app_version1/Models/general_response.dart';
@@ -27,7 +28,9 @@ List<Researchers> researcherPhoneList = <Researchers>[];
  var surveyNametxtCont = TextEditingController();
  var surveyInputLimitation = TextEditingController();
  var limitCountVis = false.obs;
+ var TypeVis = false.obs;
  String? torolStr;
+ String? counttypeStr;
  String? levelStr;
  String? torolNameStr;
  String? levelNameStr;
@@ -57,6 +60,13 @@ Future surveyCreate() async{
           Get.snackbar('Амжилттай', '', snackPosition: SnackPosition.BOTTOM,
           colorText: Colors.white, backgroundColor: Colors.grey[900], margin:  const EdgeInsets.all(5));
           GlobalHelpers.workingWithCode.clearSurveyCreation();
+          if(TypeVis.value == true){
+            //response oos ni avii
+            // Get.find<SCont>().surveyGet(widget.itemindx, widget.surveyColor, RouteUnits.home);
+            //done deer zov chiglvvleh
+            // vvsgej bhdaa level iig ni haruulah
+            //table deer column uudiig ni nemeh
+          }
           break;
       case '400':
          Get.snackbar('Судалгааг хадаглаж чадсангүй', generalResponse.message.toString( ), snackPosition: SnackPosition.BOTTOM,

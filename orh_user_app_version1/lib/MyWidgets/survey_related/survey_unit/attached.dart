@@ -17,7 +17,7 @@ class _AttachedsUnitUnitState extends State<AttachedsUnit> {
   var resCont = Get.find<ResCont>();
   @override
   Widget build(BuildContext context) {
-    return GetX<SurveyController>(builder: (sCont){
+    return GetX<SCont>(builder: (sCont){
                   return GestureDetector(
                     onTap: (){
                        try{

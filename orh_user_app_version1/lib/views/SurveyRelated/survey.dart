@@ -18,7 +18,7 @@ class SurveyUnit extends StatefulWidget {
 class _SurveyUnit extends State<SurveyUnit> {
   var argu = Get.arguments as String;
   var pageController = PageController();
-  final queryController = Get.find<SurveyController>();
+  final queryController = Get.find<SCont>();
   final settingsController = Get.find<SettingController>();
   @override
   void initState() {
@@ -50,7 +50,7 @@ class PageUnit extends StatefulWidget {
 }
 class _PageUnitState extends State<PageUnit> {
   var settingsControllerOut = Get.find<SettingController>();
-  var surveyControllerOut = Get.find<SurveyController>(); 
+  var surveyControllerOut = Get.find<SCont>(); 
   var authCon = Get.find<AuthController>();
   void pushData(){
     surveyControllerOut.pushDataBtn.value = false;

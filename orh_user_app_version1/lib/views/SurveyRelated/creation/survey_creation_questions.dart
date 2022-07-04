@@ -19,7 +19,7 @@ class SurveyCreationQuestion extends StatefulWidget {
 }
 class _SurveyCreationQuestionState extends State<SurveyCreationQuestion> {
   var ereklog = logger(SurveyCreationQuestion);
-  var surveyController = Get.find<SurveyController>();
+  var surveyController = Get.find<SCont>();
   var sCreCont = Get.find<CreationCont>();
 
   List<TypeInfo>? questionType;
@@ -170,7 +170,7 @@ class SurveyInputCreation extends StatefulWidget {
 }
 class _SurveyInputCreationState extends State<SurveyInputCreation> {
   var sCCont = Get.find<CreationCont>();
-  var surveyController = Get.find<SurveyController>();
+  var surveyController = Get.find<SCont>();
   var ereklog = logger(SurveyInputCreation);
   callBackFunc(chosenVal, int index){//drop down nii value nuudaas ali ni songogdson iig yalgah
     sCCont.newQuestionList[widget.surveyQuestionIndex].type = chosenVal;
@@ -327,7 +327,7 @@ class _SurveyInputCreationState extends State<SurveyInputCreation> {
 }
 
 Widget configureBtns(int index){
-  var surveyController = Get.find<SurveyController>();
+  var surveyController = Get.find<SCont>();
   var sCreCont = Get.find<CreationCont>();
   return Column(
           children: [

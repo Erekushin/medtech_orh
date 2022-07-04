@@ -15,7 +15,7 @@ class SurveyCreation extends StatefulWidget {
 }
 class _SurveyCreationState extends State<SurveyCreation> {
   var surveyCreationController = Get.find<CreationCont>();
-  var surveyController = Get.find<SurveyController>();
+  var surveyController = Get.find<SCont>();
   @override
   Widget build(BuildContext context) {
     return SafeArea(

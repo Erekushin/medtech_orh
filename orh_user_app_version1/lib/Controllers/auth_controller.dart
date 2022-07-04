@@ -39,8 +39,8 @@ class AuthController extends GetxController{
     data['user_id'] = geregeId; 
     return data;
   }
-  var surveyController = Get.find<SurveyController>();
-  var ereklog = logger(SurveyController);
+  var surveyController = Get.find<SCont>();
+  var ereklog = logger(SCont);
   Future geregeUserLogin(Function retryFunction) async{
     loginloading.value = true;
     GlobalHelpers.userName = loginName.text;

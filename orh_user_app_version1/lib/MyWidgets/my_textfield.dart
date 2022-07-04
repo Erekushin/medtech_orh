@@ -22,7 +22,7 @@ class MyTextField extends StatefulWidget {
 }
 
 class _MyTextFieldState extends State<MyTextField> {
-   final surveyController = Get.find<SurveyController>(); 
+   final surveyController = Get.find<SCont>(); 
   final settingsController = Get.find<SettingController>();
   @override
   void initState() {

@@ -59,17 +59,17 @@ class _SurveyCreationGeneralState extends State<SurveyCreationGeneral> {
                       ),
                     ),
                   const SizedBox(height: 20,),
-                  Column(// torol songoh
+                  Column(// toonii torol songoh
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    myText('Судалгааны төрөл', 11, 1, FontWeight.bold),
+                    myText('Судалгааны тоо', 11, 1, FontWeight.bold),
                     DropdownButton<String>(
-                  hint: myText('Судалгааны төрөл', 16, 1),
-                  value: sCCont.torolStr,
+                  hint: myText('Судалгааны тоо', 16, 1),
+                  value: sCCont.counttypeStr,
                   onChanged: (String? newValue) {
                     setState(() {
-                      sCCont.torolStr = newValue.toString();
+                      sCCont.counttypeStr = newValue.toString();
                     });
                     switch(newValue){
                       case 'хязгаартай':
@@ -84,7 +84,7 @@ class _SurveyCreationGeneralState extends State<SurveyCreationGeneral> {
                   underline: const SizedBox(),
                   isExpanded: true,
                   borderRadius: BorderRadius.circular(5),
-                  items: dropitems(sCCont.surveyCreationTypes.result!.surveyType !, 'surveyType')
+                  items: dropitems(sCCont.surveyCreationTypes.result!.countType !, 'countType')
                 ),
                     Visibility(
                       visible: sCCont.limitCountVis.value,
@@ -95,6 +95,39 @@ class _SurveyCreationGeneralState extends State<SurveyCreationGeneral> {
                       hintText: 'Судалгааг хэдэн удаа бөглөх боломтой вэ?'
                     ),
                   ))
+                  ],
+                ),
+                const SizedBox(height: 20,),
+                Column(// torol songoh
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    myText('Судалгааны төрөл', 11, 1, FontWeight.bold),
+                    DropdownButton<String>(
+                  hint: myText('Судалгааны төрөл', 16, 1),
+                  value: sCCont.torolStr,
+                  onChanged: (String? newValue) {
+                    setState(() {
+                      sCCont.torolStr = newValue.toString();
+                    });
+                    switch(newValue){
+                      case 'Auto':
+                       sCCont.TypeVis.value = true;
+                      break;
+                      case 'энгийн':
+                       sCCont.TypeVis.value = false;
+                      break;
+
+                    }
+                  },
+                  underline: const SizedBox(),
+                  isExpanded: true,
+                  borderRadius: BorderRadius.circular(5),
+                  items: dropitems(sCCont.surveyCreationTypes.result!.surveyType !, 'surveyType')
+                ),
+                    Visibility(
+                      visible: sCCont.TypeVis.value,
+                      child: const Text('Level 1'))
                   ],
                 ),
                 const SizedBox(height: 20,),

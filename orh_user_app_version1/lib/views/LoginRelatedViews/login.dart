@@ -21,7 +21,7 @@ class _LoginState extends State<Login>with SingleTickerProviderStateMixin {
   late Animation<double> _opacity;
   late Animation<double> _transform;
   GlobalKey<FormState> loginValidatorKey = GlobalKey<FormState>();
-  var surveyController = Get.find<SurveyController>();
+  var surveyController = Get.find<SCont>();
   @override
   void initState() {
     super.initState();

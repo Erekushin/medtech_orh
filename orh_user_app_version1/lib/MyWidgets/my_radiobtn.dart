@@ -16,7 +16,7 @@ class MyRadioBtn extends StatefulWidget {
   State<MyRadioBtn> createState() => _MyRadioBtn();
 }
 class _MyRadioBtn extends State<MyRadioBtn>{
-  final queryController = Get.find<SurveyController>();
+  final queryController = Get.find<SCont>();
   int valueGroup = 44;
   @override
   Widget build(BuildContext context) {
@@ -52,7 +52,7 @@ class RadioUnit extends StatefulWidget {
 }
 
 class _RadioUnitState extends State<RadioUnit> {
-  final queryController = Get.find<SurveyController>();
+  final queryController = Get.find<SCont>();
   @override
   Widget build(BuildContext context) {
     return SizedBox(

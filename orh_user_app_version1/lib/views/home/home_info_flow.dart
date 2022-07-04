@@ -26,7 +26,7 @@ class _HomeInfoFlowState extends State<HomeInfoFlow> with SingleTickerProviderSt
   var loginController = Get.find<AuthController>();
   GlobalKey<ScaffoldState> sidePageKey = GlobalKey<ScaffoldState>();
   var sqlController = Get.find<SqlController>();
-  var surveyController = Get.find<SurveyController>();
+  var surveyController = Get.find<SCont>();
   Future<bool>cloaseTheApp(BuildContext context) async {
     return await Get.defaultDialog(title: 'Эрүүл Gerege ийг хаах уу?', content: Image.asset('assets/images/thinkingBoy.png'),
     actions: <Widget>[TextButton(onPressed: (){SystemNavigator.pop();}, child: const Text("exit", style: TextStyle(fontSize: 20),)), 
@@ -389,7 +389,7 @@ class HomeSidebar extends StatefulWidget {
 }
 class _HomeSidebarState extends State<HomeSidebar> {
   var sqlController = Get.find<SqlController>();
-  var surveyController = Get.find<SurveyController>();
+  var surveyController = Get.find<SCont>();
   var loginController = Get.find<AuthController>();
   @override
   Widget build(BuildContext context) {
@@ -455,7 +455,7 @@ class HomePagePublic extends StatefulWidget {
 class _HomePagePublicState extends State<HomePagePublic> {
   var scrollController = ScrollController();
   var loginController = Get.find<AuthController>();
-  var surveyController = Get.find<SurveyController>();
+  var surveyController = Get.find<SCont>();
   @override
   void initState() {
     super.initState();
@@ -474,7 +474,7 @@ class _HomePagePublicState extends State<HomePagePublic> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: GetX<SurveyController>(builder: (surveyControllerList){
+      body: GetX<SCont>(builder: (surveyControllerList){
             return Stack(
               children: [
                 SizedBox(
@@ -513,7 +513,7 @@ class HomePageWorkSpace extends StatefulWidget {
 class _HomePageWorkSpaceState extends State<HomePageWorkSpace> {
    var scrollController = ScrollController();
   var loginController = Get.find<AuthController>();
-  var surveyController = Get.find<SurveyController>();
+  var surveyController = Get.find<SCont>();
   @override
   void initState() {
     super.initState();
@@ -532,7 +532,7 @@ class _HomePageWorkSpaceState extends State<HomePageWorkSpace> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: GetX<SurveyController>(builder: (surveyControllerList){
+      body: GetX<SCont>(builder: (surveyControllerList){
             return Stack(
               children: [
                 SizedBox(

@@ -17,7 +17,7 @@ class _OwnsUnitState extends State<OwnsUnit> {
   var resCont = Get.find<ResCont>();
   @override
   Widget build(BuildContext context) {
-    return GetX<SurveyController>(builder: (sCont){
+    return GetX<SCont>(builder: (sCont){
                   return GestureDetector(
                     onLongPress: (){
                        sCont.surveyDeleteIcon.value = true;

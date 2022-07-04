@@ -18,6 +18,7 @@ import 'package:orh_user_app_version1/views/splash_screen.dart';
 import 'package:orh_user_app_version1/views/ProfileRelated/profile.dart';
 import 'package:orh_user_app_version1/views/LoginRelatedViews/login.dart';
 import 'package:orh_user_app_version1/views/SettingsRelatedViews/setting.dart';
+import 'Controllers/SurveyRelated/response.dart';
 import 'Controllers/SurveyRelated/survey_creation_controller.dart';
 import 'Controllers/calculator_controller.dart';
 import 'Controllers/image_controller.dart';
@@ -56,11 +57,12 @@ class _MyAppState extends State<MyApp> {
     GlobalHelpers.bottomnavbarSwitcher.add(false);
   }
   bindInitialControllers(){
-    Get.put(SurveyController());
+    Get.put(SCont());
     Get.put(AuthController(), permanent: true);
     Get.put(ImageController(), permanent: true);
     Get.put(SettingController(), permanent: true);
     Get.put(SqlController(), permanent: true);
+    Get.put(ResCont());
     Get.put(CreationCont());
     Get.put(CalculatorController());
   }

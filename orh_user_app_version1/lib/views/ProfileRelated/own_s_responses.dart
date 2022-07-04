@@ -11,11 +11,11 @@ class MyResponds extends StatefulWidget {
 }
 
 class _MyRespondsState extends State<MyResponds> {
-  var sCont = Get.find<SurveyController>();
+  var sCont = Get.find<SCont>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: GetX<SurveyController>(builder: (sCont){
+      body: GetX<SCont>(builder: (sCont){
         return Stack(
         children: [
           SafeArea(

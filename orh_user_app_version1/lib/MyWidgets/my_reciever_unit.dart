@@ -22,7 +22,7 @@ class RecieverUnit extends StatefulWidget {
   State<RecieverUnit> createState() => _RecieverUnit();
 }
 class _RecieverUnit extends State<RecieverUnit> {
-  var queryController = Get.find<SurveyController>();
+  var queryController = Get.find<SCont>();
   Widget categorization(int type){
     switch (type) {
         case 6:

@@ -18,34 +18,41 @@ class SurveyCreationTypes {
 class Result {
   List<TypeInfo>? privacyLevel;
   List<TypeInfo>? questionType;
+  List<TypeInfo>? countType;
   List<TypeInfo>? surveyType;
   List<TypeInfo>? statistic;
 
-  Result({this.privacyLevel, this.questionType, this.surveyType});
+  Result({this.privacyLevel, this.questionType, this.surveyType, this.countType});
 
   Result.fromJson(Map<String, dynamic> json) {
     if (json['privacy_level'] != null) {
       privacyLevel = <TypeInfo>[];
       json['privacy_level'].forEach((v) {
-        privacyLevel!.add(new TypeInfo.fromJson(v));
+        privacyLevel!.add(TypeInfo.fromJson(v));
       });
     }
     if(json['statistic'] != null){
        statistic = <TypeInfo>[];
       json['statistic'].forEach((v) {
-        statistic!.add(new TypeInfo.fromJson(v));
+        statistic!.add(TypeInfo.fromJson(v));
       });
     }
     if (json['question_type'] != null) {
       questionType = <TypeInfo>[];
       json['question_type'].forEach((v) {
-        questionType!.add(new TypeInfo.fromJson(v));
+        questionType!.add(TypeInfo.fromJson(v));
+      });
+    }
+     if (json['count_type'] != null) {
+      countType = <TypeInfo>[];
+      json['count_type'].forEach((v) {
+        countType!.add(TypeInfo.fromJson(v));
       });
     }
     if (json['survey_type'] != null) {
       surveyType = <TypeInfo>[];
       json['survey_type'].forEach((v) {
-        surveyType!.add(new TypeInfo.fromJson(v));
+        surveyType!.add(TypeInfo.fromJson(v));
       });
     }
   }

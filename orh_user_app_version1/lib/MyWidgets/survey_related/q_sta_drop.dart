@@ -16,7 +16,7 @@ class QStaDrop extends StatefulWidget {
   _QStaDropState createState() => _QStaDropState();
 }
 class _QStaDropState extends State<QStaDrop> {
-  final sCont = Get.find<SurveyController>();
+  final sCont = Get.find<SCont>();
   final sCCont = Get.find<CreationCont>();
   @override
   Widget build(BuildContext context) {

@@ -17,7 +17,7 @@ class SegsUnit extends StatefulWidget {
 class _SegsUnitState extends State<SegsUnit> {
   @override
   Widget build(BuildContext context) {
-    return GetX<SurveyController>(builder: (surveyController){
+    return GetX<SCont>(builder: (surveyController){
                   return GestureDetector(
                     onTap: (){
                        try{

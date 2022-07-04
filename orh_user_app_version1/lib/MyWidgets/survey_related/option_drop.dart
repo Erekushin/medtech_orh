@@ -16,7 +16,7 @@ class OptionDrop extends StatefulWidget {
   _OptionDropState createState() => _OptionDropState();
 }
 class _OptionDropState extends State<OptionDrop> {
-  final sCont = Get.find<SurveyController>();
+  final sCont = Get.find<SCont>();
   @override
   void initState() {
      sCont.surveyAnswer.answers![widget.answerIndex].questionId = int.parse(widget.questionID!) ;

@@ -4,7 +4,7 @@ import '../Controllers/SurveyRelated/survey_creation_controller.dart';
 
 class WorkingWithCode{
  clearSurveyAnswers(){
-  var surveyController = Get.find<SurveyController>();
+  var surveyController = Get.find<SCont>();
    surveyController.surveyAnswer.answers?.clear();
    surveyController.textEditingControllers.clear();
    surveyController.dropvalueList.clear();
@@ -18,6 +18,7 @@ class WorkingWithCode{
   sCCont.researcherPhoneList.clear();
   sCCont.researchetTextController.clear();
   sCCont.surveyNametxtCont.text = '';
+  sCCont.counttypeStr = null;
   sCCont.torolStr = null;
   sCCont.levelStr = null;
   sCCont.torolNameStr = null;
