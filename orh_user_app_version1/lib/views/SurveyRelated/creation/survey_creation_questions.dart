@@ -182,7 +182,7 @@ class _SurveyInputCreationState extends State<SurveyInputCreation> {
         sCCont.newQuestionList[widget.surveyQuestionIndex].optionTextController.clear();
         sCCont.newQuestionList[widget.surveyQuestionIndex].containerHeight = 210;
 
-
+        
         // sCCont.newQuestionList[widget.surveyQuestionIndex].statistics!.clear();
         // for(int a = 0; a < sCCont.surveyCreationTypes.result!.statistic!.length; a++){
         //   if(sCCont.surveyCreationTypes.result!.statistic![a].t_type == 'number'){

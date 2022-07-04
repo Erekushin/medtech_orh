@@ -5,10 +5,7 @@ import 'package:get/get.dart';
 import 'package:orh_user_app_version1/Controllers/auth_controller.dart';
 import 'dart:convert';
 import 'package:orh_user_app_version1/Helpers/logging.dart';
-import 'package:orh_user_app_version1/Models/SurveyRelated/statistic_answer.dart';
 import 'package:orh_user_app_version1/global_helpers.dart';
-import '../../Models/SurveyRelated/response.dart';
-import '../../Models/SurveyRelated/response_answers.dart';
 import '../../Models/SurveyRelated/survey_answer_body.dart';
 import '../../Models/SurveyRelated/survey_list.dart';
 import '../../Models/general_response.dart';
@@ -119,52 +116,5 @@ class SurveyController extends GetxController{
        ownSurveyListbody.value.result!.removeAt(chosenSurveyIndx);
           break;
     }
-  }
-  SurveyResponsebody surveyResponses = SurveyResponsebody();
-  Future responsesListGet(String username) async{
-    var data = await GlobalHelpers.postRequestGeneral.getdata(chosenSurveyPayload('', username), "120008", UriAdresses.medCore);
-    ereklog.wtf(data);
-    surveyResponses = SurveyResponsebody.fromJson(jsonDecode(data.toString()));
-    ereklog.wtf(data);
-    ereklog.wtf(chosenSurveyPayload('', username));
-    switch(surveyResponses.code){
-       case 200:
-         await responseStatisticGet();
-         Get.toNamed(RouteUnits.surveyResponses);
-          break;
-    }
-  }
-    SurveyListBody respondResearchers =SurveyListBody();
-    Future respondResearchersListGet(int chosenIndx) async{
-    var data = await GlobalHelpers.postRequestGeneral.getdata(chosenSurveyPayload('', ''), "120011", UriAdresses.medCore);
-    respondResearchers = SurveyListBody.fromJson(jsonDecode(data.toString()));
-    ereklog.wtf(data);
-    switch(respondResearchers.code){
-       case 200:
-         Get.toNamed(RouteUnits.respondResearchers);
-         ownSurveyListbody.value.result![chosenIndx].loading.value = false;
-          break;
-    }
-  }
-
-  ResponseAnswersbody responseAnswers = ResponseAnswersbody();
-  Future responseAnswersGet(String createdDate) async{
-    var data = await GlobalHelpers.postRequestGeneral.getdata(chosenSurveyPayload(createdDate, ''), '120010', UriAdresses.medCore);
-    responseAnswers = ResponseAnswersbody.fromJson(jsonDecode(data.toString()));
-    ereklog.wtf(data);
-    ereklog.wtf(chosenSurveyPayload(createdDate, ''));
-    switch(responseAnswers.code){
-      case 200:
-      Get.toNamed(RouteUnits.surveyResponses + RouteUnits.responseAnswers);
-      break;
-    }
-  }
-
-  Statistic statisticAnswer = Statistic();
-  Future responseStatisticGet() async{
-    var data = await GlobalHelpers.postRequestGeneral.getdata(surveyResponses.toJson(), '120100', UriAdresses.medCore);
-    ereklog.wtf(surveyResponses.toJson());
-    ereklog.wtf(data);
-    statisticAnswer = Statistic.fromJson(jsonDecode(data.toString()));
   }
 }

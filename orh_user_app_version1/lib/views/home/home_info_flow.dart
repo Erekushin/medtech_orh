@@ -174,67 +174,67 @@ class _HomeInfoFlowState extends State<HomeInfoFlow> with SingleTickerProviderSt
                                 ],)
                               ),
                     ),
-                    // InkWell(//post
-                    //   onTap: () async{
+                    InkWell(//post
+                      onTap: () async{
                         
-                    //   },
-                    //   child: Container(
-                    //     padding: const EdgeInsets.all(5),
-                    //     decoration: BoxDecoration(
-                    //       color: CommonColors.geregeBlue,
-                    //       borderRadius: const BorderRadius.all(Radius.circular(15))
-                    //     ),
-                    //             margin: const EdgeInsets.only(bottom: 5, left: 10),
-                    //             child: Row(children: [
-                    //               Container(
-                    //   height: GeneralMeasurements.deviceWidth/100*10,
-                    //   width: GeneralMeasurements.deviceWidth/100*10,
-                    //   decoration: const BoxDecoration(
-                    //     color: Colors.white,
-                    //     shape: BoxShape.circle,
-                    //   ),
-                    //   child: Icon(
-                    //     Icons.ac_unit_sharp,
-                    //     color: Colors.blue.withOpacity(.6),
-                    //   ),
-                    //                 ),
-                    //               myBtn(CommonColors.geregeBlue, 50, 30, CommonColors.geregeBlue, Colors.white, 'post')
-                    //             ],)
-                    //           ),
-                    // ),
-                    //  InkWell(//
-                    //   onTap: () async{
-                    //      var surveyCreationController = Get.find<CreationCont>();
-                    //      await surveyCreationController.getSurveyCreationTypes();
-                    //      Get.toNamed(RouteUnits.surveyCreation);
-                    //   },
-                    //   child: Container(
-                    //     padding: const EdgeInsets.all(5),
-                    //     decoration: BoxDecoration(
-                    //       color: CommonColors.geregeBlue,
-                    //       borderRadius: const BorderRadius.all(Radius.circular(15))
-                    //     ),
-                    //             margin: const EdgeInsets.only(bottom: 5, left: 10),
-                    //             child: Row(children: [
-                    //               Container(
-                    //   height: GeneralMeasurements.deviceWidth / 10,
-                    //   width: GeneralMeasurements.deviceWidth / 10,
-                    //   decoration: const BoxDecoration(
-                    //     color: Colors.white,
-                    //     shape: BoxShape.circle,
-                    //   ),
-                    //   child: RotationTransition(
-                    //     turns: const AlwaysStoppedAnimation(15/360),
-                    //     child: Icon(
-                    //       Icons.question_mark_rounded,
-                    //       color: Colors.pinkAccent.withOpacity(.6),
-                    //     ),
-                    //   ),
-                    //                 ),
-                    //               myBtn(CommonColors.geregeBlue, 80, 30, CommonColors.geregeBlue, Colors.white, 'Асуулга')
-                    //             ],)
-                    //           ),
-                    // )
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.all(5),
+                        decoration: BoxDecoration(
+                          color: CommonColors.geregeBlue,
+                          borderRadius: const BorderRadius.all(Radius.circular(15))
+                        ),
+                                margin: const EdgeInsets.only(bottom: 5, left: 10),
+                                child: Row(children: [
+                                  Container(
+                      height: GeneralMeasurements.deviceWidth/100*10,
+                      width: GeneralMeasurements.deviceWidth/100*10,
+                      decoration: const BoxDecoration(
+                        color: Colors.white,
+                        shape: BoxShape.circle,
+                      ),
+                      child: Icon(
+                        Icons.ac_unit_sharp,
+                        color: Colors.blue.withOpacity(.6),
+                      ),
+                                    ),
+                                  myBtn(CommonColors.geregeBlue, 50, 30, CommonColors.geregeBlue, Colors.white, 'post')
+                                ],)
+                              ),
+                    ),
+                     InkWell(//
+                      onTap: () async{
+                         var surveyCreationController = Get.find<CreationCont>();
+                         await surveyCreationController.getSurveyCreationTypes();
+                         Get.toNamed(RouteUnits.surveyCreation);
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.all(5),
+                        decoration: BoxDecoration(
+                          color: CommonColors.geregeBlue,
+                          borderRadius: const BorderRadius.all(Radius.circular(15))
+                        ),
+                                margin: const EdgeInsets.only(bottom: 5, left: 10),
+                                child: Row(children: [
+                                  Container(
+                      height: GeneralMeasurements.deviceWidth / 10,
+                      width: GeneralMeasurements.deviceWidth / 10,
+                      decoration: const BoxDecoration(
+                        color: Colors.white,
+                        shape: BoxShape.circle,
+                      ),
+                      child: RotationTransition(
+                        turns: const AlwaysStoppedAnimation(15/360),
+                        child: Icon(
+                          Icons.question_mark_rounded,
+                          color: Colors.pinkAccent.withOpacity(.6),
+                        ),
+                      ),
+                                    ),
+                                  myBtn(CommonColors.geregeBlue, 80, 30, CommonColors.geregeBlue, Colors.white, 'Асуулга')
+                                ],)
+                              ),
+                    )
                   ],
                 ),
               ),
@@ -406,40 +406,40 @@ class _HomeSidebarState extends State<HomeSidebar> {
                   Get.toNamed('/profile', arguments: RouteUnits.profile);
                    GlobalHelpers.bottomnavbarSwitcher.add(true);},
               ),
-              // homePageCard(
-              //     const Color(0xffffa700),
-              //     Icons.article,
-              //     'Эмнэлэгүүд',
-              //     (){
-              //       Get.toNamed(RouteUnits.hospitals, arguments: RouteUnits.fromHospitals);
-              //       GlobalHelpers.bottomnavbarSwitcher.add(true);},
-              //     ),
-              // homePageCard(
-              //   const Color(0xfff37736),
-              //     Icons.article_sharp,
-              //     'Эмч нар',
-              //     (){
-              //       Get.toNamed(RouteUnits.doctors, arguments: RouteUnits.fromDoctors);
-              //       GlobalHelpers.bottomnavbarSwitcher.add(true);},
-              // ),
-              // homePageCard(
-              //     const Color(0xffffa700),
-              //     Icons.text_fields,
-              //     'Урьдчилан сэргийлэх үзлэг',
+              homePageCard(
+                  const Color(0xffffa700),
+                  Icons.article,
+                  'Эмнэлэгүүд',
+                  (){
+                    Get.toNamed(RouteUnits.hospitals, arguments: RouteUnits.fromHospitals);
+                    GlobalHelpers.bottomnavbarSwitcher.add(true);},
+                  ),
+              homePageCard(
+                const Color(0xfff37736),
+                  Icons.article_sharp,
+                  'Эмч нар',
+                  (){
+                    Get.toNamed(RouteUnits.doctors, arguments: RouteUnits.fromDoctors);
+                    GlobalHelpers.bottomnavbarSwitcher.add(true);},
+              ),
+              homePageCard(
+                  const Color(0xffffa700),
+                  Icons.text_fields,
+                  'Урьдчилан сэргийлэх үзлэг',
                  
-              //     (){
-              //       Get.toNamed(RouteUnits.preDiagnosis, arguments: RouteUnits.home);
-              //       GlobalHelpers.bottomnavbarSwitcher.add(true);},
-              //     ),
-              // homePageCard(
-              //      const Color(0xffFF6D6D),
-              //      Icons.analytics_outlined,
-              //      'Жорын бичиг',
-              //      () async{
-              //        await sqlController.readAllNotes();
-              //         Get.toNamed(RouteUnits.treatmentRecipe, arguments: "firstPage");
-              //        },
-              // )
+                  (){
+                    Get.toNamed(RouteUnits.preDiagnosis, arguments: RouteUnits.home);
+                    GlobalHelpers.bottomnavbarSwitcher.add(true);},
+                  ),
+              homePageCard(
+                   const Color(0xffFF6D6D),
+                   Icons.analytics_outlined,
+                   'Жорын бичиг',
+                   () async{
+                     await sqlController.readAllNotes();
+                      Get.toNamed(RouteUnits.treatmentRecipe, arguments: "firstPage");
+                     },
+              )
         ],
       )
     );

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../../Controllers/SurveyRelated/response.dart';
 import '../../../Controllers/SurveyRelated/survey_controller.dart';
 import '../../my_text.dart';
 import '../../../global_constant.dart';
@@ -13,21 +14,22 @@ class OwnsUnit extends StatefulWidget {
   State<OwnsUnit> createState() => _OwnsUnitState();
 }
 class _OwnsUnitState extends State<OwnsUnit> {
+  var resCont = Get.find<ResCont>();
   @override
   Widget build(BuildContext context) {
-    return GetX<SurveyController>(builder: (surveyController){
+    return GetX<SurveyController>(builder: (sCont){
                   return GestureDetector(
                     onLongPress: (){
-                       surveyController.surveyDeleteIcon.value = true;
-                          surveyController.ownSurveyListbody.value.result![widget.itemindx].borderColor.value = Colors.red;
-                          surveyController.chosenSurveyIndx = widget.itemindx;
-                          surveyController.chosenSurveyId = widget.surveyId;
+                       sCont.surveyDeleteIcon.value = true;
+                          sCont.ownSurveyListbody.value.result![widget.itemindx].borderColor.value = Colors.red;
+                          sCont.chosenSurveyIndx = widget.itemindx;
+                          sCont.chosenSurveyId = widget.surveyId;
                       },
                     onTap: (){
                        try{
-                           surveyController.chosenSurveyId = widget.surveyId;
-                           surveyController.ownSurveyListbody.value.result![widget.itemindx].loading.value = true;
-                           surveyController.respondResearchersListGet(widget.itemindx);
+                           resCont.chosenSurveyId = widget.surveyId;
+                           sCont.ownSurveyListbody.value.result![widget.itemindx].loading.value = true;
+                           resCont.researchers(widget.itemindx);
                        }
                        catch(e){
                         Get.snackbar('Алдаа', '$e', snackPosition: SnackPosition.BOTTOM,
@@ -39,7 +41,7 @@ class _OwnsUnitState extends State<OwnsUnit> {
                   height: GeneralMeasurements.deviceHeight*.15,
                   decoration: BoxDecoration(
                     border: Border.all(
-                      color: surveyController.ownSurveyListbody.value.result![widget.itemindx].borderColor.value),
+                      color: sCont.ownSurveyListbody.value.result![widget.itemindx].borderColor.value),
                   color: Colors.white,
                   boxShadow: [
                     BoxShadow(
@@ -61,7 +63,7 @@ class _OwnsUnitState extends State<OwnsUnit> {
                     width: GeneralMeasurements.deviceWidth*.7,
                     child: myText(widget.surveyName, 17, 1, FontWeight.w700),
                   ),
-                  surveyController.ownSurveyListbody.value.result![widget.itemindx].loading.value? const SizedBox(
+                  sCont.ownSurveyListbody.value.result![widget.itemindx].loading.value? const SizedBox(
                     width: 20,
                     height: 20,
                     child: CircularProgressIndicator(strokeWidth: 3,)) 
@@ -86,7 +88,7 @@ class _OwnsUnitState extends State<OwnsUnit> {
                               //   child: Image.memory(Uint8List.fromList(surveyController.ownSurveyListbody.value.result![widget.itemindx].creatorPicture!)))
                          ),
                           const SizedBox(width: 10,),
-                    Text(surveyController.ownSurveyListbody.value.result![widget.itemindx].creatorName!, style: TextStyle(fontWeight: FontWeight.bold),)      
+                    Text(sCont.ownSurveyListbody.value.result![widget.itemindx].creatorName!, style: TextStyle(fontWeight: FontWeight.bold),)      
                   ],),
                   // Row(
                   //   children: [

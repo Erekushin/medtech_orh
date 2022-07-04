@@ -19,13 +19,13 @@ class PublicsUnit extends StatefulWidget {
 class _PublicsUnitState extends State<PublicsUnit> {
   @override
   Widget build(BuildContext context) {
-    return GetX<SurveyController>(builder: (surveyController){
+    return GetX<SurveyController>(builder: (sCont){
                   return GestureDetector(
                     onTap: (){
                        try{
-                          surveyController.chosenSurveyId = widget.surveyId;
-                           surveyController.publicSurveyList.value.result![widget.itemindx].loading.value = true;
-                           surveyController.surveyGet(widget.itemindx, widget.surveyColor, RouteUnits.home);
+                          sCont.chosenSurveyId = widget.surveyId;
+                           sCont.publicSurveyList.value.result![widget.itemindx].loading.value = true;
+                           sCont.surveyGet(widget.itemindx, widget.surveyColor, RouteUnits.home);
                        }
                        catch(e){
                         Get.snackbar('Алдаа', '$e', snackPosition: SnackPosition.BOTTOM,
@@ -37,7 +37,7 @@ class _PublicsUnitState extends State<PublicsUnit> {
                   height: GeneralMeasurements.deviceHeight*.15,
                   decoration: BoxDecoration(
                     border: Border.all(
-                      color: surveyController.publicSurveyList.value.result![widget.itemindx].borderColor.value),
+                      color: sCont.publicSurveyList.value.result![widget.itemindx].borderColor.value),
                   color: Colors.white,
                   boxShadow: [
                     BoxShadow(
@@ -59,7 +59,7 @@ class _PublicsUnitState extends State<PublicsUnit> {
                     width: GeneralMeasurements.deviceWidth*.7,
                     child: myText(widget.surveyName, 17, 1, FontWeight.w700), //queryController.childHeartQuery.result!.title??
                   ),
-                  surveyController.publicSurveyList.value.result![widget.itemindx].loading.value? const SizedBox(
+                  sCont.publicSurveyList.value.result![widget.itemindx].loading.value? const SizedBox(
                     width: 20,
                     height: 20,
                     child: CircularProgressIndicator(strokeWidth: 3,)) 
@@ -84,7 +84,7 @@ class _PublicsUnitState extends State<PublicsUnit> {
                               //   child: Image.memory(Uint8List.fromList(surveyController.surveyList.value.result![widget.itemindx].creatorPicture!)))
                          ),
                           const SizedBox(width: 10,),
-                    Text(surveyController.publicSurveyList.value.result![widget.itemindx].creatorName!, style: TextStyle(fontWeight: FontWeight.bold),)      
+                    Text(sCont.publicSurveyList.value.result![widget.itemindx].creatorName!, style: TextStyle(fontWeight: FontWeight.bold),)      
                   ],),
                   // Row(
                   //   children: [

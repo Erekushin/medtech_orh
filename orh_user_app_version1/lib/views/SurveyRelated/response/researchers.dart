@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:orh_user_app_version1/Controllers/SurveyRelated/survey_controller.dart';
-import '../../MyWidgets/my_text.dart';
-import '../../global_constant.dart';
+import '../../../Controllers/SurveyRelated/response.dart';
+import '../../../MyWidgets/my_text.dart';
+import '../../../global_constant.dart';
 
 
 class ResponseResearchers extends StatefulWidget {
@@ -13,20 +13,20 @@ class ResponseResearchers extends StatefulWidget {
 }
 
 class _ResponseResearcherssesState extends State<ResponseResearchers> {
-  var surveyCont = Get.find<SurveyController>();
+  var resCont = Get.find<ResCont>();
   @override
   Widget build(BuildContext context) {
     return SafeArea(child: 
       Stack(
         children: [
           ListView.builder(
-      itemCount: surveyCont.respondResearchers.result?.length?? 0,
+      itemCount: resCont.respondResearchers.result?.length?? 0,
       itemBuilder: (c, i){
-        var item = surveyCont.respondResearchers.result![i];
+        var item = resCont.respondResearchers.result![i];
         String? name = item.creatorName;
         return  InkWell(
                         onTap: (){
-                          surveyCont.responsesListGet(name!);
+                          resCont.responses(name!);
                         },
                         child:  Container(
                   margin: EdgeInsets.all(GeneralMeasurements.deviceWidth*.02),
@@ -58,7 +58,7 @@ class _ResponseResearcherssesState extends State<ResponseResearchers> {
       },
     ),
      Visibility(
-                visible: surveyCont.respondResearchers.result == null? true : false,
+                visible: resCont.respondResearchers.result == null? true : false,
                 child: Image.asset('assets/images/empty_box.jpg')
                 )
         ],

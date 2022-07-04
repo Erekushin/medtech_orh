@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:orh_user_app_version1/Controllers/SurveyRelated/survey_controller.dart';
 import 'package:orh_user_app_version1/MyWidgets/my_text.dart';
+
+import '../../../Controllers/SurveyRelated/response.dart';
 
 
 class ResponseAnswers extends StatefulWidget {
@@ -12,7 +13,7 @@ class ResponseAnswers extends StatefulWidget {
 }
 
 class _ResponseAnswersState extends State<ResponseAnswers> {
-  var surveyCont = Get.find<SurveyController>();
+  var resCont = Get.find<ResCont>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,9 +26,9 @@ class _ResponseAnswersState extends State<ResponseAnswers> {
             const SizedBox(height: 100,),
             ListView.builder(
               shrinkWrap: true,
-              itemCount: surveyCont.responseAnswers.result!.answers!.length,
+              itemCount: resCont.responseAnswers.result!.answers!.length,
               itemBuilder: (c,i){
-                var item = surveyCont.responseAnswers.result!.answers![i];
+                var item = resCont.responseAnswers.result!.answers![i];
                 String answer;
                 if(item.textAnswer != null){
                   answer = item.textAnswer!;

@@ -58,6 +58,7 @@ class CommonColors{
   static Color geregeBlue = const Color(0xFF0072FE);
   static Color yellow = const Color(0xFFFEC07B);
   static Color deepPink = const Color(0xFFFF4484);
+  static List<Color> chartColors = [Colors.red, Colors.blue, Colors.purple, Colors.orange, Colors.green];
 }
 
 class GeneralMeasurements{

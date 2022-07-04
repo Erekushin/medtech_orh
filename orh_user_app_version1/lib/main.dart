@@ -7,9 +7,9 @@ import 'package:orh_user_app_version1/views/AnswerFormRelated/answer_form.dart';
 import 'package:orh_user_app_version1/views/IndicatorCalculatorRelated/indicator_calculators.dart';
 import 'package:orh_user_app_version1/views/PreDiagnosis/pre_diagnosis.dart';
 import 'package:orh_user_app_version1/views/ProfileRelated/own_s_responses.dart';
-import 'package:orh_user_app_version1/views/SurveyRelated/respond_researchers.dart';
-import 'package:orh_user_app_version1/views/SurveyRelated/response/response_screen.dart';
-import 'package:orh_user_app_version1/views/SurveyRelated/response_answer.dart';
+import 'package:orh_user_app_version1/views/SurveyRelated/response/researchers.dart';
+import 'package:orh_user_app_version1/views/SurveyRelated/response/responses.dart';
+import 'package:orh_user_app_version1/views/SurveyRelated/response/answers.dart';
 import 'package:orh_user_app_version1/views/SurveyRelated/survey.dart';
 import 'package:orh_user_app_version1/views/SurveyRelated/creation/survey_creation.dart';
 import 'package:orh_user_app_version1/views/TreatmentRecipe/treatment_recipe.dart';
@@ -107,7 +107,7 @@ class _MyAppState extends State<MyApp> {
         GetPage(name: RouteUnits.surveyCreation, page: ()=> const SurveyCreation()),
         GetPage(name: RouteUnits.surveyList + RouteUnits.individualSurvey, page: ()=> const SurveyUnit()),
         GetPage(name: RouteUnits.respondResearchers, page: ()=> const ResponseResearchers()),
-        GetPage(name: RouteUnits.surveyResponses, page: ()=> const SurveyResponses()),
+        GetPage(name: RouteUnits.surveyResponses, page: ()=> const ResMain()),
         GetPage(name: RouteUnits.surveyResponses + RouteUnits.responseAnswers, page: ()=> const ResponseAnswers()),
         //Calculators
         GetPage(name: RouteUnits.treatmentRecipe, page: ()=> const TreatmentRecipe() ),// CalculatorHome()

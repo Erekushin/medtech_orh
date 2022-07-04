@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../../Controllers/SurveyRelated/response.dart';
 import '../../../Controllers/SurveyRelated/survey_controller.dart';
 import '../../../global_constant.dart';
 import '../../my_text.dart';
@@ -13,15 +14,17 @@ class AttachedsUnit extends StatefulWidget {
   State<AttachedsUnit> createState() => _AttachedsUnitUnitState();
 }
 class _AttachedsUnitUnitState extends State<AttachedsUnit> {
+  var resCont = Get.find<ResCont>();
   @override
   Widget build(BuildContext context) {
-    return GetX<SurveyController>(builder: (surveyController){
+    return GetX<SurveyController>(builder: (sCont){
                   return GestureDetector(
                     onTap: (){
                        try{
-                           surveyController.chosenSurveyId = widget.surveyId;
-                           surveyController.attachedList.value.result![widget.itemindx].loading.value = true;
-                           surveyController.respondResearchersListGet(widget.itemindx);
+                           sCont.attachedList.value.result![widget.itemindx].loading.value = true;
+
+                           resCont.chosenSurveyId = widget.surveyId;
+                           resCont.researchers(widget.itemindx);
                        }
                        catch(e){
                         Get.snackbar('Алдаа', '$e', snackPosition: SnackPosition.BOTTOM,
@@ -33,7 +36,7 @@ class _AttachedsUnitUnitState extends State<AttachedsUnit> {
                   height: GeneralMeasurements.deviceHeight*.15,
                   decoration: BoxDecoration(
                     border: Border.all(
-                      color: surveyController.attachedList.value.result![widget.itemindx].borderColor.value),
+                      color: sCont.attachedList.value.result![widget.itemindx].borderColor.value),
                   color: Colors.white,
                   boxShadow: [
                     BoxShadow(
@@ -55,7 +58,7 @@ class _AttachedsUnitUnitState extends State<AttachedsUnit> {
                     width: GeneralMeasurements.deviceWidth*.7,
                     child: myText(widget.surveyName, 17, 1, FontWeight.w700),
                   ),
-                  surveyController.attachedList.value.result![widget.itemindx].loading.value? const SizedBox(
+                  sCont.attachedList.value.result![widget.itemindx].loading.value? const SizedBox(
                     width: 20,
                     height: 20,
                     child: CircularProgressIndicator(strokeWidth: 3,)) 
@@ -80,7 +83,7 @@ class _AttachedsUnitUnitState extends State<AttachedsUnit> {
                               //   child: Image.memory(Uint8List.fromList(surveyController.attachedList.value.result![widget.itemindx].creatorPicture!)))
                          ),
                           const SizedBox(width: 10,),
-                    Text(surveyController.attachedList.value.result![widget.itemindx].creatorName!, style: TextStyle(fontWeight: FontWeight.bold),)      
+                    Text(sCont.attachedList.value.result![widget.itemindx].creatorName!, style: TextStyle(fontWeight: FontWeight.bold),)      
                   ],),
                   // Row(
                   //   children: [
