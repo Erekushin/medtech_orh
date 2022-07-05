@@ -10,7 +10,7 @@ import '../../Models/SurveyRelated/survey_answer_body.dart';
 import '../../Models/SurveyRelated/survey_list.dart';
 import '../../Models/general_response.dart';
 import '../../global_constant.dart';
-import '../../models/SurveyRelated/survey_body.dart';
+import '../../Models/SurveyRelated/survey_body.dart';
 class SCont extends GetxController{
   var ereklog = logger(SCont);
   //.......................................................
@@ -84,6 +84,7 @@ class SCont extends GetxController{
   }
   GeneralResponse surveyGen = GeneralResponse();
   Survey survey = Survey();
+  Argu arg = Argu();
   Future surveyGet(int chosenIndx,String surveyColor, String route) async{
     var jsondata = await GlobalHelpers.postRequestGeneral.getdata(chosenSurveyPayload('', ''), "120003", UriAdresses.medCore);
     ereklog.wtf(jsondata);
@@ -91,9 +92,12 @@ class SCont extends GetxController{
     switch(surveyGen.code){
       case '200' :
       survey = Survey.fromJson(surveyGen.result);
-      Get.toNamed(RouteUnits.surveyList + RouteUnits.individualSurvey, arguments: surveyColor);
+      arg.sColor = surveyColor;
+      arg.type = "Normal";
+      arg.count =  survey.questions!.length;
+      Get.toNamed(RouteUnits.surveyList + RouteUnits.individualSurvey, arguments: arg );
       GlobalHelpers.bottomnavbarSwitcher.add(false);
-      surveyAnswer.answers = List<Answers>.generate(survey.result!.questions!.length, ((index) => Answers()));
+      surveyAnswer.answers = List<Answers>.generate(survey.questions!.length, ((index) => Answers()));
       switch(route){
         case '/home':
         publicSurveyList.value.result![chosenIndx].loading.value = false;

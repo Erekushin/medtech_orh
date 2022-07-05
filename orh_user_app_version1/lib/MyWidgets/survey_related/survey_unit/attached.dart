@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../Controllers/SurveyRelated/response.dart';
 import '../../../Controllers/SurveyRelated/survey_controller.dart';
+import '../../../Controllers/SurveyRelated/survey_creation_controller.dart';
 import '../../../global_constant.dart';
 import '../../my_text.dart';
 class AttachedsUnit extends StatefulWidget {
@@ -15,14 +16,15 @@ class AttachedsUnit extends StatefulWidget {
 }
 class _AttachedsUnitUnitState extends State<AttachedsUnit> {
   var resCont = Get.find<ResCont>();
+  var  sCCont = Get.find<CreationCont>();
   @override
   Widget build(BuildContext context) {
     return GetX<SCont>(builder: (sCont){
                   return GestureDetector(
                     onTap: (){
                        try{
+                           sCCont.TypeVis.value = false;
                            sCont.attachedList.value.result![widget.itemindx].loading.value = true;
-
                            resCont.chosenSurveyId = widget.surveyId;
                            resCont.researchers(widget.itemindx);
                        }

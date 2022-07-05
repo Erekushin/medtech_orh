@@ -47,7 +47,7 @@ class _QTypeDropState extends State<QTypeDrop> {
             setState(() {
               sCCont.qTypes[widget.answerIndex].value = newValue.toString();
             });
-            widget.callBackFunction!(newValue, widget.answerIndex);
+            widget.callBackFunction!(int.parse(newValue!), widget.answerIndex);
           },
           underline: const SizedBox(),
           isExpanded: true,

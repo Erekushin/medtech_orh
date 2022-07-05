@@ -21,3 +21,9 @@ class DropSelectVal{
   DropSelectVal({this.value});
   String? value;
 }
+class Argu {
+  String? sColor;
+  String? type;
+  int? count;
+  Argu({sColor, type, count});
+}

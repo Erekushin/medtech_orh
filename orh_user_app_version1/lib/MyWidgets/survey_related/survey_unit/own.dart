@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../Controllers/SurveyRelated/response.dart';
 import '../../../Controllers/SurveyRelated/survey_controller.dart';
+import '../../../Controllers/SurveyRelated/survey_creation_controller.dart';
 import '../../my_text.dart';
 import '../../../global_constant.dart';
 class OwnsUnit extends StatefulWidget {
@@ -15,18 +16,20 @@ class OwnsUnit extends StatefulWidget {
 }
 class _OwnsUnitState extends State<OwnsUnit> {
   var resCont = Get.find<ResCont>();
+  var  sCCont = Get.find<CreationCont>();
   @override
   Widget build(BuildContext context) {
     return GetX<SCont>(builder: (sCont){
                   return GestureDetector(
                     onLongPress: (){
-                       sCont.surveyDeleteIcon.value = true;
+                          sCont.surveyDeleteIcon.value = true;
                           sCont.ownSurveyListbody.value.result![widget.itemindx].borderColor.value = Colors.red;
                           sCont.chosenSurveyIndx = widget.itemindx;
                           sCont.chosenSurveyId = widget.surveyId;
                       },
                     onTap: (){
                        try{
+                           sCCont.TypeVis.value = false;
                            resCont.chosenSurveyId = widget.surveyId;
                            sCont.ownSurveyListbody.value.result![widget.itemindx].loading.value = true;
                            resCont.researchers(widget.itemindx);

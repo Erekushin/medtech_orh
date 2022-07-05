@@ -7,6 +7,7 @@ import '../../../MyWidgets/my_button.dart';
 import '../../../global_constant.dart';
 
 
+
 class SurveyInfoCheck extends StatefulWidget {
   const SurveyInfoCheck({ Key? key }) : super(key: key);
 
@@ -97,15 +98,20 @@ class _SurveyInfoCheckState extends State<SurveyInfoCheck> {
                   margin: const EdgeInsets.all(20),
                   child: InkWell(
                 onTap: (){
-                  sCCont.surveyCreationbody.surveyName = sCCont.surveyNametxtCont.text;
-                  if( sCCont.surveyCreationbody.surveyName != null && 
+
+                  sCCont.surveyCreationbody.name = sCCont.surveyNametxtCont.text;
+                  if( sCCont.surveyCreationbody.name != null && 
                       sCCont.surveyCreationbody.surveyPrivacyLevel != null &&
                       sCCont.surveyCreationbody.surveyType != null){
                     //level, type, color, date 4 songogdoh vydee yavchihaj bgaa 
                   sCCont.surveyCreationbody.userId = loginController.user.result!.userId!;
                   sCCont.surveyCreationbody.questions = sCCont.newQuestionList; 
                   sCCont.surveyCreationbody.researchers = sCCont.researcherPhoneList;
-                  Get.offAllNamed(RouteUnits.home);
+
+
+                  sCCont.surveyCreationbody.groupid = sCCont.randomString!;
+                  sCCont.surveyCreationbody.slevel = sCCont.slevel;
+                  sCCont.surveyCreationbody.connectedid = sCCont.connectedid;
                   sCCont.surveyCreate();
                   }   
                   else{

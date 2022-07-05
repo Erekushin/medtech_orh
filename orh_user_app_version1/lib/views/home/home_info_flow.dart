@@ -12,6 +12,7 @@ import '../../MyWidgets/survey_related/survey_unit/public.dart';
 import '../../MyWidgets/survey_related/survey_unit/seg.dart';
 import '../../global_constant.dart';
 import '../../global_helpers.dart';
+import 'dart:math';
 
 
 class HomeInfoFlow extends StatefulWidget {
@@ -52,6 +53,11 @@ class _HomeInfoFlowState extends State<HomeInfoFlow> with SingleTickerProviderSt
     super.initState();
     _currentIndex = 0;  
   }
+  String generateRandomString(int len) {
+  var r = Random();
+  const _chars = 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
+  return List.generate(len, (index) => _chars[r.nextInt(_chars.length)]).join();
+}
   @override
   void dispose() {
     super.dispose();
@@ -148,6 +154,7 @@ class _HomeInfoFlowState extends State<HomeInfoFlow> with SingleTickerProviderSt
                     InkWell(//survey
                       onTap: () async{
                          var surveyCreationController = Get.find<CreationCont>();
+                         surveyCreationController.randomString = generateRandomString(5) + DateTime.now().toString();
                          await surveyCreationController.getSurveyCreationTypes();
                       },
                       child: Container(

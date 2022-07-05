@@ -27,7 +27,9 @@ class _MyTextFieldState extends State<MyTextField> {
   @override
   void initState() {
     super.initState();
-    surveyController.surveyAnswer.answers![widget.answerIndex].questionId = int.parse(widget.questionID);
+    if(widget.questionID != "null"){
+      surveyController.surveyAnswer.answers![widget.answerIndex].questionId = int.parse(widget.questionID);
+    }
   }
   @override
   Widget build(BuildContext context) {

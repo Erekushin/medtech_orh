@@ -4,7 +4,7 @@ import 'package:orh_user_app_version1/Helpers/scroll_behavior.dart';
 import 'package:orh_user_app_version1/MyWidgets/my_text.dart';
 import 'package:orh_user_app_version1/global_constant.dart';
 import '../../../Controllers/SurveyRelated/survey_creation_controller.dart';
-import '../../../Models/SurveyRelated/survey_creation_body.dart';
+import '../../../Models/SurveyRelated/survey_body.dart';
 import '../../../Models/SurveyRelated/survey_creation_types.dart';
 
 class SurveyCreationGeneral extends StatefulWidget {
@@ -84,7 +84,7 @@ class _SurveyCreationGeneralState extends State<SurveyCreationGeneral> {
                   underline: const SizedBox(),
                   isExpanded: true,
                   borderRadius: BorderRadius.circular(5),
-                  items: dropitems(sCCont.surveyCreationTypes.result!.countType !, 'countType')
+                  items: dropitems(sCCont.surveyCreationTypes.result!.countType?? [], 'countType')
                 ),
                     Visibility(
                       visible: sCCont.limitCountVis.value,
@@ -123,7 +123,7 @@ class _SurveyCreationGeneralState extends State<SurveyCreationGeneral> {
                   underline: const SizedBox(),
                   isExpanded: true,
                   borderRadius: BorderRadius.circular(5),
-                  items: dropitems(sCCont.surveyCreationTypes.result!.surveyType !, 'surveyType')
+                  items: dropitems(sCCont.surveyCreationTypes.result!.surveyType?? [], 'surveyType')
                 ),
                     Visibility(
                       visible: sCCont.TypeVis.value,
@@ -157,8 +157,8 @@ class _SurveyCreationGeneralState extends State<SurveyCreationGeneral> {
                   },
                   underline: const SizedBox(),
                   isExpanded: true,
-                  borderRadius: BorderRadius.circular(5),
-                  items: dropitems(sCCont.surveyCreationTypes.result!.privacyLevel!, 'surveyLevel')
+                  borderRadius: BorderRadius.circular(5), 
+                  items: dropitems(sCCont.surveyCreationTypes.result!.privacyLevel?? [], 'surveyLevel')
                 ),
                 Container(//option container
                   margin: const EdgeInsets.only(left: 50),

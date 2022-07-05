@@ -4,8 +4,8 @@ import 'package:get/get.dart';
 import '../my_text.dart';
 
 
-class OptionDrop extends StatefulWidget {
-  const OptionDrop({Key? key, required this.dropDownHint,
+class AutocDrop extends StatefulWidget {
+  const AutocDrop({Key? key, required this.dropDownHint,
   required this.listitems,required this.currentValue,this.questionID, required this.answerIndex}) : super(key: key);
   final String? dropDownHint;
   final List<dynamic>? listitems;
@@ -13,25 +13,18 @@ class OptionDrop extends StatefulWidget {
   final int? currentValue;
   final int answerIndex;
   @override
-  _OptionDropState createState() => _OptionDropState();
+  _AutocDropState createState() => _AutocDropState();
 }
-class _OptionDropState extends State<OptionDrop> {
+class _AutocDropState extends State<AutocDrop> {
   final sCont = Get.find<SCont>();
-  @override
-  void initState() {
-    sCont.surveyAnswer.answers![widget.answerIndex].questionId = int.parse(widget.questionID!);
-  }
   @override
   Widget build(BuildContext context) {
     List<DropdownMenuItem<String>> dropitems(List<dynamic> optionList){
        return optionList.map((item){
            return DropdownMenuItem(
-             value: item.optionId.toString(),
+             value: item.optionText.toString(),
              child: Text(item.optionText!),
-             onTap: (){
-                 sCont.surveyAnswer.answers![widget.answerIndex].questionId = int.parse(widget.questionID!);
-                  sCont.surveyAnswer.answers![widget.answerIndex].optionId = item.optionId;
-             },
+             onTap: (){},
              );
            }).toList();
     }

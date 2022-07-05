@@ -6,7 +6,8 @@ import 'package:orh_user_app_version1/Controllers/setting_controller.dart';
 import 'package:orh_user_app_version1/MyWidgets/my_button.dart';
 import 'package:orh_user_app_version1/global_constant.dart';
 import 'package:orh_user_app_version1/global_helpers.dart';
-import '../../models/SurveyRelated/survey_body.dart';
+import '../../Controllers/SurveyRelated/survey_creation_controller.dart';
+import '../../Models/SurveyRelated/survey_body.dart';
 import '../../MyWidgets/my_reciever_unit.dart';
 import '../../global_constant.dart';
 
@@ -16,14 +17,14 @@ class SurveyUnit extends StatefulWidget {
   State<SurveyUnit> createState() => _SurveyUnit();
 }
 class _SurveyUnit extends State<SurveyUnit> {
-  var argu = Get.arguments as String;
+  var argu = Get.arguments as Argu;
   var pageController = PageController();
   final queryController = Get.find<SCont>();
   final settingsController = Get.find<SettingController>();
   @override
   void initState() {
     super.initState();
-    GlobalHelpers.surveyPageCount = queryController.survey.result!.questions!.length~/AllSizes.pageQuestionCount+1;
+    GlobalHelpers.surveyPageCount = argu.count!~/AllSizes.pageQuestionCount+1;
   }
   @override
   Widget build(BuildContext context) {
@@ -33,7 +34,7 @@ class _SurveyUnit extends State<SurveyUnit> {
               controller: pageController,
               itemCount: GlobalHelpers.surveyPageCount,
               itemBuilder: (context, index){
-                return PageUnit(pageIndex: index, pageColor: argu,);
+                return PageUnit(pageIndex: index, pageColor: argu.sColor!,);
               }
               ),
       )
@@ -49,8 +50,11 @@ class PageUnit extends StatefulWidget {
   State<PageUnit> createState() => _PageUnitState();
 }
 class _PageUnitState extends State<PageUnit> {
+  final argu = Get.arguments as Argu;
   var settingsControllerOut = Get.find<SettingController>();
-  var surveyControllerOut = Get.find<SCont>(); 
+  var surveyControllerOut = Get.find<SCont>();
+  var sCCont = Get.find<CreationCont>();
+  List<Questions>? questions;
   var authCon = Get.find<AuthController>();
   void pushData(){
     surveyControllerOut.pushDataBtn.value = false;
@@ -71,6 +75,15 @@ class _PageUnitState extends State<PageUnit> {
  
   @override
   Widget build(BuildContext context) {
+    switch(argu.type){
+      case "Normal":
+      questions = surveyControllerOut.survey.questions;
+      break;
+      case "Auto":
+      questions = sCCont.autosurvey.questions!;
+      break;
+    }
+    
     int pageClrInt = int.parse(widget.pageColor);
     return WillPopScope(
       onWillPop: () async{
@@ -95,11 +108,19 @@ class _PageUnitState extends State<PageUnit> {
                       //togtmol toondoo huvaagaad vldegdeltei bol tuhain vldegdeleer item
                       //count aa ogoh
                       itemCount: widget.pageIndex == GlobalHelpers.surveyPageCount-1? 
-                      surveyControllerOut.survey.result!.questions!.length%AllSizes.pageQuestionCount != 0?
-                      surveyControllerOut.survey.result!.questions!.length%AllSizes.pageQuestionCount : AllSizes.pageQuestionCount : AllSizes.pageQuestionCount,
+                      argu.count!%AllSizes.pageQuestionCount != 0?
+                      argu.count!%AllSizes.pageQuestionCount : AllSizes.pageQuestionCount : AllSizes.pageQuestionCount,
                       itemBuilder: (BuildContext context, int index){
                         final int queryUnitIndex = widget.pageIndex * AllSizes.pageQuestionCount + index;
-                        Questions item =  surveyControllerOut.survey.result!.questions![queryUnitIndex];
+                         
+                        // switch(argu.type){
+                        //   case "normal" :
+                        //   item =  surveyControllerOut.survey.questions![queryUnitIndex];
+                        //   break;
+                        //   case "Auto" :
+                        //   item =  sCCont.autosurvey.questions![queryUnitIndex];
+                        // }
+                        Questions item = questions![queryUnitIndex];
                         surveyControllerOut.textEditingControllers.add(TextEditingController());
                         surveyControllerOut.dropvalueList.add(DropSelectVal());
                         if(item.statistic  == 'line_chart'){
@@ -117,7 +138,17 @@ class _PageUnitState extends State<PageUnit> {
                         child: InkWell(
                           onTap: (){
                              if(surveyControllerOut.pushDataBtn.value){
+                              if(sCCont.TypeVis.value){
+                                GlobalHelpers.workingWithCode.clearSurveyAnswers();
+                                sCCont.surveyNametxtCont.text = sCCont.autosurvey.name!;
+                                sCCont.surveyCreationTypes.result!.countType = null;
+                                sCCont.surveyCreationTypes.result!.surveyType = null;
+                                sCCont.surveyCreationTypes.result!.privacyLevel = null;
+                                Get.toNamed(RouteUnits.surveyCreation, arguments: 1);
+                              }
+                              else{
                               pushData();
+                              }
                               Future.delayed(const Duration(seconds: 3),(){surveyControllerOut.pushDataBtn.value = true;});
                              }
                           },

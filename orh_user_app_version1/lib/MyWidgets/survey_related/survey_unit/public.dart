@@ -2,6 +2,7 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:orh_user_app_version1/Controllers/SurveyRelated/survey_creation_controller.dart';
 import '../../../Controllers/SurveyRelated/survey_controller.dart';
 import '../../my_text.dart';
 import '../../../global_constant.dart';
@@ -17,13 +18,15 @@ class PublicsUnit extends StatefulWidget {
   State<PublicsUnit> createState() => _PublicsUnitState();
 }
 class _PublicsUnitState extends State<PublicsUnit> {
+  var  sCCont = Get.find<CreationCont>();
   @override
   Widget build(BuildContext context) {
     return GetX<SCont>(builder: (sCont){
                   return GestureDetector(
                     onTap: (){
                        try{
-                          sCont.chosenSurveyId = widget.surveyId;
+                           sCCont.TypeVis.value = false;
+                           sCont.chosenSurveyId = widget.surveyId;
                            sCont.publicSurveyList.value.result![widget.itemindx].loading.value = true;
                            sCont.surveyGet(widget.itemindx, widget.surveyColor, RouteUnits.home);
                        }

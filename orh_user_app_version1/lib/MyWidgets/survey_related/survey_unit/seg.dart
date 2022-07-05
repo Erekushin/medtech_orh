@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../Controllers/SurveyRelated/survey_controller.dart';
+import '../../../Controllers/SurveyRelated/survey_creation_controller.dart';
 import '../../my_text.dart';
 import '../../../global_constant.dart';
 class SegsUnit extends StatefulWidget {
@@ -15,12 +16,14 @@ class SegsUnit extends StatefulWidget {
   State<SegsUnit> createState() => _SegsUnitState();
 }
 class _SegsUnitState extends State<SegsUnit> {
+  var  sCCont = Get.find<CreationCont>();
   @override
   Widget build(BuildContext context) {
     return GetX<SCont>(builder: (surveyController){
                   return GestureDetector(
                     onTap: (){
                        try{
+                           sCCont.TypeVis.value = false;
                            surveyController.chosenSurveyId = widget.surveyId;
                            surveyController.wrkSpaceSurveyList.value.result![widget.itemindx].loading.value = true;
                            surveyController.surveyGet(widget.itemindx, widget.surveyColor, RouteUnits.segmented);
