@@ -15,6 +15,27 @@ class SurveyCreationbody {
   SurveyCreationbody({this.surveyName, this.questions, this.researchers, this.userId, 
                        this.surveyType, this.surveyPrivacyLevel,
                        this.surveyClr});
+    SurveyCreationbody.fromJson(Map<String, dynamic> json) {
+    surveyName = json['survey_name'];
+    userId = json['user_id'];
+    surveyType = json['survey_type'];
+    surveyPrivacyLevel = json['survey_privacy_level'];
+    surveyClr = json['survey_color'];
+    surveyCreatedDate = json['survey_created_date'];
+    if (json['questions'] != null) {
+      questions = <Question>[];
+      json['questions'].forEach((v) {
+        questions!.add(Question.fromJson(v));
+      });
+    }
+    if (json['researchers'] != null) {
+      researchers = <Researchers>[];
+      json['researchers'].forEach((v) {
+        researchers!.add(Researchers.fromJson(v));
+      });
+    }
+  }
+
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['survey_name'] = surveyName;
@@ -37,6 +58,9 @@ class Researchers{
 
    String? researcherPhone;
    Researchers({this.researcherPhone});
+    Researchers.fromJson(Map<String, dynamic> json) {
+    researcherPhone = json['phone'];
+  }
    Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['phone'] = researcherPhone;
@@ -58,6 +82,17 @@ class Question{
   Question({this.questionText, this.type,required 
             this.options, this.statistic, 
             this.statistics, this.questionType});
+    Question.fromJson(Map<String, dynamic> json) {
+    questionText = json['question_text'];
+    type = json['type'];
+    statistic = json['statistic'];
+    if (json['options'] != null) {
+      options = <CreationOptions>[];
+      json['options'].forEach((v) {
+        options.add(CreationOptions.fromJson(v));
+      });
+    }
+  }
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['question_text'] = questionText;

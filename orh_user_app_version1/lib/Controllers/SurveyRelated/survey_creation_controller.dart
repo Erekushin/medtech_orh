@@ -60,13 +60,14 @@ Future surveyCreate() async{
           Get.snackbar('Амжилттай', '', snackPosition: SnackPosition.BOTTOM,
           colorText: Colors.white, backgroundColor: Colors.grey[900], margin:  const EdgeInsets.all(5));
           GlobalHelpers.workingWithCode.clearSurveyCreation();
-          if(TypeVis.value == true){
-            //response oos ni avii
-            // Get.find<SCont>().surveyGet(widget.itemindx, widget.surveyColor, RouteUnits.home);
-            //done deer zov chiglvvleh
-            // vvsgej bhdaa level iig ni haruulah
-            //table deer column uudiig ni nemeh
-          }
+          // if(TypeVis.value == true){
+          //   surveyCreationbody = SurveyCreationbody.fromJson(generalResponse.result);
+          //   Get.find<SCont>().survey = surveyCreationbody.questions;
+          //   Get.toNamed(RouteUnits.surveyList + RouteUnits.individualSurvey, arguments: surveyCreationbody.surveyClr); 
+          //   //done deer zov chiglvvleh
+          //   // vvsgej bhdaa level iig ni haruulah
+          //   //table deer column uudiig ni nemeh
+          // }
           break;
       case '400':
          Get.snackbar('Судалгааг хадаглаж чадсангүй', generalResponse.message.toString( ), snackPosition: SnackPosition.BOTTOM,
