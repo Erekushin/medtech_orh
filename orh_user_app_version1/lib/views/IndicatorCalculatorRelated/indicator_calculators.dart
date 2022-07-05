@@ -48,11 +48,11 @@ class _IndicatorButton extends State<IndicatorButton> {
               SizedBox(
                 child: ListView.builder( 
           shrinkWrap: true,  
-          itemCount: calculatorController.indicatorQuestions.result!.questions!.length,
+          itemCount: calculatorController.indicatorQuestions.questions!.length,
           itemBuilder: (contextItemBuilder, index){
             surveyControllerOut.textEditingControllers.add(TextEditingController());
             surveyControllerOut.dropvalueList.add(DropSelectVal());
-            var item = calculatorController.indicatorQuestions.result!.questions![index];
+            var item = calculatorController.indicatorQuestions.questions![index];
             return RecieverUnit(questionID: item.id!, type: item.type, questionText: item.questionText, 
                                         questionIndex: index, options: []);
           }

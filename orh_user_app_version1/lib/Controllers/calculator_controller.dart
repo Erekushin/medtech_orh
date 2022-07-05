@@ -22,7 +22,7 @@ class CalculatorController extends GetxController{
     String jsonString = await loadFromAsset("assets/file/BMI_question.json");
     var bmiQuestion = jsonDecode(jsonString);
     indicatorQuestions = Survey.fromJson(bmiQuestion);
-    surveyController.surveyAnswer.answers = List<Answers>.generate(indicatorQuestions.result!.questions!.length, ((index) => Answers()));
+    surveyController.surveyAnswer.answers = List<Answers>.generate(indicatorQuestions.questions!.length, ((index) => Answers()));
   }
   bodyMassCalculate(){
     Answers mass = surveyController.surveyAnswer.answers![0];

@@ -8,8 +8,7 @@ class GeneralResponse{
     code = json['code'].toString();
     status = json['status'];
     message = json['message'];
-    // result =
-    //     json['result'] != null ? GeneralResult.fromJson(json['result']) : null;
+    result = json['result'];
   }
 }
 // class GeneralResult{

@@ -82,13 +82,15 @@ class SCont extends GetxController{
     data['user_name'] = username;
     return data;
   }
+  GeneralResponse surveyGen = GeneralResponse();
   Survey survey = Survey();
   Future surveyGet(int chosenIndx,String surveyColor, String route) async{
     var jsondata = await GlobalHelpers.postRequestGeneral.getdata(chosenSurveyPayload('', ''), "120003", UriAdresses.medCore);
     ereklog.wtf(jsondata);
-    survey = Survey.fromJson(jsonDecode(jsondata.toString()));
-    switch(survey.code){
-      case 200 :
+    surveyGen = GeneralResponse.fromJson(jsonDecode(jsondata.toString()));
+    switch(surveyGen.code){
+      case '200' :
+      survey = Survey.fromJson(surveyGen.result);
       Get.toNamed(RouteUnits.surveyList + RouteUnits.individualSurvey, arguments: surveyColor);
       GlobalHelpers.bottomnavbarSwitcher.add(false);
       surveyAnswer.answers = List<Answers>.generate(survey.result!.questions!.length, ((index) => Answers()));
