@@ -33,6 +33,9 @@ class _SurveyCreationGeneralState extends State<SurveyCreationGeneral> {
                  case 'surveyLevel':
                  sCCont.surveyCreationbody.surveyPrivacyLevel = item.typeId;
                  break;
+                 case 'countType':
+                 sCCont.surveyCreationbody.countType = item.typeId;
+                 break;
                }
              },
              );

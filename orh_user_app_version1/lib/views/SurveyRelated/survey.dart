@@ -80,7 +80,7 @@ class _PageUnitState extends State<PageUnit> {
       questions = surveyControllerOut.survey.questions;
       break;
       case "Auto":
-      questions = sCCont.autosurvey.questions!;
+      questions = sCCont.surveys[argu.key!].questions;
       break;
     }
     
@@ -112,14 +112,6 @@ class _PageUnitState extends State<PageUnit> {
                       argu.count!%AllSizes.pageQuestionCount : AllSizes.pageQuestionCount : AllSizes.pageQuestionCount,
                       itemBuilder: (BuildContext context, int index){
                         final int queryUnitIndex = widget.pageIndex * AllSizes.pageQuestionCount + index;
-                         
-                        // switch(argu.type){
-                        //   case "normal" :
-                        //   item =  surveyControllerOut.survey.questions![queryUnitIndex];
-                        //   break;
-                        //   case "Auto" :
-                        //   item =  sCCont.autosurvey.questions![queryUnitIndex];
-                        // }
                         Questions item = questions![queryUnitIndex];
                         surveyControllerOut.textEditingControllers.add(TextEditingController());
                         surveyControllerOut.dropvalueList.add(DropSelectVal());
@@ -140,7 +132,6 @@ class _PageUnitState extends State<PageUnit> {
                              if(surveyControllerOut.pushDataBtn.value){
                               if(sCCont.TypeVis.value){
                                 GlobalHelpers.workingWithCode.clearSurveyAnswers();
-                                sCCont.surveyNametxtCont.text = sCCont.autosurvey.name!;
                                 sCCont.surveyCreationTypes.result!.countType = null;
                                 sCCont.surveyCreationTypes.result!.surveyType = null;
                                 sCCont.surveyCreationTypes.result!.privacyLevel = null;

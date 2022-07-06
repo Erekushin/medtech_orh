@@ -25,5 +25,6 @@ class Argu {
   String? sColor;
   String? type;
   int? count;
-  Argu({sColor, type, count});
+  int? key;
+  Argu({sColor, type, count, key});
 }

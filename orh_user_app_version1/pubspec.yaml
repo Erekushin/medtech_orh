@@ -10,6 +10,8 @@ environment:
 
 dependencies:
   fl_chart: ^0.51.0
+  flutter_treeview: ^1.0.7+1
+  graphview: ^1.1.1
   syncfusion_flutter_charts: ^20.1.57
   intl: ^0.17.0
   crypto: ^3.0.2

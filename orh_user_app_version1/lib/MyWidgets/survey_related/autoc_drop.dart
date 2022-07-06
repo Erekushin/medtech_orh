@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:orh_user_app_version1/Controllers/SurveyRelated/survey_controller.dart';
 import 'package:get/get.dart';
+import 'package:orh_user_app_version1/Controllers/SurveyRelated/survey_creation_controller.dart';
 import '../my_text.dart';
 
 
@@ -16,7 +17,8 @@ class AutocDrop extends StatefulWidget {
   _AutocDropState createState() => _AutocDropState();
 }
 class _AutocDropState extends State<AutocDrop> {
-  final sCont = Get.find<SCont>();
+  var sCont = Get.find<SCont>();
+  var sCCont = Get.find<CreationCont>();
   @override
   Widget build(BuildContext context) {
     List<DropdownMenuItem<String>> dropitems(List<dynamic> optionList){
@@ -24,7 +26,9 @@ class _AutocDropState extends State<AutocDrop> {
            return DropdownMenuItem(
              value: item.optionText.toString(),
              child: Text(item.optionText!),
-             onTap: (){},
+             onTap: (){
+              sCCont.numCombination += item.num.toString();
+             },
              );
            }).toList();
     }

@@ -363,8 +363,8 @@ Widget configureBtns(int index){
                    sCreCont.staTypes.insert(i, DropSelectVal());
                    sCreCont.qTxts.insert(i,TextEditingController());
                    sCreCont.newQuestionList.insert(i, Questions(options: [],
-                statistics: sCreCont.surveyCreationTypes.result!.statistic!,
-                questionType: sCreCont.surveyCreationTypes.result!.questionType!));
+                   statistics: sCreCont.surveyCreationTypes.result!.statistic!,
+                   questionType: sCreCont.surveyCreationTypes.result!.questionType!));
                  }
                  else{
                    Get.snackbar('Талбаруудын утга хоосон байна', "Асуултын төрлийг сонгоно уу", snackPosition: SnackPosition.BOTTOM,

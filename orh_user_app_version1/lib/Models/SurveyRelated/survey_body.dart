@@ -21,29 +21,27 @@ class Researchers{
 class Survey {
   String? name;
   int? userId;
-   int? surveyType;
+  int? surveyType;
+  int? countType;
   int? surveyPrivacyLevel;
   String? surveyClr;
-
-
   String? groupid;
   int? slevel;
   int? connectedid;
-
-
   String surveyCreatedDate = DateTime.now().toString().substring(0, 10);
   List<Researchers>? researchers;
   List<Questions>? questions;
 
-  Survey({this.name, this.userId, this.surveyType,
-          this.surveyPrivacyLevel, this.surveyClr,
-          this.researchers, this.questions,
-          this.groupid, this.slevel, this.connectedid});
+  Survey({name, userId, surveyType, countType,
+          surveyPrivacyLevel, surveyClr,
+          researchers, questions,
+          groupid, slevel, connectedid});
 
   Survey.fromJson(Map<String, dynamic> json) {
     name = json['name'];
     userId = json['user_id'];
     surveyType = json['survey_type'];
+    countType = json['count_type'];
     surveyPrivacyLevel = json['survey_privacy_level'];
     surveyClr = json['survey_color'];
 
@@ -71,6 +69,7 @@ class Survey {
     data['name'] = name;
     data['user_id'] = userId;
     data['survey_type'] = surveyType;
+    data['count_type'] = countType;
     data['survey_privacy_level'] = surveyPrivacyLevel;
     data['survey_color'] = surveyClr;
 
@@ -95,23 +94,21 @@ class Questions {
   int? type;
   String? questionText;
   String? statistic;
-
-   List<Options> options = <Options>[].obs;
+  int? num;
+  List<Options> options = <Options>[].obs;
   List<TextEditingController> optionTextController = <TextEditingController>[];
   List<TypeInfo>? questionType;
   List<TypeInfo>? statistics;
   double? containerHeight;
-
-
-
   Questions({this.id, this.type, this.questionText, required this.options, 
-             this.statistic, this.questionType, this.statistics});
+             this.statistic, this.questionType, this.statistics, this.num});
 
   Questions.fromJson(Map<String, dynamic> json) {
     id = json['id'].toString();
     type = json['type'];
     questionText = json['question_text'];
     statistic = json['statistic'];
+    num = json['num'];
     if (json['options'] != null) {
       options = <Options>[];
       json['options'].forEach((v) {
@@ -126,6 +123,7 @@ class Questions {
     data['type'] = type;
     data['question_text'] = questionText;
     data['statistic'] = statistic;
+    data['num'] = num; 
     if (options != null) {
       data['options'] = options.map((v) => v.toJson()).toList();
     }
@@ -136,18 +134,21 @@ class Questions {
 class Options {
   int? optionId;
   String? optionText;
+  int? num;
 
-  Options({this.optionId, this.optionText});
+  Options({this.optionId, this.optionText, this.num});
 
   Options.fromJson(Map<String, dynamic> json) {
     optionId = json['option_id'];
-    optionText = json['option_text'];
-  }
+    optionText = json['option_text']; 
+    num = json['num']; }
+    
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['option_id'] = optionId;
     data['option_text'] = optionText;
+    data['num'] = num;
     return data;
   }
 }

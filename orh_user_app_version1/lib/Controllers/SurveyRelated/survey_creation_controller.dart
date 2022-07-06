@@ -9,6 +9,7 @@ import 'package:orh_user_app_version1/global_constant.dart';
 import 'package:orh_user_app_version1/global_helpers.dart';
 import '../../Models/SurveyRelated/survey_answer_body.dart';
 import '../../Models/SurveyRelated/survey_body.dart';
+import '../auth_controller.dart';
 
 class CreationCont extends GetxController {
 final ereklog = logger(CreationCont);
@@ -31,6 +32,7 @@ Survey surveyCreationbody = Survey();
  var surveyInputLimitation = TextEditingController();
  var limitCountVis = false.obs;
  var TypeVis = false.obs;
+ String numCombination = '0';
  String? torolStr;
  String? counttypeStr;
  String? levelStr;
@@ -39,7 +41,6 @@ Survey surveyCreationbody = Survey();
 
  String? randomString;
  int? slevel = 1;
- int? connectedid = 0;
 
 
   ///vvsgej bui Question vvdee hadaglah list
@@ -57,40 +58,87 @@ Future getSurveyCreationTypes()async{
     Get.toNamed(RouteUnits.surveyCreation, arguments: 0);
   }
 }
-Survey autosurvey = Survey();
+Survey lastS = Survey();
+List<Survey> surveys = [];
 Argu arg = Argu();
-Future surveyCreate() async{
-    var jsonData = await GlobalHelpers.postRequestGeneral.getdata(surveyCreationbody.toJson(), "120001", UriAdresses.medCore);
-    print('json data');
-    ereklog.wtf(surveyCreationbody.toJson());
-    ereklog.wtf(jsonData);
-    generalResponse = GeneralResponse.fromJson(jsonDecode(jsonData));
-    switch(generalResponse.code){
-      case '200':
-          Get.snackbar('Амжилттай', '', snackPosition: SnackPosition.BOTTOM,
-          colorText: Colors.white, backgroundColor: Colors.grey[900], margin:  const EdgeInsets.all(5));
-          GlobalHelpers.workingWithCode.clearSurveyCreation();
-          if(TypeVis.value == true){
-            autosurvey = Survey.fromJson(generalResponse.result);
-            slevel = autosurvey.slevel! + 1;
-            arg.sColor = surveyCreationbody.surveyClr;
-            arg.type = "Auto";
-            arg.count = autosurvey.questions!.length;
-            Get.find<SCont>().surveyAnswer.answers = List<Answers>.generate(autosurvey.questions!.length, ((index) => Answers()));
-            Get.toNamed(RouteUnits.surveyList + RouteUnits.individualSurvey, arguments: arg); 
-            //done deer zov chiglvvleh
-            // vvsgej bhdaa level iig ni haruulah
-            //table deer column uudiig ni nemeh
-          }
-          else{
-            Get.offAllNamed(RouteUnits.home);
-          }
-          break;
-      case '400':
-         Get.snackbar('Судалгааг хадаглаж чадсангүй', generalResponse.message.toString( ), snackPosition: SnackPosition.BOTTOM,
-          colorText: Colors.white, backgroundColor: Colors.grey[900], margin:  const EdgeInsets.all(5));
-      break;    
-    }
+Future surveyCreate(String key) async{
+                  surveyCreationbody.name = surveyNametxtCont.text;
+                  if( surveyCreationbody.name!= null && 
+                      surveyCreationbody.surveyPrivacyLevel != null &&
+                      surveyCreationbody.surveyType != null && 
+                      surveyCreationbody.countType != null){
+                    //level, type, color, date 4 songogdoh vydee yavchihaj bgaa 
+                       surveyCreationbody.userId = Get.find<AuthController>().user.result!.userId!;
+                       surveyCreationbody.questions = newQuestionList; 
+                       surveyCreationbody.researchers = researcherPhoneList;
+                       surveyCreationbody.groupid = randomString!;
+                       surveyCreationbody.slevel = slevel;
+                       surveyCreationbody.connectedid = int.parse(numCombination);
+                       for(int i = 0; i<surveyCreationbody.questions!.length; i++){
+                         surveyCreationbody.questions![i].num = i+1;
+                         if(surveyCreationbody.questions![i].options.isNotEmpty){
+                           for(int a = 0; a<surveyCreationbody.questions![i].options.length; a++){
+                             surveyCreationbody.questions![i].options[a].num = a+1;
+                           }
+                         }
+                       }
+                       ////////////////////////////////
+                       var jsonData = await GlobalHelpers.postRequestGeneral.getdata(surveyCreationbody.toJson(), "120001", UriAdresses.medCore);
+                       ereklog.wtf(surveyCreationbody.toJson());
+                       ereklog.wtf(jsonData);
+                       generalResponse = GeneralResponse.fromJson(jsonDecode(jsonData));
+                       switch(generalResponse.code){
+                       case '200':
+                           Get.snackbar('Амжилттай', '', snackPosition: SnackPosition.BOTTOM,
+                           colorText: Colors.white, backgroundColor: Colors.grey[900], margin:  const EdgeInsets.all(5));
+                           GlobalHelpers.workingWithCode.clearSurveyCreation();
+                           switch(key){
+                             case "variationup":
+                             lastS = Survey.fromJson(generalResponse.result);
+                             surveys.add(lastS);
+                             surveyNametxtCont.text = surveys.last.name!;
+                             slevel = surveys.last.slevel;
+
+                             arg.sColor = surveyCreationbody.surveyClr;
+                             arg.type = "Auto";
+                             arg.count = surveys.last.questions!.length;
+                             arg.key = surveys.indexOf(surveys.last) -1;
+                             Get.toNamed(RouteUnits.surveyList + RouteUnits.individualSurvey, arguments: arg);
+                             break;
+                             case "levelup":
+                             lastS = Survey.fromJson(generalResponse.result);
+                             surveys.add(lastS);
+                             surveyNametxtCont.text = surveys.last.name!;
+                             slevel = surveys.last.slevel! + 1;
+
+
+                             arg.sColor = surveyCreationbody.surveyClr;
+                             arg.type = "Auto";
+                             arg.count = surveys.last.questions!.length;
+                             arg.key = surveys.indexOf(surveys.last); //level ni surveys.last.slevel! iim level tei item iin index iig yavuulah
+
+                             Get.toNamed(RouteUnits.surveyList + RouteUnits.individualSurvey, arguments: arg); 
+                             break;
+                             case "save":
+                              Get.offAllNamed(RouteUnits.home);
+                             break;
+                           }
+                           break;
+                       case '400':
+                          Get.snackbar('Судалгааг хадаглаж чадсангүй', generalResponse.message.toString( ), snackPosition: SnackPosition.BOTTOM,
+                           colorText: Colors.white, backgroundColor: Colors.grey[900], margin:  const EdgeInsets.all(5));
+                       break;    
+                       }
+                  }   
+                  else{
+                     Get.snackbar('Талбарууд дутуу байна', '', snackPosition: SnackPosition.BOTTOM,
+                     colorText: Colors.white, backgroundColor: Colors.grey[900], margin:  const EdgeInsets.all(5));
+                  }
+
+
+
+
+  
     
   }
 }

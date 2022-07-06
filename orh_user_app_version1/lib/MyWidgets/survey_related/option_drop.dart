@@ -29,7 +29,7 @@ class _OptionDropState extends State<OptionDrop> {
              value: item.optionId.toString(),
              child: Text(item.optionText!),
              onTap: (){
-                 sCont.surveyAnswer.answers![widget.answerIndex].questionId = int.parse(widget.questionID!);
+                  sCont.surveyAnswer.answers![widget.answerIndex].questionId = int.parse(widget.questionID!);
                   sCont.surveyAnswer.answers![widget.answerIndex].optionId = item.optionId;
              },
              );
