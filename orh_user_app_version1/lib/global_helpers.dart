@@ -18,8 +18,9 @@ static bool isXyrNull = false;
 static int loopCheck = 0;
 }
 class DropSelectVal{
-  DropSelectVal({this.value});
+  DropSelectVal({this.value, this.numVal});
   String? value;
+  String? numVal;
 }
 class Argu {
   String? sColor;
