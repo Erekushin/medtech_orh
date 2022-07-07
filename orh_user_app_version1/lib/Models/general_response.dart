@@ -1,10 +1,10 @@
-class GeneralResponse{
+class EResponse{
   String? code;
   String? status;
   String? message;
   var result;
-  GeneralResponse({this.code, this.status, this.message, this.result});
-  GeneralResponse.fromJson(Map<String, dynamic> json) {
+  EResponse({this.code, this.status, this.message, this.result});
+  EResponse.fromJson(Map<String, dynamic> json) {
     code = json['code'].toString();
     status = json['status'];
     message = json['message'];

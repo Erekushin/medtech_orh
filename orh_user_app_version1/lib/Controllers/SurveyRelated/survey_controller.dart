@@ -26,42 +26,72 @@ class SCont extends GetxController{
     data['phone'] = phone;
     return data;
   }
+
+
+  EResponse surveyListGen = EResponse();
   var publicSurveyList = SurveyListBody().obs;
   var ownSurveyListbody = SurveyListBody().obs;
   var wrkSpaceSurveyList = SurveyListBody().obs;
   var attachedList = SurveyListBody().obs;
+
   Future listGet(String routekey, String messageCode, int userId, String searchTxt, String phone) async{
     var data = await GlobalHelpers.postRequestGeneral.getdata(listJBody(userId, searchTxt, phone), messageCode, UriAdresses.medCore);
+    surveyListGen = EResponse.fromJson(jsonDecode(data));
     ereklog.wtf(data);
     switch(routekey){
       case '/home':
-      publicSurveyList.value = SurveyListBody.fromJson(jsonDecode(data.toString()));
+      publicSurveyList.value = SurveyListBody.fromJson(surveyListGen.result);
       break;
       case '/segmented':
-      wrkSpaceSurveyList.value = SurveyListBody.fromJson(jsonDecode(data.toString()));
+      wrkSpaceSurveyList.value = SurveyListBody.fromJson(surveyListGen.result);
       break; 
       case '/profile':
-      ownSurveyListbody.value = SurveyListBody.fromJson(jsonDecode(data.toString()));
+      ownSurveyListbody.value = SurveyListBody.fromJson(surveyListGen.result);
       break;
       case '/attachedList':
-      attachedList.value = SurveyListBody.fromJson(jsonDecode(data.toString()));
+      attachedList.value = SurveyListBody.fromJson(surveyListGen.result);
       break;
     }
   }
   var pushDataBtn = true.obs;
   SurveyAnswer surveyAnswer = SurveyAnswer();
-  GeneralResponse generalResponse = GeneralResponse();
+  EResponse generalResponse = EResponse();
   Future answersPush() async{//message code deeree toglood olon torliin asuultuud yavuulj bolno
-     var jsondata = await GlobalHelpers.postRequestGeneral.getdata(surveyAnswer.toJson(), "120004", UriAdresses.medCore);
-    log(jsonEncode(surveyAnswer.toJson()));
-    print(jsondata.toString()+' '+'hariugaa yavuulsanii hariu');
-    generalResponse = GeneralResponse.fromJson(jsonDecode(jsondata));
+     
+    pushDataBtn.value = false;
+    surveyAnswer.researcherGeregeID = Get.find<AuthController>().user.result!.userId;
+    surveyAnswer.surveyId = chosenSurveyId;
+    surveyAnswer.fillerName = Get.find<AuthController>().user.result!.userName;
+    surveyAnswer.createdDate = DateTime.now().toString().substring(0,18);
+    surveyAnswer.slevel = survey.slevel;
+
+    String connectedidStr = '';
+    for(int p = 0; p < dropvalueList.length; p++){
+      connectedidStr += dropvalueList[p].numVal!;
+    }
+    surveyAnswer.connectedid = int.parse(connectedidStr);//num uudiig ni tsugluulj bgaad yavuulah
+    surveyAnswer.groupid = survey.groupid;
+
+
+     try{
+      var jsondata = await GlobalHelpers.postRequestGeneral.getdata(surveyAnswer.toJson(), "120004", UriAdresses.medCore);
+      log(jsonEncode(surveyAnswer.toJson()));
+      print(jsondata.toString()+' '+'hariugaa yavuulsanii hariu');
+      generalResponse = EResponse.fromJson(jsonDecode(jsondata));
+     }
+     catch(e){
+       Get.snackbar('Алдаа', '$e!', snackPosition: SnackPosition.BOTTOM,
+      colorText: Colors.white, backgroundColor: Colors.grey[900], margin:  const EdgeInsets.all(5));
+     }
+     
     switch(generalResponse.code){
       case '200':
           pushDataBtn.value = true;
           Get.snackbar('Амжилттай бүртгэгдлээ', '', snackPosition: SnackPosition.BOTTOM,
           colorText: Colors.white, backgroundColor: Colors.grey[900], margin: EdgeInsets.only(bottom: GeneralMeasurements.snackbarBottomMargin, left: 5, right: 5,));
           GlobalHelpers.workingWithCode.clearSurveyAnswers();
+          //back deeree body noosoo 
+          //response deerees ni level 2 bgaa esehiig harna bval dahiad boglono gesen v
           Get.offAllNamed(RouteUnits.home);
           break;
       case '400':
@@ -82,13 +112,13 @@ class SCont extends GetxController{
     data['user_name'] = username;
     return data;
   }
-  GeneralResponse surveyGen = GeneralResponse();
+  EResponse surveyGen = EResponse();
   Survey survey = Survey();
   Argu arg = Argu();
   Future surveyGet(int chosenIndx,String surveyColor, String route) async{
     var jsondata = await GlobalHelpers.postRequestGeneral.getdata(chosenSurveyPayload('', ''), "120003", UriAdresses.medCore);
     ereklog.wtf(jsondata);
-    surveyGen = GeneralResponse.fromJson(jsonDecode(jsondata.toString()));
+    surveyGen = EResponse.fromJson(jsonDecode(jsondata.toString()));
     switch(surveyGen.code){
       case '200' :
       survey = Survey.fromJson(surveyGen.result);
@@ -113,7 +143,7 @@ class SCont extends GetxController{
   var surveyDeleteIcon = false.obs;
   Future delete() async{
     var data = await GlobalHelpers.postRequestGeneral.getdata(chosenSurveyPayload('', ''), "120007", UriAdresses.medCore);
-    generalResponse = GeneralResponse.fromJson(jsonDecode(data.toString()));
+    generalResponse = EResponse.fromJson(jsonDecode(data.toString()));
     ereklog.wtf(data);
     switch(generalResponse.code){
        case '200':

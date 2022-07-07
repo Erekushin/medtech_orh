@@ -106,7 +106,7 @@ class _MyAppState extends State<MyApp> {
         GetPage(name: RouteUnits.doctors, page: ()=> const Doctors()),
         GetPage(name: RouteUnits.doctors + RouteUnits.doctorProfile, page: ()=> const DoctorProfile()),
         //Судалгаанууд
-        GetPage(name: RouteUnits.surveyCreation, page: ()=> const SurveyCreation()),
+        GetPage(name: RouteUnits.surveyCreation, page: ()=> const SurveyCreation()), //SurveyCreation
         GetPage(name: RouteUnits.surveyList + RouteUnits.individualSurvey, page: ()=> const SurveyUnit()),
         GetPage(name: RouteUnits.respondResearchers, page: ()=> const ResponseResearchers()),
         GetPage(name: RouteUnits.surveyResponses, page: ()=> const ResMain()),

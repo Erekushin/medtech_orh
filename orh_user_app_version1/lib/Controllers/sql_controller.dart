@@ -12,7 +12,7 @@ import '../global_constant.dart';
 
 class SqlController extends GetxController{
   TreatmentRecipies treatmentRecipies = TreatmentRecipies();
-  GeneralResponse generalResponse = GeneralResponse();
+  EResponse generalResponse = EResponse();
   var recipeList = Result().recipies.obs;
   final ereklog = logger(SqlController);
   static Database? _database;

@@ -20,10 +20,10 @@ class _ResponseResearcherssesState extends State<ResponseResearchers> {
       Stack(
         children: [
           ListView.builder(
-      itemCount: resCont.respondResearchers.result?.length?? 0,
+      itemCount: resCont.surveyRLst.result?.length?? 0,
       itemBuilder: (c, i){
-        var item = resCont.respondResearchers.result![i];
-        String? name = item.creatorName;
+        var item = resCont.surveyRLst.result![i];
+        String? name = item.name;
         return  InkWell(
                         onTap: (){
                           resCont.responses(name!);
@@ -58,7 +58,7 @@ class _ResponseResearcherssesState extends State<ResponseResearchers> {
       },
     ),
      Visibility(
-                visible: resCont.respondResearchers.result == null? true : false,
+                visible: resCont.surveyRLst.result == null? true : false,
                 child: Image.asset('assets/images/empty_box.jpg')
                 )
         ],

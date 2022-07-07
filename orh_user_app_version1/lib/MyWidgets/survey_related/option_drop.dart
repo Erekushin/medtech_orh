@@ -31,6 +31,8 @@ class _OptionDropState extends State<OptionDrop> {
              onTap: (){
                   sCont.surveyAnswer.answers![widget.answerIndex].questionId = int.parse(widget.questionID!);
                   sCont.surveyAnswer.answers![widget.answerIndex].optionId = item.optionId;
+
+                  sCont.dropvalueList[widget.answerIndex].value = item.num.toString();
              },
              );
            }).toList();

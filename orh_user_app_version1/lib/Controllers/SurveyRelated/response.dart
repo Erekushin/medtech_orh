@@ -6,9 +6,11 @@ import 'dart:convert';
 import 'package:orh_user_app_version1/Helpers/logging.dart';
 import 'package:orh_user_app_version1/Models/SurveyRelated/statistic_answer.dart';
 import 'package:orh_user_app_version1/global_helpers.dart';
+import '../../Models/SurveyRelated/researchers.dart';
 import '../../Models/SurveyRelated/response.dart';
 import '../../Models/SurveyRelated/response_answers.dart';
 import '../../Models/SurveyRelated/survey_list.dart';
+import '../../Models/general_response.dart';
 import '../../global_constant.dart';
 class ResCont extends GetxController{
   var ereklog = logger(ResCont);
@@ -35,13 +37,16 @@ class ResCont extends GetxController{
           break;
     }
   }
-    SurveyListBody respondResearchers =SurveyListBody();
+    
+    EResponse respondResearcherGen = EResponse();
+    RLst surveyRLst = RLst();
     Future researchers(int chosenIndx) async{
     var data = await GlobalHelpers.postRequestGeneral.getdata(chosen('', ''), "120011", UriAdresses.medCore);
-    respondResearchers = SurveyListBody.fromJson(jsonDecode(data.toString()));
+    respondResearcherGen = EResponse.fromJson(jsonDecode(data.toString()));
     ereklog.wtf(data);
-    switch(respondResearchers.code){
-       case 200:
+    switch(respondResearcherGen.code){
+       case '200':
+         surveyRLst = RLst.fromJson(respondResearcherGen.result);
          Get.toNamed(RouteUnits.respondResearchers);
          Get.find<SCont>().ownSurveyListbody.value.result![chosenIndx].loading.value = false;
           break;

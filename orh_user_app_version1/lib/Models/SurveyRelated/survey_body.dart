@@ -1,6 +1,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:flutter/material.dart';
 import 'package:orh_user_app_version1/Models/SurveyRelated/survey_creation_types.dart';
 
 
@@ -19,6 +20,12 @@ class Researchers{
 }
 
 class Survey {
+  int? id;
+  String? creatorName;
+  List<int>? creatorPicture;
+  var loading = false.obs;
+  var borderColor = Colors.white.obs;
+
   String? name;
   int? userId;
   int? surveyType;
@@ -28,6 +35,7 @@ class Survey {
   String? groupid;
   int? slevel;
   int? connectedid;
+  int? preconnected = 0;
   String surveyCreatedDate = DateTime.now().toString().substring(0, 10);
   List<Researchers>? researchers;
   List<Questions>? questions;
@@ -35,7 +43,8 @@ class Survey {
   Survey({name, userId, surveyType, countType,
           surveyPrivacyLevel, surveyClr,
           researchers, questions,
-          groupid, slevel, connectedid});
+          groupid, slevel, this.connectedid, preconnected,
+          this.creatorPicture, this.creatorName, this.id});
 
   Survey.fromJson(Map<String, dynamic> json) {
     name = json['name'];
@@ -48,6 +57,11 @@ class Survey {
     groupid = json["groupid"];
     slevel = json["slevel"];
     connectedid = json["connectedid"];
+    preconnected = json["preconnected"];
+
+    creatorPicture = json["creator_picture"];
+    creatorName = json["creator_name"];
+    id = json["id"];
 
     surveyCreatedDate = json['survey_created_date']?? '';
     if (json['researchers'] != null) {
@@ -76,6 +90,7 @@ class Survey {
     data['groupid'] = groupid;
     data['slevel'] = slevel;
     data['connectedid'] = connectedid;
+    data['preconnected'] = preconnected;
 
 
     data['survey_created_date'] = surveyCreatedDate;

@@ -495,7 +495,7 @@ class _HomePagePublicState extends State<HomePagePublic> {
                           itemBuilder: (context, index){
                             var item = surveyControllerList.publicSurveyList.value.result![index];
                             return PublicsUnit(surveyName: item.name?? "", surveyId: item.id!, 
-                                                    itemindx: index, fromRoute: "home", surveyColor: item.color?? '0xFFFFFFFF',);
+                                                    itemindx: index, fromRoute: "home", surveyColor: item.surveyClr?? '0xFFFFFFFF',);
                           } 
                           ),
                 ),
@@ -553,7 +553,7 @@ class _HomePageWorkSpaceState extends State<HomePageWorkSpace> {
                           itemBuilder: (context, index){
                             var item = surveyControllerList.wrkSpaceSurveyList.value.result![index];
                             return SegsUnit(surveyName: item.name?? "", surveyId: item.id!, 
-                                                       itemindx: index, surveyColor: item.color?? '0xFFFFFFFF',);
+                                                       itemindx: index, surveyColor: item.surveyClr?? '0xFFFFFFFF',);
                           } 
                           ),
                 ),

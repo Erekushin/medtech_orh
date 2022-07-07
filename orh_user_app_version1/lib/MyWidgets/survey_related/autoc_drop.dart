@@ -27,7 +27,7 @@ class _AutocDropState extends State<AutocDrop> {
              value: item.optionText.toString(),
              child: Text(item.optionText!),
              onTap: (){
-              sCCont.numCombination += item.num.toString();
+              sCCont.strCombList[widget.answerIndex].unit = item.num.toString();
              },
              );
            }).toList();

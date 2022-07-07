@@ -1,14 +1,23 @@
 class SurveyAnswer {
-  int? researcherGeregeID ;
+  int? slevel;
+  int? connectedid;
+  String? groupid;
+
+
+  int? researcherGeregeID;
   String? fillerName;
   int? surveyId;
   String? createdDate;
   List<Answers>? answers = [];
 
   SurveyAnswer({this.surveyId,this.answers,
-                 this.fillerName, this.createdDate});
+                 this.fillerName, this.createdDate,
+                 this.slevel, this.connectedid, this.groupid});
 
   SurveyAnswer.fromJson(Map<String, dynamic> json) {
+    slevel = json['slevel'];
+    connectedid = json['connectedid'];
+    groupid = json['groupid'];
     researcherGeregeID = json['researcher_GeregeID'];
     createdDate = json['created_date'];
     surveyId = json['survey_id'];
@@ -22,6 +31,9 @@ class SurveyAnswer {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
+    data['slevel'] = slevel;
+    data['connectedid'] = connectedid;
+    data['groupid'] = groupid;
     data['researcher_GeregeID'] = researcherGeregeID;
     data['survey_id'] = surveyId;
     data['user_name'] = fillerName;

@@ -52,32 +52,24 @@ class PageUnit extends StatefulWidget {
 class _PageUnitState extends State<PageUnit> {
   final argu = Get.arguments as Argu;
   var settingsControllerOut = Get.find<SettingController>();
-  var surveyControllerOut = Get.find<SCont>();
+  var sCont = Get.find<SCont>();
   var sCCont = Get.find<CreationCont>();
   List<Questions>? questions;
+  int? level;
+  String? groupid;
+  int? connectedid;
+
   var authCon = Get.find<AuthController>();
-  void pushData(){
-    surveyControllerOut.pushDataBtn.value = false;
-    surveyControllerOut.surveyAnswer.researcherGeregeID = authCon.user.result!.userId;
-    surveyControllerOut.surveyAnswer.surveyId = surveyControllerOut.chosenSurveyId;
-    surveyControllerOut.surveyAnswer.fillerName = authCon.user.result!.userName;
-    surveyControllerOut.surveyAnswer.createdDate = DateTime.now().toString().substring(0,18);
-    try{
-        surveyControllerOut.answersPush();
-      }
-   catch(e){
-      Get.snackbar('Алдаа', '$e!', snackPosition: SnackPosition.BOTTOM,
-      colorText: Colors.white, backgroundColor: Colors.grey[900], margin:  const EdgeInsets.all(5));
-    }                   
-  }
- 
   @override
  
   @override
   Widget build(BuildContext context) {
     switch(argu.type){
       case "Normal":
-      questions = surveyControllerOut.survey.questions;
+      questions = sCont.survey.questions;
+      level = sCont.survey.slevel;
+      groupid = sCont.survey.groupid;
+      connectedid = sCont.survey.connectedid;
       break;
       case "Auto":
       questions = sCCont.surveys[argu.key!].questions;
@@ -113,10 +105,10 @@ class _PageUnitState extends State<PageUnit> {
                       itemBuilder: (BuildContext context, int index){
                         final int queryUnitIndex = widget.pageIndex * AllSizes.pageQuestionCount + index;
                         Questions item = questions![queryUnitIndex];
-                        surveyControllerOut.textEditingControllers.add(TextEditingController());
-                        surveyControllerOut.dropvalueList.add(DropSelectVal());
+                        sCont.textEditingControllers.add(TextEditingController());
+                        sCont.dropvalueList.add(DropSelectVal());
                         if(item.statistic  == 'line_chart'){
-                          surveyControllerOut.surveyAnswer.answers![queryUnitIndex].statistic = 'line_chart';
+                          sCont.surveyAnswer.answers![queryUnitIndex].statistic = 'line_chart';
                         }
                       return RecieverUnit(questionID: item.id!, type: item.type, questionText: item.questionText, 
                                           questionIndex: queryUnitIndex, options: item.options);
@@ -129,18 +121,21 @@ class _PageUnitState extends State<PageUnit> {
                         margin: const EdgeInsets.only(right: 25),
                         child: InkWell(
                           onTap: (){
-                             if(surveyControllerOut.pushDataBtn.value){
+                             if(sCont.pushDataBtn.value){
                               if(sCCont.TypeVis.value){
                                 GlobalHelpers.workingWithCode.clearSurveyAnswers();
+
+                                //level 2 deer daraahiig songoj bolohgvi bh uchir bvgdiig ni null
+                                //tei tentsvvlev
                                 sCCont.surveyCreationTypes.result!.countType = null;
                                 sCCont.surveyCreationTypes.result!.surveyType = null;
                                 sCCont.surveyCreationTypes.result!.privacyLevel = null;
                                 Get.toNamed(RouteUnits.surveyCreation, arguments: 1);
                               }
                               else{
-                              pushData();
+                              sCont.answersPush();
                               }
-                              Future.delayed(const Duration(seconds: 3),(){surveyControllerOut.pushDataBtn.value = true;});
+                              Future.delayed(const Duration(seconds: 3),(){sCont.pushDataBtn.value = true;});
                              }
                           },
                           child: myBtn(CommonColors.geregeBlue, GeneralMeasurements.deviceWidth*.2, GeneralMeasurements.deviceHeight*.05, 

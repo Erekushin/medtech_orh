@@ -20,7 +20,7 @@ final ereklog = logger(CreationCont);
   List<TextEditingController> qTxts = [];
 
 SurveyCreationTypes surveyCreationTypes = SurveyCreationTypes();
-GeneralResponse generalResponse = GeneralResponse();
+EResponse generalResponse = EResponse();
 ///sudlaachid zoriulsan sudalgaanii sudlaachidiin jagsaalt
 var researchetTextController = <TextEditingController>[].obs;
 List<Researchers> researcherPhoneList = <Researchers>[];
@@ -32,7 +32,10 @@ Survey surveyCreationbody = Survey();
  var surveyInputLimitation = TextEditingController();
  var limitCountVis = false.obs;
  var TypeVis = false.obs;
- String numCombination = '0';
+ String strCombination = '0';
+ List<CombUnit> strCombList = [];
+
+ 
  String? torolStr;
  String? counttypeStr;
  String? levelStr;
@@ -61,6 +64,19 @@ Future getSurveyCreationTypes()async{
 Survey lastS = Survey();
 List<Survey> surveys = [];
 Argu arg = Argu();
+List<Survey>? filteredList2;
+findParentNode(int currentlvl){ 
+  int parentlvl = currentlvl - 1;
+  List<Survey> filteredList = [];
+  filteredList.add(Survey(connectedid: 0, name: 'dfdfdd'));
+  for(int a = 0 ; a < surveys.length; a++){
+    if(surveys[a].slevel == parentlvl){
+      filteredList.add(surveys[a]);
+    }
+  }
+  filteredList2 = filteredList;
+}
+
 Future surveyCreate(String key) async{
                   surveyCreationbody.name = surveyNametxtCont.text;
                   if( surveyCreationbody.name!= null && 
@@ -73,7 +89,14 @@ Future surveyCreate(String key) async{
                        surveyCreationbody.researchers = researcherPhoneList;
                        surveyCreationbody.groupid = randomString!;
                        surveyCreationbody.slevel = slevel;
-                       surveyCreationbody.connectedid = int.parse(numCombination);
+                       
+                       for(int l = 0; l < strCombList.length; l++){
+                        strCombination += strCombList[l].unit!;
+                       }
+                       findParentNode(slevel!);
+                       String a = filteredList2!.last.connectedid.toString() +strCombination;
+                       surveyCreationbody.connectedid = int.parse(a);
+
                        for(int i = 0; i<surveyCreationbody.questions!.length; i++){
                          surveyCreationbody.questions![i].num = i+1;
                          if(surveyCreationbody.questions![i].options.isNotEmpty){
@@ -82,11 +105,11 @@ Future surveyCreate(String key) async{
                            }
                          }
                        }
-                       ////////////////////////////////
+                       /////////////////////////////////
                        var jsonData = await GlobalHelpers.postRequestGeneral.getdata(surveyCreationbody.toJson(), "120001", UriAdresses.medCore);
                        ereklog.wtf(surveyCreationbody.toJson());
                        ereklog.wtf(jsonData);
-                       generalResponse = GeneralResponse.fromJson(jsonDecode(jsonData));
+                       generalResponse = EResponse.fromJson(jsonDecode(jsonData));
                        switch(generalResponse.code){
                        case '200':
                            Get.snackbar('Амжилттай', '', snackPosition: SnackPosition.BOTTOM,
@@ -98,25 +121,32 @@ Future surveyCreate(String key) async{
                              surveys.add(lastS);
                              surveyNametxtCont.text = surveys.last.name!;
                              slevel = surveys.last.slevel;
+                             findParentNode(slevel!);
+                             surveyCreationbody.preconnected = filteredList2!.last.connectedid;
 
                              arg.sColor = surveyCreationbody.surveyClr;
                              arg.type = "Auto";
-                             arg.count = surveys.last.questions!.length;
-                             arg.key = surveys.indexOf(surveys.last) -1;
+                             arg.count = filteredList2!.last.questions!.length;
+                             arg.key = surveys.indexOf(filteredList2!.last);
+                             strCombList = List<CombUnit>.generate(surveys[surveys.indexOf(surveys.last) -1].questions!.length, ((index) => CombUnit()));
                              Get.toNamed(RouteUnits.surveyList + RouteUnits.individualSurvey, arguments: arg);
                              break;
                              case "levelup":
+                             //daraagiin survey niihee yumnuudaas beldej bgaa heseg
                              lastS = Survey.fromJson(generalResponse.result);
                              surveys.add(lastS);
                              surveyNametxtCont.text = surveys.last.name!;
                              slevel = surveys.last.slevel! + 1;
+                             findParentNode(slevel!);
+                             surveyCreationbody.preconnected = filteredList2!.last.connectedid;
 
 
+                             //combination beldej hariulah heseg rvv yavahdaa beldej bgaa heseg
                              arg.sColor = surveyCreationbody.surveyClr;
                              arg.type = "Auto";
                              arg.count = surveys.last.questions!.length;
-                             arg.key = surveys.indexOf(surveys.last); //level ni surveys.last.slevel! iim level tei item iin index iig yavuulah
-
+                             arg.key = surveys.indexOf(surveys.last);
+                             strCombList = List<CombUnit>.generate(surveys[surveys.indexOf(surveys.last)].questions!.length, ((index) => CombUnit()));
                              Get.toNamed(RouteUnits.surveyList + RouteUnits.individualSurvey, arguments: arg); 
                              break;
                              case "save":
@@ -134,11 +164,9 @@ Future surveyCreate(String key) async{
                      Get.snackbar('Талбарууд дутуу байна', '', snackPosition: SnackPosition.BOTTOM,
                      colorText: Colors.white, backgroundColor: Colors.grey[900], margin:  const EdgeInsets.all(5));
                   }
-
-
-
-
-  
-    
   }
+}
+
+class CombUnit{
+ String? unit;
 }

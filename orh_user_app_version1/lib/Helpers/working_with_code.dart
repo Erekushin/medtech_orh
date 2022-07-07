@@ -25,5 +25,6 @@ class WorkingWithCode{
   sCCont.levelNameStr = null;
   sCCont.toolQuestionCount.value = 0;
   sCCont.surveyCreationbody.surveyClr = '0xFFFFFFFF';
+  sCCont.strCombination = '';
  }
 }

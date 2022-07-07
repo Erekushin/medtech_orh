@@ -152,10 +152,10 @@ class AuthController extends GetxController{
     data['new_picture'] = imageCon.imageBytes.toString();
     return data;
   }
-  GeneralResponse GForUpdateProPic = GeneralResponse();
+  EResponse GForUpdateProPic = EResponse();
   Future updateProPic() async{
      var data = await GlobalHelpers.postRequestGeneral.getdata(updateProbody(), '110003', UriAdresses.medCore);
-     GForUpdateProPic = GeneralResponse.fromJson(jsonDecode(data.toString()));
+     GForUpdateProPic = EResponse.fromJson(jsonDecode(data.toString()));
       switch(registerResponse.code){
       case 200:
       Get.snackbar('', "Зураг амжилттай солигдлоо", snackPosition: SnackPosition.BOTTOM,
