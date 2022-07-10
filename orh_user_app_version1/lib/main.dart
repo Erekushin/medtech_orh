@@ -37,7 +37,7 @@ import 'global_constant.dart';
 import 'dart:async';
 import 'global_helpers.dart';
 import 'package:flutter/services.dart';
-// this is fucking survey version 2 branch ..   hamgiin svvliin change
+// this is fucking survey version 2 branch ..   hamgiin svvliin change 7/10
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(const MyApp());
