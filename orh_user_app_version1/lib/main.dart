@@ -12,6 +12,7 @@ import 'package:orh_user_app_version1/views/SurveyRelated/response/responses.dar
 import 'package:orh_user_app_version1/views/SurveyRelated/response/answers.dart';
 import 'package:orh_user_app_version1/views/SurveyRelated/survey.dart';
 import 'package:orh_user_app_version1/views/SurveyRelated/creation/survey_creation.dart';
+import 'package:orh_user_app_version1/views/SurveyRelated/survey_twin.dart';
 import 'package:orh_user_app_version1/views/TreatmentRecipe/treatment_recipe.dart';
 import 'package:orh_user_app_version1/views/home/home_info_flow.dart';
 import 'package:orh_user_app_version1/views/splash_screen.dart';
@@ -37,26 +38,30 @@ import 'global_constant.dart';
 import 'dart:async';
 import 'global_helpers.dart';
 import 'package:flutter/services.dart';
+
 // this is fucking survey version 2 branch ..   hamgiin svvliin change 7/10
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(const MyApp());
 }
+
 class MyApp extends StatefulWidget {
-  const MyApp({ Key? key }) : super(key: key);
+  const MyApp({Key? key}) : super(key: key);
   @override
   State<MyApp> createState() => _MyAppState();
 }
+
 class _MyAppState extends State<MyApp> {
   late Stream<bool> bottomNavbarSwitcher;
   @override
-  void initState(){
+  void initState() {
     super.initState();
     GlobalHelpers.bottomnavbarSwitcher = StreamController();
     bottomNavbarSwitcher = GlobalHelpers.bottomnavbarSwitcher.stream;
     GlobalHelpers.bottomnavbarSwitcher.add(false);
   }
-  bindInitialControllers(){
+
+  bindInitialControllers() {
     Get.put(SCont());
     Get.put(AuthController(), permanent: true);
     Get.put(ImageController(), permanent: true);
@@ -66,74 +71,128 @@ class _MyAppState extends State<MyApp> {
     Get.put(CreationCont());
     Get.put(CalculatorController());
   }
+
   @override
   Widget build(BuildContext context) {
-     SystemChrome.setPreferredOrientations([
-        DeviceOrientation.portraitUp,
-        DeviceOrientation.portraitDown,
-      ]);
-    return  MaterialApp(
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         resizeToAvoidBottomInset: false,
         body: Stack(
-        children: [
-          GetMaterialApp(
-      debugShowCheckedModeBanner: false,
-      initialRoute: RouteUnits.splashScreen,
-      initialBinding: BindingsBuilder(() => bindInitialControllers()),
-      getPages: [
-        GetPage(name: RouteUnits.splashScreen, page: ()=> const MyCustomSplashScreen()),
-        //basic profile input
-        GetPage(name: RouteUnits.answerform, page: ()=> const AnswerForm(),),
-        //login
-        GetPage(name: RouteUnits.login, page: ()=> const Login()),
-        //home
-        GetPage(name: RouteUnits.home, page: ()=> const HomeInfoFlow()),
-        //Profile
-        GetPage(name: RouteUnits.profile, page: ()=> const Profile()),
-        GetPage(name: RouteUnits.profileInfo, page: ()=> const ProfileInfo()),
-        GetPage(name: RouteUnits.profileDiagnosisHistory, page: ()=> const ProfileDiagnosisHistory()),
-        GetPage(name: RouteUnits.profileDeviceLog, page: ()=> const ProfileDevicelog()),
-        //Үйлчлүүлэгч үзлэгийн цаг захиалах
-        GetPage(name: RouteUnits.timeOrder + RouteUnits.hospitals, page: ()=> Hospitals()),
-        GetPage(name: RouteUnits.timeOrder + RouteUnits.hospitals + RouteUnits.doctors, page: ()=> const Doctors()),
-        GetPage(name: RouteUnits.timeOrder + RouteUnits.hospitals + RouteUnits.doctors + RouteUnits.timeSequence, page: ()=> const DoctorTimeSequence()),
-        //Эмнэлэгүүдийн мэдээлэл
-        GetPage(name: RouteUnits.hospitals, page: ()=> Hospitals()),
-        GetPage(name: RouteUnits.hospitals + RouteUnits.hospitalProfile, page: ()=> const HospitalProfile()),
-        //Эмч нарын мsэдээлэл
-        GetPage(name: RouteUnits.doctors, page: ()=> const Doctors()),
-        GetPage(name: RouteUnits.doctors + RouteUnits.doctorProfile, page: ()=> const DoctorProfile()),
-        //Судалгаанууд
-        GetPage(name: RouteUnits.surveyCreation, page: ()=> const SurveyCreation()), //SurveyCreation
-        GetPage(name: RouteUnits.surveyList + RouteUnits.individualSurvey, page: ()=> const SurveyUnit()),
-        GetPage(name: RouteUnits.respondResearchers, page: ()=> const ResponseResearchers()),
-        GetPage(name: RouteUnits.surveyResponses, page: ()=> const ResMain()),
-        GetPage(name: RouteUnits.surveyResponses + RouteUnits.responseAnswers, page: ()=> const ResponseAnswers()),
-        //Calculators
-        GetPage(name: RouteUnits.treatmentRecipe, page: ()=> const TreatmentRecipe() ),// CalculatorHome()
-        //Setting
-        GetPage(name: RouteUnits.setting, page: ()=> Setting()),
-        //Урьдчилан сэргийлэх үзлэг
-        GetPage(name: RouteUnits.preDiagnosis, page: ()=> const PreDiagnosis()),
-        GetPage(name: RouteUnits.calculators, page: ()=> const CalculatorsHome()),
-        GetPage(name: RouteUnits.myResponds, page: ()=> const MyResponds()),
-      ], 
-    ),
-        StreamBuilder<bool>(
-          stream: bottomNavbarSwitcher,
-          builder: (context, snapshot){
-            if (snapshot.data == true) 
-            {
-              return const Align(alignment: Alignment.bottomCenter, child: MyBottomNavbar(),);
-            }
-            else {
-              return const SizedBox(height: 1);
-            }
-          })
-        ],
-      ),
+          children: [
+            GetMaterialApp(
+              debugShowCheckedModeBanner: false,
+              initialRoute: RouteUnits.splashScreen,
+              initialBinding: BindingsBuilder(() => bindInitialControllers()),
+              getPages: [
+                GetPage(
+                    name: RouteUnits.splashScreen,
+                    page: () => const MyCustomSplashScreen()),
+                //basic profile input
+                GetPage(
+                  name: RouteUnits.answerform,
+                  page: () => const AnswerForm(),
+                ),
+                //login
+                GetPage(name: RouteUnits.login, page: () => const Login()),
+                //home
+                GetPage(
+                    name: RouteUnits.home, page: () => const HomeInfoFlow()),
+                //Profile
+                GetPage(name: RouteUnits.profile, page: () => const Profile()),
+                GetPage(
+                    name: RouteUnits.profileInfo,
+                    page: () => const ProfileInfo()),
+                GetPage(
+                    name: RouteUnits.profileDiagnosisHistory,
+                    page: () => const ProfileDiagnosisHistory()),
+                GetPage(
+                    name: RouteUnits.profileDeviceLog,
+                    page: () => const ProfileDevicelog()),
+                //Үйлчлүүлэгч үзлэгийн цаг захиалах
+                GetPage(
+                    name: RouteUnits.timeOrder + RouteUnits.hospitals,
+                    page: () => Hospitals()),
+                GetPage(
+                    name: RouteUnits.timeOrder +
+                        RouteUnits.hospitals +
+                        RouteUnits.doctors,
+                    page: () => const Doctors()),
+                GetPage(
+                    name: RouteUnits.timeOrder +
+                        RouteUnits.hospitals +
+                        RouteUnits.doctors +
+                        RouteUnits.timeSequence,
+                    page: () => const DoctorTimeSequence()),
+                //Эмнэлэгүүдийн мэдээлэл
+                GetPage(name: RouteUnits.hospitals, page: () => Hospitals()),
+                GetPage(
+                    name: RouteUnits.hospitals + RouteUnits.hospitalProfile,
+                    page: () => const HospitalProfile()),
+                //Эмч нарын мsэдээлэл
+                GetPage(name: RouteUnits.doctors, page: () => const Doctors()),
+                GetPage(
+                    name: RouteUnits.doctors + RouteUnits.doctorProfile,
+                    page: () => const DoctorProfile()),
+                //Судалгаанууд
+                GetPage(
+                    name: RouteUnits.surveyCreation,
+                    page: () => const SurveyCreation()), //SurveyCreation
+                GetPage(
+                    name: RouteUnits.surveyList + RouteUnits.individualSurvey,
+                    page: () => const SurveyUnit()),
+
+                GetPage(
+                    name:
+                        RouteUnits.surveyList + RouteUnits.individualSurveyTwin,
+                    page: () => const SurveyTwin()),
+
+                GetPage(
+                    name: RouteUnits.respondResearchers,
+                    page: () => const ResponseResearchers()),
+                GetPage(
+                    name: RouteUnits.surveyResponses,
+                    page: () => const ResMain()),
+                GetPage(
+                    name:
+                        RouteUnits.surveyResponses + RouteUnits.responseAnswers,
+                    page: () => const ResponseAnswers()),
+                //Calculators
+                GetPage(
+                    name: RouteUnits.treatmentRecipe,
+                    page: () => const TreatmentRecipe()), // CalculatorHome()
+                //Setting
+                GetPage(name: RouteUnits.setting, page: () => Setting()),
+                //Урьдчилан сэргийлэх үзлэг
+                GetPage(
+                    name: RouteUnits.preDiagnosis,
+                    page: () => const PreDiagnosis()),
+                GetPage(
+                    name: RouteUnits.calculators,
+                    page: () => const CalculatorsHome()),
+                GetPage(
+                    name: RouteUnits.myResponds,
+                    page: () => const MyResponds()),
+              ],
+            ),
+            StreamBuilder<bool>(
+                stream: bottomNavbarSwitcher,
+                builder: (context, snapshot) {
+                  if (snapshot.data == true) {
+                    return const Align(
+                      alignment: Alignment.bottomCenter,
+                      child: MyBottomNavbar(),
+                    );
+                  } else {
+                    return const SizedBox(height: 1);
+                  }
+                })
+          ],
+        ),
       ),
     );
   }
