@@ -7,7 +7,6 @@ import 'package:orh_user_app_version1/MyWidgets/survey_related/autoc_drop.dart';
 import 'package:orh_user_app_version1/MyWidgets/survey_related/option_drop.dart';
 import 'package:orh_user_app_version1/MyWidgets/survey_tools/rd_xyr_info.dart';
 import 'package:orh_user_app_version1/Models/SurveyRelated/survey_body.dart';
-import 'package:orh_user_app_version1/views/SurveyRelated/creation/survey_creation.dart';
 import '../../MyWidgets/my_textfield.dart';
 
 ///хариултыг оруулах item 
@@ -33,7 +32,7 @@ class _RecieverUnit extends State<RecieverUnit> {
           return MyTextField(hinttxt:widget.questionText, txtController:queryController.textEditingControllers[widget.questionIndex], margint: 5, marginb: 5, 
           marginr: 20, marginl: 20, questionID: widget.questionID, answerIndex: widget.questionIndex, mark: 'query'); 
         case 7:  
-        if(sCCont.TypeVis.value){
+        if(sCCont.sSwitcher.value){
           return AutocDrop(dropDownHint: widget.questionText, listitems: widget.options, 
                               currentValue: 0, questionID: widget.questionID,
                               answerIndex: widget.questionIndex);

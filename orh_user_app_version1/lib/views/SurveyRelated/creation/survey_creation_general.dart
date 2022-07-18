@@ -115,10 +115,10 @@ class _SurveyCreationGeneralState extends State<SurveyCreationGeneral> {
                     });
                     switch(newValue){
                       case 'Auto':
-                       sCCont.TypeVis.value = true;
+                       sCCont.sSwitcher.value = true;
                       break;
                       case 'энгийн':
-                       sCCont.TypeVis.value = false;
+                       sCCont.sSwitcher.value = false;
                       break;
 
                     }
@@ -129,8 +129,8 @@ class _SurveyCreationGeneralState extends State<SurveyCreationGeneral> {
                   items: dropitems(sCCont.surveyCreationTypes.result!.surveyType?? [], 'surveyType')
                 ),
                     Visibility(
-                      visible: sCCont.TypeVis.value,
-                      child: const Text('Level 1'))
+                      visible: sCCont.sSwitcher.value,
+                      child: Text(sCCont.slevel.toString()))
                   ],
                 ),
                 const SizedBox(height: 20,),

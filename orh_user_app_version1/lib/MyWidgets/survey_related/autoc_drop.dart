@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:orh_user_app_version1/Controllers/SurveyRelated/survey_creation_controller.dart';
 import '../my_text.dart';
 
-
+//auto survey vvsgeh vyd hereglegddeg drop
 class AutocDrop extends StatefulWidget {
   const AutocDrop({Key? key, required this.dropDownHint,
   required this.listitems,required this.currentValue,this.questionID, required this.answerIndex}) : super(key: key);

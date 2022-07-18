@@ -14,6 +14,9 @@ import '../../Models/SurveyRelated/survey_body.dart';
 
 class SCont extends GetxController {
   var ereklog = logger(SCont);
+
+  String autoSCombination = "";
+
   //.......................................................
   List<DropSelectVal> dropvalueList = [];
   List<DropSelectVal> statisticTypeList = [];
@@ -62,7 +65,8 @@ class SCont extends GetxController {
   SurveyAnswer surveyAnswer = SurveyAnswer();
   EResponse generalResponse = EResponse();
   Survey sNxtLvl = Survey();
-  Future answersPush() async {
+  Argu argTwin = Argu();
+  Future answersPush(int currentlvl) async {
     //message code deeree toglood olon torliin asuultuud yavuulj bolno
 
     pushDataBtn.value = false;
@@ -71,14 +75,15 @@ class SCont extends GetxController {
     surveyAnswer.surveyId = chosenSurveyId;
     surveyAnswer.fillerName = Get.find<AuthController>().user.result!.userName;
     surveyAnswer.createdDate = DateTime.now().toString().substring(0, 18);
-    surveyAnswer.slevel = survey.slevel! + 1;
+    surveyAnswer.slevel = currentlvl + 1;
 
     String connectedidStr = '';
     for (int p = 0; p < dropvalueList.length; p++) {
       connectedidStr += dropvalueList[p].numVal!;
     }
+    autoSCombination += connectedidStr;
     surveyAnswer.connectedid =
-        int.parse(connectedidStr); //num uudiig ni tsugluulj bgaad yavuulah
+        int.parse(autoSCombination); //num uudiig ni tsugluulj bgaad yavuulah
     surveyAnswer.groupid = survey.groupid;
 
     try {
@@ -108,10 +113,21 @@ class SCont extends GetxController {
               right: 5,
             ));
         GlobalHelpers.workingWithCode.clearSurveyAnswers();
-        if (generalResponse.result != null) {
+        if (generalResponse.result != null){
           sNxtLvl = Survey.fromJson(generalResponse.result);
-          Get.toNamed(RouteUnits.surveyList + RouteUnits.individualSurveyTwin);
+           argTwin.type = "nxtLevel";
+           argTwin.surveylvl = sNxtLvl.slevel;
+           argTwin.count = sNxtLvl.questions!.length;
+           argTwin.sColor = sNxtLvl.surveyClr;
+           surveyAnswer.answers = List<Answers>.generate(sNxtLvl.questions!.length, ((index) => Answers()));
+           if(sNxtLvl.slevel!.isEven){
+            Get.offNamed(RouteUnits.surveyList + RouteUnits.individualSurveyTwin, arguments: argTwin);
+           }
+           else{
+             Get.offNamed(RouteUnits.surveyList + RouteUnits.individualSurvey, arguments: argTwin);
+           }
         } else {
+          autoSCombination = "";
           Get.offAllNamed(RouteUnits.home);
         }
         break;
@@ -156,6 +172,7 @@ class SCont extends GetxController {
         arg.sColor = surveyColor;
         arg.type = "Normal";
         arg.count = survey.questions!.length;
+        arg.surveylvl = survey.slevel;
         Get.toNamed(RouteUnits.surveyList + RouteUnits.individualSurvey,
             arguments: arg);
         GlobalHelpers.bottomnavbarSwitcher.add(false);
@@ -169,7 +186,6 @@ class SCont extends GetxController {
             wrkSpaceSurveyList.value.result![chosenIndx].loading.value = false;
             break;
         }
-
         break;
     }
   }

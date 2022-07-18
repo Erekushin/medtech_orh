@@ -6,6 +6,8 @@ import '../../../Controllers/SurveyRelated/survey_creation_controller.dart';
 import '../../my_text.dart';
 import '../../../global_constant.dart';
 class OwnsUnit extends StatefulWidget {
+  ///profile хэсэг өөрийн үүсгэсэн асуумжуудын жагсаарт харагдах бөгөөд 
+  ///тэрхүү list ийг бүрдүүлж буй unit
   const OwnsUnit({ Key? key,required this.surveyName, required this.surveyId, 
                          required this.itemindx}) : super(key: key);
   final String surveyName;
@@ -29,7 +31,7 @@ class _OwnsUnitState extends State<OwnsUnit> {
                       },
                     onTap: (){
                        try{
-                           sCCont.TypeVis.value = false;
+                           sCCont.sSwitcher.value = false;
                            resCont.chosenSurveyId = widget.surveyId;
                            sCont.ownSurveyListbody.value.result![widget.itemindx].loading.value = true;
                            resCont.researchers(widget.itemindx);

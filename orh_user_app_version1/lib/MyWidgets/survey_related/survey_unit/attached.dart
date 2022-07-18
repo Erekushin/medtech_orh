@@ -5,7 +5,13 @@ import '../../../Controllers/SurveyRelated/survey_controller.dart';
 import '../../../Controllers/SurveyRelated/survey_creation_controller.dart';
 import '../../../global_constant.dart';
 import '../../my_text.dart';
+
+
 class AttachedsUnit extends StatefulWidget {
+///хэрэглэгч өөрийн бөглөсөн асуумнуудыг 
+///profile -> responses 
+///хэсэгээс харах боломжтой
+///тэр хэсэгт харагдах асуумжуудыг жагсаалтыг бүрдүүлж буй unit юм
   const AttachedsUnit({ Key? key,required this.surveyName, required this.surveyId, 
                          required this.itemindx}) : super(key: key);
   final String surveyName;
@@ -23,7 +29,7 @@ class _AttachedsUnitUnitState extends State<AttachedsUnit> {
                   return GestureDetector(
                     onTap: (){
                        try{
-                           sCCont.TypeVis.value = false;
+                           sCCont.sSwitcher.value = false;
                            sCont.attachedList.value.result![widget.itemindx].loading.value = true;
                            resCont.chosenSurveyId = widget.surveyId;
                            resCont.researchers(widget.itemindx);

@@ -16,11 +16,10 @@ class SurveyTwin extends StatefulWidget {
   @override
   State<SurveyTwin> createState() => _SurveyTwin();
 }
-
 class _SurveyTwin extends State<SurveyTwin> {
   var argu = Get.arguments as Argu;
   var pageController = PageController();
-  final queryController = Get.find<SCont>();
+  final sCont = Get.find<SCont>();
   final settingsController = Get.find<SettingController>();
   @override
   void initState() {
@@ -39,7 +38,8 @@ class _SurveyTwin extends State<SurveyTwin> {
           itemBuilder: (context, index) {
             return TwinPageUnit(
               pageIndex: index,
-              pageColor: argu.sColor!,
+              pageColor: sCont.sNxtLvl.surveyClr!,
+              surveylvl: argu.surveylvl!,
             );
           }),
     ));
@@ -49,10 +49,11 @@ class _SurveyTwin extends State<SurveyTwin> {
 ///судалгааны асуултуудыг харуулах хуудас
 class TwinPageUnit extends StatefulWidget {
   const TwinPageUnit(
-      {Key? key, required this.pageIndex, required this.pageColor})
+      {Key? key, required this.pageIndex, required this.pageColor, required this.surveylvl})
       : super(key: key);
   final int pageIndex;
   final String pageColor;
+  final int surveylvl;
   @override
   State<TwinPageUnit> createState() => _TwinPageUnitState();
 }
@@ -81,6 +82,9 @@ class _TwinPageUnitState extends State<TwinPageUnit> {
       case "Auto":
         questions = sCCont.surveys[argu.key!].questions;
         break;
+      case "nxtLevel":
+        questions = sCont.sNxtLvl.questions;
+      break;  
     }
 
     int pageClrInt = int.parse(widget.pageColor);
@@ -91,8 +95,9 @@ class _TwinPageUnitState extends State<TwinPageUnit> {
         return true;
       },
       child: Container(
-        decoration: BoxDecoration(color: Colors.purple //Color(pageClrInt)
-            ),
+        decoration: BoxDecoration(
+          color: Color(int.parse(sCont.sNxtLvl.surveyClr!))
+          ),
         child: Stack(
           children: [
             SingleChildScrollView(
@@ -111,7 +116,7 @@ class _TwinPageUnitState extends State<TwinPageUnit> {
                         //count aa ogoh
                         itemCount: widget.pageIndex ==
                                 GlobalHelpers.surveyPageCount - 1
-                            ? argu.count! % AllSizes.pageQuestionCount != 0
+                            ? argu.count!% AllSizes.pageQuestionCount != 0
                                 ? argu.count! % AllSizes.pageQuestionCount
                                 : AllSizes.pageQuestionCount
                             : AllSizes.pageQuestionCount,
@@ -144,7 +149,7 @@ class _TwinPageUnitState extends State<TwinPageUnit> {
                               child: InkWell(
                                 onTap: () {
                                   if (sCont.pushDataBtn.value) {
-                                    if (sCCont.TypeVis.value) {
+                                    if (sCCont.sSwitcher.value) {
                                       GlobalHelpers.workingWithCode
                                           .clearSurveyAnswers();
 
@@ -159,7 +164,7 @@ class _TwinPageUnitState extends State<TwinPageUnit> {
                                       Get.toNamed(RouteUnits.surveyCreation,
                                           arguments: 1);
                                     } else {
-                                      sCont.answersPush();
+                                      sCont.answersPush(widget.surveylvl);
                                     }
                                     Future.delayed(const Duration(seconds: 3),
                                         () {

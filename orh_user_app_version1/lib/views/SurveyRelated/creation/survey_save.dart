@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart' as getx;
 import 'package:orh_user_app_version1/Controllers/auth_controller.dart';
 import 'package:orh_user_app_version1/MyWidgets/my_text.dart';
+import 'package:orh_user_app_version1/global_helpers.dart';
 import '../../../Controllers/SurveyRelated/survey_creation_controller.dart';
 import '../../../MyWidgets/my_button.dart';
 import '../../../global_constant.dart';
@@ -20,13 +21,14 @@ class _SurveyInfoCheckState extends State<SurveyInfoCheck> {
   var sCCont = getx.Get.find<CreationCont>();
   var loginController = getx.Get.find<AuthController>();
   int _iterations = 600;
+  Argu arg = Argu();
   @override
   Widget build(BuildContext context) {
       final Graph graph = Graph();
     // ! Create nodes
     final nodes = <Node>[];
     for (int i = 0; i < sCCont.surveys.length; ++i){
-      nodes.add(Node.Id(sCCont.surveys[i].connectedid));
+      nodes.add(Node.Id(sCCont.surveys.elementAt(i).connectedid));
     }
     for(int w = 0; w < sCCont.surveys.length; w++){
       for(int q = w+1; q < sCCont.surveys.length; q++){
@@ -140,13 +142,16 @@ class _SurveyInfoCheckState extends State<SurveyInfoCheck> {
                                            graph: graph,
                                            builder: (node) {
                                              // Render the node as any widget
-                                             final idx = node.key!.value as int;
+                                             final connectedId = node.key!.value as int;
                                              return Chip(
                                                label: InkWell(
                                                  onTap: (){
-                                                   print('dfdfdfdfdfdf');
+                                                  print('dfdffd');
+                                                   int idx = sCCont.surveys.indexOf(sCCont.surveys.firstWhere((element) => element.connectedid == connectedId));
+                                                   sCCont.surveyCreate("levelupOnChosen", idx);
                                                  },
-                                                 child: Text('хослол $idx')),
+                                                 
+                                                 child: Text('асуумж $connectedId')),
                                                backgroundColor: Colors.primaries[Random().nextInt(Colors.primaries.length)][100],
                                              );
                                            },
@@ -167,19 +172,19 @@ class _SurveyInfoCheckState extends State<SurveyInfoCheck> {
                   children: [
               InkWell(
                 onTap: (){
-                  sCCont.surveyCreate("variationup");
+                  sCCont.surveyCreate("variationup", 0);
                 },
                 child: myBtn(CommonColors.deepPink, 200, 50, CommonColors.deepPink, Colors.white, 'Хувилбар нэмэх'),
               ),
               InkWell(
                 onTap: (){
-                  sCCont.surveyCreate("levelup");
+                  sCCont.surveyCreate("levelup", 0);
                 },
                 child: myBtn(CommonColors.geregeBlue, 200, 50, CommonColors.geregeBlue, Colors.white, 'Дараагийн шат'),
               ),
               InkWell(
                 onTap: (){
-                  sCCont.surveyCreate("save");
+                  sCCont.surveyCreate("save", 0);
                 },
                 child: myBtn(CommonColors.yellow, 200, 50, CommonColors.yellow, Colors.white, 'Судалгааг хадаглах'),
               ),

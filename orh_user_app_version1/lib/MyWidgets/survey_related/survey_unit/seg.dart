@@ -5,6 +5,7 @@ import '../../../Controllers/SurveyRelated/survey_creation_controller.dart';
 import '../../my_text.dart';
 import '../../../global_constant.dart';
 class SegsUnit extends StatefulWidget {
+  ///segmented хэсэгт харагдах асуултын жагсаалтыг үүсгэж буй unit юм.
   const SegsUnit({ Key? key,required this.surveyName, required this.surveyId, 
                          required this.itemindx, required this.surveyColor}) : super(key: key);
 
@@ -23,7 +24,7 @@ class _SegsUnitState extends State<SegsUnit> {
                   return GestureDetector(
                     onTap: (){
                        try{
-                           sCCont.TypeVis.value = false;
+                           sCCont.sSwitcher.value = false;
                            surveyController.chosenSurveyId = widget.surveyId;
                            surveyController.wrkSpaceSurveyList.value.result![widget.itemindx].loading.value = true;
                            surveyController.surveyGet(widget.itemindx, widget.surveyColor, RouteUnits.segmented);

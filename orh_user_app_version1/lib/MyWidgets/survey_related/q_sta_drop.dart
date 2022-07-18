@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import '../../Controllers/SurveyRelated/survey_creation_controller.dart';
 import '../my_text.dart';
 
-
+//question deer statistic nemeh heregtei boloh vyd hereglegdeh drop
 class QStaDrop extends StatefulWidget {
   const QStaDrop({Key? key, required this.dropDownHint,
   required this.listitems, required this.answerIndex, this.callBackFunction}) : super(key: key);

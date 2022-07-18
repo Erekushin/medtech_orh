@@ -3,6 +3,9 @@ import 'package:get/get.dart';
 import '../../Controllers/SurveyRelated/survey_creation_controller.dart';
 import '../my_text.dart';
 
+
+
+//question vvsgeh vyd hereglegdeh drop
 class QTypeDrop extends StatefulWidget {
   const QTypeDrop({Key? key, required this.dropDownHint,
   required this.listitems,

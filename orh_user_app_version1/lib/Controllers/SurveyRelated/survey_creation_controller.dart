@@ -1,20 +1,16 @@
 import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
-import 'package:orh_user_app_version1/Controllers/SurveyRelated/survey_controller.dart';
 import 'package:orh_user_app_version1/Helpers/logging.dart';
 import 'package:orh_user_app_version1/Models/SurveyRelated/survey_creation_types.dart';
 import 'package:orh_user_app_version1/Models/general_response.dart';
 import 'package:orh_user_app_version1/global_constant.dart';
 import 'package:orh_user_app_version1/global_helpers.dart';
-import '../../Models/SurveyRelated/survey_answer_body.dart';
 import '../../Models/SurveyRelated/survey_body.dart';
 import '../auth_controller.dart';
 
 class CreationCont extends GetxController {
 final ereklog = logger(CreationCont);
-
-
   List<DropSelectVal> qTypes = [];
   List<DropSelectVal> staTypes = [];
   List<TextEditingController> qTxts = [];
@@ -31,7 +27,10 @@ Survey surveyCreationbody = Survey();
  var surveyNametxtCont = TextEditingController();
  var surveyInputLimitation = TextEditingController();
  var limitCountVis = false.obs;
- var TypeVis = false.obs;
+
+ ///зүгээр асуумж бөглөж байгаа болон auto survey үүсгэж байгаа 
+ ///эсэхийг илэрхийлэх switcher
+ var sSwitcher = false.obs;
  String strCombination = '0';
  List<CombUnit> strCombList = [];
 
@@ -62,6 +61,7 @@ Future getSurveyCreationTypes()async{
   }
 }
 Survey lastS = Survey();
+Survey chosenNodeSurvey = Survey();
 List<Survey> surveys = [];
 Argu arg = Argu();
 List<Survey>? filteredList2;
@@ -77,7 +77,7 @@ findParentNode(int currentlvl){
   filteredList2 = filteredList;
 }
 
-Future surveyCreate(String key) async{
+Future surveyCreate(String key, int idx) async{
                   surveyCreationbody.name = surveyNametxtCont.text;
                   if( surveyCreationbody.name!= null && 
                       surveyCreationbody.surveyPrivacyLevel != null &&
@@ -148,6 +148,21 @@ Future surveyCreate(String key) async{
                              arg.key = surveys.indexOf(surveys.last);
                              strCombList = List<CombUnit>.generate(surveys[surveys.indexOf(surveys.last)].questions!.length, ((index) => CombUnit()));
                              Get.toNamed(RouteUnits.surveyList + RouteUnits.individualSurvey, arguments: arg); 
+                             break;
+                             case "levelupOnChosen":
+                             chosenNodeSurvey  = surveys.elementAt(idx);
+                             lastS = Survey.fromJson(generalResponse.result);
+                             surveys.add(lastS);
+                             surveyNametxtCont.text = surveys.last.name!;
+                             slevel = chosenNodeSurvey.slevel! + 1;
+                             findParentNode(slevel!);
+                             surveyCreationbody.preconnected = filteredList2!.last.connectedid;
+
+
+                             arg.count = chosenNodeSurvey.questions!.length;
+                             arg.key = idx;
+                             strCombList = List<CombUnit>.generate(surveys[idx].questions!.length, ((index) => CombUnit()));
+                             Get.toNamed(RouteUnits.surveyList + RouteUnits.individualSurvey, arguments: arg);
                              break;
                              case "save":
                               Get.offAllNamed(RouteUnits.home);

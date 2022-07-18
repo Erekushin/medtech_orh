@@ -27,5 +27,6 @@ class Argu {
   String? type;
   int? count;
   int? key;
-  Argu({sColor, type, count, key});
+  int? surveylvl;
+  Argu({sColor, type, count, key, surveylvl});
 }

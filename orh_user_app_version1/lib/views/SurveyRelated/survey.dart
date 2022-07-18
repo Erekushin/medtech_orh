@@ -20,6 +20,7 @@ class _SurveyUnit extends State<SurveyUnit> {
   var argu = Get.arguments as Argu;
   var pageController = PageController();
   final queryController = Get.find<SCont>();
+  var sCCont = Get.find<CreationCont>();
   final settingsController = Get.find<SettingController>();
   @override
   void initState() {
@@ -34,7 +35,7 @@ class _SurveyUnit extends State<SurveyUnit> {
               controller: pageController,
               itemCount: GlobalHelpers.surveyPageCount,
               itemBuilder: (context, index){
-                return PageUnit(pageIndex: index, pageColor: argu.sColor!,);
+                return PageUnit(pageIndex: index, pageColor: argu.sColor!, currentlvl: argu.surveylvl!,);
               }
               ),
       )
@@ -43,9 +44,10 @@ class _SurveyUnit extends State<SurveyUnit> {
 }
 ///судалгааны асуултуудыг харуулах хуудас
 class PageUnit extends StatefulWidget {
-  const PageUnit({ Key? key,required this.pageIndex, required this.pageColor }) : super(key: key);
+  const PageUnit({ Key? key,required this.pageIndex, required this.pageColor, required this.currentlvl }) : super(key: key);
   final int pageIndex;
   final String pageColor;
+  final int currentlvl;
   @override
   State<PageUnit> createState() => _PageUnitState();
 }
@@ -73,6 +75,9 @@ class _PageUnitState extends State<PageUnit> {
       break;
       case "Auto":
       questions = sCCont.surveys[argu.key!].questions;
+      break;
+      case "nxtLevel":
+        questions = sCont.sNxtLvl.questions;
       break;
     }
     
@@ -122,7 +127,7 @@ class _PageUnitState extends State<PageUnit> {
                         child: InkWell(
                           onTap: (){
                              if(sCont.pushDataBtn.value){
-                              if(sCCont.TypeVis.value){
+                              if(sCCont.sSwitcher.value){
                                 GlobalHelpers.workingWithCode.clearSurveyAnswers();
 
                                 //level 2 deer daraahiig songoj bolohgvi bh uchir bvgdiig ni null
@@ -133,7 +138,7 @@ class _PageUnitState extends State<PageUnit> {
                                 Get.toNamed(RouteUnits.surveyCreation, arguments: 1);
                               }
                               else{
-                              sCont.answersPush();
+                              sCont.answersPush(widget.currentlvl);
                               }
                               Future.delayed(const Duration(seconds: 3),(){sCont.pushDataBtn.value = true;});
                              }
