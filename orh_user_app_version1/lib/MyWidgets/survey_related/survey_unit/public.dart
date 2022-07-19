@@ -7,12 +7,14 @@ import '../../../global_constant.dart';
 class PublicsUnit extends StatefulWidget {
   /// public content flow дээр харагдах survey unit юм.
   const PublicsUnit({ Key? key,required this.surveyName, required this.surveyId, 
-                         required this.itemindx, required this.fromRoute, required this.surveyColor}) : super(key: key);
+                         required this.itemindx, required this.fromRoute, required this.surveyColor,
+                         required this.sType}) : super(key: key);
   final String fromRoute;
   final String surveyName;
   final int surveyId;
   final int itemindx;
   final String surveyColor;
+  final int sType;
   @override
   State<PublicsUnit> createState() => _PublicsUnitState();
 }
@@ -24,6 +26,7 @@ class _PublicsUnitState extends State<PublicsUnit> {
                   return GestureDetector(
                     onTap: (){
                        try{
+                           sCont.chosenSType = widget.sType;
                            sCCont.sSwitcher.value = false;
                            sCont.chosenSurveyId = widget.surveyId;
                            sCont.publicSurveyList.value.result![widget.itemindx].loading.value = true;

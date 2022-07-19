@@ -7,12 +7,14 @@ import '../../../global_constant.dart';
 class SegsUnit extends StatefulWidget {
   ///segmented хэсэгт харагдах асуултын жагсаалтыг үүсгэж буй unit юм.
   const SegsUnit({ Key? key,required this.surveyName, required this.surveyId, 
-                         required this.itemindx, required this.surveyColor}) : super(key: key);
+                         required this.itemindx, required this.surveyColor,
+                         required this.sType}) : super(key: key);
 
   final String surveyName;
   final int surveyId;
   final int itemindx;
   final String surveyColor;
+  final int sType;
   @override
   State<SegsUnit> createState() => _SegsUnitState();
 }
@@ -20,14 +22,15 @@ class _SegsUnitState extends State<SegsUnit> {
   var  sCCont = Get.find<CreationCont>();
   @override
   Widget build(BuildContext context) {
-    return GetX<SCont>(builder: (surveyController){
+    return GetX<SCont>(builder: (sCont){
                   return GestureDetector(
                     onTap: (){
                        try{
+                           sCont.chosenSType = widget.sType;
                            sCCont.sSwitcher.value = false;
-                           surveyController.chosenSurveyId = widget.surveyId;
-                           surveyController.wrkSpaceSurveyList.value.result![widget.itemindx].loading.value = true;
-                           surveyController.surveyGet(widget.itemindx, widget.surveyColor, RouteUnits.segmented);
+                           sCont.chosenSurveyId = widget.surveyId;
+                           sCont.wrkSpaceSurveyList.value.result![widget.itemindx].loading.value = true;
+                           sCont.surveyGet(widget.itemindx, widget.surveyColor, RouteUnits.segmented);
                        }
                        catch(e){
                         Get.snackbar('Алдаа', '$e', snackPosition: SnackPosition.BOTTOM,
@@ -39,7 +42,7 @@ class _SegsUnitState extends State<SegsUnit> {
                   height: GeneralMeasurements.deviceHeight*.15,
                   decoration: BoxDecoration(
                     border: Border.all(
-                      color: surveyController.wrkSpaceSurveyList.value.result![widget.itemindx].borderColor.value),
+                      color: sCont.wrkSpaceSurveyList.value.result![widget.itemindx].borderColor.value),
                   color: Colors.white,
                   boxShadow: [
                     BoxShadow(
@@ -61,7 +64,7 @@ class _SegsUnitState extends State<SegsUnit> {
                     width: GeneralMeasurements.deviceWidth*.7,
                     child: myText(widget.surveyName, 17, 1, FontWeight.w700),
                   ),
-                  surveyController.wrkSpaceSurveyList.value.result![widget.itemindx].loading.value? const SizedBox(
+                  sCont.wrkSpaceSurveyList.value.result![widget.itemindx].loading.value? const SizedBox(
                     width: 20,
                     height: 20,
                     child: CircularProgressIndicator(strokeWidth: 3,)) 
@@ -86,7 +89,7 @@ class _SegsUnitState extends State<SegsUnit> {
                               //   child: Image.memory(Uint8List.fromList(surveyController.wrkSpaceSurveyList.value.result![widget.itemindx].creatorPicture!)))
                          ),
                           const SizedBox(width: 10,),
-                    Text(surveyController.wrkSpaceSurveyList.value.result![widget.itemindx].creatorName!, style: TextStyle(fontWeight: FontWeight.bold),)      
+                    Text(sCont.wrkSpaceSurveyList.value.result![widget.itemindx].creatorName!, style: const TextStyle(fontWeight: FontWeight.bold),)      
                   ],),
                   // Row(
                   //   children: [

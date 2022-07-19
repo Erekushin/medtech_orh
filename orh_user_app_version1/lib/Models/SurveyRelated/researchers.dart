@@ -4,13 +4,11 @@ class RLst {
 
   RLst({this.result});
 
-  RLst.fromJson(Map<String, dynamic> json) {
-    if (json['result'] != null) {
-      result = <Researcher>[];
-      json['result'].forEach((v) {
+  RLst.fromJson(List<dynamic> json) {
+     result = <Researcher>[];
+      for (var v in json) {
         result!.add(Researcher.fromJson(v));
-      });
-    }
+      }
   }
 }
 
@@ -19,12 +17,12 @@ class Researcher{
   Researcher({this.name});
 
   Researcher.fromJson(Map<String, dynamic> json) {
-    name = json['name'];
+    name = json['creator_name'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['name'] = name;
+    data['creator_name'] = name;
     return data;
   }
 }

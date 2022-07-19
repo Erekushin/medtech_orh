@@ -217,7 +217,7 @@ class _ProfileState extends State<Profile> {
                 ),
               ),
                Visibility(
-                visible: profileController.ownSurveyListbody.value.result == null? true : false,
+                visible: profileController.ownSurveyListbody.value.result!.isEmpty? true : false,
                 child: Image.asset('assets/images/empty_box.jpg')
                 )
               ],

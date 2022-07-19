@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:orh_user_app_version1/Controllers/SurveyRelated/survey_controller.dart';
 import '../../../Controllers/SurveyRelated/response.dart';
-import '../../../Controllers/SurveyRelated/survey_controller.dart';
 import '../../../MyWidgets/my_text.dart';
 import '../../../global_constant.dart';
 import '../../../MyWidgets/waiting_screen.dart';
@@ -19,7 +17,7 @@ class _ResMainState extends State<ResMain> {
   var resCont = Get.find<ResCont>();
   staView(){
     if(resCont.statisticAnswer.result![0].answers != null && resCont.statisticAnswer.result!.length != 1){
-      return const ResSta();
+      return const ResSta();  
     }
     else{
       return const WaitingScreen();
@@ -108,6 +106,8 @@ class _ResStaState extends State<ResSta> {
      double l_interval = 1;
   @override
   void initState() {
+
+      //doorh hesegt min bolon max value aa olj bgaa
       minYvalue = resCont.statisticAnswer.result![0].answers![0].numberAnswer!.toDouble();
       for(int a = 0; a<resCont.statisticAnswer.result!.length; a++){
         for(int w = 0; w < resCont.statisticAnswer.result![a].answers!.length; w++){
@@ -118,6 +118,9 @@ class _ResStaState extends State<ResSta> {
            minYvalue = resCont.statisticAnswer.result![a].answers![w].numberAnswer!.toDouble();
            }
         }
+    }
+    if(maxYvalue == minYvalue){
+      maxYvalue = minYvalue + minYvalue;
     }
     for(int b = 0; b < resCont.surveyResponses.result!.length; b++){
     }

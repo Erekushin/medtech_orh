@@ -358,13 +358,19 @@ Widget configureBtns(int index){
              InkWell(// dooshoo nemeh
                onTap: (){
                  if(sCreCont.newQuestionList[index].type != null){
-                   int i = index+1;
+                   if(sCreCont.torolStr == "Auto" && sCreCont.newQuestionList[index].type != 7){
+                    Get.snackbar('', "асуултыг сонголт хэлбэрээр үүсгэнэ үү", snackPosition: SnackPosition.BOTTOM,
+                       colorText: Colors.white, backgroundColor: Colors.grey[900], margin: const EdgeInsets.only(left: 5, right: 5, bottom: 80));
+                   }
+                   else{
+                     int i = index+1;
                    sCreCont.qTypes.insert(i,DropSelectVal());
                    sCreCont.staTypes.insert(i, DropSelectVal());
                    sCreCont.qTxts.insert(i,TextEditingController());
                    sCreCont.newQuestionList.insert(i, Questions(options: [],
                    statistics: sCreCont.surveyCreationTypes.result!.statistic!,
                    questionType: sCreCont.surveyCreationTypes.result!.questionType!));
+                   }
                  }
                  else{
                    Get.snackbar('Талбаруудын утга хоосон байна', "Асуултын төрлийг сонгоно уу", snackPosition: SnackPosition.BOTTOM,

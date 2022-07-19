@@ -17,6 +17,10 @@ class SCont extends GetxController {
 
   String autoSCombination = "";
 
+  ///survey deer darah vyd daragdsan survey iin type 
+  ///buyu auto normal esehiin id iig end hadaglana
+  int chosenSType = 0;
+
   //.......................................................
   List<DropSelectVal> dropvalueList = [];
   List<DropSelectVal> statisticTypeList = [];
@@ -44,6 +48,7 @@ class SCont extends GetxController {
         listJBody(userId, searchTxt, phone), messageCode, UriAdresses.medCore);
     surveyListGen = EResponse.fromJson(jsonDecode(data));
     ereklog.wtf(data);
+    surveyListGen.result ??= [];
     switch (routekey) {
       case '/home':
         publicSurveyList.value = SurveyListBody.fromJson(surveyListGen.result);
@@ -67,8 +72,6 @@ class SCont extends GetxController {
   Survey sNxtLvl = Survey();
   Argu argTwin = Argu();
   Future answersPush(int currentlvl) async {
-    //message code deeree toglood olon torliin asuultuud yavuulj bolno
-
     pushDataBtn.value = false;
     surveyAnswer.researcherGeregeID =
         Get.find<AuthController>().user.result!.userId;
@@ -78,13 +81,16 @@ class SCont extends GetxController {
     surveyAnswer.slevel = currentlvl + 1;
 
     String connectedidStr = '';
-    for (int p = 0; p < dropvalueList.length; p++) {
+    if(chosenSType == 10){
+      for (int p = 0; p < dropvalueList.length; p++) {
       connectedidStr += dropvalueList[p].numVal!;
+      }
+      autoSCombination += connectedidStr;
+      surveyAnswer.connectedid =
+          int.parse(autoSCombination); //num uudiig ni tsugluulj bgaad yavuulah
+      surveyAnswer.groupid = survey.groupid;
     }
-    autoSCombination += connectedidStr;
-    surveyAnswer.connectedid =
-        int.parse(autoSCombination); //num uudiig ni tsugluulj bgaad yavuulah
-    surveyAnswer.groupid = survey.groupid;
+    
 
     try {
       var jsondata = await GlobalHelpers.postRequestGeneral
@@ -208,6 +214,18 @@ class SCont extends GetxController {
               right: 5,
             ));
         ownSurveyListbody.value.result!.removeAt(chosenSurveyIndx);
+        break;
+        case '400':
+        Get.snackbar('алдаа гарлаа', generalResponse.message!,
+            snackPosition: SnackPosition.BOTTOM,
+            colorText: Colors.white,
+            backgroundColor: Colors.grey[900],
+            margin: EdgeInsets.only(
+              bottom: GeneralMeasurements.snackbarBottomMargin,
+              left: 5,
+              right: 5,
+            ));
+        ownSurveyListbody.value.result![chosenSurveyIndx].borderColor.value = Colors.white;
         break;
     }
   }

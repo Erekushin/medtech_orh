@@ -10,8 +10,7 @@ class SurveyCreationTypes {
     code = json['code'];
     status = json['status'];
     message = json['message'];
-    result =
-        json['result'] != null ? new Result.fromJson(json['result']) : null;
+    result = json['result'] != null ? new Result.fromJson(json['result']) : null;
   }
 }
 

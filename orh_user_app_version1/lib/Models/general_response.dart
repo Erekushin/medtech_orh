@@ -3,7 +3,7 @@ class EResponse{
   String? status;
   String? message;
   var result;
-  EResponse({this.code, this.status, this.message, this.result});
+  EResponse({this.code, this.status, this.message,this.result});
   EResponse.fromJson(Map<String, dynamic> json) {
     code = json['code'].toString();
     status = json['status'];

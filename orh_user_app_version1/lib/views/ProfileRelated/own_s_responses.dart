@@ -27,7 +27,7 @@ class _MyRespondsState extends State<MyResponds> {
         }),
       ),
        Visibility(
-                visible: sCont.attachedList.value.result == null? true : false,
+                visible: sCont.attachedList.value.result!.isEmpty? true : false,
                 child: Image.asset('assets/images/empty_box.jpg')
                 )
         ],

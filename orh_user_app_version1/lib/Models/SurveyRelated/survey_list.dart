@@ -7,8 +7,8 @@ class SurveyListBody {
 
   SurveyListBody.fromJson(List<dynamic> json) {
     result = <Survey>[];
-      json.forEach((v) {
+      for (var v in json) {
         result!.add(Survey.fromJson(v));
-      });
+      }
   }
 }

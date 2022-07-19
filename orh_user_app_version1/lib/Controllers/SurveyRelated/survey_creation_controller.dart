@@ -118,6 +118,12 @@ Future surveyCreate(String key, int idx) async{
                            switch(key){
                              case "variationup":
                              lastS = Survey.fromJson(generalResponse.result);
+                             if(lastS.slevel == 1){
+                              Get.snackbar('', 'level 1 бүхий судалгаан дээр хувилбар нэмэх боломжгүй', snackPosition: SnackPosition.BOTTOM,
+                              colorText: Colors.white, backgroundColor: Colors.grey[900], margin: const EdgeInsets.all(5));
+                              Get.offAllNamed(RouteUnits.home);
+                              break;
+                             }
                              surveys.add(lastS);
                              surveyNametxtCont.text = surveys.last.name!;
                              slevel = surveys.last.slevel;
@@ -128,6 +134,7 @@ Future surveyCreate(String key, int idx) async{
                              arg.type = "Auto";
                              arg.count = filteredList2!.last.questions!.length;
                              arg.key = surveys.indexOf(filteredList2!.last);
+                             arg.surveylvl = filteredList2!.last.slevel;
                              strCombList = List<CombUnit>.generate(surveys[surveys.indexOf(surveys.last) -1].questions!.length, ((index) => CombUnit()));
                              Get.toNamed(RouteUnits.surveyList + RouteUnits.individualSurvey, arguments: arg);
                              break;
@@ -146,6 +153,7 @@ Future surveyCreate(String key, int idx) async{
                              arg.type = "Auto";
                              arg.count = surveys.last.questions!.length;
                              arg.key = surveys.indexOf(surveys.last);
+                             arg.surveylvl = surveys.last.slevel;
                              strCombList = List<CombUnit>.generate(surveys[surveys.indexOf(surveys.last)].questions!.length, ((index) => CombUnit()));
                              Get.toNamed(RouteUnits.surveyList + RouteUnits.individualSurvey, arguments: arg); 
                              break;
@@ -161,10 +169,15 @@ Future surveyCreate(String key, int idx) async{
 
                              arg.count = chosenNodeSurvey.questions!.length;
                              arg.key = idx;
+                             arg.surveylvl = chosenNodeSurvey.slevel;
                              strCombList = List<CombUnit>.generate(surveys[idx].questions!.length, ((index) => CombUnit()));
                              Get.toNamed(RouteUnits.surveyList + RouteUnits.individualSurvey, arguments: arg);
                              break;
                              case "save":
+                             slevel = 1;
+                             surveys = [];
+                             filteredList2 = [];
+                             strCombList = [];
                               Get.offAllNamed(RouteUnits.home);
                              break;
                            }

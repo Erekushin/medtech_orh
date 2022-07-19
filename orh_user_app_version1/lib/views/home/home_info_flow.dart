@@ -495,13 +495,15 @@ class _HomePagePublicState extends State<HomePagePublic> {
                           itemBuilder: (context, index){
                             var item = surveyControllerList.publicSurveyList.value.result![index];
                             return PublicsUnit(surveyName: item.name?? "", surveyId: item.id!, 
-                                                    itemindx: index, fromRoute: "home", surveyColor: item.surveyClr?? '0xFFFFFFFF',);
+                                                    itemindx: index, fromRoute: "home", 
+                                                    surveyColor: item.surveyClr?? '0xFFFFFFFF',
+                                                    sType: item.surveyType!,);
                           } 
                           ),
                 ),
               ),
               Visibility(
-                visible: surveyControllerList.publicSurveyList.value.result == null? true : false,
+                visible: surveyControllerList.publicSurveyList.value.result!.isEmpty? true : false,
                 child: Image.asset('assets/images/empty_box.jpg')
                 )
               ],
@@ -553,13 +555,14 @@ class _HomePageWorkSpaceState extends State<HomePageWorkSpace> {
                           itemBuilder: (context, index){
                             var item = surveyControllerList.wrkSpaceSurveyList.value.result![index];
                             return SegsUnit(surveyName: item.name?? "", surveyId: item.id!, 
-                                                       itemindx: index, surveyColor: item.surveyClr?? '0xFFFFFFFF',);
+                                            itemindx: index, surveyColor: item.surveyClr?? '0xFFFFFFFF',
+                                            sType: item.surveyType!,);
                           } 
                           ),
                 ),
               ),
                  Visibility(
-                visible: surveyControllerList.wrkSpaceSurveyList.value.result == null? true : false,
+                visible: surveyControllerList.wrkSpaceSurveyList.value.result!.isEmpty? true : false,
                 child: Image.asset('assets/images/empty_box.jpg')
                 )
               ],
