@@ -22,13 +22,13 @@ class MyTextField extends StatefulWidget {
 }
 
 class _MyTextFieldState extends State<MyTextField> {
-   final surveyController = Get.find<SCont>(); 
+   final sCont = Get.find<SCont>(); 
   final settingsController = Get.find<SettingController>();
   @override
   void initState() {
     super.initState();
     if(widget.questionID != "null"){
-      surveyController.surveyAnswer.answers![widget.answerIndex].questionId = int.parse(widget.questionID);
+      sCont.surveyAnswer.answers![widget.answerIndex].questionId = int.parse(widget.questionID);
     }
   }
   @override
@@ -39,8 +39,8 @@ class _MyTextFieldState extends State<MyTextField> {
     padding: EdgeInsets.only(top: widget.margint, bottom: widget.marginb, left: widget.marginr, right: widget.marginl),
     child: TextField(
       onChanged: (value){
-          surveyController.surveyAnswer.answers![widget.answerIndex].questionId = int.parse(widget.questionID);
-          surveyController.surveyAnswer.answers![widget.answerIndex].answerText = value;
+          sCont.surveyAnswer.answers![widget.answerIndex].questionId = int.parse(widget.questionID);
+          sCont.surveyAnswer.answers![widget.answerIndex].answerText = value;
         },
       controller: widget.txtController,
       decoration: InputDecoration(
@@ -57,8 +57,8 @@ class _MyTextFieldState extends State<MyTextField> {
       keyboardType: TextInputType.number,
       onChanged: (value){
         if(value != ""){
-          surveyController.surveyAnswer.answers![widget.answerIndex].questionId = int.parse(widget.questionID);
-          surveyController.surveyAnswer.answers![widget.answerIndex].answerDigit = int. parse(value);
+          sCont.surveyAnswer.answers![widget.answerIndex].questionId = int.parse(widget.questionID);
+          sCont.surveyAnswer.answers![widget.answerIndex].answerDigit = int. parse(value);
         }
         },
       controller: widget.txtController,

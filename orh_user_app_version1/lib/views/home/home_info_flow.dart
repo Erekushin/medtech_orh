@@ -317,36 +317,36 @@ class _HomeInfoFlowState extends State<HomeInfoFlow> with SingleTickerProviderSt
             child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                // InkWell(
-                //   highlightColor: Colors.transparent,
-                //   splashColor: Colors.transparent,
-                //   onTap: () {
-                //     Get.toNamed(RouteUnits.setting, arguments: RouteUnits.fromHome);
-                //     GlobalHelpers.bottomnavbarSwitcher.add(true);
+                InkWell(
+                  highlightColor: Colors.transparent,
+                  splashColor: Colors.transparent,
+                  onTap: () {
+                    Get.toNamed(RouteUnits.setting, arguments: RouteUnits.fromHome);
+                    GlobalHelpers.bottomnavbarSwitcher.add(true);
 
-                //   },
-                //   child: ClipRRect(
-                //     borderRadius: const BorderRadius.all(Radius.circular(99)),
-                //     child: BackdropFilter(
-                //       filter: ImageFilter.blur(sigmaY: 5, sigmaX: 5),
-                //       child: Container(
-                //         height: GeneralMeasurements.deviceWidth / 8.5,
-                //         width: GeneralMeasurements.deviceWidth / 8.5,
-                //         decoration: BoxDecoration(
-                //           color: Colors.black.withOpacity(.05),
-                //           shape: BoxShape.circle,
-                //         ),
-                //         child: Center(
-                //           child: Icon(
-                //             Icons.settings,
-                //             size: GeneralMeasurements.deviceWidth / 17,
-                //             color: Colors.black.withOpacity(.6),
-                //           ),
-                //         ),
-                //       ),
-                //     ),
-                //   ),
-                // ),
+                  },
+                  child: ClipRRect(
+                    borderRadius: const BorderRadius.all(Radius.circular(99)),
+                    child: BackdropFilter(
+                      filter: ImageFilter.blur(sigmaY: 5, sigmaX: 5),
+                      child: Container(
+                        height: GeneralMeasurements.deviceWidth / 8.5,
+                        width: GeneralMeasurements.deviceWidth / 8.5,
+                        decoration: BoxDecoration(
+                          color: Colors.black.withOpacity(.05),
+                          shape: BoxShape.circle,
+                        ),
+                        child: Center(
+                          child: Icon(
+                            Icons.settings,
+                            size: GeneralMeasurements.deviceWidth / 17,
+                            color: Colors.black.withOpacity(.6),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
                 const SizedBox(width: 10),
                 InkWell( // menu btn
                   highlightColor: Colors.transparent,
