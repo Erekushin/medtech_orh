@@ -3,11 +3,9 @@ import 'package:flutter/gestures.dart';
 import 'package:get/get.dart';
 import 'package:orh_user_app_version1/Controllers/SurveyRelated/survey_controller.dart';
 import 'package:orh_user_app_version1/global_constant.dart';
-import 'package:orh_user_app_version1/global_helpers.dart';
 import '../../Controllers/auth_controller.dart';
 import '../../Helpers/scroll_behavior.dart';
 import '../../Helpers/logging.dart';
-import 'package:logger/logger.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -83,7 +81,7 @@ class _LoginState extends State<Login>with SingleTickerProviderStateMixin {
                       width: GeneralMeasurements.deviceWidth/100*90,
                       height: GeneralMeasurements.deviceHeight/100*60,
                       decoration: BoxDecoration(
-                        color: Colors.white,
+                        color: GeneralMeasurements.deviceWidth< 600? Colors.white : Colors.red,
                         borderRadius: BorderRadius.circular(15),
                         boxShadow: [
                           BoxShadow(
