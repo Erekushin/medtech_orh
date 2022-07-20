@@ -39,7 +39,7 @@ import 'dart:async';
 import 'global_helpers.dart';
 import 'package:flutter/services.dart';
 
-// this is fucking survey version 2 branch ..   hamgiin svvliin change 7/19
+// this is fucking web build extra branch ..  
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(const MyApp());
