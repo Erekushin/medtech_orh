@@ -12,8 +12,8 @@ class Login extends StatefulWidget {
   @override
   _LoginState createState() => _LoginState();
 }
-class _LoginState extends State<Login>with SingleTickerProviderStateMixin {
-  
+
+class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
   final log = logger(Login);
   late AnimationController _controller;
   late Animation<double> _opacity;
@@ -27,7 +27,6 @@ class _LoginState extends State<Login>with SingleTickerProviderStateMixin {
     _controller = AnimationController(
       vsync: this,
       duration: const Duration(seconds: 3),
-      
     );
     _opacity = Tween<double>(begin: 0, end: 1).animate(
       CurvedAnimation(
@@ -35,8 +34,8 @@ class _LoginState extends State<Login>with SingleTickerProviderStateMixin {
         curve: Curves.ease,
       ),
     )..addListener(() {
-      setState(() {});
-    });
+        setState(() {});
+      });
     _transform = Tween<double>(begin: 2, end: 1).animate(
       CurvedAnimation(
         parent: _controller,
@@ -46,152 +45,171 @@ class _LoginState extends State<Login>with SingleTickerProviderStateMixin {
     _controller.forward();
     super.initState();
   }
+
   @override
   void dispose() {
     _controller.dispose();
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<AuthController>(builder: (logincontroller){
+    return GetBuilder<AuthController>(builder: (logincontroller) {
       return Scaffold(
-      extendBodyBehindAppBar: true,
-      body: ScrollConfiguration(
-        behavior: MyBehavior(),
-        child: SingleChildScrollView(
-          child: SizedBox(
-            height: GeneralMeasurements.deviceHeight,
-            child: Container(
-              alignment: Alignment.center,
-              decoration: const BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: [
-                    Color(0xffFEC37B),
-                    Color(0xffFF4184),
-                  ],
+        extendBodyBehindAppBar: true,
+        body: ScrollConfiguration(
+          behavior: MyBehavior(),
+          child: SingleChildScrollView(
+            child: SizedBox(
+              height: GeneralMeasurements.deviceHeight,
+              child: Container(
+                alignment: Alignment.center,
+                decoration: const BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: [
+                      Color(0xffFEC37B),
+                      Color(0xffFF4184),
+                    ],
+                  ),
                 ),
-              ),
-              child: Opacity(
-                opacity: _opacity.value,
-                child: Transform.scale(
-                  scale: _transform.value,
-                  child: Container(
-                      width: GeneralMeasurements.deviceWidth/100*90,
-                      height: GeneralMeasurements.deviceHeight/100*60,
-                      decoration: BoxDecoration(
-                        color: GeneralMeasurements.deviceWidth< 600? Colors.white : Colors.red,
-                        borderRadius: BorderRadius.circular(15),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(.1),
-                            blurRadius: 90,
-                          ),
-                        ],
-                      ),
-                      child: Form(
-                        key: loginValidatorKey,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            const SizedBox(),
-                            Text(
-                              'Sign In',
-                              style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.w600,
-                                color: Colors.black.withOpacity(.7),
-                              ),
+                child: Opacity(
+                  opacity: _opacity.value,
+                  child: Transform.scale(
+                    scale: _transform.value,
+                    child: Container(
+                        width: GeneralMeasurements.deviceWidth / 100 * 90,
+                        height: GeneralMeasurements.deviceHeight / 100 * 60,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(15),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(.1),
+                              blurRadius: 90,
                             ),
-                            const SizedBox(),
-                            component1(Icons.account_circle_outlined,
-                                'User name...', false, false, logincontroller.loginName),
-                            component1(
-                                Icons.lock_outline, 'Password...', true, false, logincontroller.loginPass),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                InkWell(
-                                  highlightColor: Colors.transparent,
-                                  splashColor: Colors.transparent,
-                                  onTap:(){
-                                     logincontroller.geregeUserLogin((){Get.offNamed(RouteUnits.home);});
-                                     log.d('log in');
-                                  },
-                                  child: Container(
-                                    height: GeneralMeasurements.deviceHeight/100*6,
-                                    width: GeneralMeasurements.deviceWidth/100*36,
-                                    alignment: Alignment.center,
-                                    decoration: BoxDecoration(
-                                      color: const Color(0xff4796ff),
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
-                                    child: const Text(
-                                      "LOGIN",
-                                      style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600),
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(width: GeneralMeasurements.deviceWidth / 25),
-                                Container(
-                                  width: GeneralMeasurements.deviceWidth / 2.6,
-                                  alignment: Alignment.center,
-                                  child: RichText(
-                                    text: TextSpan(
-                                      text: 'Forgotten password!',
-                                      style: const TextStyle(color: Colors.blueAccent),
-                                      recognizer: TapGestureRecognizer()
-                                        ..onTap = () async{
-                                          List<int> f = [1,21,545,121];
-                                          print(f.toString());
-                                        },
-                                    ),
-                                  ),
-                                )
-                              ],
-                            ),
-                            const SizedBox(),
-                            RichText(
-                              text: TextSpan(
-                                text: 'Create a new Account',
-                                style: const TextStyle(
-                                  color: Colors.blueAccent,
-                                  fontSize: 15,
-                                ),
-                                recognizer: TapGestureRecognizer()
-                                  ..onTap = () {
-                                    print('object');
-                                  Get.toNamed(RouteUnits.answerform);
-                                  },
-                              ),
-                            ),
-                            const SizedBox(),
-                            // Obx((){
-                            //   if(Get.find<LoginController>().loginloading as bool){} const CircularProgressIndicator() : const SizedBox();
-                            // })
-                            GetX<AuthController>(builder: (builder){
-                              return builder.loginloading.isTrue? const CircularProgressIndicator() : const SizedBox();
-                            }),
                           ],
                         ),
-                      )
+                        child: Form(
+                          key: loginValidatorKey,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              const SizedBox(),
+                              Text(
+                                'Sign In',
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.black.withOpacity(.7),
+                                ),
+                              ),
+                              const SizedBox(),
+                              component1(
+                                  Icons.account_circle_outlined,
+                                  'User name...',
+                                  false,
+                                  false,
+                                  logincontroller.loginName),
+                              component1(Icons.lock_outline, 'Password...',
+                                  true, false, logincontroller.loginPass),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  InkWell(
+                                    highlightColor: Colors.transparent,
+                                    splashColor: Colors.transparent,
+                                    onTap: () {
+                                      logincontroller.geregeUserLogin(() {
+                                        Get.offNamed(RouteUnits.home);
+                                      });
+                                      log.d('log in');
+                                    },
+                                    child: Container(
+                                      height: GeneralMeasurements.deviceHeight /
+                                          100 *
+                                          6,
+                                      width: GeneralMeasurements.deviceWidth /
+                                          100 *
+                                          36,
+                                      alignment: Alignment.center,
+                                      decoration: BoxDecoration(
+                                        color: const Color(0xff4796ff),
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                      child: const Text(
+                                        "LOGIN",
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.w600),
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                      width:
+                                          GeneralMeasurements.deviceWidth / 25),
+                                  Container(
+                                    width:
+                                        GeneralMeasurements.deviceWidth / 2.6,
+                                    alignment: Alignment.center,
+                                    child: RichText(
+                                      text: TextSpan(
+                                        text: 'Forgotten password!',
+                                        style: const TextStyle(
+                                            color: Colors.blueAccent),
+                                        recognizer: TapGestureRecognizer()
+                                          ..onTap = () async {
+                                            List<int> f = [1, 21, 545, 121];
+                                            print(f.toString());
+                                          },
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ),
+                              const SizedBox(),
+                              RichText(
+                                text: TextSpan(
+                                  text: 'Create a new Account',
+                                  style: const TextStyle(
+                                    color: Colors.blueAccent,
+                                    fontSize: 15,
+                                  ),
+                                  recognizer: TapGestureRecognizer()
+                                    ..onTap = () {
+                                      print('object');
+                                      Get.toNamed(RouteUnits.answerform);
+                                    },
+                                ),
+                              ),
+                              const SizedBox(),
+                              // Obx((){
+                              //   if(Get.find<LoginController>().loginloading as bool){} const CircularProgressIndicator() : const SizedBox();
+                              // })
+                              GetX<AuthController>(builder: (builder) {
+                                return builder.loginloading.isTrue
+                                    ? const CircularProgressIndicator()
+                                    : const SizedBox();
+                              }),
+                            ],
+                          ),
+                        )),
                   ),
                 ),
               ),
             ),
           ),
         ),
-      ),
-    );
+      );
     });
   }
 
-  Widget component1(
-      IconData icon, String hintText, bool isPassword, bool isEmail, TextEditingController controller) {
+  Widget component1(IconData icon, String hintText, bool isPassword,
+      bool isEmail, TextEditingController controller) {
     return Container(
-      height: GeneralMeasurements.deviceHeight /100*7,
-      width: GeneralMeasurements.deviceWidth /100*80,
+      height: GeneralMeasurements.deviceHeight / 100 * 7,
+      width: GeneralMeasurements.deviceWidth / 100 * 80,
       alignment: Alignment.center,
       padding: EdgeInsets.only(right: GeneralMeasurements.deviceWidth / 30),
       decoration: BoxDecoration(
@@ -199,8 +217,8 @@ class _LoginState extends State<Login>with SingleTickerProviderStateMixin {
         borderRadius: BorderRadius.circular(10),
       ),
       child: TextFormField(
-        validator: (val){
-          if(val!.isEmpty){
+        validator: (val) {
+          if (val!.isEmpty) {
             return "Required";
           }
         },
@@ -217,7 +235,7 @@ class _LoginState extends State<Login>with SingleTickerProviderStateMixin {
           hintMaxLines: 1,
           hintText: hintText,
           hintStyle:
-          TextStyle(fontSize: 14, color: Colors.black.withOpacity(.5)),
+              TextStyle(fontSize: 14, color: Colors.black.withOpacity(.5)),
         ),
       ),
     );
