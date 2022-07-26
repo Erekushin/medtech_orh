@@ -3,9 +3,16 @@ import 'package:get/get.dart';
 import 'package:orh_user_app_version1/MyWidgets/my_text.dart';
 import 'package:orh_user_app_version1/global_constant.dart';
 import '../Controllers/SurveyRelated/survey_controller.dart';
+
 class MyRadioBtn extends StatefulWidget {
-  MyRadioBtn({ Key? key,required this.w, this.optionItems, required this.title, 
-                     required this.questionID, required this.questionIndex}) : super(key: key);
+  const MyRadioBtn(
+      {Key? key,
+      required this.w,
+      this.optionItems,
+      required this.title,
+      required this.questionID,
+      required this.questionIndex})
+      : super(key: key);
   final double w;
   final List? optionItems;
   final String title;
@@ -15,7 +22,8 @@ class MyRadioBtn extends StatefulWidget {
   @override
   State<MyRadioBtn> createState() => _MyRadioBtn();
 }
-class _MyRadioBtn extends State<MyRadioBtn>{
+
+class _MyRadioBtn extends State<MyRadioBtn> {
   final queryController = Get.find<SCont>();
   int valueGroup = 44;
   @override
@@ -27,7 +35,6 @@ class _MyRadioBtn extends State<MyRadioBtn>{
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             myText(widget.title, AllSizes.queryTxtSize, 1),
-            
             // ListView.builder(
             //   shrinkWrap: true,
             //   itemCount: widget.optionItems!.length,
@@ -35,14 +42,19 @@ class _MyRadioBtn extends State<MyRadioBtn>{
             //   // final eachOptionInfo = queryController.survey.result!.questions![widget.questionIndex].options![index];
             //   return RadioUnit(unitId: eachOptionInfo.optionId!, unitText: eachOptionInfo.optionText!,questionIndex: widget.questionIndex, radioIndex: index,);
             // })
-      ],
-    )
-    );
+          ],
+        ));
   }
 }
 
 class RadioUnit extends StatefulWidget {
-  RadioUnit({ Key? key, required this.unitId, required this.unitText,required this.questionIndex, required this.radioIndex}) : super(key: key);
+  const RadioUnit(
+      {Key? key,
+      required this.unitId,
+      required this.unitText,
+      required this.questionIndex,
+      required this.radioIndex})
+      : super(key: key);
   final int unitId;
   final String unitText;
   final int questionIndex;
@@ -56,24 +68,23 @@ class _RadioUnitState extends State<RadioUnit> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-          height: 35,
-          child: ListTile(
-                  dense: true,
-                  title: myText(widget.unitText, AllSizes.queryTxtSize, 1),
-                  selected: true,
-                  leading: Radio<int>(
-                    onChanged: (value){
-                      setState(() {
-                         MyRadioBtn.a = value;
-                         queryController.surveyAnswer.answers![widget.questionIndex].optionId = value;
-                      });
-                    },
-                    groupValue: MyRadioBtn.a,
-                    value: widget.unitId,
-                  ),
-                ),
-  );
+      height: 35,
+      child: ListTile(
+        dense: true,
+        title: myText(widget.unitText, AllSizes.queryTxtSize, 1),
+        selected: true,
+        leading: Radio<int>(
+          onChanged: (value) {
+            setState(() {
+              MyRadioBtn.a = value;
+              queryController
+                  .surveyAnswer.answers![widget.questionIndex].optionId = value;
+            });
+          },
+          groupValue: MyRadioBtn.a,
+          value: widget.unitId,
+        ),
+      ),
+    );
   }
 }
-
-

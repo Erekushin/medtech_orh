@@ -17,7 +17,7 @@ class SCont extends GetxController {
 
   String autoSCombination = "";
 
-  ///survey deer darah vyd daragdsan survey iin type 
+  ///survey deer darah vyd daragdsan survey iin type
   ///buyu auto normal esehiin id iig end hadaglana
   int chosenSType = 0;
 
@@ -66,32 +66,36 @@ class SCont extends GetxController {
     }
   }
 
+  ///hariugaa olon daraallaj yavuulhaas sergiileh
   var pushDataBtn = true.obs;
   SurveyAnswer surveyAnswer = SurveyAnswer();
   EResponse generalResponse = EResponse();
   Survey sNxtLvl = Survey();
   Argu argTwin = Argu();
+
   Future answersPush(int currentlvl) async {
     pushDataBtn.value = false;
-    surveyAnswer.researcherGeregeID =
-        Get.find<AuthController>().user.result!.userId;
+
+    //preparation of peace of data
+    surveyAnswer.fillerID = Get.find<AuthController>().user.result!.userId;
     surveyAnswer.surveyId = chosenSurveyId;
     surveyAnswer.fillerName = Get.find<AuthController>().user.result!.userName;
     surveyAnswer.createdDate = DateTime.now().toString().substring(0, 18);
     surveyAnswer.slevel = currentlvl + 1;
 
+    //auto uyd connectedStr bolon group id avch bgaa
     String connectedidStr = '';
-    if(chosenSType == 10){
+    if (chosenSType == 10) {
       for (int p = 0; p < dropvalueList.length; p++) {
-      connectedidStr += dropvalueList[p].numVal!;
+        connectedidStr += dropvalueList[p].numVal!;
       }
       autoSCombination += connectedidStr;
       surveyAnswer.connectedid =
           int.parse(autoSCombination); //num uudiig ni tsugluulj bgaad yavuulah
       surveyAnswer.groupid = survey.groupid;
     }
-    
 
+    //hariultiig yavuulj bgaa heseg
     try {
       var jsondata = await GlobalHelpers.postRequestGeneral
           .getdata(surveyAnswer.toJson(), "120004", UriAdresses.medCore);
@@ -99,39 +103,31 @@ class SCont extends GetxController {
       print(jsondata.toString() + ' ' + 'hariugaa yavuulsanii hariu');
       generalResponse = EResponse.fromJson(jsonDecode(jsondata));
     } catch (e) {
-      Get.snackbar('Алдаа', '$e!',
-          snackPosition: SnackPosition.BOTTOM,
-          colorText: Colors.white,
-          backgroundColor: Colors.grey[900],
-          margin: const EdgeInsets.all(5));
+      GlobalHelpers.mySnackbar('Алдаа', '$e', 3);
     }
 
     switch (generalResponse.code) {
       case '200':
         pushDataBtn.value = true;
-        Get.snackbar('Амжилттай бүртгэгдлээ', '',
-            snackPosition: SnackPosition.BOTTOM,
-            colorText: Colors.white,
-            backgroundColor: Colors.grey[900],
-            margin: EdgeInsets.only(
-              bottom: GeneralMeasurements.snackbarBottomMargin,
-              left: 5,
-              right: 5,
-            ));
+        GlobalHelpers.mySnackbar(
+            'Амжилттай бүртгэгдлээ' + generalResponse.message!, '', 1);
         GlobalHelpers.workingWithCode.clearSurveyAnswers();
-        if (generalResponse.result != null){
+        if (generalResponse.result != null) {
           sNxtLvl = Survey.fromJson(generalResponse.result);
-           argTwin.type = "nxtLevel";
-           argTwin.surveylvl = sNxtLvl.slevel;
-           argTwin.count = sNxtLvl.questions!.length;
-           argTwin.sColor = sNxtLvl.surveyClr;
-           surveyAnswer.answers = List<Answers>.generate(sNxtLvl.questions!.length, ((index) => Answers()));
-           if(sNxtLvl.slevel!.isEven){
-            Get.offNamed(RouteUnits.surveyList + RouteUnits.individualSurveyTwin, arguments: argTwin);
-           }
-           else{
-             Get.offNamed(RouteUnits.surveyList + RouteUnits.individualSurvey, arguments: argTwin);
-           }
+          argTwin.type = "nxtLevel";
+          argTwin.surveylvl = sNxtLvl.slevel;
+          argTwin.count = sNxtLvl.questions!.length;
+          argTwin.sColor = sNxtLvl.surveyClr;
+          surveyAnswer.answers = List<Answers>.generate(
+              sNxtLvl.questions!.length, ((index) => Answers()));
+          if (sNxtLvl.slevel!.isEven) {
+            Get.offNamed(
+                RouteUnits.surveyList + RouteUnits.individualSurveyTwin,
+                arguments: argTwin);
+          } else {
+            Get.offNamed(RouteUnits.surveyList + RouteUnits.individualSurvey,
+                arguments: argTwin);
+          }
         } else {
           autoSCombination = "";
           Get.offAllNamed(RouteUnits.home);
@@ -139,15 +135,8 @@ class SCont extends GetxController {
         break;
       case '400':
         pushDataBtn.value = true;
-        Get.snackbar('Хариуг хадгалж чадсангүй', '',
-            snackPosition: SnackPosition.BOTTOM,
-            colorText: Colors.white,
-            backgroundColor: Colors.grey[900],
-            margin: EdgeInsets.only(
-              bottom: GeneralMeasurements.snackbarBottomMargin,
-              left: 5,
-              right: 5,
-            ));
+        GlobalHelpers.mySnackbar(
+            'хариуг хадаглаж чадсангүй' + generalResponse.message!, '', 1);
         break;
     }
   }
@@ -215,7 +204,7 @@ class SCont extends GetxController {
             ));
         ownSurveyListbody.value.result!.removeAt(chosenSurveyIndx);
         break;
-        case '400':
+      case '400':
         Get.snackbar('алдаа гарлаа', generalResponse.message!,
             snackPosition: SnackPosition.BOTTOM,
             colorText: Colors.white,
@@ -225,7 +214,8 @@ class SCont extends GetxController {
               left: 5,
               right: 5,
             ));
-        ownSurveyListbody.value.result![chosenSurveyIndx].borderColor.value = Colors.white;
+        ownSurveyListbody.value.result![chosenSurveyIndx].borderColor.value =
+            Colors.white;
         break;
     }
   }

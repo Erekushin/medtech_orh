@@ -1,17 +1,16 @@
-class User_Info {
+class UserInfo {
   int? code;
   String? status;
   String? message;
   Result? result;
 
-  User_Info({this.code, this.status, this.message, this.result});
+  UserInfo({this.code, this.status, this.message, this.result});
 
-  User_Info.fromJson(Map<String, dynamic> json) {
+  UserInfo.fromJson(Map<String, dynamic> json) {
     code = json['code'];
     status = json['status'];
     message = json['message'];
-    result =
-        json['result'] != null ? Result.fromJson(json['result']) : null;
+    result = json['result'] != null ? Result.fromJson(json['result']) : null;
   }
 
   Map<String, dynamic> toJson() {

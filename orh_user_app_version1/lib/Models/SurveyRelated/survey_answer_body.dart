@@ -3,22 +3,26 @@ class SurveyAnswer {
   int? connectedid;
   String? groupid;
 
-
-  int? researcherGeregeID;
+  int? fillerID;
   String? fillerName;
   int? surveyId;
   String? createdDate;
   List<Answers>? answers = [];
 
-  SurveyAnswer({this.surveyId,this.answers,
-                 this.fillerName, this.createdDate,
-                 this.slevel, this.connectedid, this.groupid});
+  SurveyAnswer(
+      {this.surveyId,
+      this.answers,
+      this.fillerName,
+      this.createdDate,
+      this.slevel,
+      this.connectedid,
+      this.groupid});
 
   SurveyAnswer.fromJson(Map<String, dynamic> json) {
     slevel = json['slevel'];
     connectedid = json['connectedid'];
     groupid = json['groupid'];
-    researcherGeregeID = json['researcher_GeregeID'];
+    fillerID = json['researcher_GeregeID'];
     createdDate = json['created_date'];
     surveyId = json['survey_id'];
     if (json['answers'] != null) {
@@ -34,7 +38,7 @@ class SurveyAnswer {
     data['slevel'] = slevel;
     data['connectedid'] = connectedid;
     data['groupid'] = groupid;
-    data['researcher_GeregeID'] = researcherGeregeID;
+    data['researcher_GeregeID'] = fillerID;
     data['survey_id'] = surveyId;
     data['user_name'] = fillerName;
     data['created_date'] = createdDate;
@@ -52,7 +56,12 @@ class Answers {
   String? answerText;
   String? statistic;
 
-  Answers({this.questionId, this.optionId, this.answerText, this.answerDigit, this.statistic});
+  Answers(
+      {this.questionId,
+      this.optionId,
+      this.answerText,
+      this.answerDigit,
+      this.statistic});
 
   Answers.fromJson(Map<String, dynamic> json) {
     questionId = json['question_id'];
@@ -72,4 +81,3 @@ class Answers {
     return data;
   }
 }
-

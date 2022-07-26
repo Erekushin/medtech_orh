@@ -47,7 +47,7 @@ class Result {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['researcher_name'] = researcherName;
-    data['cearted_date'] = createdDate;
+    data['created_date'] = createdDate;
     data['survey_id'] = surveyID;
     data['user_id'] = userID;
     return data;
