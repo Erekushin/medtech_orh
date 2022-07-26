@@ -19,7 +19,6 @@ class ResMain extends StatefulWidget {
 class _ResMainState extends State<ResMain> {
   var resCont = Get.find<ResCont>();
   staView() {
-    //list ee null bishvvdiig ni oor list rvv avii
     for (int a = 0; a < resCont.statisticAnswer.result!.length; a++) {
       if (resCont.statisticAnswer.result![a].answers != null) {
         resCont.lineChartValueList.add(resCont.statisticAnswer.result![a]);
