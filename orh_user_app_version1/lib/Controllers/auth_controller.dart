@@ -59,10 +59,20 @@ class AuthController extends GetxController {
           // GlobalHelpers.auth =  'bearer ' + geregeUser.result!.token!.token!;
           Get.find<ImageController>().imageBytes.value =
               user.result!.picture!.cast<int>();
-          await surveyController.listGet(RouteUnits.home, '120002',
-              user.result!.userId!, '', user.result!.phone!);
-          await surveyController.listGet('/segmented', '120009',
-              user.result!.userId!, '', user.result!.phone!);
+          await surveyController.listGet(
+              RouteUnits.home,
+              '120002',
+              user.result!.userId!,
+              '',
+              user.result!.phone!,
+              GlobalHelpers.publicSurveyLstth);
+          await surveyController.listGet(
+              '/segmented',
+              '120009',
+              user.result!.userId!,
+              '',
+              user.result!.phone!,
+              GlobalHelpers.publicSurveyLstth);
           retryFunction();
           break;
         case 403:

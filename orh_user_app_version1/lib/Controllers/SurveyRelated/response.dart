@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:orh_user_app_version1/Controllers/SurveyRelated/survey_controller.dart';
 import 'package:orh_user_app_version1/Controllers/auth_controller.dart';
@@ -34,7 +35,6 @@ class ResCont extends GetxController {
     switch (surveyResponses.code) {
       case 200:
         await sta();
-        Get.toNamed(RouteUnits.surveyResponses);
         break;
     }
   }
@@ -88,12 +88,22 @@ class ResCont extends GetxController {
   }
 
   staAns.Statistic statisticAnswer = staAns.Statistic();
-  List<staAns.Result> lineChartValueList = [];
+  List<staAns.Result> statisticList = [];
+  List<staAns.Result> lineChartList = [];
+  List<staAns.Result> bubbleChartList = [];
   Future sta() async {
     var data = await GlobalHelpers.postRequestGeneral
         .getdata(surveyResponses.toJson(), '120100', UriAdresses.medCore);
     ereklog.wtf(surveyResponses.toJson());
     ereklog.wtf(data);
     statisticAnswer = staAns.Statistic.fromJson(jsonDecode(data.toString()));
+    switch (statisticAnswer.code) {
+      case 200:
+        Get.toNamed(RouteUnits.surveyResponses);
+        break;
+      case 400:
+        GlobalHelpers.mySnackbar('алдаа', statisticAnswer.message, 2);
+        break;
+    }
   }
 }

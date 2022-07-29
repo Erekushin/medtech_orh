@@ -43,7 +43,7 @@ class _OwnsUnitState extends State<OwnsUnit> {
               sCont.ownSurveyListbody.value.result![widget.itemindx].loading
                   .value = true;
               resCont.researchers(widget.itemindx, RouteUnits.profile);
-              resCont.lineChartValueList = [];
+              resCont.statisticList = [];
             } catch (e) {
               Get.snackbar('Алдаа', '$e',
                   snackPosition: SnackPosition.BOTTOM,

@@ -51,7 +51,8 @@ Widget profileBigButtons(ButtonStructure structureInfo) {
               '120012',
               loginController.user.result!.userId!,
               '',
-              loginController.user.result!.phone!);
+              loginController.user.result!.phone!,
+              GlobalHelpers.profileSurveyLstth);
           break;
       }
       Get.toNamed(structureInfo.route, arguments: structureInfo.argument);

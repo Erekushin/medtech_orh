@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:graphview/GraphView.dart';
 import 'package:orh_user_app_version1/Controllers/sql_controller.dart';
 import 'dart:ui';
 import '../../Controllers/SurveyRelated/survey_creation_controller.dart';
@@ -139,19 +140,23 @@ class _HomeInfoFlowState extends State<HomeInfoFlow>
                         child: TextField(
                           onChanged: (value) {
                             if (homePageCont.page == 0) {
+                              GlobalHelpers.publicSurveyLstth = 1;
                               surveyController.listGet(
                                   RouteUnits.home,
                                   '120002',
                                   loginController.user.result!.userId!,
                                   value,
-                                  loginController.user.result!.phone!);
+                                  loginController.user.result!.phone!,
+                                  GlobalHelpers.publicSurveyLstth);
                             } else if (homePageCont.page == 1) {
+                              GlobalHelpers.segmentedSurveyLstth = 1;
                               surveyController.listGet(
                                   '/segmented',
                                   '120009',
                                   loginController.user.result!.userId!,
                                   value,
-                                  loginController.user.result!.phone!);
+                                  loginController.user.result!.phone!,
+                                  GlobalHelpers.segmentedSurveyLstth);
                             }
                           },
                           controller: searchController,
@@ -174,14 +179,16 @@ class _HomeInfoFlowState extends State<HomeInfoFlow>
                                   '120002',
                                   loginController.user.result!.userId!,
                                   searchController.text,
-                                  loginController.user.result!.phone!);
+                                  loginController.user.result!.phone!,
+                                  GlobalHelpers.publicSurveyLstth);
                             } else if (homePageCont.page == 1) {
                               surveyController.listGet(
                                   '/segmented',
                                   '120009',
                                   loginController.user.result!.userId!,
                                   searchController.text,
-                                  loginController.user.result!.phone!);
+                                  loginController.user.result!.phone!,
+                                  GlobalHelpers.segmentedSurveyLstth);
                             }
                           },
                           icon: const Icon(
@@ -348,7 +355,7 @@ class _HomeInfoFlowState extends State<HomeInfoFlow>
                               splashColor: Colors.transparent,
                               highlightColor: Colors.transparent,
                               child: AnimatedContainer(
-                                margin: EdgeInsets.all(1),
+                                margin: const EdgeInsets.all(1),
                                 child: Center(
                                     child: Text(
                                   pageNames[index],
@@ -375,9 +382,10 @@ class _HomeInfoFlowState extends State<HomeInfoFlow>
                       )
                     ],
                   ),
-                  SizedBox(
+                  Container(
+                    margin: const EdgeInsets.only(bottom: 5),
                     width: GeneralMeasurements.deviceWidth,
-                    height: GeneralMeasurements.deviceHeight / 100 * 70,
+                    height: GeneralMeasurements.deviceHeight / 100 * 65,
                     child: PageView(
                       onPageChanged: (index) {
                         switch (index) {
@@ -510,7 +518,8 @@ class _HomeSidebarState extends State<HomeSidebar> {
                     '120006',
                     loginController.user.result!.userId!,
                     '',
-                    loginController.user.result!.phone!);
+                    loginController.user.result!.phone!,
+                    GlobalHelpers.profileSurveyLstth);
                 Get.toNamed('/profile', arguments: RouteUnits.profile);
                 GlobalHelpers.bottomnavbarSwitcher.add(true);
               },
@@ -570,26 +579,58 @@ class _HomePagePublicState extends State<HomePagePublic> {
   var scrollController = ScrollController();
   var loginController = Get.find<AuthController>();
   var surveyController = Get.find<SCont>();
+  bool bottomloading = false;
   @override
   void initState() {
     super.initState();
     scrollController.addListener(_scrollListener);
   }
 
-  _scrollListener() {
+  _scrollListener() async {
     if (scrollController.offset >= scrollController.position.maxScrollExtent &&
         !scrollController.position.outOfRange) {
-      print('reach the bottom');
+      //reach bottom
+      print('bottom');
+      GlobalHelpers.publicSurveyLstth += 1;
+      setState(() {
+        bottomloading = true;
+      });
+      await surveyController.listGet(
+          RouteUnits.home,
+          '120002',
+          loginController.user.result!.userId!,
+          '',
+          loginController.user.result!.phone!,
+          GlobalHelpers.publicSurveyLstth);
+      try {
+        setState(() {
+          surveyController.publicSurveyList.value.result!
+              .addAll(surveyController.additionalcontentPublic.result!);
+          bottomloading = false;
+          if (surveyController.additionalcontentPublic.result!.isNotEmpty) {
+            scrollController.animateTo(scrollController.offset + 250,
+                duration: const Duration(milliseconds: 500),
+                curve: Curves.ease);
+          } else {
+            GlobalHelpers.mySnackbar('sorry', 'there is no other content', 3);
+          }
+        });
+      } catch (e) {
+        GlobalHelpers.mySnackbar('Алдаа', '$e', 3);
+      }
     }
     if (scrollController.offset <= scrollController.position.minScrollExtent &&
         !scrollController.position.outOfRange) {
       //reach the top
+      print('top');
       surveyController.listGet(
           RouteUnits.home,
           '120002',
           loginController.user.result!.userId!,
           '',
-          loginController.user.result!.phone!);
+          loginController.user.result!.phone!,
+          1);
+      GlobalHelpers.publicSurveyLstth = 1;
     }
   }
 
@@ -628,7 +669,15 @@ class _HomePagePublicState extends State<HomePagePublic> {
                   surveyControllerList.publicSurveyList.value.result!.isEmpty
                       ? true
                       : false,
-              child: Image.asset('assets/images/empty_box.jpg'))
+              child: Image.asset('assets/images/empty_box.jpg')),
+          Visibility(
+              visible: bottomloading ? true : false,
+              child: Align(
+                alignment: Alignment.bottomCenter,
+                child: Container(
+                    margin: const EdgeInsets.only(bottom: 15),
+                    child: const CircularProgressIndicator()),
+              ))
         ],
       );
     }));
@@ -652,10 +701,26 @@ class _HomePageWorkSpaceState extends State<HomePageWorkSpace> {
     scrollController.addListener(_scrollListener);
   }
 
-  _scrollListener() {
+  _scrollListener() async {
     if (scrollController.offset >= scrollController.position.maxScrollExtent &&
         !scrollController.position.outOfRange) {
-      print('reach the bottom');
+      //reach bottom
+      GlobalHelpers.segmentedSurveyLstth += 1;
+      await surveyController.listGet(
+          '/segmented',
+          '120009',
+          loginController.user.result!.userId!,
+          '',
+          loginController.user.result!.phone!,
+          GlobalHelpers.segmentedSurveyLstth);
+      try {
+        setState(() {
+          surveyController.wrkSpaceSurveyList.value.result!
+              .addAll(surveyController.additionalcontentSeg.result!);
+        });
+      } catch (e) {
+        GlobalHelpers.mySnackbar('Алдаа', '$e', 3);
+      }
     }
     if (scrollController.offset <= scrollController.position.minScrollExtent &&
         !scrollController.position.outOfRange) {
@@ -665,7 +730,9 @@ class _HomePageWorkSpaceState extends State<HomePageWorkSpace> {
           '120009',
           loginController.user.result!.userId!,
           '',
-          loginController.user.result!.phone!);
+          loginController.user.result!.phone!,
+          1);
+      GlobalHelpers.segmentedSurveyLstth = 1;
     }
   }
 

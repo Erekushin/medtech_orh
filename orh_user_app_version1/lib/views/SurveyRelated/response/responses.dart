@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:graphview/GraphView.dart';
 import '../../../Controllers/SurveyRelated/response.dart';
-import '../../../Models/SurveyRelated/statistic_answer.dart';
 import '../../../MyWidgets/my_text.dart';
 import '../../../global_constant.dart';
 import '../../../MyWidgets/waiting_screen.dart';
@@ -18,24 +18,47 @@ class ResMain extends StatefulWidget {
 
 class _ResMainState extends State<ResMain> {
   var resCont = Get.find<ResCont>();
-  staView() {
+  @override
+  void initState() {
+    super.initState();
     for (int a = 0; a < resCont.statisticAnswer.result!.length; a++) {
       if (resCont.statisticAnswer.result![a].answers != null) {
-        resCont.lineChartValueList.add(resCont.statisticAnswer.result![a]);
+        resCont.statisticList.add(resCont.statisticAnswer.result![a]);
       }
     }
-    if (resCont.lineChartValueList.length > 1) {
-      return const ResSta();
+    for (int y = 0; y < resCont.statisticList.length; y++) {
+      for (int x = 0; x < resCont.statisticList[y].answers!.length; x++) {
+        if (resCont.statisticList[y].answers![x].astatistic == "line_chart") {
+          resCont.lineChartList.add(resCont.statisticList[y]);
+        }
+        if (resCont.statisticList[y].answers![x].astatistic == "bubble") {
+          resCont.bubbleChartList.add(resCont.statisticList[y]);
+        }
+      }
+    }
+  }
+
+  linechartView() {
+    if (resCont.lineChartList.length > 1) {
+      return const LineSta();
     } else {
       return const WaitingScreen();
     }
   }
 
+  // bubblechartView() {
+  //   if (resCont.bubbleChartList.length > 1) {
+  //     return const StaCount();
+  //   } else {
+  //     return const WaitingScreen();
+  //   }
+  // }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
         child: PageView(
-      children: [const ResList(), staView()],
+      children: [const ResList(), linechartView()], //, bubblechartView()
     ));
   }
 }
@@ -101,13 +124,13 @@ class _ResListState extends State<ResList> {
 }
 
 //level 3
-class ResSta extends StatefulWidget {
-  const ResSta({Key? key}) : super(key: key);
+class LineSta extends StatefulWidget {
+  const LineSta({Key? key}) : super(key: key);
   @override
-  State<ResSta> createState() => _ResStaState();
+  State<LineSta> createState() => _ResStaState();
 }
 
-class _ResStaState extends State<ResSta> {
+class _ResStaState extends State<LineSta> {
   TrackballBehavior? _trackballBehavior;
   bool isWebFullView = true;
   var resCont = Get.find<ResCont>();
@@ -117,19 +140,16 @@ class _ResStaState extends State<ResSta> {
   @override
   void initState() {
     //doorh hesegt min bolon max value aa olj bgaa
-    minYvalue =
-        resCont.lineChartValueList[0].answers![0].numberAnswer!.toDouble();
-    for (int a = 0; a < resCont.lineChartValueList.length; a++) {
-      for (int w = 0; w < resCont.lineChartValueList[a].answers!.length; w++) {
-        if (resCont.lineChartValueList[a].answers![w].numberAnswer! >
-            maxYvalue) {
-          maxYvalue = resCont.lineChartValueList[a].answers![w].numberAnswer!
-              .toDouble();
+    minYvalue = resCont.lineChartList[0].answers![0].numberAnswer!.toDouble();
+    for (int a = 0; a < resCont.lineChartList.length; a++) {
+      for (int w = 0; w < resCont.lineChartList[a].answers!.length; w++) {
+        if (resCont.lineChartList[a].answers![w].numberAnswer! > maxYvalue) {
+          maxYvalue =
+              resCont.lineChartList[a].answers![w].numberAnswer!.toDouble();
         }
-        if (resCont.lineChartValueList[a].answers![w].numberAnswer! <
-            minYvalue) {
-          minYvalue = resCont.lineChartValueList[a].answers![w].numberAnswer!
-              .toDouble();
+        if (resCont.lineChartList[a].answers![w].numberAnswer! < minYvalue) {
+          minYvalue =
+              resCont.lineChartList[a].answers![w].numberAnswer!.toDouble();
         }
       }
     }
@@ -218,7 +238,7 @@ class _ResStaState extends State<ResSta> {
 
   List<CartesianSeries<_ChartData, String>> getlines() {
     List<CartesianSeries<_ChartData, String>> lines = [];
-    for (int q = 0; q < resCont.lineChartValueList[0].answers!.length; q++) {
+    for (int q = 0; q < resCont.lineChartList[0].answers!.length; q++) {
       lines.add(LineSeries<_ChartData, String>(
         animationDuration: 2500,
         dataSource: getData(q),
@@ -233,12 +253,12 @@ class _ResStaState extends State<ResSta> {
 
   List<_ChartData> getData(int index) {
     final List<_ChartData> data = <_ChartData>[];
-    for (int i = 0; i < resCont.lineChartValueList.length; i++) {
+    for (int i = 0; i < resCont.lineChartList.length; i++) {
       data.add(_ChartData(
-        resCont.lineChartValueList[i].answers![index].createdDate!
+        resCont.lineChartList[i].answers![index].createdDate!
             .toString()
             .substring(6, 18),
-        resCont.lineChartValueList[i].answers![index].numberAnswer!.toDouble(),
+        resCont.lineChartList[i].answers![index].numberAnswer!.toDouble(),
       ));
     }
     return data;
@@ -289,11 +309,161 @@ class _SidebarState extends State<Sidebar> {
     return SizedBox(
       width: GeneralMeasurements.deviceWidth * .6,
       child: ListView.builder(
-          itemCount: resCont.lineChartValueList[0].answers!.length,
+          itemCount: resCont.lineChartList[0].answers!.length,
           itemBuilder: (c, i) {
-            var item = resCont.lineChartValueList[0].answers![i];
+            var item = resCont.lineChartList[0].answers![i];
             return titles(CommonColors.chartColors[i], item.question!);
           }),
     );
   }
 }
+
+//level 3b
+class BubbleSta extends StatefulWidget {
+  const BubbleSta({Key? key}) : super(key: key);
+
+  @override
+  State<BubbleSta> createState() => _BubbleStaState();
+}
+
+class _BubbleStaState extends State<BubbleSta> {
+  TrackballBehavior? _trackballBehavior;
+  var resCont = Get.find<ResCont>();
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Row(
+          children: [
+            Container(
+                height: GeneralMeasurements.deviceHeight * 0.5,
+                width: GeneralMeasurements.deviceWidth,
+                color: Colors.black87,
+                padding: const EdgeInsets.only(bottom: 80),
+                child: _buildbubbleChart(context))
+          ],
+        ),
+      ),
+    );
+  }
+
+  SfCartesianChart _buildbubbleChart(BuildContext context) {
+    return SfCartesianChart(
+      zoomPanBehavior:
+          ZoomPanBehavior(enablePanning: true, enablePinching: true),
+      plotAreaBorderWidth: 0,
+      title: ChartTitle(
+          textStyle: const TextStyle(color: Colors.white),
+          text: 'Хавтгай дээрх үзүүлэлт'),
+      primaryXAxis: CategoryAxis(),
+      primaryYAxis: NumericAxis(
+          labelFormat: '{value}',
+          axisLine: const AxisLine(width: 0),
+          majorTickLines: const MajorTickLines(color: Colors.transparent)),
+      series: getbubbles(),
+      trackballBehavior: _trackballBehavior,
+      onTrackballPositionChanging: (TrackballArgs args) {
+        args.chartPointInfo.label =
+            args.chartPointInfo.header! + ' : ' + args.chartPointInfo.label!;
+      },
+    );
+  }
+
+  List<BubbleSeries<_ChartData, String>> getbubbles() {
+    List<BubbleSeries<_ChartData, String>> lines = [];
+    for (int q = 0; q < resCont.bubbleChartList[0].answers!.length; q++) {
+      lines.add(BubbleSeries<_ChartData, String>(
+        animationDuration: 2500,
+        dataSource: getData(q),
+        color: CommonColors.chartColors[q],
+        xValueMapper: (_ChartData bubbles, _) => bubbles.x,
+        yValueMapper: (_ChartData bubbles, _) => bubbles.y,
+      ));
+    }
+    return lines;
+  }
+
+  List<_ChartData> getData(int index) {
+    final List<_ChartData> data = <_ChartData>[];
+    for (int i = 0; i < resCont.bubbleChartList.length; i++) {
+      data.add(_ChartData(
+        resCont.bubbleChartList[i].answers![index].createdDate!
+            .toString()
+            .substring(6, 18),
+        resCont.bubbleChartList[i].answers![0].optionAnswers![i].optionId!
+            .toDouble(),
+      ));
+    }
+    return data;
+  }
+}
+
+// class StaCount extends StatefulWidget {
+//   const StaCount({Key? key}) : super(key: key);
+
+//   @override
+//   State<StaCount> createState() => _StaCountState();
+// }
+
+// class _StaCountState extends State<StaCount> {
+//   var resCont = Get.find<ResCont>();
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       body: Center(
+//         child: ListView.builder(
+//             itemCount: resCont.bubbleChartList[0].answers!.length,
+//             itemBuilder: (c, i) {
+//               return EachAnswer(
+//                 answerIndex: i,
+//               );
+//             }),
+//       ),
+//     );
+//   }
+// }
+
+//level 4
+// class EachAnswer extends StatefulWidget {
+//   const EachAnswer({Key? key, required this.answerIndex}) : super(key: key);
+//   final int answerIndex;
+//   @override
+//   State<EachAnswer> createState() => _EachAnswerState();
+// }
+
+// class _EachAnswerState extends State<EachAnswer> {
+//   var resCont = Get.find<ResCont>();
+//   @override
+//   void initState() {
+//     super.initState();
+//     //calculate counts
+
+//   }
+//   @override
+//   Widget build(BuildContext context) {
+//     return Container(
+//       margin: const EdgeInsets.all(5),
+//       child: Column(
+//         children: [
+//           Text(resCont.bubbleChartList[0].answers![widget.answerIndex].question
+//               .toString(), style: const TextStyle(fontWeight: FontWeight.bold),),
+//           ListView.builder(
+//               shrinkWrap: true,
+//               itemCount: resCont.bubbleChartList[0].answers![widget.answerIndex]
+//                   .optionAnswers!.length,
+//               itemBuilder: (c, i) {
+//                 return Container(
+//                   margin: const EdgeInsets.all(5),
+//                   child: Text(resCont
+//                       .bubbleChartList[0]
+//                       .answers![widget.answerIndex]
+//                       .optionAnswers![i]
+//                       .optionText!),
+//                 );
+//               })
+//         ],
+//       ),
+//     );
+//   }
+// }

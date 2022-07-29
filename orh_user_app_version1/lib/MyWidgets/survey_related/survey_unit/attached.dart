@@ -38,7 +38,7 @@ class _AttachedsUnitUnitState extends State<AttachedsUnit> {
                   true;
               resCont.chosenSurveyId = widget.surveyId;
               resCont.researchers(widget.itemindx, RouteUnits.attached);
-              resCont.lineChartValueList = [];
+              resCont.statisticList = [];
             } catch (e) {
               Get.snackbar('Алдаа', '$e',
                   snackPosition: SnackPosition.BOTTOM,

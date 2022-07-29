@@ -28,41 +28,64 @@ class SCont extends GetxController {
   //.......................................................
 
   static Map<String, dynamic> listJBody(
-      int userId, String searchTxt, String phone) {
+      int userId, String searchTxt, String phone, int th) {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['user_id'] = userId;
     data['search_txt'] = searchTxt;
     data['phone'] = phone;
+    data['th'] = th;
     return data;
   }
 
   EResponse surveyListGen = EResponse();
   var publicSurveyList = SurveyListBody().obs;
+  var additionalcontentPublic = SurveyListBody();
+
   var ownSurveyListbody = SurveyListBody().obs;
+  var additionalcontentSeg = SurveyListBody();
+
   var wrkSpaceSurveyList = SurveyListBody().obs;
   var attachedList = SurveyListBody().obs;
 
   Future listGet(String routekey, String messageCode, int userId,
-      String searchTxt, String phone) async {
+      String searchTxt, String phone, int th) async {
     var data = await GlobalHelpers.postRequestGeneral.getdata(
-        listJBody(userId, searchTxt, phone), messageCode, UriAdresses.medCore);
+        listJBody(userId, searchTxt, phone, th),
+        messageCode,
+        UriAdresses.medCore);
     surveyListGen = EResponse.fromJson(jsonDecode(data));
     ereklog.wtf(data);
+    ereklog.wtf(listJBody(userId, searchTxt, phone, th).toString());
     surveyListGen.result ??= [];
-    switch (routekey) {
-      case '/home':
-        publicSurveyList.value = SurveyListBody.fromJson(surveyListGen.result);
-        break;
-      case '/segmented':
-        wrkSpaceSurveyList.value =
-            SurveyListBody.fromJson(surveyListGen.result);
-        break;
-      case '/profile':
-        ownSurveyListbody.value = SurveyListBody.fromJson(surveyListGen.result);
-        break;
-      case '/attachedList':
-        attachedList.value = SurveyListBody.fromJson(surveyListGen.result);
-        break;
+    if (th > 1) {
+      switch (routekey) {
+        case '/home':
+          additionalcontentPublic =
+              SurveyListBody.fromJson(surveyListGen.result);
+
+          break;
+        case '/segmented':
+          additionalcontentSeg = SurveyListBody.fromJson(surveyListGen.result);
+          break;
+      }
+    } else {
+      switch (routekey) {
+        case '/home':
+          publicSurveyList.value =
+              SurveyListBody.fromJson(surveyListGen.result);
+          break;
+        case '/segmented':
+          wrkSpaceSurveyList.value =
+              SurveyListBody.fromJson(surveyListGen.result);
+          break;
+        case '/profile':
+          ownSurveyListbody.value =
+              SurveyListBody.fromJson(surveyListGen.result);
+          break;
+        case '/attachedList':
+          attachedList.value = SurveyListBody.fromJson(surveyListGen.result);
+          break;
+      }
     }
   }
 
@@ -87,7 +110,7 @@ class SCont extends GetxController {
     String connectedidStr = '';
     if (chosenSType == 10) {
       for (int p = 0; p < dropvalueList.length; p++) {
-        connectedidStr += dropvalueList[p].numVal!;
+        connectedidStr += dropvalueList[p].numVal ?? '0';
       }
       autoSCombination += connectedidStr;
       surveyAnswer.connectedid =

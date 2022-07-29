@@ -131,7 +131,7 @@ class _PageUnitState extends State<PageUnit> {
                           sCont.textEditingControllers
                               .add(TextEditingController());
                           sCont.dropvalueList.add(DropSelectVal());
-                          sCont.surveyAnswer.answers![queryUnitIndex]
+                          sCont.surveyAnswer.answers?[queryUnitIndex]
                               .statistic = item.statistic;
                           return RecieverUnit(
                               questionID: item.id!,

@@ -258,20 +258,30 @@ class _SurveyInfoCheckState extends State<SurveyInfoCheck> {
           ),
           Column(
             children: [
-              InkWell(
-                onTap: () {
-                  sCCont.surveyCreate("variationup", 0);
-                },
-                child: myBtn(CommonColors.deepPink, 200, 50,
-                    CommonColors.deepPink, Colors.white, 'Хувилбар нэмэх'),
-              ),
-              InkWell(
-                onTap: () {
-                  sCCont.surveyCreate("levelup", 0);
-                },
-                child: myBtn(CommonColors.geregeBlue, 200, 50,
-                    CommonColors.geregeBlue, Colors.white, 'Дараагийн шат'),
-              ),
+              getx.GetX<CreationCont>(builder: (sCCont) {
+                return Visibility(
+                  visible: sCCont.sSwitcher.isTrue ? true : false,
+                  child: InkWell(
+                    onTap: () {
+                      sCCont.surveyCreate("variationup", 0);
+                    },
+                    child: myBtn(CommonColors.deepPink, 200, 50,
+                        CommonColors.deepPink, Colors.white, 'Хувилбар нэмэх'),
+                  ),
+                );
+              }),
+              getx.GetX<CreationCont>(builder: (sCCont) {
+                return Visibility(
+                  visible: sCCont.sSwitcher.isTrue ? true : false,
+                  child: InkWell(
+                    onTap: () {
+                      sCCont.surveyCreate("levelup", 0);
+                    },
+                    child: myBtn(CommonColors.geregeBlue, 200, 50,
+                        CommonColors.geregeBlue, Colors.white, 'Дараагийн шат'),
+                  ),
+                );
+              }),
               InkWell(
                 onTap: () {
                   sCCont.surveyCreate("save", 0);

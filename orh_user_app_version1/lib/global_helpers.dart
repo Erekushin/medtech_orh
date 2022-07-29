@@ -7,6 +7,10 @@ import 'Helpers/working_with_folders.dart';
 import 'global_constant.dart';
 
 class GlobalHelpers {
+  static int publicSurveyLstth = 1;
+  static int segmentedSurveyLstth = 1;
+  static int profileSurveyLstth = 1;
+
   static PostRequestGeneral postRequestGeneral = PostRequestGeneral();
   static late StreamController<bool> bottomnavbarSwitcher;
   static WorkingWithCode workingWithCode = WorkingWithCode();
