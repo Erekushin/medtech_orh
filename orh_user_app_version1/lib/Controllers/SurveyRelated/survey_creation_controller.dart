@@ -1,11 +1,13 @@
 import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
+import 'package:orh_user_app_version1/Controllers/SurveyRelated/survey_controller.dart';
 import 'package:orh_user_app_version1/Helpers/logging.dart';
 import 'package:orh_user_app_version1/Models/SurveyRelated/survey_creation_types.dart';
 import 'package:orh_user_app_version1/Models/general_response.dart';
 import 'package:orh_user_app_version1/global_constant.dart';
 import 'package:orh_user_app_version1/global_helpers.dart';
+import '../../Models/SurveyRelated/survey_answer_body.dart';
 import '../../Models/SurveyRelated/survey_body.dart';
 import '../auth_controller.dart';
 
@@ -152,6 +154,8 @@ class CreationCont extends GetxController {
               arg.count = filteredList2!.last.questions!.length;
               arg.key = surveys.indexOf(filteredList2!.last);
               arg.surveylvl = filteredList2!.last.slevel;
+              Get.find<SCont>().surveyAnswer.answers = List<Answers>.generate(
+                  lastS.questions!.length, ((index) => Answers()));
               strCombList = List<CombUnit>.generate(
                   surveys[surveys.indexOf(surveys.last) - 1].questions!.length,
                   ((index) => CombUnit()));
@@ -166,13 +170,14 @@ class CreationCont extends GetxController {
               slevel = surveys.last.slevel! + 1;
               findParentNode(slevel!);
               surveyCreationbody.preconnected = filteredList2!.last.connectedid;
-
               //combination beldej hariulah heseg rvv yavahdaa beldej bgaa heseg
               arg.sColor = surveyCreationbody.surveyClr;
               arg.type = "Auto";
               arg.count = surveys.last.questions!.length;
               arg.key = surveys.indexOf(surveys.last);
               arg.surveylvl = surveys.last.slevel;
+              Get.find<SCont>().surveyAnswer.answers = List<Answers>.generate(
+                  lastS.questions!.length, ((index) => Answers()));
               strCombList = List<CombUnit>.generate(
                   surveys[surveys.indexOf(surveys.last)].questions!.length,
                   ((index) => CombUnit()));
