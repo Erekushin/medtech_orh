@@ -96,6 +96,7 @@ class SCont extends GetxController {
   Survey sNxtLvl = Survey();
   Argu argTwin = Argu();
 
+  String connectedidStr = '';
   Future answersPush(int currentlvl) async {
     pushDataBtn.value = false;
 
@@ -107,7 +108,7 @@ class SCont extends GetxController {
     surveyAnswer.slevel = currentlvl + 1;
 
     //auto uyd connectedStr bolon group id avch bgaa
-    String connectedidStr = '';
+
     if (chosenSType == 10) {
       for (int p = 0; p < dropvalueList.length; p++) {
         connectedidStr += dropvalueList[p].numVal ?? '0';

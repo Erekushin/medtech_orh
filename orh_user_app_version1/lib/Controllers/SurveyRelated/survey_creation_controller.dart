@@ -154,6 +154,7 @@ class CreationCont extends GetxController {
               arg.count = filteredList2!.last.questions!.length;
               arg.key = surveys.indexOf(filteredList2!.last);
               arg.surveylvl = filteredList2!.last.slevel;
+              Get.find<SCont>().surveyAnswer.answers?.clear();
               Get.find<SCont>().surveyAnswer.answers = List<Answers>.generate(
                   lastS.questions!.length, ((index) => Answers()));
               strCombList = List<CombUnit>.generate(
@@ -176,6 +177,7 @@ class CreationCont extends GetxController {
               arg.count = surveys.last.questions!.length;
               arg.key = surveys.indexOf(surveys.last);
               arg.surveylvl = surveys.last.slevel;
+              Get.find<SCont>().surveyAnswer.answers?.clear();
               Get.find<SCont>().surveyAnswer.answers = List<Answers>.generate(
                   lastS.questions!.length, ((index) => Answers()));
               strCombList = List<CombUnit>.generate(
@@ -196,6 +198,9 @@ class CreationCont extends GetxController {
               arg.count = chosenNodeSurvey.questions!.length;
               arg.key = idx;
               arg.surveylvl = chosenNodeSurvey.slevel;
+              Get.find<SCont>().surveyAnswer.answers?.clear();
+              Get.find<SCont>().surveyAnswer.answers = List<Answers>.generate(
+                  lastS.questions!.length, ((index) => Answers()));
               strCombList = List<CombUnit>.generate(
                   surveys[idx].questions!.length, ((index) => CombUnit()));
               Get.toNamed(RouteUnits.surveyList + RouteUnits.individualSurvey,
