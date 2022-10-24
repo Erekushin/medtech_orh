@@ -23,6 +23,8 @@ class AuthController extends GetxController {
   var passValidCont = TextEditingController();
   var phoneCont = TextEditingController();
   var rdCont = TextEditingController();
+  var emailCont = TextEditingController();
+  var otpCodeCont = TextEditingController();
   Map<String, dynamic> loginBody() {
     var bytes = utf8.encode(loginPass.text);
     var hash = sha256.convert(bytes);
@@ -107,6 +109,7 @@ class AuthController extends GetxController {
           loginPass.clear();
           break;
         case 400:
+          retryFunction();
           loginloading.value = false;
           Get.snackbar(user.message!, 'Нууц үг буруу эсвэл Тэрминал байхгүй',
               snackPosition: SnackPosition.BOTTOM,
@@ -191,6 +194,18 @@ class AuthController extends GetxController {
             margin: const EdgeInsets.all(5));
         break;
     }
+  }
+
+  Map<String, dynamic> otpReqB() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['identity'] = "erekushinforlife@gmail.com";
+    return data;
+  }
+
+  Future otpReq() async {
+    var data = GlobalHelpers.postRequestGeneral
+        .getdata(otpReqB(), '', UriAdresses.mArea);
+    print(data);
   }
 
   Map<String, dynamic> updateProbody() {

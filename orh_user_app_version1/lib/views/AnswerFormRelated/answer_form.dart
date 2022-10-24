@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:orh_user_app_version1/Controllers/auth_controller.dart';
@@ -10,10 +12,11 @@ import '../../global_helpers.dart';
 import '../splash_screen.dart';
 
 class AnswerForm extends StatefulWidget {
-  const AnswerForm({ Key? key }) : super(key: key);
+  const AnswerForm({Key? key}) : super(key: key);
   @override
   State<AnswerForm> createState() => _AnswerFormState();
 }
+
 class _AnswerFormState extends State<AnswerForm> {
   var authController = Get.find<AuthController>();
 
@@ -22,60 +25,101 @@ class _AnswerFormState extends State<AnswerForm> {
   @override
   void initState() {
     answercards.add(SwipeItem(
-           content: BasicProfileData1(nameController: authController.nameCont, passConroller: authController.passCont,
-                       phoneController: authController.phoneCont, rdController: authController.rdCont, passValCont: authController.passValidCont,),
-           onSlideUpdate: (SlideRegion? region) async {
-          }));
+        //huudas 1
+        content: BasicProfileData1(
+          nameController: authController.nameCont,
+          passConroller: authController.passCont,
+          phoneController: authController.phoneCont,
+          rdController: authController.rdCont,
+          passValCont: authController.passValidCont,
+        ),
+        onSlideUpdate: (SlideRegion? region) async {}));
     answercards.add(SwipeItem(
-           content: BasicProfileData2(phoneController: authController.phoneCont, rdController: authController.rdCont,),
-           onSlideUpdate: (SlideRegion? region) async {
-          }));
+        //huudas 2
+        content: BasicProfileData2(
+          phoneCont: authController.phoneCont,
+          rdCont: authController.rdCont,
+          emailCont: authController.emailCont,
+        ),
+        onSlideUpdate: (SlideRegion? region) async {}));
+    answercards.add(SwipeItem(
+        //huudas 3
+        content: Otp1(
+          otpController: authController.otpCodeCont,
+        ),
+        onSlideUpdate: (SlideRegion? region) async {}));
     _matchEngine = MatchEngine(swipeItems: answercards);
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
-     return Scaffold(
-        body: Container(///background container
+    return Scaffold(
+        body: Container(
+
+            ///background container
             color: CommonColors.geregeBlue,
             child: Center(
-              child: SizedBox(///Картуудыг агуулах Container
-                width: GeneralMeasurements.deviceWidth/100*90,
-                height: GeneralMeasurements.deviceHeight/100*60,
-                child: SwipeCards(///Картууд
+              child: SizedBox(
+                ///Картуудыг агуулах Container
+                width: GeneralMeasurements.deviceWidth / 100 * 90,
+                height: GeneralMeasurements.deviceHeight / 100 * 60,
+                child: SwipeCards(
+                  ///Картууд
                   matchEngine: _matchEngine!,
                   itemBuilder: (BuildContext context, int index) {
                     return Container(
-                        width: GeneralMeasurements.deviceWidth/100*90,
-                        height: GeneralMeasurements.deviceHeight/100*60,
+                        width: GeneralMeasurements.deviceWidth / 100 * 90,
+                        height: GeneralMeasurements.deviceHeight / 100 * 60,
                         decoration: const BoxDecoration(
                           borderRadius: BorderRadius.all(Radius.circular(20)),
                           color: Colors.white,
                         ),
                         alignment: Alignment.center,
-                        child:  answercards[index].content);
+                        child: answercards[index].content);
                   },
                   onStackFinished: () {
-                    if(authController.phoneCont.text.isEmpty || authController.rdCont.text.isEmpty){
-                      Get.snackbar('талбарууд бөглөгдөөгүй байна', "", snackPosition: SnackPosition.BOTTOM,
-                         colorText: Colors.white, backgroundColor: Colors.grey[900], margin: const EdgeInsets.all(5));
-                         Get.toNamed(RouteUnits.login);
-                    }
-                    else{
+                    if (authController.otpCodeCont.text != '44') {
+                      Get.snackbar('OTP таарахгүй байна', "",
+                          snackPosition: SnackPosition.BOTTOM,
+                          colorText: Colors.white,
+                          backgroundColor: Colors.grey[900],
+                          margin: const EdgeInsets.all(5));
+                      Get.toNamed(RouteUnits.login);
+                    } else {
                       authController.registration();
-                    Get.to(const MyCustomSplashScreen());
+                      Get.to(const MyCustomSplashScreen());
                     }
                   },
                   itemChanged: (SwipeItem item, int index) {
                     print("item: ${item.content}, index: $index");
                     print('item transform it self');
-                    if(index == 1){
-                      if(authController.nameCont.text.isEmpty || authController.passCont.text.isEmpty 
-                         || authController.passValidCont.text.isEmpty){
-                         Get.snackbar('талбарууд бөглөгдөөгүй байна', "", snackPosition: SnackPosition.BOTTOM,
-                         colorText: Colors.white, backgroundColor: Colors.grey[900], margin: const EdgeInsets.all(5));
-                         Get.toNamed(RouteUnits.login);
-                      }
+                    switch (index) {
+                      case 10:
+                        if (authController.nameCont.text.isEmpty ||
+                            authController.passCont.text.isEmpty ||
+                            authController.passValidCont.text.isEmpty) {
+                          Get.snackbar('талбарууд бөглөгдөөгүй байна', "",
+                              snackPosition: SnackPosition.BOTTOM,
+                              colorText: Colors.white,
+                              backgroundColor: Colors.grey[900],
+                              margin: const EdgeInsets.all(5));
+                          Get.toNamed(RouteUnits.login);
+                        }
+                        break;
+                      case 2:
+                        if (authController.phoneCont.text.isEmpty ||
+                            authController.rdCont.text.isEmpty) {
+                          Get.snackbar('талбарууд бөглөгдөөгүй байна', "",
+                              snackPosition: SnackPosition.BOTTOM,
+                              colorText: Colors.white,
+                              backgroundColor: Colors.grey[900],
+                              margin: const EdgeInsets.all(5));
+                          Get.toNamed(RouteUnits.login);
+                        } else {
+                          authController.otpReq();
+                        }
+                        break;
                     }
                   },
                   upSwipeAllowed: false,
@@ -86,13 +130,134 @@ class _AnswerFormState extends State<AnswerForm> {
   }
 }
 
+class Otp1 extends StatefulWidget {
+  const Otp1({Key? key, required this.otpController}) : super(key: key);
+  final TextEditingController otpController;
+
+  @override
+  State<Otp1> createState() => _Otp1State();
+}
+
+class _Otp1State extends State<Otp1> {
+  final registerFormKey = GlobalKey<FormState>();
+  bool timeOver = true;
+  Timer? _timer;
+  int count = 120;
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: [
+        Form(
+            key: registerFormKey,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  margin: const EdgeInsets.all(10),
+                  child: (timeOver)
+                      ? TextButton(
+                          onPressed: () {
+                            timeOver = false;
+                            Get.snackbar('код илгээгдлээ',
+                                "та e-mail ээ шалгаад баталгаажуулах дугаарыг хуулж доорх талбарт оруулна уу",
+                                snackPosition: SnackPosition.BOTTOM,
+                                colorText: Colors.white,
+                                backgroundColor: Colors.grey[900],
+                                margin: const EdgeInsets.all(5));
+                            startTimer();
+                          },
+                          child: const Text(
+                            'код илгээх',
+                            style: TextStyle(
+                                fontSize: 25,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.grey),
+                          ))
+                      : Text(
+                          '$count',
+                          style: const TextStyle(
+                              fontSize: 25,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.grey),
+                        ),
+                ),
+                Container(
+                  //otp
+                  padding: const EdgeInsets.only(
+                      left: 50, right: 50, top: 10, bottom: 0),
+                  child: TextFormField(
+                    onChanged: (string) {
+                      final isvalid = registerFormKey.currentState!.validate();
+                    },
+                    validator: (val) {
+                      if (val!.isEmpty) {
+                        return "Required";
+                      }
+                    },
+                    controller: widget.otpController,
+                    style: TextStyle(color: Colors.black.withOpacity(.8)),
+                    decoration: InputDecoration(
+                      hintMaxLines: 1,
+                      hintText: 'OTP Code',
+                      hintStyle: TextStyle(
+                          fontSize: 14, color: Colors.black.withOpacity(.5)),
+                    ),
+                  ),
+                )
+              ],
+            )),
+        Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                TextButton(onPressed: () {}, child: const Text('swipe'))
+              ],
+            ),
+            Container(
+              decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(90)),
+                  color: Color(0xFFFF4484)),
+              width: 200,
+              height: 5,
+            )
+          ],
+        )
+      ],
+    );
+  }
+
+  void startTimer() {
+    const oneSec = Duration(seconds: 1);
+    _timer = Timer.periodic(
+        oneSec,
+        (Timer timer) => setState(() {
+              if (count < 1) {
+                timeOver = true;
+                timer.cancel();
+              } else {
+                count = count - 1;
+              }
+            }));
+  }
+}
+
 class BasicProfileData2 extends StatefulWidget {
-  BasicProfileData2({Key? key, required this.phoneController,required  this.rdController}) : super(key: key);
-  final TextEditingController phoneController;
-  final TextEditingController rdController;
+  BasicProfileData2(
+      {Key? key,
+      required this.phoneCont,
+      required this.rdCont,
+      required this.emailCont})
+      : super(key: key);
+  final TextEditingController phoneCont;
+  final TextEditingController rdCont;
+  final TextEditingController emailCont;
   @override
   _BasicProfileData2 createState() => _BasicProfileData2();
 }
+
 class _BasicProfileData2 extends State<BasicProfileData2> {
   final registerFormKey = GlobalKey<FormState>();
   var surveyController = Get.find<SCont>();
@@ -101,98 +266,127 @@ class _BasicProfileData2 extends State<BasicProfileData2> {
     return SizedBox(
       child: Center(
           child: Stack(
-            children: [
-              Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          TextButton(onPressed: (){}, child: const Text('swipe'))
-                        ],
-                      ),
-                      Container(
-                        decoration: const BoxDecoration(
-                            borderRadius: BorderRadius.all(Radius.circular(90)),
-                            color: Color(0xFFFF4484)
-                        ),
-                        width: 200,
-                        height: 5,
-                      )
-                    ],
-                  ),
-              Form(
-                key: registerFormKey,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                          Container(//phone
-                  padding: const EdgeInsets.only(left: 50, right: 50, top: 10, bottom: 0),
+        children: [
+          Form(
+            key: registerFormKey,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  //phone
+                  padding: const EdgeInsets.only(
+                      left: 50, right: 50, top: 10, bottom: 0),
                   child: TextFormField(
-                    onChanged: (string){
-                       final isvalid = registerFormKey.currentState!.validate();
+                    onChanged: (string) {
+                      final isvalid = registerFormKey.currentState!.validate();
                     },
-                     validator: (val){
-                        RegExp exp = RegExp(
-                     r"^\d{8}$",
-                     caseSensitive: false);
-                      if(val!.length != 8){
+                    validator: (val) {
+                      RegExp exp = RegExp(r"^\d{8}$", caseSensitive: false);
+                      if (val!.length != 8) {
                         return "орны тоо зөрүүтэй байна.";
-                      }
-                      else if(!exp.hasMatch(val)){
+                      } else if (!exp.hasMatch(val)) {
                         return "дугаарыг заавал тоогоор оруулна.";
                       }
                     },
-                        controller: widget.phoneController,
-                        style: TextStyle(color: Colors.black.withOpacity(.8)),
-                        decoration: InputDecoration(
-                          hintMaxLines: 1,
-                          hintText: 'Утас',
-                          hintStyle:
-                          TextStyle(fontSize: 14, color: Colors.black.withOpacity(.5)),
-                        ),
+                    controller: widget.phoneCont,
+                    style: TextStyle(color: Colors.black.withOpacity(.8)),
+                    decoration: InputDecoration(
+                      hintMaxLines: 1,
+                      hintText: 'Утас',
+                      hintStyle: TextStyle(
+                          fontSize: 14, color: Colors.black.withOpacity(.5)),
+                    ),
+                  ),
                 ),
-                ),
-                 Container(//rd
-                  padding: const EdgeInsets.only(left: 50, right: 50, top: 10, bottom: 0),
+                Container(
+                  //rd
+                  padding: const EdgeInsets.only(
+                      left: 50, right: 50, top: 10, bottom: 0),
                   child: TextFormField(
-                    onChanged: (string){
-                       final isvalid = registerFormKey.currentState!.validate();
+                    onChanged: (string) {
+                      final isvalid = registerFormKey.currentState!.validate();
                     },
-                     validator: (val){
-                        RegExp exp = RegExp(
-                     r"^[а-я]{2}\d{8}$",
-                     caseSensitive: false);
-                      if(val!.length != 10){
+                    validator: (val) {
+                      RegExp exp =
+                          RegExp(r"[а-я]{2}\d{8}$", caseSensitive: false);
+                      if (val!.length != 10) {
                         return "орны тоо зөрүүтэй байна.";
-                      }
-                      else if(!exp.hasMatch(val)){
+                      } else if (!exp.hasMatch(val)) {
                         return "Регистрийн бүтэц буруу байна.";
                       }
                     },
-                        controller: widget.rdController,
-                        style: TextStyle(color: Colors.black.withOpacity(.8)),
-                        decoration: InputDecoration(
-                          hintMaxLines: 1,
-                          hintText: 'Регистрийн дугаар',
-                          hintStyle:
-                          TextStyle(fontSize: 14, color: Colors.black.withOpacity(.5)),
-                        ),
+                    controller: widget.rdCont,
+                    style: TextStyle(color: Colors.black.withOpacity(.8)),
+                    decoration: InputDecoration(
+                      hintMaxLines: 1,
+                      hintText: 'Регистрийн дугаар',
+                      hintStyle: TextStyle(
+                          fontSize: 14, color: Colors.black.withOpacity(.5)),
+                    ),
+                  ),
                 ),
-                )
-                  ],
+                Container(
+                  //email
+                  padding: const EdgeInsets.only(
+                      left: 50, right: 50, top: 10, bottom: 0),
+                  child: TextFormField(
+                    onChanged: (string) {
+                      final isvalid = registerFormKey.currentState!.validate();
+                    },
+                    validator: (val) {
+                      RegExp exp = RegExp(
+                          r"^([a-z\d\.-_]+)@([a-z\d-]+)\.([a-z]{2,8})(\.[a-z]{2,8})?$",
+                          caseSensitive: false);
+                      if (!exp.hasMatch(val!)) {
+                        return "Email-ийн бүтэц буруу байна.";
+                      }
+                    },
+                    controller: widget.emailCont,
+                    style: TextStyle(color: Colors.black.withOpacity(.8)),
+                    decoration: InputDecoration(
+                      hintMaxLines: 1,
+                      hintText: 'Email',
+                      hintStyle: TextStyle(
+                          fontSize: 14, color: Colors.black.withOpacity(.5)),
+                    ),
+                  ),
                 ),
+              ],
+            ),
+          ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  TextButton(onPressed: () {}, child: const Text('swipe'))
+                ],
+              ),
+              Container(
+                decoration: const BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(90)),
+                    color: Color(0xFFFF4484)),
+                width: 200,
+                height: 5,
               )
             ],
           )
-      ),
+        ],
+      )),
     );
   }
-} 
+}
 
 class BasicProfileData1 extends StatefulWidget {
-  const BasicProfileData1({ Key? key, required this.nameController, required this.passConroller,
-                                required this.phoneController, required this.rdController, required this.passValCont }) : super(key: key);
+  const BasicProfileData1(
+      {Key? key,
+      required this.nameController,
+      required this.passConroller,
+      required this.phoneController,
+      required this.rdController,
+      required this.passValCont})
+      : super(key: key);
   final TextEditingController nameController;
   final TextEditingController passConroller;
   final TextEditingController passValCont;
@@ -201,139 +395,162 @@ class BasicProfileData1 extends StatefulWidget {
   @override
   State<BasicProfileData1> createState() => _BasicProfileData1State();
 }
+
 class _BasicProfileData1State extends State<BasicProfileData1> {
   final registerFormKey = GlobalKey<FormState>();
   bool passHide = true;
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      child: Center(
-        child: Form(
+    return Stack(
+      children: [
+        Form(
           key: registerFormKey,
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Column(
-                children: [
-                  const SizedBox(height: 20,),
-                  GetX<ImageController>(builder: (imageController){
-                    return InkWell(
-                      onTap: (){
-                          GlobalHelpers.imageFileSwitcher = true;
-                          imageController.cameraAndGallery(RouteUnits.answerform, context);
-                      },
-                      child: CircleAvatar(
-                    backgroundColor: Colors.grey,
-                    radius: 40,
-                    backgroundImage: const AssetImage('assets/images/user_default.png'),
-                    child:  GlobalHelpers.imageFileSwitcher? ClipRRect(
-                                 child: AspectRatio(aspectRatio: 1 / 1, child: Image.file(imageController.imageFile.value, fit: BoxFit.fill,)),
-                                 borderRadius: BorderRadius.circular(90.0)
-                                 ): Container(color: Colors.blue, width: 1, height: 1, child: Text(imageController.imageFile.value.toString()),)
-                    ),
-                    );
-                  })
-                ],
-              ),
-             Container(//ner
-                padding: const EdgeInsets.only(left: 50, right: 50, top: 10, bottom: 0),
-                child: TextFormField(
-                  onChanged: (string){
-                     final isvalid = registerFormKey.currentState!.validate();
+              GetX<ImageController>(builder: (imageController) {
+                return InkWell(
+                  onTap: () {
+                    GlobalHelpers.imageFileSwitcher = true;
+                    imageController.cameraAndGallery(
+                        RouteUnits.answerform, context);
                   },
-                   validator: (val){
-                     if(val!.isEmpty){
+                  child: CircleAvatar(
+                      backgroundColor: Colors.grey,
+                      radius: 40,
+                      backgroundImage:
+                          const AssetImage('assets/images/user_default.png'),
+                      child: GlobalHelpers.imageFileSwitcher
+                          ? ClipRRect(
+                              child: AspectRatio(
+                                  aspectRatio: 1 / 1,
+                                  child: Image.file(
+                                    imageController.imageFile.value,
+                                    fit: BoxFit.fill,
+                                  )),
+                              borderRadius: BorderRadius.circular(90.0))
+                          : Container(
+                              color: Colors.blue,
+                              width: 1,
+                              height: 1,
+                              child: Text(
+                                  imageController.imageFile.value.toString()),
+                            )),
+                );
+              }),
+              Container(
+                //ner
+                padding: const EdgeInsets.only(
+                    left: 50, right: 50, top: 10, bottom: 0),
+                child: TextFormField(
+                  onChanged: (string) {
+                    final isvalid = registerFormKey.currentState!.validate();
+                  },
+                  validator: (val) {
+                    if (val!.isEmpty) {
                       return "Required";
-                     }
+                    }
                   },
-          controller: widget.nameController,
-          style: TextStyle(color: Colors.black.withOpacity(.8)),
-          decoration: InputDecoration(
-            hintMaxLines: 1,
-            hintText: 'Нэр',
-            hintStyle:
-            TextStyle(fontSize: 14, color: Colors.black.withOpacity(.5)),
-          ),
-              ),
-              ),
-               Container(//pass
-                padding: const EdgeInsets.only(left: 50, right: 50, top: 10, bottom: 0),
-                child: TextFormField(
-                  onChanged: (string){
-                     final isvalid = registerFormKey.currentState!.validate();
-                  },
-                   validator: (val){
-                     RegExp exp = RegExp(
-                     r"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[*.@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$",
-                     caseSensitive: false);
-                     if(val!.length < 8){
-                      return "тэмдэгтийн тоо 8 аас дээш байх хэрэгтэй";
-                     }
-                     else if(!exp.hasMatch(val)){
-                       return "үсэг, тоо, тэмдэгт байх хэрэгтэй ";
-                     }
-                  },
-          controller: widget.passConroller,
-          style: TextStyle(color: Colors.black.withOpacity(.8)),
-          obscureText: passHide,
-          decoration: InputDecoration(
-            suffixIcon: passHide? InkWell(
-              onTap: (){setState(() {
-                passHide = false;
-              });},
-              child: const Icon(Icons.visibility_off)) : InkWell(
-                onTap: (){setState(() {
-                  passHide = true;
-                });},
-                child: const Icon(Icons.visibility)),
-            hintMaxLines: 1,
-            hintText: 'Нууц үг',
-            hintStyle:
-            TextStyle(fontSize: 14, color: Colors.black.withOpacity(.5)),
-          ),
-              ),
-              ),
-              Container(//pass davtah
-                padding: const EdgeInsets.only(left: 50, right: 50, top: 10, bottom: 0),
-                child: TextFormField(
-                  controller: widget.passValCont,
-                  onChanged: (string){
-                     final isvalid = registerFormKey.currentState!.validate();
-                  },
-                   validator: (val){
-                     if(val! != widget.passConroller.text){
-                      return "Нууц үг таарахгүй байна";
-                     }
-                  },
-          style: TextStyle(color: Colors.black.withOpacity(.8)),
-          obscureText: passHide,
-          decoration: InputDecoration(
-            hintMaxLines: 1,
-            hintText: 'Нууц үг давтах',
-            hintStyle:
-            TextStyle(fontSize: 14, color: Colors.black.withOpacity(.5)),
-          ),
-              ),
-              ),
-              const SizedBox(height: 40,),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  TextButton(onPressed: (){}, child: const Text('swipe'))
-                ],
+                  controller: widget.nameController,
+                  style: TextStyle(color: Colors.black.withOpacity(.8)),
+                  decoration: InputDecoration(
+                    hintMaxLines: 1,
+                    hintText: 'Нэр',
+                    hintStyle: TextStyle(
+                        fontSize: 14, color: Colors.black.withOpacity(.5)),
+                  ),
+                ),
               ),
               Container(
-                decoration: const BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(90)),
-                    color: Color(0xFFFF4484)
+                //pass
+                padding: const EdgeInsets.only(
+                    left: 50, right: 50, top: 10, bottom: 0),
+                child: TextFormField(
+                  onChanged: (string) {
+                    final isvalid = registerFormKey.currentState!.validate();
+                  },
+                  validator: (val) {
+                    RegExp exp = RegExp(
+                        r"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[*.@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$",
+                        caseSensitive: false);
+                    if (val!.length < 8) {
+                      return "тэмдэгтийн тоо 8 аас дээш байх хэрэгтэй";
+                    } else if (!exp.hasMatch(val)) {
+                      return "үсэг, тоо, тэмдэгт байх хэрэгтэй ";
+                    }
+                  },
+                  controller: widget.passConroller,
+                  style: TextStyle(color: Colors.black.withOpacity(.8)),
+                  obscureText: passHide,
+                  decoration: InputDecoration(
+                    suffixIcon: passHide
+                        ? InkWell(
+                            onTap: () {
+                              setState(() {
+                                passHide = false;
+                              });
+                            },
+                            child: const Icon(Icons.visibility_off))
+                        : InkWell(
+                            onTap: () {
+                              setState(() {
+                                passHide = true;
+                              });
+                            },
+                            child: const Icon(Icons.visibility)),
+                    hintMaxLines: 1,
+                    hintText: 'Нууц үг',
+                    hintStyle: TextStyle(
+                        fontSize: 14, color: Colors.black.withOpacity(.5)),
+                  ),
                 ),
-                width: 200,
-                height: 5,
-              )
+              ),
+              Container(
+                //pass davtah
+                padding: const EdgeInsets.only(
+                    left: 50, right: 50, top: 10, bottom: 0),
+                child: TextFormField(
+                  controller: widget.passValCont,
+                  onChanged: (string) {
+                    final isvalid = registerFormKey.currentState!.validate();
+                  },
+                  validator: (val) {
+                    if (val! != widget.passConroller.text) {
+                      return "Нууц үг таарахгүй байна";
+                    }
+                  },
+                  style: TextStyle(color: Colors.black.withOpacity(.8)),
+                  obscureText: passHide,
+                  decoration: InputDecoration(
+                    hintMaxLines: 1,
+                    hintText: 'Нууц үг давтах',
+                    hintStyle: TextStyle(
+                        fontSize: 14, color: Colors.black.withOpacity(.5)),
+                  ),
+                ),
+              ),
             ],
           ),
         ),
-      ),
+        Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                TextButton(onPressed: () {}, child: const Text('swipe'))
+              ],
+            ),
+            Container(
+              decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(90)),
+                  color: Color(0xFFFF4484)),
+              width: 200,
+              height: 5,
+            )
+          ],
+        )
+      ],
     );
   }
 }

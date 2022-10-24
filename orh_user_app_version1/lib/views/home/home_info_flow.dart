@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:graphview/GraphView.dart';
 import 'package:orh_user_app_version1/Controllers/sql_controller.dart';
 import 'dart:ui';
 import '../../Controllers/SurveyRelated/survey_creation_controller.dart';
@@ -513,13 +512,13 @@ class _HomeSidebarState extends State<HomeSidebar> {
               Icons.person,
               'Профайл',
               () async {
-                await surveyController.listGet(
-                    RouteUnits.profile,
-                    '120006',
-                    loginController.user.result!.userId!,
-                    '',
-                    loginController.user.result!.phone!,
-                    GlobalHelpers.profileSurveyLstth);
+                // await surveyController.listGet(
+                //     RouteUnits.profile,
+                //     '120006',
+                //     loginController.user.result!.userId!,
+                //     '',
+                //     loginController.user.result!.phone!,
+                //     GlobalHelpers.profileSurveyLstth);
                 Get.toNamed('/profile', arguments: RouteUnits.profile);
                 GlobalHelpers.bottomnavbarSwitcher.add(true);
               },

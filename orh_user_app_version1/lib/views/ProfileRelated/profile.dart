@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -8,7 +9,6 @@ import 'package:orh_user_app_version1/global_helpers.dart';
 import '../../Controllers/SurveyRelated/survey_controller.dart';
 import '../../MyWidgets/my_button.dart';
 import '../../MyWidgets/my_text.dart';
-import '../../MyWidgets/survey_related/survey_unit/own.dart';
 import '../../Controllers/SurveyRelated/survey_creation_controller.dart';
 
 class ButtonStructure {
@@ -239,44 +239,146 @@ class _ProfileState extends State<Profile> {
                         ),
                       );
                     }),
+
+                    Column(
+                      children: [
+                        Image.asset('assets/images/empty_box.jpg'),
+                        const Text(
+                          'Таньд идвэхжүүлсэн үзүүлэлт алга байна',
+                          style: TextStyle(),
+                        ),
+                        TextButton(
+                            onPressed: () {
+                              log('df');
+                              Get.defaultDialog(
+                                  title: 'үзүүлэлтүүд',
+                                  content: Container(
+                                    width: GeneralMeasurements.deviceWidth * .8,
+                                    height:
+                                        GeneralMeasurements.deviceHeight * .6,
+                                    child: GridView.count(
+                                      mainAxisSpacing: 5,
+                                      crossAxisSpacing: 5,
+                                      crossAxisCount: 2,
+                                      children: <Widget>[
+                                        Container(
+                                          decoration: const BoxDecoration(
+                                              color: Colors.blueAccent,
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(15))),
+                                          padding: const EdgeInsets.all(5),
+                                          child: const Align(
+                                              alignment: Alignment.center,
+                                              child: Text(
+                                                'Жингээ оруулах',
+                                                style: TextStyle(
+                                                    color: Colors.white),
+                                              )),
+                                        ),
+                                        Container(
+                                          decoration: const BoxDecoration(
+                                              color: Colors.blueAccent,
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(15))),
+                                          padding: const EdgeInsets.all(5),
+                                          child: const Align(
+                                              alignment: Alignment.center,
+                                              child: Text(
+                                                'Даралт оруулах',
+                                                style: TextStyle(
+                                                    color: Colors.white),
+                                              )),
+                                        ),
+                                        Container(
+                                          decoration: const BoxDecoration(
+                                              color: Colors.blueAccent,
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(15))),
+                                          padding: const EdgeInsets.all(5),
+                                          child: const Align(
+                                              alignment: Alignment.center,
+                                              child: Text(
+                                                'Цусан дахь сахрын хэмжээгээ оруулах',
+                                                style: TextStyle(
+                                                    color: Colors.white),
+                                              )),
+                                        ),
+                                        Container(
+                                          decoration: const BoxDecoration(
+                                              color: Colors.blueAccent,
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(15))),
+                                          padding: const EdgeInsets.all(5),
+                                          child: const Align(
+                                              alignment: Alignment.center,
+                                              child: Text(
+                                                'Шөнө хэдэн цаг унтсан',
+                                                style: TextStyle(
+                                                    color: Colors.white),
+                                              )),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  actions: <Widget>[
+                                    TextButton(
+                                        onPressed: () {},
+                                        child: const Text('болсон'))
+                                  ]);
+                            },
+                            child: const Text('идвэхжүүлэх'))
+                      ],
+                    ),
                     const SizedBox(
                       width: 1,
                       height: 10,
                     ),
-                    GetX<SCont>(builder: (profileController) {
-                      return Stack(
-                        children: [
-                          SizedBox(
-                            height: GeneralMeasurements.deviceHeight / 100 * 55,
-                            child: SingleChildScrollView(
-                              controller: scrollController,
-                              physics: const BouncingScrollPhysics(
-                                  parent: AlwaysScrollableScrollPhysics()),
-                              child: ListView.builder(
-                                  physics: const NeverScrollableScrollPhysics(),
-                                  shrinkWrap: true,
-                                  itemCount: profileController.ownSurveyListbody
-                                          .value.result?.length ??
-                                      0,
-                                  itemBuilder: (context, index) {
-                                    var item = profileController
-                                        .ownSurveyListbody.value.result![index];
-                                    return OwnsUnit(
-                                        surveyName: item.name ?? "",
-                                        surveyId: item.id!,
-                                        itemindx: index);
-                                  }),
-                            ),
-                          ),
-                          Visibility(
-                              visible: profileController
-                                      .ownSurveyListbody.value.result!.isEmpty
-                                  ? true
-                                  : false,
-                              child: Image.asset('assets/images/empty_box.jpg'))
-                        ],
-                      );
-                    })
+
+                    // SingleChildScrollView(
+                    //   child: GridView.count(
+                    //     crossAxisCount: 3,
+                    //     children: <Widget>[
+                    //       Container(
+                    //         child: Text(''),
+                    //       )
+                    //     ],
+                    //     ),
+                    // )
+
+                    // GetX<SCont>(builder: (profileController) {
+                    //   return Stack(
+                    //     children: [
+                    //       SizedBox(
+                    //         height: GeneralMeasurements.deviceHeight / 100 * 55,
+                    //         child: SingleChildScrollView(
+                    //           controller: scrollController,
+                    //           physics: const BouncingScrollPhysics(
+                    //               parent: AlwaysScrollableScrollPhysics()),
+                    //           child: ListView.builder(
+                    //               physics: const NeverScrollableScrollPhysics(),
+                    //               shrinkWrap: true,
+                    //               itemCount: profileController.ownSurveyListbody
+                    //                       .value.result?.length ??
+                    //                   0,
+                    //               itemBuilder: (context, index) {
+                    //                 var item = profileController
+                    //                     .ownSurveyListbody.value.result![index];
+                    //                 return OwnsUnit(
+                    //                     surveyName: item.name ?? "",
+                    //                     surveyId: item.id!,
+                    //                     itemindx: index);
+                    //               }),
+                    //         ),
+                    //       ),
+                    //       Visibility(
+                    //           visible: profileController
+                    //                   .ownSurveyListbody.value.result!.isEmpty
+                    //               ? true
+                    //               : false,
+                    //           child: Image.asset('assets/images/empty_box.jpg'))
+                    //     ],
+                    //   );
+                    // })
                   ],
                 ),
               ),
